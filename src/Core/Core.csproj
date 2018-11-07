@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C9193853-8CAD-41B4-A66C-758B4CCD82A4}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Core</RootNamespace>
+    <AssemblyName>Core</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper">
+      <HintPath>..\..\Resources\In\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="Encryption">
+      <HintPath>..\..\Resources\In\Encryption.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\..\Resources\In\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\Resources\In\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap">
+      <HintPath>..\..\Resources\In\StructureMap.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DecimalHelper.cs" />
+    <Compile Include="Encryption.cs" />
+    <Compile Include="Enums\OriginalMediumType.cs" />
+    <Compile Include="Enums\WellKnownTranscriptionQueueOption.cs" />
+    <Compile Include="Enums\WellKnownErrorType.cs" />
+    <Compile Include="Enums\WellKnownTranscriptionModificationType.cs" />
+    <Compile Include="Enums\WellKnownModificationType.cs" />
+    <Compile Include="IntHelper.cs" />
+    <Compile Include="CurrencyHelper.cs" />
+    <Compile Include="EnumExtensions.cs" />
+    <Compile Include="Enums\WellKnownUserType.cs" />
+    <Compile Include="FileManipulationHelper.cs" />
+    <Compile Include="BooleanHelper.cs" />
+    <Compile Include="Configuration\ConfigurationData.cs" />
+    <Compile Include="DateTimeHelper.cs" />
+    <Compile Include="Diagnostics\ErrorSeverity.cs" />
+    <Compile Include="Diagnostics\ExceptionManagement\ExceptionHandlingApproach.cs" />
+    <Compile Include="Diagnostics\ExceptionManagement\ExceptionManager.cs" />
+    <Compile Include="Diagnostics\ExceptionManagement\Resource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Diagnostics\Logging\ILogger.cs" />
+    <Compile Include="Diagnostics\Logging\LoggerCollection.cs" />
+    <Compile Include="Diagnostics\Logging\Loggers\Log4NetLogger.cs" />
+    <Compile Include="Diagnostics\Logging\LogManager.cs" />
+    <Compile Include="EnumHelper.cs" />
+    <Compile Include="FontHelper.cs" />
+    <Compile Include="GlobalConstant.cs" />
+    <Compile Include="GuidHelper.cs" />
+    <Compile Include="JSONObjectMapper.cs" />
+    <Compile Include="ObjectFactory.cs" />
+    <Compile Include="ObjectMapper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StringHelper.cs" />
+    <Compile Include="ValidationHelper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Diagnostics\ExceptionManagement\Resource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

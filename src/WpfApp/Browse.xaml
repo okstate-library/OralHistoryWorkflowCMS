@@ -1,0 +1,468 @@
+﻿<UserControl x:Class="WpfApp.Browse"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"              
+             xmlns:local="clr-namespace:WpfApp"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBox.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Card.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <local:PackIconConverter x:Key="PackIconConverter" />
+            <local:ShortTextConverter x:Key="ShortTextConverter" />
+
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"                     
+                      Margin="0 0 0 32" >
+        <Grid>
+
+            <Grid Name="MainGrid">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="200" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Border Margin="0 0 0 10" Grid.Row="0" Grid.Column="1" VerticalAlignment="Top">
+                    <Grid  Background="{DynamicResource PrimaryHueMidBrush}" MaxHeight="75">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="3*" />
+                            <ColumnDefinition Width="5*" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Margin="20 10 0 8"  Name="RecordCountWordTextBox" VerticalAlignment="Center"  
+                                   Grid.Column="0" HorizontalAlignment="Stretch" Style="{StaticResource MaterialDesignTitleTextBlock}"  />
+
+                        <StackPanel Grid.Row="1" Margin="20 10 0 8" Orientation="Horizontal"  Grid.Column="1">
+                            <!--Text="{Binding SearchWord}"-->
+
+                            <TextBox  Width="300" Margin="20 10 0 8" Name="SearchWordTextBox"   />
+                            <Button Margin="20 10 0 8"   Content="Search" Style="{StaticResource MaterialDesignRaisedAccentButton}" Click="SearchButton_Click"/>
+                            <Button Margin="20 10 0 8"  Content="Reset" Style="{StaticResource MaterialDesignRaisedLightButton}" Click="ResetButton_Click"/>
+                        </StackPanel>
+
+                        <Grid Grid.Column="2" VerticalAlignment="Center">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="5*" />
+                                <ColumnDefinition Width="5*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Margin="20 10 0 8"  Grid.Column="0" HorizontalAlignment="Center" Text="Show"  />
+                            <ComboBox  Grid.Column="1" Background="Aquamarine" VerticalAlignment="Center">
+                                <ComboBoxItem>5</ComboBoxItem>
+                                <ComboBoxItem IsSelected="True">10</ComboBoxItem>
+                                <ComboBoxItem>50</ComboBoxItem>
+                                <ComboBoxItem>100</ComboBoxItem>
+                            </ComboBox>
+                            <TextBlock Margin="20 10 0 8"  Grid.Column="2" HorizontalAlignment="Center" Text="entries"  />
+                            
+                            <!--<TextBlock Margin="20 10 0 8"  Grid.Column="2" HorizontalAlignment="Stretch" Text="dsad"  Style="{StaticResource MaterialDesignTitleTextBlock}"  />
+                            <TextBlock Margin="20 10 0 8"  Grid.Column="3" HorizontalAlignment="Stretch" Text="dsad"  Style="{StaticResource MaterialDesignTitleTextBlock}"  />-->
+                        </Grid>
+                    </Grid>
+
+                </Border>
+
+                <materialDesign:Card Background="{DynamicResource MaterialDesignBackground}" VerticalAlignment="Top"
+                                     Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Width="180" Margin="0 0 20 0" >
+                    <StackPanel>
+                        <Expander HorizontalAlignment="Stretch" Background="{DynamicResource AlternativeColor}"
+                          Header="Collection(s)">
+                            <StackPanel Orientation="Vertical"
+                            TextBlock.Foreground="{DynamicResource MaterialDesignBody}" >
+                                <ListView Margin="-10 -20 0 0"
+                                          HorizontalAlignment="Left" 
+                                          Name="checkedListCollections" 
+                                          VerticalAlignment="Top" 
+                                          ItemsSource="{Binding}"                                      
+                                          IsSynchronizedWithCurrentItem="True"
+                                    SelectionChanged="checkedListCollections_SelectionChanged" >
+                                    <ListView.View>
+                                        <GridView>
+                                            <GridView.Columns>
+                                                <GridViewColumn>
+                                                    <GridViewColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <ToggleButton Content="X" 
+                                                        Tag="{Binding Value}" 
+                                                        Style="{StaticResource OptionToggleButton}"
+                                                        IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}, 
+                                                        Path=IsSelected}" ToolTip="{Binding Key}"  />
+                                                        </DataTemplate>
+                                                    </GridViewColumn.CellTemplate>
+                                                </GridViewColumn>
+                                                <GridViewColumn>
+                                                    <GridViewColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <StackPanel>
+                                                                <TextBlock ToolTip="{Binding Key}" Text="{Binding Key , Converter={StaticResource ShortTextConverter}}" />
+                                                            </StackPanel>
+                                                        </DataTemplate>
+                                                    </GridViewColumn.CellTemplate>
+                                                </GridViewColumn>
+                                            </GridView.Columns>
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+                            </StackPanel>
+                        </Expander>
+                        <Border Background="{DynamicResource MaterialDesignDivider}" Height="1" HorizontalAlignment="Stretch" SnapsToDevicePixels="True" />
+                        <Expander HorizontalAlignment="Stretch" Background="{DynamicResource PrimaryHueLightBrush}"
+                      Header="Interviewer(s)">
+                            <StackPanel Orientation="Vertical"
+                            TextBlock.Foreground="{DynamicResource MaterialDesignBody}">
+                                <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Visible" >
+                                    <ListView Margin="-10 -20 0 0"
+                                            HorizontalAlignment="Left" 
+                                            Name="checkedListInterviewer" 
+                                            VerticalAlignment="Top" 
+                                            ItemsSource="{Binding}" 
+                                            IsSynchronizedWithCurrentItem="True"
+                                    SelectionChanged="checkedListInterviewer_SelectionChanged" >
+                                        <ListView.View>
+                                            <GridView>
+                                                <GridView.Columns>
+                                                    <GridViewColumn>
+                                                        <GridViewColumn.CellTemplate>
+                                                            <DataTemplate>
+                                                                <ToggleButton Content="X"
+                                                        Tag="{Binding Value}" 
+                                                        Style="{StaticResource OptionToggleButton}"
+                                                        IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}, 
+                                                        Path=IsSelected}" ToolTip="{Binding Key}"  />
+                                                            </DataTemplate>
+                                                        </GridViewColumn.CellTemplate>
+                                                    </GridViewColumn>
+                                                    <GridViewColumn>
+                                                        <GridViewColumn.CellTemplate>
+                                                            <DataTemplate>
+                                                                <StackPanel>
+                                                                    <TextBlock ToolTip="{Binding Key}" Text="{Binding Key , Converter={StaticResource ShortTextConverter}}" />
+                                                                </StackPanel>
+                                                            </DataTemplate>
+                                                        </GridViewColumn.CellTemplate>
+                                                    </GridViewColumn>
+                                                </GridView.Columns>
+                                            </GridView>
+                                        </ListView.View>
+                                    </ListView>
+                                </ScrollViewer>
+                            </StackPanel>
+                        </Expander>
+                        <Border Background="{DynamicResource MaterialDesignDivider}" Height="1" HorizontalAlignment="Stretch" SnapsToDevicePixels="True" />
+                        <Expander HorizontalAlignment="Stretch" Background="{DynamicResource AlternativeColor}"
+                      Header="Subject(s)">
+                            <StackPanel Orientation="Vertical" TextBlock.Foreground="{DynamicResource MaterialDesignBody}" >
+                                <ScrollViewer Height="250"  HorizontalScrollBarVisibility="Auto"  VerticalScrollBarVisibility="Visible" >
+                                    <ListView Margin="-10 -20 0 0"
+                                              HorizontalAlignment="Left" 
+                                              Name="checkedListSubject" 
+                                              VerticalAlignment="Top" 
+                                              ItemsSource="{Binding}"      
+                                              SelectionChanged="checkedListSubject_SelectionChanged" >
+                                        <ListView.View>
+                                            <GridView>
+                                                <GridView.Columns>
+                                                    <GridViewColumn>
+                                                        <GridViewColumn.CellTemplate>
+                                                            <DataTemplate>
+                                                                <ToggleButton Content="X"
+                                                        Tag="{Binding Value}" 
+                                                        Style="{StaticResource OptionToggleButton}"
+                                                        IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}, 
+                                                        Path=IsSelected}" ToolTip="{Binding Key}" />
+                                                            </DataTemplate>
+                                                        </GridViewColumn.CellTemplate>
+                                                    </GridViewColumn>
+                                                    <GridViewColumn>
+                                                        <GridViewColumn.CellTemplate>
+                                                            <DataTemplate>
+                                                                <TextBlock ToolTip="{Binding Key}" Text="{Binding Key , Converter={StaticResource ShortTextConverter}}" />
+                                                            </DataTemplate>
+                                                        </GridViewColumn.CellTemplate>
+                                                    </GridViewColumn>
+                                                </GridView.Columns>
+                                            </GridView>
+                                        </ListView.View>
+                                    </ListView>
+                                </ScrollViewer>
+                            </StackPanel>
+                        </Expander>
+                        <Border Background="{DynamicResource MaterialDesignDivider}" Height="1" HorizontalAlignment="Stretch" SnapsToDevicePixels="True" />
+                        <Expander HorizontalAlignment="Stretch" Background="{DynamicResource PrimaryHueLightBrush}"
+                      Header="Content dm(s)">
+                            <StackPanel Orientation="Vertical" TextBlock.Foreground="{DynamicResource MaterialDesignBody}" >
+                                <ListView Margin="-10 -20 0 0"
+                                              HorizontalAlignment="Left" 
+                                              Name="checkedListContentDM" 
+                                              VerticalAlignment="Top" 
+                                              ItemsSource="{Binding}"      
+                                              SelectionChanged="checkedListContentDm_SelectionChanged" >
+                                    <ListView.View>
+                                        <GridView>
+                                            <GridView.Columns>
+                                                <GridViewColumn>
+                                                    <GridViewColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <ToggleButton Content="X"
+                                                        Tag="{Binding Value}" 
+                                                        Style="{StaticResource OptionToggleButton}"
+                                                        IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}, 
+                                                        Path=IsSelected}" ToolTip="{Binding Key}" />
+                                                        </DataTemplate>
+                                                    </GridViewColumn.CellTemplate>
+                                                </GridViewColumn>
+                                                <GridViewColumn>
+                                                    <GridViewColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <TextBlock ToolTip="{Binding Key}" Text="{Binding Key , Converter={StaticResource ShortTextConverter}}" />
+
+                                                        </DataTemplate>
+                                                    </GridViewColumn.CellTemplate>
+                                                </GridViewColumn>
+                                            </GridView.Columns>
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+                            </StackPanel>
+                        </Expander>
+                    </StackPanel>
+                </materialDesign:Card>
+
+                <ListView Margin="10" Name="TranscriptionQueueListView" Grid.Row="1" Grid.Column="1"
+                      GridViewColumnHeader.Click="GridViewColumnHeaderClickedHandler" VerticalAlignment="Top"
+                      MouseDoubleClick="TranscriptionQueueListView_MouseDoubleClick"  ItemContainerStyle="{StaticResource ListViewAlternatingRowStyle}" AlternationCount="2">
+                    <ListView.View>
+                        <GridView>
+
+                            <!--Id-->
+                            <GridViewColumn Header="Id" 
+                                            HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}" >
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Id}"  />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+
+                            <!--Interviewee-->
+                            <GridViewColumn Header="Interviewee" Width="150"  
+                                            HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}" >
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock Name="IntervieweeTextBlock_Metadata" ToolTip="{Binding Interviewee}" Text="{Binding Interviewee , Converter={StaticResource ShortTextConverter}}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <!--project code-->
+                            <GridViewColumn Header="Project code" Width="100"  HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}"  >
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock Name="ProjectCodeTextBlock_General" 
+                                                       ToolTip="{Binding ProjectCode}" 
+                                                       Text="{Binding ProjectCode , Converter={StaticResource ShortTextConverter}}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <!--Interviewer-->
+                            <GridViewColumn Header="Interviewer" Width="150"
+                                            HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}" >
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock Name="InterviewerTextBlock_Metadata" 
+                                                       ToolTip="{Binding Interviewer}" 
+                                                       Text="{Binding Interviewer , Converter={StaticResource ShortTextConverter}}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <!--Interview on-->
+                            <GridViewColumn Header="Interview on" Width="100"   HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}"  >
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock Name="InterviewOnTextBlock_Metadata" ToolTip="{Binding InterviewDate , StringFormat='{}{0:MM/dd/yyyy}'}" Text="{Binding InterviewDate , StringFormat='{}{0:MM/dd/yyyy}'}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <!--Collection-->
+                            <GridViewColumn Header="Collection" Width="150"
+                                            HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}"  >
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock Name="CollectionTextBlock_Metadata" ToolTip="{Binding CollectionName}" Text="{Binding CollectionName , Converter={StaticResource ShortTextConverter}}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <!--Subject-->
+                            <GridViewColumn Header="Subject" Width="150" 
+                                            HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}"  >
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock Name="SubjectTextBlock_Metadata" ToolTip="{Binding Subject}" Text="{Binding Subject , Converter={StaticResource ShortTextConverter}}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <!--keywords-->
+                            <GridViewColumn Header="Keywords" Width="150" 
+                                             HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}" >
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock Name="KeywordsTextBlock_Metadata" ToolTip="{Binding Keywords}" Text="{Binding Keywords , Converter={StaticResource ShortTextConverter}}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <!--format-->
+                            <GridViewColumn Header="Format" Width="100"
+                                            HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}"  >
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock Name="FormatTextBlock_Media" ToolTip="{Binding FormatText}" Text="{Binding FormatText , Converter={StaticResource ShortTextConverter}}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <!--TranscriptStatus-->
+                            <GridViewColumn Width="100"  Header="Transcription&#x0a;status" HeaderContainerStyle="{StaticResource GridViewColumnHeaderMediumFontStyle}"  >
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel  >
+                                            <materialDesign:PackIcon Name="TranscriptionStatusPackIcon_Transcript" ToolTip="{Binding TranscriptStatus}" 
+                                                                     VerticalAlignment="Center"   Width="100"  
+                                                                     Kind="{Binding TranscriptStatus , Converter={StaticResource PackIconConverter}}"  />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <!--Access media status-->
+                            <GridViewColumn Width="100"  Header="Access media&#x0a;status" HeaderContainerStyle="{StaticResource GridViewColumnHeaderMediumFontStyle}"  >
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel  >
+                                            <materialDesign:PackIcon Name="TranscriptionStatusPackIcon_Media"  Width="80" ToolTip="{Binding IsAccessMediaStatus}"  Kind="{Binding IsAccessMediaStatus , Converter={StaticResource PackIconConverter}}"  />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <!--IsInContentDm-->
+                            <GridViewColumn Width="100"  Header="On Content DM" HeaderContainerStyle="{StaticResource GridViewColumnHeaderMediumFontStyle}"  >
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <materialDesign:PackIcon Name="OnCOntentDmPackIcon_Supplemental" Width="80" 
+                                                                     ToolTip="{Binding IsInContentDm}" 
+                                                                     Kind="{Binding IsInContentDm , Converter={StaticResource PackIconConverter}}"  />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <!--ReleaseForm-->
+                            <GridViewColumn Width="80"  Header="Release form" HeaderContainerStyle="{StaticResource GridViewColumnHeaderMediumFontStyle}"  >
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <materialDesign:PackIcon  Name="ReleaseFormPackIcon_Supplemental" Width="60" 
+                                                                      ToolTip="{Binding ReleaseForm}" 
+                                                                      Kind="{Binding ReleaseForm , Converter={StaticResource PackIconConverter}}"  />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <!--IsRestriction-->
+                            <GridViewColumn Width="80" Header="Restriction" HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}"  >
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                            <materialDesign:PackIcon  Name="RestrictionPackIcon_Supplemental" Width="60" 
+                                                                      ToolTip="{Binding IsRestriction}" 
+                                                                      Kind="{Binding IsRestriction , Converter={StaticResource PackIconConverter}}"  />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <!--In Rosetta-->
+                            <GridViewColumn Width="80" Header="In Rosetta" HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}"  >
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <materialDesign:PackIcon  Name="InRosettaPackIcon_Supplemental" Width="60" 
+                                                                      ToolTip="{Binding IsRosetta}" 
+                                                                      Kind="{Binding IsRosetta , Converter={StaticResource PackIconConverter}}"  />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <!--born digital-->
+                            <GridViewColumn Width="80" Header="Born&#x0a;digital" HeaderContainerStyle="{StaticResource GridViewColumnHeaderMediumFontStyle}"  >
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <materialDesign:PackIcon  Name="BornDigitalPackIcon_Supplemental" Width="50" 
+                                                                      ToolTip="{Binding IsBornDigital}" 
+                                                                      Kind="{Binding IsBornDigital , Converter={StaticResource PackIconConverter}}"  />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+
+                </ListView>
+            </Grid>
+            <StackPanel>
+                <Button Name="BackToListButton" Content="Back to List..." Click="BackToListButton_Click" />
+                <ContentControl x:Name="cc"/>
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
+</UserControl>

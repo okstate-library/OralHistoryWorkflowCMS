@@ -1,0 +1,405 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="oralcmsdbModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="8.0" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="collections">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CollectionName" Type="varchar" MaxLength="250" Nullable="false" />
+        </EntityType>
+        <EntityType Name="keywords">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KeywordName" Type="varchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="subjects">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SubjectName" Type="varchar" MaxLength="250" Nullable="false" />
+        </EntityType>
+        <EntityType Name="subseries">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CollectionId" Type="smallint" Nullable="false" />
+          <Property Name="SubseriesName" Type="varchar" MaxLength="250" Nullable="false" />
+        </EntityType>
+        <EntityType Name="transcriptions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProjectCode" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IsPriority" Type="bool" Nullable="false" />
+          <Property Name="ReasonForPriority" Type="varchar" MaxLength="250" />
+          <Property Name="InitialNote" Type="varchar" MaxLength="250" />
+          <Property Name="CollectionId" Type="smallint" Nullable="false" />
+          <Property Name="SubseriesId" Type="int" Nullable="false" />
+          <Property Name="Interviewee" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="Interviewer" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="InterviewDate" Type="date" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="2000" />
+          <Property Name="Keywords" Type="varchar" MaxLength="500" />
+          <Property Name="Subject" Type="varchar" MaxLength="500" />
+          <Property Name="ScopeAndContents" Type="varchar" MaxLength="500" />
+          <Property Name="Format" Type="varchar" MaxLength="250" />
+          <Property Name="Type" Type="varchar" MaxLength="250" />
+          <Property Name="Publisher" Type="varchar" MaxLength="250" />
+          <Property Name="RelationIsPartOf" Type="varchar" MaxLength="250" />
+          <Property Name="CoverageSpatial" Type="varchar" MaxLength="250" />
+          <Property Name="CoverageTemporal" Type="varchar" MaxLength="250" />
+          <Property Name="Rights" Type="varchar" MaxLength="500" />
+          <Property Name="Language" Type="varchar" MaxLength="100" />
+          <Property Name="Identifier" Type="varchar" MaxLength="250" />
+          <Property Name="Transcript" Type="varchar" MaxLength="250" />
+          <Property Name="FileName" Type="varchar" MaxLength="250" />
+          <Property Name="IsInContentDm" Type="bool" Nullable="false" />
+          <Property Name="IsRosetta" Type="bool" Nullable="false" />
+          <Property Name="IsRosettaForm" Type="bool" Nullable="false" />
+          <Property Name="IsRestriction" Type="bool" Nullable="false" />
+          <Property Name="LegalNote" Type="varchar" MaxLength="500" />
+          <Property Name="EquipmentUsed" Type="varchar" MaxLength="250" />
+          <Property Name="InterviewerNote" Type="varchar" MaxLength="250" />
+          <Property Name="ReleaseForm" Type="bool" Nullable="false" />
+          <Property Name="Place" Type="varchar" MaxLength="250" />
+          <Property Name="TranscriberAssigned" Type="varchar" MaxLength="250" />
+          <Property Name="TranscriberCompleted" Type="datetime" Precision="6" />
+          <Property Name="AuditCheckCompleted" Type="varchar" MaxLength="250" />
+          <Property Name="AuditCheckCompletedDate" Type="datetime" Precision="6" />
+          <Property Name="FirstEditCompleted" Type="varchar" MaxLength="250" />
+          <Property Name="FirstEditCompletedDate" Type="datetime" Precision="6" />
+          <Property Name="SecondEditCompleted" Type="varchar" MaxLength="250" />
+          <Property Name="SecondEditCompletedDate" Type="datetime" Precision="6" />
+          <Property Name="DraftSentDate" Type="datetime" Precision="6" />
+          <Property Name="EditWithCorrectionCompleted" Type="varchar" MaxLength="250" />
+          <Property Name="EditWithCorrectionDate" Type="datetime" Precision="6" />
+          <Property Name="FinalEditCompleted" Type="varchar" MaxLength="250" />
+          <Property Name="FinalEditDate" Type="datetime" Precision="6" />
+          <Property Name="FinalSentDate" Type="datetime" Precision="6" />
+          <Property Name="TranscriptStatus" Type="bool" Nullable="false" />
+          <Property Name="TranscriptLocation" Type="utinyint" Nullable="false" />
+          <Property Name="TranscriptNote" Type="varchar" MaxLength="500" />
+          <Property Name="IsAudioFormat" Type="bool" Nullable="false" />
+          <Property Name="IsVideoFormat" Type="bool" Nullable="false" />
+          <Property Name="IsBornDigital" Type="bool" Nullable="false" />
+          <Property Name="OriginalMediumType" Type="utinyint" Nullable="false" />
+          <Property Name="OriginalMedium" Type="varchar" MaxLength="50" />
+          <Property Name="IsConvertToDigital" Type="bool" Nullable="false" />
+          <Property Name="ConvertToDigitalDate" Type="datetime" Precision="6" />
+          <Property Name="IsAccessMediaStatus" Type="bool" Nullable="false" />
+          <Property Name="MasterFileLocation" Type="varchar" MaxLength="500" />
+          <Property Name="AccessFileLocation" Type="varchar" MaxLength="500" />
+          <Property Name="TranscriberLocation" Type="varchar" MaxLength="500" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Precision="6" Nullable="false" />
+          <Property Name="UpdatedBy" Type="int" Nullable="false" />
+          <Property Name="UpdatedDate" Type="datetime" Precision="6" Nullable="false" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserType" Type="utinyint" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="Username" Type="varchar" MaxLength="50" />
+          <Property Name="Password" Type="varchar" MaxLength="50" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+          <Property Name="Mobile" Type="varchar" MaxLength="50" />
+          <Property Name="RowId" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityContainer Name="oralcmsdbModelStoreContainer">
+          <EntitySet Name="collections" EntityType="Self.collections" Schema="oralcmsdb" store:Type="Tables" />
+          <EntitySet Name="keywords" EntityType="Self.keywords" Schema="oralcmsdb" store:Type="Tables" />
+          <EntitySet Name="subjects" EntityType="Self.subjects" Schema="oralcmsdb" store:Type="Tables" />
+          <EntitySet Name="subseries" EntityType="Self.subseries" Schema="oralcmsdb" store:Type="Tables" />
+          <EntitySet Name="transcriptions" EntityType="Self.transcriptions" Schema="oralcmsdb" store:Type="Tables" />
+          <EntitySet Name="user" EntityType="Self.user" Schema="oralcmsdb" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="oralcmsdbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="collections" EntityType="oralcmsdbModel.collection" />
+          <EntitySet Name="keywords" EntityType="oralcmsdbModel.keyword" />
+          <EntitySet Name="subjects" EntityType="oralcmsdbModel.subject" />
+          <EntitySet Name="subseries" EntityType="oralcmsdbModel.subsery" />
+          <EntitySet Name="users" EntityType="oralcmsdbModel.user" />
+          <EntitySet Name="transcriptions" EntityType="oralcmsdbModel.transcription" />
+        </EntityContainer>
+        <EntityType Name="collection">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CollectionName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="keyword">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KeywordName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="subject">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SubjectName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="subsery">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CollectionId" Type="Int16" Nullable="false" />
+          <Property Name="SubseriesName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserType" Type="Byte" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Mobile" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RowId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="transcription">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProjectCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsPriority" Type="Boolean" Nullable="false" />
+          <Property Name="ReasonForPriority" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="InitialNote" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="CollectionId" Type="Int16" Nullable="false" />
+          <Property Name="SubseriesId" Type="Int32" Nullable="false" />
+          <Property Name="Interviewee" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Interviewer" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="InterviewDate" Type="DateTime" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
+          <Property Name="Keywords" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Subject" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ScopeAndContents" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Format" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Type" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Publisher" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="RelationIsPartOf" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="CoverageSpatial" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="CoverageTemporal" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Rights" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Language" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Identifier" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Transcript" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="FileName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="IsInContentDm" Type="Boolean" Nullable="false" />
+          <Property Name="IsRosetta" Type="Boolean" Nullable="false" />
+          <Property Name="IsRosettaForm" Type="Boolean" Nullable="false" />
+          <Property Name="IsRestriction" Type="Boolean" Nullable="false" />
+          <Property Name="LegalNote" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="EquipmentUsed" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="InterviewerNote" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="ReleaseForm" Type="Boolean" Nullable="false" />
+          <Property Name="Place" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="TranscriberAssigned" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="TranscriberCompleted" Type="DateTime" />
+          <Property Name="AuditCheckCompleted" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="AuditCheckCompletedDate" Type="DateTime" />
+          <Property Name="FirstEditCompleted" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="FirstEditCompletedDate" Type="DateTime" />
+          <Property Name="SecondEditCompleted" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="SecondEditCompletedDate" Type="DateTime" />
+          <Property Name="DraftSentDate" Type="DateTime" />
+          <Property Name="EditWithCorrectionCompleted" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="EditWithCorrectionDate" Type="DateTime" />
+          <Property Name="FinalEditCompleted" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="FinalEditDate" Type="DateTime" />
+          <Property Name="FinalSentDate" Type="DateTime" />
+          <Property Name="TranscriptStatus" Type="Boolean" Nullable="false" />
+          <Property Name="TranscriptLocation" Type="Byte" Nullable="false" />
+          <Property Name="TranscriptNote" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="IsAudioFormat" Type="Boolean" Nullable="false" />
+          <Property Name="IsVideoFormat" Type="Boolean" Nullable="false" />
+          <Property Name="IsBornDigital" Type="Boolean" Nullable="false" />
+          <Property Name="OriginalMediumType" Type="Byte" Nullable="false" />
+          <Property Name="OriginalMedium" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsConvertToDigital" Type="Boolean" Nullable="false" />
+          <Property Name="ConvertToDigitalDate" Type="DateTime" />
+          <Property Name="IsAccessMediaStatus" Type="Boolean" Nullable="false" />
+          <Property Name="MasterFileLocation" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="AccessFileLocation" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="TranscriberLocation" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="Int32" Nullable="false" />
+          <Property Name="UpdatedDate" Type="DateTime" Nullable="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="oralcmsdbModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="collections">
+            <EntityTypeMapping TypeName="oralcmsdbModel.collection">
+              <MappingFragment StoreEntitySet="collections">
+                <ScalarProperty Name="CollectionName" ColumnName="CollectionName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="keywords">
+            <EntityTypeMapping TypeName="oralcmsdbModel.keyword">
+              <MappingFragment StoreEntitySet="keywords">
+                <ScalarProperty Name="KeywordName" ColumnName="KeywordName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="subjects">
+            <EntityTypeMapping TypeName="oralcmsdbModel.subject">
+              <MappingFragment StoreEntitySet="subjects">
+                <ScalarProperty Name="SubjectName" ColumnName="SubjectName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="subseries">
+            <EntityTypeMapping TypeName="oralcmsdbModel.subsery">
+              <MappingFragment StoreEntitySet="subseries">
+                <ScalarProperty Name="SubseriesName" ColumnName="SubseriesName" />
+                <ScalarProperty Name="CollectionId" ColumnName="CollectionId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="oralcmsdbModel.user">
+              <MappingFragment StoreEntitySet="user">
+                <ScalarProperty Name="RowId" ColumnName="RowId" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="UserType" ColumnName="UserType" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="transcriptions">
+            <EntityTypeMapping TypeName="oralcmsdbModel.transcription">
+              <MappingFragment StoreEntitySet="transcriptions">
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="TranscriberLocation" ColumnName="TranscriberLocation" />
+                <ScalarProperty Name="AccessFileLocation" ColumnName="AccessFileLocation" />
+                <ScalarProperty Name="MasterFileLocation" ColumnName="MasterFileLocation" />
+                <ScalarProperty Name="IsAccessMediaStatus" ColumnName="IsAccessMediaStatus" />
+                <ScalarProperty Name="ConvertToDigitalDate" ColumnName="ConvertToDigitalDate" />
+                <ScalarProperty Name="IsConvertToDigital" ColumnName="IsConvertToDigital" />
+                <ScalarProperty Name="OriginalMedium" ColumnName="OriginalMedium" />
+                <ScalarProperty Name="OriginalMediumType" ColumnName="OriginalMediumType" />
+                <ScalarProperty Name="IsBornDigital" ColumnName="IsBornDigital" />
+                <ScalarProperty Name="IsVideoFormat" ColumnName="IsVideoFormat" />
+                <ScalarProperty Name="IsAudioFormat" ColumnName="IsAudioFormat" />
+                <ScalarProperty Name="TranscriptNote" ColumnName="TranscriptNote" />
+                <ScalarProperty Name="TranscriptLocation" ColumnName="TranscriptLocation" />
+                <ScalarProperty Name="TranscriptStatus" ColumnName="TranscriptStatus" />
+                <ScalarProperty Name="FinalSentDate" ColumnName="FinalSentDate" />
+                <ScalarProperty Name="FinalEditDate" ColumnName="FinalEditDate" />
+                <ScalarProperty Name="FinalEditCompleted" ColumnName="FinalEditCompleted" />
+                <ScalarProperty Name="EditWithCorrectionDate" ColumnName="EditWithCorrectionDate" />
+                <ScalarProperty Name="EditWithCorrectionCompleted" ColumnName="EditWithCorrectionCompleted" />
+                <ScalarProperty Name="DraftSentDate" ColumnName="DraftSentDate" />
+                <ScalarProperty Name="SecondEditCompletedDate" ColumnName="SecondEditCompletedDate" />
+                <ScalarProperty Name="SecondEditCompleted" ColumnName="SecondEditCompleted" />
+                <ScalarProperty Name="FirstEditCompletedDate" ColumnName="FirstEditCompletedDate" />
+                <ScalarProperty Name="FirstEditCompleted" ColumnName="FirstEditCompleted" />
+                <ScalarProperty Name="AuditCheckCompletedDate" ColumnName="AuditCheckCompletedDate" />
+                <ScalarProperty Name="AuditCheckCompleted" ColumnName="AuditCheckCompleted" />
+                <ScalarProperty Name="TranscriberCompleted" ColumnName="TranscriberCompleted" />
+                <ScalarProperty Name="TranscriberAssigned" ColumnName="TranscriberAssigned" />
+                <ScalarProperty Name="Place" ColumnName="Place" />
+                <ScalarProperty Name="ReleaseForm" ColumnName="ReleaseForm" />
+                <ScalarProperty Name="InterviewerNote" ColumnName="InterviewerNote" />
+                <ScalarProperty Name="EquipmentUsed" ColumnName="EquipmentUsed" />
+                <ScalarProperty Name="LegalNote" ColumnName="LegalNote" />
+                <ScalarProperty Name="IsRestriction" ColumnName="IsRestriction" />
+                <ScalarProperty Name="IsRosettaForm" ColumnName="IsRosettaForm" />
+                <ScalarProperty Name="IsRosetta" ColumnName="IsRosetta" />
+                <ScalarProperty Name="IsInContentDm" ColumnName="IsInContentDm" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="Transcript" ColumnName="Transcript" />
+                <ScalarProperty Name="Identifier" ColumnName="Identifier" />
+                <ScalarProperty Name="Language" ColumnName="Language" />
+                <ScalarProperty Name="Rights" ColumnName="Rights" />
+                <ScalarProperty Name="CoverageTemporal" ColumnName="CoverageTemporal" />
+                <ScalarProperty Name="CoverageSpatial" ColumnName="CoverageSpatial" />
+                <ScalarProperty Name="RelationIsPartOf" ColumnName="RelationIsPartOf" />
+                <ScalarProperty Name="Publisher" ColumnName="Publisher" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Format" ColumnName="Format" />
+                <ScalarProperty Name="ScopeAndContents" ColumnName="ScopeAndContents" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="Keywords" ColumnName="Keywords" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="InterviewDate" ColumnName="InterviewDate" />
+                <ScalarProperty Name="Interviewer" ColumnName="Interviewer" />
+                <ScalarProperty Name="Interviewee" ColumnName="Interviewee" />
+                <ScalarProperty Name="SubseriesId" ColumnName="SubseriesId" />
+                <ScalarProperty Name="CollectionId" ColumnName="CollectionId" />
+                <ScalarProperty Name="InitialNote" ColumnName="InitialNote" />
+                <ScalarProperty Name="ReasonForPriority" ColumnName="ReasonForPriority" />
+                <ScalarProperty Name="IsPriority" ColumnName="IsPriority" />
+                <ScalarProperty Name="ProjectCode" ColumnName="ProjectCode" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

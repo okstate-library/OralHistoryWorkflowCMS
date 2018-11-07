@@ -1,0 +1,71 @@
+﻿<Window x:Class="WpfApp.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:local="clr-namespace:WpfApp"
+        xmlns:domain="clr-namespace:WpfApp.Domain"
+        mc:Ignorable="d"
+        WindowStyle="None"   Width="400" Height="250"
+        ResizeMode="NoResize">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBox.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid Background="{DynamicResource AlternativeColor}" >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!--<TextBox.Text>
+            <Binding Path="Name" UpdateSourceTrigger="PropertyChanged">
+                <Binding.ValidationRules>
+                    <domain:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                </Binding.ValidationRules>
+            </Binding>
+        </TextBox.Text>-->
+
+        <Label  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Content="Login window" FontWeight="Bold" FontSize="13" VerticalAlignment="Center" HorizontalAlignment="Center">
+        </Label>
+        
+        <TextBox x:Name="UsernameTextBox"  Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="20 20 0 0" FontSize="15"
+                     materialDesign:HintAssist.Hint="Username">           
+        </TextBox>
+
+        <PasswordBox x:Name="PasswordTextBox"  Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Margin="20"  FontSize="15"
+                             VerticalAlignment="Top"
+                             IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignFilledPasswordFieldPasswordBoxEnabledComboBox}"
+                             materialDesign:HintAssist.Hint="Password">
+        </PasswordBox>
+        <Button Grid.Row="3"  Grid.Column="0" Margin="10" Style="{StaticResource MaterialDesignRaisedLightButton}" Width="100" KeyboardNavigation.TabIndex="0"
+                        ToolTip="Login" Click="LoginButton_Click" IsDefault="True">
+            _Submit
+        </Button>
+        <Button  Grid.Row="3"  Grid.Column="1" Margin="10" Style="{StaticResource MaterialDesignRaisedLightButton}" Width="100"
+                        ToolTip="Cancle and exit from the app" Click="CancleButton_Click">
+            _Cancle
+        </Button>
+        <TextBlock Grid.Row="4" Name="ErrorMessageTextBlock" Margin="10,10,20,10" VerticalAlignment="Center" Foreground="#FFFF0101" Grid.ColumnSpan="2"  />
+
+        <TextBlock Margin="25 20 20 0" Grid.Row="4" Grid.Column="1">
+                                <Hyperlink Click="GuestUserButton_Click">
+                                    <TextBlock FontSize="12" Text="Click for log as a guest user" />
+                                </Hyperlink>    
+                            </TextBlock>     
+
+    </Grid>
+</Window>
