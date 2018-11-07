@@ -1,0 +1,177 @@
+﻿<UserControl x:Class="WpfApp.Statewidevalidation"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"          
+             xmlns:local="clr-namespace:WpfApp"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBox.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Card.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <local:PackIconConverter x:Key="PackIconConverter" />
+            <local:ShortTextConverter x:Key="ShortTextConverter" />
+
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+
+        <Grid Name="MainGrid">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Border Margin="0 0 0 10" Grid.Row="0" Grid.Column="1" VerticalAlignment="Top">
+                <Grid  Background="{DynamicResource PrimaryHueMidBrush}"  MaxHeight="500">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Grid.Row="0" Margin="20 10 0 8"  Orientation="Horizontal"  >
+
+                        <Grid Margin="10 10 0 10"  >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Row="0"  Style="{StaticResource BoldLabel}" Content="Upload the file to create person list"  />
+                            <Label Grid.Row="1" Grid.Column="0" Width="600" Margin="20 10 0 8" Name="fileUploadLabel"   />
+                            <Button Grid.Row="1" Grid.Column="1" Content="Upload and Validate" Style="{StaticResource MaterialDesignRaisedAccentButton}" Click="CreateFilesButton_Click" />
+                        </Grid>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Margin="20 10 0 8"  Orientation="Horizontal"  >
+
+                        <Grid Margin="10 10 0 10"  >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" /> 
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Row="0"  Style="{StaticResource BoldLabel}" Content="Stats"  />
+
+                            <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible"> 
+                                <TextBlock Margin="20 10 0 8" Name="StatTextBox" Grid.RowSpan="4" FontSize="12"
+                                     VerticalAlignment="Top" Width="500" Height="500" TextWrapping="Wrap"   
+                                    />
+                            </ScrollViewer>
+                            
+                            <StackPanel Grid.Row="1"  Grid.Column="1" Orientation="Vertical">
+                                <Button  Name="PeopleCSVButon" Visibility="Hidden"  ToolTip="Download people csv file" 
+                                         Tag="people"  Style="{StaticResource MaterialDesignRaisedLightButton}" Click="DownoadButton_Click" >
+                                    Download people csv file
+                                </Button>
+                                <Border Style="{StaticResource TinyEmptyBorder}"   />
+                                <Button Name="RepositoryCSVButon" Visibility="Hidden" ToolTip="Download repository csv file" 
+                                        Tag="repository"  Style="{StaticResource MaterialDesignRaisedLightButton}" Click="DownoadButton_Click" >
+                                    Download repository csv file
+                                </Button>
+                                <Border Style="{StaticResource TinyEmptyBorder}"   />
+                                <Button Name="CollectionCSVButon" Visibility="Hidden" ToolTip="Download collection csv file" 
+                                        Tag="collection"  Style="{StaticResource MaterialDesignRaisedLightButton}" Click="DownoadButton_Click" >
+                                    Download collection csv file
+                                </Button>
+                                <Border Style="{StaticResource TinyEmptyBorder}"   />
+                                <Button Name="InterviewCSVButon" Visibility="Hidden" ToolTip="Download interview csv file" 
+                                        Tag="interview"  Style="{StaticResource MaterialDesignRaisedLightButton}" Click="DownoadButton_Click" >
+                                    Download interview csv file
+                                </Button>
+                            </StackPanel>
+
+                        </Grid>
+                    </StackPanel>
+
+                </Grid>
+            </Border>
+
+            <materialDesign:Card Background="{DynamicResource PrimaryHueLightBrush}"  Grid.Row="0" Grid.Column="0"   
+                      Foreground="{DynamicResource PrimaryHueLightForegroundBrush}"
+                      Width="180" Margin="0 0 1 0">
+                <StackPanel>
+
+                    <Grid Margin="10 10 0 10"  >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <StackPanel  Grid.Row="0">
+                            <TextBlock Text="Instructions" FontWeight="Bold" FontSize="18" />
+                        </StackPanel>
+                        <Border Grid.Row="1" Style="{StaticResource EmptyBorder}"   />
+                        <StackPanel  Grid.Row="2">
+                            <TextBlock Text=" Excel columns:" FontWeight="Bold" FontSize="13" />
+                            <TextBlock Margin="10 0 0 0" FontSize="12">
+                        Repository<LineBreak/>	
+                        Collection Name	<LineBreak/>
+                        Collection Sub Title<LineBreak/>	
+                        Collection Keywords<LineBreak/>	
+                        Collection Subjects<LineBreak/>
+                        Collection Call Number<LineBreak/>
+                        Title	<LineBreak/>
+                        Sub Title <LineBreak/>
+                        Inclusive Begin Date<LineBreak/>	
+                        Inclusive End Date<LineBreak/>	
+                        Call Number<LineBreak/>
+                        Date Interview<LineBreak/>	
+                        Interviewer<LineBreak/>	
+                        Interviewee<LineBreak/>	
+                        Interview Date<LineBreak/>	
+                        Subject<LineBreak/>	
+                        Interview Keywords<LineBreak/>	
+                        Interview Loc Subjects<LineBreak/>	
+                        Description<LineBreak/>	
+                        Canonical URL<LineBreak/>
+                            </TextBlock>
+                        </StackPanel>
+
+                        <StackPanel  Grid.Row="3">
+                            <TextBlock Text=" Excel file sheet name:" FontWeight="Bold" FontSize="13" />
+                            <TextBlock Margin="10 0 0 0" FontSize="12">test</TextBlock>
+                        </StackPanel>
+                        <Border Style="{StaticResource EmptyBorder}"   />
+
+                        <StackPanel Grid.Row="4"  Orientation="Horizontal">
+                            <Button Margin="10"    Style="{StaticResource MaterialDesignFlatButton}" ToolTip="Add new user" Click="DownoadUploadSampleButton_Click" >
+                                Download sample
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </materialDesign:Card>
+
+            <ListView Margin="10"  Grid.Row="1" Grid.Column="1">
+            </ListView>
+        </Grid>
+    </Grid>
+</UserControl>

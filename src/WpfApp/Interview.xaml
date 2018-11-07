@@ -1,0 +1,214 @@
+﻿<UserControl x:Class="WpfApp.Interview"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBox.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Card.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style TargetType="{x:Type TextBlock}"  x:Key="expanderHeaderTextBlock">
+                <Setter Property="Margin" Value="0 0 0 0" />
+                <Setter Property="FontSize" Value="15"></Setter>
+            </Style>
+        </ResourceDictionary>
+
+    </UserControl.Resources>
+
+    <ScrollViewer HorizontalScrollBarVisibility="Hidden"  VerticalScrollBarVisibility="Hidden"                     
+                      Margin="0 0 0 0">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+
+            <materialDesign:Card Background="{DynamicResource PrimaryHueLightBrush}"  Grid.Row="0" Grid.Column="0"   
+                      Foreground="{DynamicResource PrimaryHueLightForegroundBrush}"
+                      Width="180" Margin="0 0 1 0">
+                <StackPanel>
+                    <TextBlock Margin="20">Add interview details</TextBlock>
+                </StackPanel>
+            </materialDesign:Card>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left"   Grid.Row="0" Grid.Column="1">
+
+                <StackPanel Orientation="Vertical"
+                            TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
+                            Margin="20,0,50,24"  >
+
+
+                    <Grid  VerticalAlignment="Top" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="200" />
+                            <ColumnDefinition Width="300" />
+                            <ColumnDefinition Width="200" />
+                            <ColumnDefinition Width="300" />
+                        </Grid.ColumnDefinitions>
+
+                        <Label Style="{StaticResource BoldLabel}" Grid.Row="0" Grid.Column="0">Title</Label>
+
+                        <TextBox Name="TitleTextBox" Grid.Row="0"  Grid.Column="1" Grid.ColumnSpan="3"   Style="{StaticResource EditableTextBox}" />
+
+                        <Border  Grid.Row="1"  Style="{StaticResource EmptyBorder}"   />
+
+                        <Label Style="{StaticResource BoldLabel}" Grid.Row="2" Grid.Column="0">Interviewee</Label>
+                       
+                        <TextBox Name="IntervieweeTextBox"  Grid.Row="2" Grid.Column="1"   Style="{StaticResource EditableTextBox}" />
+
+                        <Label Style="{StaticResource BoldLabel}" Margin="15 0 0 0" Grid.Row="2" Grid.Column="2">Interviewer</Label>
+
+                        <TextBox Name="InterviewerTextBox" Grid.Row="2" Grid.Column="3"   Style="{StaticResource EditableTextBox}" />
+
+                        <Border  Grid.Row="3"  Style="{StaticResource EmptyBorder}"   />
+
+                        <Label Style="{StaticResource BoldLabel}" Grid.Row="4" Grid.Column="0">Interview date</Label>
+
+                        <DatePicker Name="InterviewDateDateDatePicker"  Grid.Row="4" Grid.ColumnSpan="1"   Grid.Column="1" Style="{StaticResource MaterialDesignFloatingHintDatePicker}"  />
+
+                        <Label Style="{StaticResource BoldLabel}" Grid.Row="4" Grid.Column="2" Margin="15 0 0 0" >Place (City and county)</Label>
+
+                        <TextBox Name="PlaceTextBox" Grid.Row="4" Grid.Column="3"   Style="{StaticResource EditableTextBox}" />
+
+                        <Border  Grid.Row="5"  Style="{StaticResource EmptyBorder}"   />
+
+                        <Label Style="{StaticResource BoldLabel}" Grid.Row="6" Grid.Column="0">Collection</Label>
+
+                        <ComboBox  Grid.Row="6" Grid.Column="1" Name="CollectionComboBox" SelectionChanged="CollectionComboBox_SelectionChanged" DisplayMemberPath="CollectionName"/>
+
+                        <Label Style="{StaticResource BoldLabel}" Grid.Row="6" Grid.Column="2" Margin="15 0 0 0" >Subseries</Label>
+
+                        <TextBox Name="LabguageTextBox" Grid.Row="6" Grid.Column="3"   Style="{StaticResource EditableTextBox}" />
+
+                        <ComboBox  Grid.Row="6" Grid.Column="3" Name="SubseriesComboBox" DisplayMemberPath="SubseryName"/>
+
+                        <Border  Grid.Row="7"  Style="{StaticResource EmptyBorder}"   />
+
+                        <Label Style="{StaticResource BoldLabel}" Grid.Row="8" Grid.Column="0">Subject</Label>
+                       
+                        <TextBox Name="SubjectTextBox" Grid.Row="8"  Grid.Column="1" Grid.ColumnSpan="3"  Height="50" AcceptsReturn="True" 
+                                     TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"   Style="{StaticResource EditableTextBox}" />
+
+                        <Border  Grid.Row="9"  Style="{StaticResource EmptyBorder}"   />
+
+                        <Label Style="{StaticResource BoldLabel}" Grid.Row="10" Grid.Column="0">Keywords</Label>
+
+                        <TextBox Name="KeywordsTextBox"  Grid.Row="10"  Grid.Column="1" Grid.ColumnSpan="3" Height="50" AcceptsReturn="True"
+                                     TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"   Style="{StaticResource EditableTextBox}" />
+
+                        <Border  Grid.Row="11"  Style="{StaticResource EmptyBorder}" />
+
+                        <Label Style="{StaticResource BoldLabel}" Grid.Row="12" Grid.Column="0" >Description</Label>
+
+                        <TextBox Name="DescriptionTextBox"  Grid.Row="12"  Grid.Column="1" Grid.ColumnSpan="3" Height="50" AcceptsReturn="True"
+                                     TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"   Style="{StaticResource EditableTextBox}" />
+
+                        <Border  Grid.Row="13"  Style="{StaticResource EmptyBorder}"   />
+
+                        <Label Style="{StaticResource BoldLabel}" Grid.Row="14" Grid.Column="0">Project code</Label>
+
+                        <TextBox Name="ProjectCodeTextBox"  Grid.Row="14" Grid.Column="1"   Style="{StaticResource EditableTextBox}" />
+
+                        <Label Style="{StaticResource BoldLabel}" Grid.Row="14" Grid.Column="2" Margin="15 0 0 0" >Transcriber assigned</Label>
+
+                        <TextBox Name="TranscriberAssignedTextBox" Grid.Row="14" Grid.Column="3"   Style="{StaticResource EditableTextBox}" />
+
+                        <Border  Grid.Row="15"  Style="{StaticResource EmptyBorder}"   />
+
+                        <Label Style="{StaticResource BoldLabel}" Grid.Row="16" Grid.Column="0">Release form</Label>
+
+                        <ToggleButton  Grid.Row="16" Grid.Column="1" Style="{StaticResource YesNoToggleButtonStyle}"
+                                  IsChecked="True" Name="ReleaseFormToggleButton">
+                        </ToggleButton>
+
+                        <Label Style="{StaticResource BoldLabel}" Grid.Row="16" Grid.Column="2" Margin="15 0 0 0" >Record format</Label>
+                      
+                        <StackPanel  Grid.Row="16" Grid.Column="3"  Orientation="Horizontal"    >
+                            <CheckBox Name="MediaAudioCheckBox">
+                                Audio
+                            </CheckBox>
+                            <CheckBox Name="MediaVideoCheckBox">
+                                Video
+                            </CheckBox>
+                        </StackPanel>
+
+
+                        <Border  Grid.Row="17"  Style="{StaticResource EmptyBorder}"   />
+
+                        <Label Style="{StaticResource BoldLabel}" Grid.Row="18" Grid.Column="0">Restriction/Legal note</Label>
+
+                        <ToggleButton  Grid.Row="18" Grid.Column="1" Style="{StaticResource YesNoToggleButtonStyle}"
+                                  IsChecked="True" Name="RestrictionToggleButton">
+                        </ToggleButton>
+
+                        <TextBox Name="LegalNoteTextBox" Grid.Row="18" Grid.Column="2" Grid.ColumnSpan="2"   Style="{StaticResource EditableTextBox}" />
+
+                        <Border  Grid.Row="19"  Style="{StaticResource EmptyBorder}"   />
+
+                        <Label Style="{StaticResource BoldLabel}" Grid.Row="20" Grid.Column="0">Equipment used</Label>
+
+                        <TextBox Name="EquipmentUsedTextBox"  Grid.Row="20" Grid.Column="1"   Style="{StaticResource EditableTextBox}" />
+
+                        <Border  Grid.Row="21"  Style="{StaticResource EmptyBorder}"   />
+
+                        <Label Style="{StaticResource BoldLabel}" Grid.Row="22" Grid.Column="0">Notes</Label>
+
+                        <TextBox Name="NoteTextBox"  Grid.Row="22" Grid.Column="1" Grid.ColumnSpan="3"   Style="{StaticResource EditableTextBox}" />
+
+                        <Button Grid.Row="28"  Grid.ColumnSpan="5"  Margin="0,20,0,0"  Style="{StaticResource MaterialDesignRaisedAccentButton}" Click="InterviewSubmitButton_Click" 
+                        ToolTip="Submit metadata details">
+                            _Submit
+                        </Button>
+                        
+                    </Grid>
+
+                </StackPanel>
+
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
+
+</UserControl>
