@@ -1,5 +1,7 @@
-﻿using Model;
+﻿using Core.Enums;
+using Model;
 using Model.Transfer;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -14,7 +16,7 @@ namespace WpfApp
     {
         #region Constructor
         /// <summary>
-        /// Initializes a new instance of the <see cref="FindReplace"/> class.
+        /// Initializes a new instance of the <see cref="FindReplace" /> class.
         /// </summary>
         public FindReplace()
         {
@@ -25,18 +27,21 @@ namespace WpfApp
 
         #region Events
 
-        /// <summary>        
+        /// <summary>
         /// Handles the Click event of the FindAndReplaceButton control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
         private void FindAndReplaceButton_Click(object sender, RoutedEventArgs e)
         {
+            WellKnownFindAndReplaceType field = WellKnownFindAndReplaceType.None;
+
             RequestModel requestModel = new RequestModel()
             {
 
                 FindReplaceModel = new FindReplaceModel()
                 {
+                    Field = field,
                     FindWord = FindTextBox.Text,
                     ReplaceWord = ReplaceTextBox.Text
                 },
@@ -56,6 +61,48 @@ namespace WpfApp
 
             ClearData();
         }
+
+        /// <summary>
+        /// Handles the Click event of the FindAndReplaceFieldButton control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+        private void FindAndReplaceFieldButton_Click(object sender, RoutedEventArgs e)
+        {
+            WellKnownFindAndReplaceType field = WellKnownFindAndReplaceType.None;
+
+            if (!string.IsNullOrEmpty(FieldComboBox.SelectedValue.ToString()))
+            {
+                field = (WellKnownFindAndReplaceType)Enum.Parse(typeof(WellKnownFindAndReplaceType),
+                    ((ComboBoxItem)FieldComboBox.SelectedValue).Content.ToString(), true);
+            }
+
+            RequestModel requestModel = new RequestModel()
+            {
+                FindReplaceModel = new FindReplaceModel()
+                {
+                    Field = field,
+                    FindWord = FindFieldWordTextBox.Text,
+                    ReplaceWord = ReplaceFieldWordTextBox.Text
+                },
+
+            };
+
+            ResponseModel response = App.BaseUserControl.InternalService.FindReplace(requestModel);
+
+            if (response.IsOperationSuccess)
+            {
+                App.ShowMessage(true, string.Empty);
+            }
+            else
+            {
+                App.ShowMessage(false, response.ErrorMessage);
+            }
+
+            ClearData();
+        }
+
+
 
         #endregion
 

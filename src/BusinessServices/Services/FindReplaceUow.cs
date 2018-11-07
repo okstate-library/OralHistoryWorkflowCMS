@@ -135,17 +135,45 @@ namespace BusinessServices.Servcices
 
             foreach (transcription item in all)
             {
-                item.Description = item.Description.Replace(this.Request.FindReplaceModel.FindWord, 
-                    this.Request.FindReplaceModel.ReplaceWord);
+                if (this.Request.FindReplaceModel.Field == Core.Enums.WellKnownFindAndReplaceType.None)
+                {
+                    item.Title = item.Title.Replace(this.Request.FindReplaceModel.FindWord,
+                      this.Request.FindReplaceModel.ReplaceWord);
 
-                item.Keywords = item.Keywords.Replace(this.Request.FindReplaceModel.FindWord,
-                    this.Request.FindReplaceModel.ReplaceWord);
+                    item.Description = item.Description.Replace(this.Request.FindReplaceModel.FindWord,
+                  this.Request.FindReplaceModel.ReplaceWord);
 
-                item.Title = item.Title.Replace(this.Request.FindReplaceModel.FindWord, 
-                    this.Request.FindReplaceModel.ReplaceWord);
+                    item.Keywords = item.Keywords.Replace(this.Request.FindReplaceModel.FindWord,
+                        this.Request.FindReplaceModel.ReplaceWord);
 
-                item.Subject = item.Subject.Replace(this.Request.FindReplaceModel.FindWord,
-                    this.Request.FindReplaceModel.ReplaceWord);
+                    item.Subject = item.Subject.Replace(this.Request.FindReplaceModel.FindWord,
+                        this.Request.FindReplaceModel.ReplaceWord);
+                }
+                else
+                {
+                    switch (this.Request.FindReplaceModel.Field)
+                    {
+                        case Core.Enums.WellKnownFindAndReplaceType.Title:
+                            item.Title = item.Title.Replace(this.Request.FindReplaceModel.FindWord,
+                                    this.Request.FindReplaceModel.ReplaceWord);
+                            break;
+                        case Core.Enums.WellKnownFindAndReplaceType.Description:
+
+                            item.Description = item.Description.Replace(this.Request.FindReplaceModel.FindWord,
+                                    this.Request.FindReplaceModel.ReplaceWord);
+                            break;
+                        case Core.Enums.WellKnownFindAndReplaceType.Keywords:
+                            item.Keywords = item.Keywords.Replace(this.Request.FindReplaceModel.FindWord,
+                                    this.Request.FindReplaceModel.ReplaceWord);
+                            break;
+                        case Core.Enums.WellKnownFindAndReplaceType.Subject:
+                            item.Subject = item.Subject.Replace(this.Request.FindReplaceModel.FindWord,
+                                    this.Request.FindReplaceModel.ReplaceWord);
+                            break;
+                        default:
+                            break;
+                    }
+                }
 
                 this.TranscriptionRepository.Edit(item);
                 this.TranscriptionRepository.Save();

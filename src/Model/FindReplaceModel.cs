@@ -1,4 +1,6 @@
-﻿namespace Model
+﻿using Core.Enums;
+
+namespace Model
 {
     /// <summary>
     /// 
@@ -22,5 +24,12 @@
         /// </value>
         public string ReplaceWord { get; set; }
 
+        /// <summary>
+        /// Gets or sets the field.
+        /// </summary>
+        /// <value>
+        /// The field.
+        /// </value>
+        public WellKnownFindAndReplaceType Field { get; set; }
     }
 }
