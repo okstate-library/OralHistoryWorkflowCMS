@@ -21,6 +21,13 @@
         <Setter Property="VerticalAlignment" Value="Center"></Setter>
     </Style>
 
+    <Style x:Key="PageTitleLabel"  TargetType="{x:Type Label }" BasedOn="{StaticResource MaterialDesignLabel}">
+        <Setter Property="Margin" Value="0 0 0 0" />
+        <Setter Property="FontSize" Value="20"></Setter>
+        <Setter Property="VerticalAlignment" Value="Center"></Setter>
+    </Style>
+    
+
     <Style x:Key="ListViewAlternatingRowStyle" TargetType="{x:Type ListViewItem}">
         <Style.Triggers>
             <Trigger Property="ItemsControl.AlternationIndex" Value="0">
@@ -101,6 +108,7 @@
     <Style TargetType="{x:Type TextBox}"  x:Key="EditableTextBox" BasedOn="{StaticResource MaterialDesignTextBox}">
         <Setter Property="Margin" Value="0 0 0 0" />
         <Setter Property="FontSize" Value="15"></Setter>
+        <Setter Property="Background" Value="#DCDCDC"></Setter>
     </Style>
 
     <Style TargetType="{x:Type TextBox}"  x:Key="readOnlyTextBox" BasedOn="{StaticResource MaterialDesignTextBox}">
@@ -112,10 +120,15 @@
     <Style TargetType="{x:Type TextBox}"  x:Key="SearchTextBox" BasedOn="{StaticResource MaterialDesignTextBox}">
         <Setter Property="Margin" Value="0 0 0 0" />
         <Setter Property="FontSize" Value="15"></Setter>
-        <Setter Property="IsReadOnly" Value="True"></Setter>
-        <Setter Property="Background" Value="AlternativeColor"></Setter>
+        <Setter Property="Background" Value="#DCDCDC"></Setter>
     </Style>
-    
+
+    <Style TargetType="{x:Type TextBox}"  x:Key="WhiteTextBox" BasedOn="{StaticResource MaterialDesignTextBox}">
+        <Setter Property="Margin" Value="0 0 0 0" />
+        <Setter Property="FontSize" Value="15"></Setter>
+        <Setter Property="Background" Value="#DCDCDC"></Setter>
+    </Style>
+
     <!--Border styling-->
     
     <Style x:Key="EmptyBorder" TargetType="{x:Type Border}" >

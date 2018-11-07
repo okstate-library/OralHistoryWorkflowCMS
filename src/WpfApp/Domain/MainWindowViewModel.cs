@@ -42,7 +42,7 @@ namespace WpfApp.Domain
         /// <summary>
         /// The queue demo item
         /// </summary>
-        public static DemoItem QueueDemoItem = new DemoItem("Users", PackIconKind.NaturePeople, new Users(), ScrollBarVisibility.Auto, ScrollBarVisibility.Auto);
+        public static DemoItem usersQueueDemoItem = new DemoItem("Users", PackIconKind.NaturePeople, new Users(), ScrollBarVisibility.Auto, ScrollBarVisibility.Auto);
 
         /// <summary>
         /// The find and replace queue demo item
@@ -90,6 +90,7 @@ namespace WpfApp.Domain
             findAndReplaceQueueDemoItem,
             controlledVocabularyQueueDemoItem,
             reportsQueueDemoItem,
+            usersQueueDemoItem,
             settingsQueueDemoItem,
             importQueueDemoItem,
             stateWideValidationQueueDemoItem,

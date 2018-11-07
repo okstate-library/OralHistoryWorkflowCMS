@@ -73,6 +73,7 @@
     <Compile Include="Enums\WellKnownErrorType.cs" />
     <Compile Include="Enums\WellKnownTranscriptionModificationType.cs" />
     <Compile Include="Enums\WellKnownModificationType.cs" />
+    <Compile Include="Enums\WellKnownFindAndReplaceType.cs" />
     <Compile Include="IntHelper.cs" />
     <Compile Include="CurrencyHelper.cs" />
     <Compile Include="EnumExtensions.cs" />
