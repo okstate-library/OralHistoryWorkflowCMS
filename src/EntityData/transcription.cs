@@ -11,7 +11,7 @@ namespace EntityData
 {
     using System;
     using System.Collections.Generic;
-    
+
     public partial class transcription
     {
         public int Id { get; set; }
@@ -81,5 +81,11 @@ namespace EntityData
         public System.DateTime CreatedDate { get; set; }
         public int UpdatedBy { get; set; }
         public System.DateTime UpdatedDate { get; set; }
+        public string InterviewerDescription { get; set; }
+        public string InterviewerKeywords { get; set; }
+        public string InterviewerSubjects { get; set; }
+        public string EuipmentNumber { get; set; }
+        public bool SentOut { get; set; }
+        public string MetadataDraft { get; set; }
     }
 }

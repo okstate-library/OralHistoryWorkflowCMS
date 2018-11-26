@@ -9,11 +9,11 @@
 
 namespace EntityData
 {
+    using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
 
     [DbConfigurationType(typeof(MySql.Data.EntityFramework.MySqlEFConfiguration))]
-
     public partial class OralCMSDBEntities : DbContext
     {
         public OralCMSDBEntities()
