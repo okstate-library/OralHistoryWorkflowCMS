@@ -149,7 +149,7 @@ namespace BusinessServices.Servcices
             MainFormModel mainFormModel = new MainFormModel()
             {
                 BrowseRecordCount = this.TranscriptionRepository.GetAll().Count(),
-                TranscrptionQueueRecordCount = this.TranscriptionRepository.FindBy(t => t.TranscriptStatus == true).Count(),
+                TranscrptionQueueRecordCount = this.TranscriptionRepository.FindBy(t => t.TranscriptStatus == false).Count(),
             };
 
             List<CollectionModel> newlist = new List<CollectionModel>();

@@ -227,7 +227,6 @@ namespace WpfApp
         {
             RequestModel requestModel = new RequestModel()
             {
-                IsTranscriptionQueue = true,
                 FilterKeyWords = SearchList,
                 SearchWord = SearchWordTextBox.Text.Trim(),
             };

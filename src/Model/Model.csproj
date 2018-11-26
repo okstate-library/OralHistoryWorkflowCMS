@@ -57,6 +57,7 @@
     <Compile Include="Transfer\RequestModel.cs" />
     <Compile Include="Transfer\ResponseModel.cs" />
     <Compile Include="Transfer\Search\PaginationInfo.cs" />
+    <Compile Include="Transfer\Search\SearchRequest.cs" />
     <Compile Include="UserModel.cs" />
   </ItemGroup>
   <ItemGroup>

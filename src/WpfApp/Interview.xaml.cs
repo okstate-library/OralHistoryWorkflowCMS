@@ -4,6 +4,7 @@ using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using WpfApp.Helper;
 
 namespace WpfApp
 {
@@ -59,12 +60,12 @@ namespace WpfApp
                     Interviewer = InterviewerTextBox.Text,
                     InterviewerNote = NoteTextBox.Text,
                     IsAudioFormat = (bool)MediaAudioCheckBox.IsChecked,
-                    IsRestriction = (bool)RestrictionToggleButton.IsChecked,
+                    IsRestriction = (bool)RestrictionYesCheckBox.IsChecked,
                     IsVideoFormat = (bool)MediaVideoCheckBox.IsChecked,
                     Keywords = KeywordsTextBox.Text,
                     LegalNote = LegalNoteTextBox.Text,
                     Place = PlaceTextBox.Text,
-                    ReleaseForm = (bool)ReleaseFormToggleButton.IsChecked,
+                    ReleaseForm = (bool)ReleaseFromYesCheckBox.IsChecked,
                     Subject = SubjectTextBox.Text,
                     SubseriesId = (int)subseryModel.Id,
                     Title = TitleTextBox.Text,
@@ -93,6 +94,23 @@ namespace WpfApp
             }
         }
 
+        private void ReleaseFrom_Check(object sender, RoutedEventArgs e)
+        {
+            CheckBox currentCheckBox = (CheckBox)sender;
+
+            UIHelper.SetMutualExclusivity((CheckBox)sender,
+                ReleaseFromYesCheckBox,
+                ReleaseFromYesCheckBox);
+        }
+
+        private void Restriction_Check(object sender, RoutedEventArgs e)
+        {
+            CheckBox currentCheckBox = (CheckBox)sender;
+
+            UIHelper.SetMutualExclusivity((CheckBox)sender,
+                RestrictionYesCheckBox,
+                RestrictionNoCheckBox);
+        }
 
 
         /// <summary>

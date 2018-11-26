@@ -47,6 +47,11 @@
     <Reference Include="MaterialDesignThemes.Wpf, Version=2.4.1.1101, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\MaterialDesignThemes.2.4.1.1101\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\..\resources\In\Microsoft.Office.Interop.Excel.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -82,8 +87,11 @@
       <DependentUpon>FindReplace.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helper\BaseUserControl.cs" />
+    <Compile Include="Helper\FileHelper.cs" />
     <Compile Include="Helper\PackIconConverter.cs" />
+    <Compile Include="Helper\SearchHelper.cs" />
     <Compile Include="Helper\ShortTextConverter.cs" />
+    <Compile Include="Helper\UIHelper.cs" />
     <Compile Include="Helper\WellKnownExpander.cs" />
     <Compile Include="Reports.xaml.cs">
       <DependentUpon>Reports.xaml</DependentUpon>

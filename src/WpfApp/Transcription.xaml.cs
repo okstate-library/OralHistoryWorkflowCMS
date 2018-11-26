@@ -1,25 +1,13 @@
 ﻿using Core.Enums;
-using MaterialDesignThemes.Wpf;
 using Model;
 using Model.Transfer;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Markup;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using WpfApp.Domain;
 using WpfApp.Helper;
 
 namespace WpfApp
@@ -31,7 +19,7 @@ namespace WpfApp
     /// <seealso cref="System.Windows.Markup.IComponentConnector" />
     public partial class Transcription : UserControl
     {
-        #region  #region Public Properties
+        #region  Public Properties
 
         /// <summary>
         /// Gets or sets the transcription identifier.
@@ -52,14 +40,6 @@ namespace WpfApp
         #endregion
 
         #region Constructor
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TranscriptionUserControl" /> class.
-        /// </summary>
-        public Transcription()
-        {
-            InitializeComponent();
-        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TranscriptionUserControl" /> class.
@@ -96,8 +76,10 @@ namespace WpfApp
                     default:
                         break;
                 }
+
             }
 
+            ControlsVisibility();
         }
 
         #endregion
@@ -144,7 +126,7 @@ namespace WpfApp
                 EditCorrectionCompletedTDateDatePicker.SelectedDate.Value.Date
                 : (DateTime?)null,
 
-                TranscriptStatus = TranscriptStatusToggleButton.IsChecked.Value,
+                TranscriptStatus = TranscriptStatusCompleteCheckBox.IsChecked.Value,// TranscriptStatusToggleButton.IsChecked.Value,
 
                 FinalSentDate = FinalSentDatePicker.SelectedDate != null ?
                 FinalSentDatePicker.SelectedDate.Value.Date
@@ -171,7 +153,7 @@ namespace WpfApp
                 IsAudioFormat = MediaAudioCheckBox.IsChecked.Value ? true : false,
                 IsVideoFormat = MediaVideoCheckBox.IsChecked.Value ? true : false,
 
-                IsBornDigital = BornDigitalToggleButton.IsChecked.Value,
+                IsBornDigital = BornDigitalYesCheckBox.IsChecked.Value,
 
                 OriginalMediumType = AudiocassetteCheckBox.IsChecked.Value ? (byte)OriginalMediumType.AudioCassette : (byte)OriginalMediumType.Other
             };
@@ -181,13 +163,13 @@ namespace WpfApp
 
             transcriptionModel.OriginalMedium = OtherDigitalFormatTextBox.Text;
 
-            transcriptionModel.IsConvertToDigital = DigitalConvertedToggleButton.IsChecked.Value;
+            transcriptionModel.IsConvertToDigital = ConvertedYesCheckBox.IsChecked.Value;
 
             transcriptionModel.ConvertToDigitalDate = DateDigitalConvertedDateDatePicker.SelectedDate != null ?
                 DateDigitalConvertedDateDatePicker.SelectedDate.Value.Date
                 : (DateTime?)null;
 
-            transcriptionModel.IsAccessMediaStatus = AccessMediaToggleButton.IsChecked.Value;
+            transcriptionModel.IsAccessMediaStatus = AccessMediaStatusCompleteCheckBox.IsChecked.Value;
 
             transcriptionModel.MasterFileLocation = MasterFileLocationTextBox.Text;
             transcriptionModel.AccessFileLocation = AccessFileLocationTextBox.Text;
@@ -199,7 +181,7 @@ namespace WpfApp
         /// Handles the Click event of the MetadataButton control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
         private void MetadataButton_Click(object sender, EventArgs e)
         {
             TranscriptionModel transcriptionModel = new TranscriptionModel
@@ -239,6 +221,7 @@ namespace WpfApp
 
             this.UpdateTranscription(transcriptionModel, WellKnownTranscriptionModificationType.Metadata);
         }
+
         /// <summary>
         /// Handles the Click event of the SupplementDetailsButton control.
         /// </summary>
@@ -248,10 +231,10 @@ namespace WpfApp
         {
             TranscriptionModel transcriptionModel = new TranscriptionModel
             {
-                IsInContentDm = OnContentDmToggleButton.IsChecked.Value,
-                IsRosetta = InRosettaToggleButton.IsChecked.Value,
-                ReleaseForm = ReleaseFormToggleButton.IsChecked.Value,
-                IsRestriction = RestrictionsToggleButton.IsChecked.Value,
+                IsInContentDm = OnContentDmYesCheckBox.IsChecked.Value,
+                IsRosetta = InRosettaYesCheckBox.IsChecked.Value,
+                ReleaseForm = ReleaseFormYesCheckBox.IsChecked.Value,
+                IsRestriction = RestrictionsYesCheckBox.IsChecked.Value,
 
                 LegalNote = RestrictionNoteTextBox.Text,
 
@@ -295,6 +278,119 @@ namespace WpfApp
             {
                 ExpanderVisibility(false, false, false, false, true);
             }
+        }
+
+        /// <summary>
+        /// Handles the Check event of the TranscriptStatus control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
+        private void TranscriptStatus_Check(object sender, RoutedEventArgs e)
+        {
+            CheckBox currentCheckBox = (CheckBox)sender;
+
+            UIHelper.SetMutualExclusivity((CheckBox)sender,
+                TranscriptStatusInProgressCheckBox,
+                TranscriptStatusCompleteCheckBox);
+
+        }
+
+        /// <summary>
+        /// Handles the Check event of the BornDigital control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
+        private void BornDigital_Check(object sender, RoutedEventArgs e)
+        {
+            CheckBox currentCheckBox = (CheckBox)sender;
+
+            UIHelper.SetMutualExclusivity((CheckBox)sender,
+                BornDigitalYesCheckBox,
+                BornDigitalNoCheckBox);
+        }
+
+        /// <summary>
+        /// Handles the Check event of the Converted control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
+        private void Converted_Check(object sender, RoutedEventArgs e)
+        {
+            CheckBox currentCheckBox = (CheckBox)sender;
+
+            UIHelper.SetMutualExclusivity((CheckBox)sender,
+                ConvertedYesCheckBox,
+                ConvertedNoCheckBox);
+        }
+
+        /// <summary>
+        /// Handles the Check event of the AccessMediaStatus control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
+        private void AccessMediaStatus_Check(object sender, RoutedEventArgs e)
+        {
+            CheckBox currentCheckBox = (CheckBox)sender;
+
+            UIHelper.SetMutualExclusivity((CheckBox)sender,
+                AccessMediaStatusInProgressCheckBox,
+                AccessMediaStatusCompleteCheckBox);
+        }
+
+        /// <summary>
+        /// Called when [content dm no check].
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
+        private void OnContentDmNo_Check(object sender, RoutedEventArgs e)
+        {
+            CheckBox currentCheckBox = (CheckBox)sender;
+
+            UIHelper.SetMutualExclusivity((CheckBox)sender,
+                OnContentDmYesCheckBox,
+                OnContentDmNoCheckBox);
+        }
+
+        /// <summary>
+        /// Handles the Check event of the InRosetta control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+        private void InRosetta_Check(object sender, RoutedEventArgs e)
+        {
+            CheckBox currentCheckBox = (CheckBox)sender;
+
+            UIHelper.SetMutualExclusivity((CheckBox)sender,
+                InRosettaYesCheckBox,
+                InRosettaNoCheckBox);
+        }
+
+        /// <summary>
+        /// Handles the Check event of the ReleaseForm control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
+        private void ReleaseForm_Check(object sender, RoutedEventArgs e)
+        {
+            CheckBox currentCheckBox = (CheckBox)sender;
+
+            UIHelper.SetMutualExclusivity((CheckBox)sender,
+                ReleaseFormYesCheckBox,
+                ReleaseFormNoCheckBox);
+        }
+
+        /// <summary>
+        /// Handles the Check event of the Restrictions control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+        private void Restrictions_Check(object sender, RoutedEventArgs e)
+        {
+            CheckBox currentCheckBox = (CheckBox)sender;
+
+            UIHelper.SetMutualExclusivity((CheckBox)sender,
+                RestrictionsYesCheckBox,
+                RestrictionsNoCheckBox);
         }
 
         #endregion
@@ -343,17 +439,17 @@ namespace WpfApp
                 ProjectCodeTextBox.Text = transcriptionModel.ProjectCode;
                 InterviewDateTextBox.Text = transcriptionModel.InterviewDate.ToShortDateString();
 
-                if (transcriptionModel.IsAudioFormat)
+                if (transcriptionModel.IsAudioFormat && transcriptionModel.IsVideoFormat)
+                {
+                    FormatTextBox.Text = "Audio/Video";
+                }
+                else if (transcriptionModel.IsAudioFormat)
                 {
                     FormatTextBox.Text = "Audio";
                 }
                 else if (transcriptionModel.IsVideoFormat)
                 {
                     FormatTextBox.Text = "Video";
-                }
-                else if (transcriptionModel.IsAudioFormat && transcriptionModel.IsVideoFormat)
-                {
-                    FormatTextBox.Text = "Audio/Video";
                 }
 
                 double completePercentage = GetObjectCompletePercentage(transcriptionModel);
@@ -412,7 +508,8 @@ namespace WpfApp
                 FinalSentDatePicker.Text = transcriptionModel.FinalSentDate != null ?
                     ((DateTime)transcriptionModel.FinalSentDate).ToShortDateString() : string.Empty;
 
-                TranscriptStatusToggleButton.IsChecked = transcriptionModel.TranscriptStatus;
+                TranscriptStatusCompleteCheckBox.IsChecked = transcriptionModel.TranscriptStatus;
+                TranscriptStatusInProgressCheckBox.IsChecked = !transcriptionModel.TranscriptStatus;
 
                 TranscriberLocationTextBox.Text = transcriptionModel.TranscriberLocation;
 
@@ -423,19 +520,22 @@ namespace WpfApp
                 MediaAudioCheckBox.IsChecked = transcriptionModel.IsAudioFormat;
                 MediaVideoCheckBox.IsChecked = transcriptionModel.IsVideoFormat;
 
-                BornDigitalToggleButton.IsChecked = transcriptionModel.IsBornDigital;
+                BornDigitalYesCheckBox.IsChecked = transcriptionModel.IsBornDigital;
+                BornDigitalNoCheckBox.IsChecked = !transcriptionModel.IsBornDigital;
 
                 AudiocassetteCheckBox.IsChecked = (transcriptionModel.OriginalMediumType == (byte)OriginalMediumType.AudioCassette ? true : false);
                 MiniDVCheckBox.IsChecked = (transcriptionModel.OriginalMediumType == (byte)OriginalMediumType.MiniDV ? true : false);
                 OtherCheckBox.IsChecked = (transcriptionModel.OriginalMediumType == (byte)OriginalMediumType.Other ? true : false);
                 OtherDigitalFormatTextBox.Text = transcriptionModel.OriginalMedium;
 
-                DigitalConvertedToggleButton.IsChecked = transcriptionModel.IsConvertToDigital;
+                ConvertedYesCheckBox.IsChecked = transcriptionModel.IsConvertToDigital;
+                ConvertedNoCheckBox.IsChecked = !transcriptionModel.IsConvertToDigital;
 
                 DateDigitalConvertedDateDatePicker.Text = transcriptionModel.ConvertToDigitalDate != null ?
                     ((DateTime)transcriptionModel.ConvertToDigitalDate).ToShortDateString() : string.Empty;
 
-                AccessMediaToggleButton.IsChecked = transcriptionModel.IsAccessMediaStatus;
+                AccessMediaStatusCompleteCheckBox.IsChecked = transcriptionModel.IsAccessMediaStatus;
+                AccessMediaStatusInProgressCheckBox.IsChecked = !transcriptionModel.IsAccessMediaStatus;
 
                 MasterFileLocationTextBox.Text = transcriptionModel.MasterFileLocation;
                 AccessFileLocationTextBox.Text = transcriptionModel.AccessFileLocation;
@@ -471,13 +571,17 @@ namespace WpfApp
 
                 //// Tab 5 
 
-                OnContentDmToggleButton.IsChecked = transcriptionModel.IsInContentDm;
+                OnContentDmYesCheckBox.IsChecked = transcriptionModel.IsInContentDm;
+                OnContentDmNoCheckBox.IsChecked = !transcriptionModel.IsInContentDm;
 
-                InRosettaToggleButton.IsChecked = transcriptionModel.IsRosetta;
+                InRosettaYesCheckBox.IsChecked = transcriptionModel.IsRosetta;
+                InRosettaNoCheckBox.IsChecked = !transcriptionModel.IsRosetta;
 
-                ReleaseFormToggleButton.IsChecked = transcriptionModel.ReleaseForm;
+                ReleaseFormYesCheckBox.IsChecked = transcriptionModel.ReleaseForm;
+                ReleaseFormNoCheckBox.IsChecked = !transcriptionModel.ReleaseForm;
 
-                RestrictionsToggleButton.IsChecked = transcriptionModel.IsRestriction;
+                RestrictionsYesCheckBox.IsChecked = transcriptionModel.IsRestriction;
+                RestrictionsNoCheckBox.IsChecked = !transcriptionModel.IsRestriction;
 
                 RestrictionNoteTextBox.Text = transcriptionModel.LegalNote;
 
@@ -491,7 +595,6 @@ namespace WpfApp
 
             }
         }
-
 
         /// <summary>
         /// Updates the transcription.
@@ -526,10 +629,15 @@ namespace WpfApp
 
         }
 
+        /// <summary>
+        /// Gets the object complete percentage.
+        /// </summary>
+        /// <param name="transcriptionModel">The transcription model.</param>
+        /// <returns></returns>
         private double GetObjectCompletePercentage(TranscriptionModel transcriptionModel)
         {
             double totalProperties = 0, filledProperties = 0;
-            
+
             foreach (PropertyInfo prop in transcriptionModel.GetType().GetProperties())
             {
                 totalProperties++;
@@ -539,16 +647,47 @@ namespace WpfApp
                 if (obj != null)
                 {
                     filledProperties++;
-                }                
-            }                        
+                }
+            }
 
-            double percentage = filledProperties/ totalProperties * 100;
+            double percentage = filledProperties / totalProperties * 100;
 
             return Math.Round(percentage, 0);
+        }
+
+        /// <summary>
+        /// Controlses the visibility.
+        /// </summary>
+        private void ControlsVisibility()
+        {
+            WellKnownUserType selUserType = (WellKnownUserType)App.BaseUserControl.UserModel.UserType;
+
+            switch (selUserType)
+            {
+                case WellKnownUserType.GuestUser:
+                case WellKnownUserType.Student:
+                case WellKnownUserType.Interviewer:
+                    RestrictionsBorder1.Visibility = Visibility.Collapsed;
+                    RestrictionsLabel.Visibility = Visibility.Collapsed;
+                    RestrictionsStackPanel.Visibility = Visibility.Collapsed;
+                    RestrictionsBorder2.Visibility = Visibility.Collapsed;
+                    RestrictionNoteTextBox.Visibility = Visibility.Collapsed;
+                    break;
+                case WellKnownUserType.AdminUser:
+
+                    RestrictionsBorder1.Visibility = Visibility.Visible;
+                    RestrictionsLabel.Visibility = Visibility.Visible;
+                    RestrictionsStackPanel.Visibility = Visibility.Visible;
+                    RestrictionsBorder2.Visibility = Visibility.Visible;
+                    RestrictionNoteTextBox.Visibility = Visibility.Visible;
+                    break;
+                default:
+                    break;
+            }
+            
         }
 
         #endregion
 
     }
-
 }

@@ -8,18 +8,19 @@ using BusinessServices.Services;
 using EntityData;
 using Model;
 using Model.Transfer;
+using Model.Transfer.Search;
+using PagedList;
 using Repository;
 using Repository.Implementations;
 
 namespace BusinessServices.Servcices
 {
     /// <summary>
-    /// 
-    /// 
+    /// Defines the properties, construtor and methods related to GetTranscriptionsForBrowseUow
     /// </summary>
+    /// <seealso cref="BusinessServices.UnitOfWork" />
     internal class GetTranscriptionsForBrowseUow : UnitOfWork
     {
-
         /// <summary>
         /// gets and sets the request model
         /// </summary>
@@ -108,83 +109,79 @@ namespace BusinessServices.Servcices
         /// </summary>
         protected override void Execute()
         {
+            IPagedList<transcription> pagedList = null;
+
             List<TranscriptionModel> newlist = new List<TranscriptionModel>();
 
-            var predicate = PredicateBuilder.False<transcription>();
+            List<transcription> allTranscriptions = this.TranscriptionRepository.GetAll().ToList();
+            
+            pagedList = allTranscriptions.ToPagedList(this.Request.SearchRequest.CurrentPage, this.Request.SearchRequest.ListLength);
 
-            foreach (string item in this.Request.TranscriptionSearchModel.CollectionNames)
+            if (this.Request.TranscriptionSearchModel.IsSearchRecordsExists() || !string.IsNullOrEmpty(this.Request.SearchWord))
             {
-                predicate = predicate.Or(p => p.CollectionId == short.Parse(item));
-            }
+                var predicate = PredicateBuilder.False<transcription>();
 
-            foreach (string item in this.Request.TranscriptionSearchModel.Subjects)
+                foreach (string item in this.Request.TranscriptionSearchModel.CollectionNames)
+                {
+                    predicate = predicate.Or(p => p.CollectionId == short.Parse(item));
+                }
+
+                foreach (string item in this.Request.TranscriptionSearchModel.Subjects)
+                {
+                    predicate = predicate.Or(p => p.Subject.Contains(item));
+                }
+
+                foreach (string item in this.Request.TranscriptionSearchModel.Interviewers)
+                {
+                    predicate = predicate.Or(p => p.Interviewer.Equals(item));
+                }
+
+                foreach (string item in this.Request.TranscriptionSearchModel.Contentdms)
+                {
+                    predicate = predicate.Or(p => p.IsInContentDm == bool.Parse(item));
+                }
+
+                if (!string.IsNullOrEmpty(this.Request.SearchWord))
+                {
+                    predicate = predicate.And(p =>
+                                                    p.Interviewer.Contains(Request.SearchWord) ||
+                                                    p.AuditCheckCompleted.Contains(this.Request.SearchWord) ||
+                                                    p.AccessFileLocation.Contains(this.Request.SearchWord) ||
+                                                    p.CoverageSpatial.Contains(this.Request.SearchWord) ||
+                                                    p.CoverageTemporal.Contains(this.Request.SearchWord) ||
+                                                    p.Description.Contains(this.Request.SearchWord) ||
+                                                    p.EditWithCorrectionCompleted.Contains(this.Request.SearchWord) ||
+                                                    p.Interviewee.Contains(this.Request.SearchWord) ||
+                                                    p.Keywords.Contains(this.Request.SearchWord) ||
+                                                    p.Title.Contains(this.Request.SearchWord) ||
+                                                    p.Subject.Contains(this.Request.SearchWord)
+                                                  );
+                }
+
+                IEnumerable<transcription> dataset3 = allTranscriptions.Where<transcription>(predicate.Compile());
+
+                pagedList = dataset3.ToPagedList(this.Request.SearchRequest.CurrentPage, this.Request.SearchRequest.ListLength);
+            }
+            
+            PaginationInfo page = page = new PaginationInfo()
             {
-                predicate = predicate.Or(p => p.Subject.Contains(item));
-            }
+                CurrentPage = pagedList.PageNumber,
 
-            foreach (string item in this.Request.TranscriptionSearchModel.Interviewers)
-            {
-                predicate = predicate.Or(p => p.Interviewer.Equals(item));
-            }
+                TotalListLength = pagedList.TotalItemCount,
 
-            foreach (string item in this.Request.TranscriptionSearchModel.Contentdms)
-            {
-                predicate = predicate.Or(p => p.IsInContentDm == bool.Parse(item));
-            }
+                TotalPages = pagedList.PageCount,
 
-            if (!string.IsNullOrEmpty(this.Request.SearchWord))
-            {
-                predicate = predicate.And(p =>
-                                                p.Interviewer.Contains(Request.SearchWord) ||
-                                                p.AuditCheckCompleted.Contains(this.Request.SearchWord) ||
-                                                p.AccessFileLocation.Contains(this.Request.SearchWord) ||
-                                                p.CoverageSpatial.Contains(this.Request.SearchWord) ||
-                                                p.CoverageTemporal.Contains(this.Request.SearchWord) ||
-                                                p.Description.Contains(this.Request.SearchWord) ||
-                                                p.EditWithCorrectionCompleted.Contains(this.Request.SearchWord) ||
-                                                //p.EquipmentUsed.Contains(this.Request.SearchWord) ||
-                                                //p.FileName.Contains(this.Request.SearchWord) ||
-                                                //p.FinalEditCompleted.Contains(this.Request.SearchWord) ||
-                                                //p.FirstEditCompleted.Contains(this.Request.SearchWord) ||
-                                                //p.Format.Contains(this.Request.SearchWord) ||
-                                                //p.Identifier.Contains(this.Request.SearchWord) ||
-                                                //p.InitialNote.Contains(this.Request.SearchWord) ||
-                                                p.Interviewee.Contains(this.Request.SearchWord) ||
-                                                //p.InterviewerNote.Contains(this.Request.SearchWord) ||
-                                                p.Keywords.Contains(this.Request.SearchWord) ||
-                                                //p.LegalNote.Contains(this.Request.SearchWord) ||
-                                                //p.Place.Contains(this.Request.SearchWord) ||
-                                                //p.ProjectCode.Contains(this.Request.SearchWord) ||
-                                                //p.Publisher.Contains(this.Request.SearchWord) ||
-                                                //p.ReasonForPriority.Contains(this.Request.SearchWord) ||
-                                                //p.RelationIsPartOf.Contains(this.Request.SearchWord) ||
-                                                //p.Rights.Contains(this.Request.SearchWord) ||
-                                                //p.ScopeAndContents.Contains(this.Request.SearchWord) ||
-                                                //p.SecondEditCompleted.Contains(this.Request.SearchWord) ||
-                                                //p.Rights.Contains(this.Request.SearchWord) ||
-                                                p.Title.Contains(this.Request.SearchWord) ||
-                                                p.Subject.Contains(this.Request.SearchWord)
-                                              //p.TranscriberAssigned.Contains(this.Request.SearchWord) ||
-                                              //p.TranscriberLocation.Contains(this.Request.SearchWord) ||
-                                              //p.Transcript.Contains(this.Request.SearchWord) ||
-                                              //p.TranscriptNote.Contains(this.Request.SearchWord) ||
-                                              //p.Type.Contains(this.Request.SearchWord)
-                                              );
-            }
+                ListLength = pagedList.PageSize
+            };
 
-            List<transcription> allTranscription = this.TranscriptionRepository.GetAll().ToList();
-
-            IEnumerable<transcription> dataset3 = allTranscription.Where<transcription>(predicate.Compile());
-
-            List<transcription> all = dataset3.ToList();
-
-            foreach (transcription item in all)
+            foreach (transcription item in pagedList.ToList())
             {
                 newlist.Add(Util.ConvertToTranscriptionModel(item));
             }
 
             this.Response = new ResponseModel()
             {
+                PaginationInfo = page,
                 Transcriptions = newlist,
                 IsOperationSuccess = true
             };

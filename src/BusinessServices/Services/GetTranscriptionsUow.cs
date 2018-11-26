@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 using BusinessServices.Services;
 using Core.Enums;
 using EntityData;
@@ -11,6 +9,8 @@ using Model;
 using Model.Transfer;
 using Repository;
 using Repository.Implementations;
+using PagedList;
+using Model.Transfer.Search;
 
 namespace BusinessServices.Servcices
 {
@@ -115,19 +115,13 @@ namespace BusinessServices.Servcices
         {
 
             List<TranscriptionModel> newlist = new List<TranscriptionModel>();
-
-            //this.TranscriptionRepository.FindBy()
-
+            
             Expression<Func<transcription, bool>> predicate = PredicateBuilder.True<transcription>();
 
-            if (this.Request.IsTranscriptionQueue)
-            {
-                predicate = predicate.Or(p => p.TranscriptStatus == false);
-            }
+            predicate = predicate.And(p => p.TranscriptStatus == false);
 
-            if (this.Request.FilterKeyWords != null)
+            if (this.Request.FilterKeyWords != null && this.Request.FilterKeyWords.Count > 0)
             {
-
                 foreach (string keyword in this.Request.FilterKeyWords)
                 {
 
@@ -211,16 +205,30 @@ namespace BusinessServices.Servcices
                                                 p.Type.Contains(this.Request.SearchWord)
                                               );
             }
+            
+            IPagedList<transcription> pagedTransactionList = this.TranscriptionRepository.FindBy(predicate).
+                OrderBy(t => t.Title).ToPagedList(this.Request.SearchRequest.CurrentPage,
+               this.Request.SearchRequest.ListLength);
 
-            IQueryable<transcription> dataset = this.TranscriptionRepository.FindBy(predicate);
+            PaginationInfo page = page = new PaginationInfo()
+            {
+                CurrentPage = pagedTransactionList.PageNumber,
 
-            foreach (transcription item in dataset.ToList())
+                TotalListLength = pagedTransactionList.TotalItemCount,
+
+                TotalPages = pagedTransactionList.PageCount,
+
+                ListLength = pagedTransactionList.PageSize
+            };
+
+            foreach (transcription item in pagedTransactionList.ToList())
             {
                 newlist.Add(Util.ConvertToTranscriptionModel(item));
             }
 
             this.Response = new ResponseModel()
             {
+                PaginationInfo = page,
                 Transcriptions = newlist,
                 IsOperationSuccess = true
             };

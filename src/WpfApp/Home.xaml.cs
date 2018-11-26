@@ -33,24 +33,38 @@ namespace WpfApp
         /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void HomePage_Load(object sender, RoutedEventArgs e)
         {
-            if (App.BaseUserControl.UserModel != null && (WellKnownUserType)App.BaseUserControl.UserModel.UserType != WellKnownUserType.GuestUser)
+            if (App.IsValidToProcess)
             {
-                RequestModel request = new RequestModel()
+                if (App.BaseUserControl.UserModel != null && (WellKnownUserType)App.BaseUserControl.UserModel.UserType != WellKnownUserType.GuestUser)
                 {
-                    UserModel = App.BaseUserControl.UserModel,
-                };
+                    RequestModel request = new RequestModel()
+                    {
+                        UserModel = App.BaseUserControl.UserModel,
+                    };
 
-                ResponseModel response = App.BaseUserControl.InternalService.GetPostInitializeMainForm(request);
+                    ResponseModel response = App.BaseUserControl.InternalService.GetPostInitializeMainForm(request);
 
-                if (response.IsOperationSuccess)
-                {
-                    LatestTranscriptions.ItemsSource = response.Transcriptions;
+                    if (response.IsOperationSuccess)
+                    {
+                        LatestTranscriptions.ItemsSource = response.Transcriptions;
+
+                        App.BaseUserControl.TranscrptionQueueRecordCount = response.MainFormModel.TranscrptionQueueRecordCount;
+                        App.BaseUserControl.BrowseRecordCount = response.MainFormModel.BrowseRecordCount;
+                    }
                 }
+                else
+                {
+                    LatestTranscriptions.ItemsSource = "No data found";
+                }
+
             }
             else
             {
-                LatestTranscriptions.ItemsSource = "No data found";
+                App.ShowMessage(false, " No internet access.\n Please check the connection.");
+
+                //Application.Current.Shutdown();
             }
+           
 
         }
 
