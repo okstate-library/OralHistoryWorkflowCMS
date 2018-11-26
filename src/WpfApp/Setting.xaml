@@ -37,13 +37,38 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*" />
                         <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
                     </Grid.ColumnDefinitions>
 
-                    <StackPanel Grid.Row="1" Margin="20 10 0 8" Orientation="Horizontal"  Grid.Column="1">
+                    <StackPanel Grid.Row="1" Margin="20 10 0 8" Orientation="Horizontal"  Grid.Column="0">
                         <Label  Style="{StaticResource BoldLabel}" Content="Clear the database"  />
-                        <Button Margin="20 10 0 8" Content="Clear" Style="{StaticResource MaterialDesignRaisedAccentButton}" Click="ClearDBButton_Click"/>
                     </StackPanel>
+                    
+                    <StackPanel VerticalAlignment="Center"  Grid.Row="1"  Grid.Column="1" Margin="20 10 0 8" >
+                        <Button Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" Margin="20 10 0 8" Style="{StaticResource MaterialDesignRaisedAccentButton}" 
+                                materialDesign:DialogHost.DialogClosingAttached="Confirmaiton_OnDialogClosing">
+                            <Button.CommandParameter>
+                                <StackPanel Margin="16">
+                                    <TextBlock Text=" Are you really want to delete the database?" FontWeight="Bold" FontSize="20" ></TextBlock>
+                                    <Button Style="{StaticResource MaterialDesignFlatButton}" IsCancel="True" 
+                                            Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                                            CommandParameter="true"
+                                            HorizontalAlignment="Center">Ok</Button>
+                                    
+                                    <Button Style="{StaticResource MaterialDesignFlatButton}" IsCancel="True" 
+                                            Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                                            CommandParameter="cancel"
+                                            HorizontalAlignment="Center">Cancel</Button>
+                                </StackPanel>
+                            </Button.CommandParameter>
+                           Process
+                        </Button>                       
+                    </StackPanel>
+
+                   
 
                 </Grid>
             </Border>

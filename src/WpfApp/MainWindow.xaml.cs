@@ -46,7 +46,7 @@ namespace WpfApp
 
             Loaded += MainWindow_Loaded;
 
-            DataContext = new MainWindowViewModel(MainSnackbar.MessageQueue);
+            DataContext = new MainWindowViewModel(MainSnackbar.MessageQueue, App.IsValidToProcess);
         }
 
         /// <summary>
@@ -56,21 +56,28 @@ namespace WpfApp
         /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            //TODO: Login window
-            //LoginWindow win1 = new LoginWindow();
-            //win1.Owner = this;
-            //win1.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            //win1.ShowDialog();
-
-            App.BaseUserControl.UserModel = new Model.UserModel()
+            if (App.IsValidToProcess)
             {
-                UserId = 1,
-                Name = "Patrick",
-                UserType = 4,
-                Username = "admin"
-            };
+                //TODO: Login window
+                LoginWindow win1 = new LoginWindow
+                {
+                    Owner = this,
+                    WindowStartupLocation = WindowStartupLocation.CenterOwner
+                };
 
-            DataContext = new MainWindowViewModel(MainSnackbar.MessageQueue);
+                win1.ShowDialog();
+
+                //App.BaseUserControl.UserModel = new Model.UserModel()
+                //{
+                //    UserId = 1,
+                //    Name = "Patrick",
+                //    UserType = 4,
+                //    Username = "admin"
+                //};
+
+                DataContext = new MainWindowViewModel(MainSnackbar.MessageQueue, App.IsValidToProcess);
+            }
+
         }
 
         /// <summary>

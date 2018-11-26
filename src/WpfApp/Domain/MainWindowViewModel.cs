@@ -72,7 +72,7 @@ namespace WpfApp.Domain
         /// <summary>
         /// The state wide validation queue demo item
         /// </summary>
-        public static DemoItem stateWideValidationQueueDemoItem = new DemoItem("Statewide validation", PackIconKind.Upload, new Statewidevalidation(), ScrollBarVisibility.Auto, ScrollBarVisibility.Auto, Color.Aqua);
+        public static DemoItem stateWideValidationQueueDemoItem = new DemoItem("Statewide validation", PackIconKind.CheckAll, new Statewidevalidation(), ScrollBarVisibility.Auto, ScrollBarVisibility.Auto, Color.Aqua);
 
 
         /// <summary>
@@ -138,6 +138,17 @@ namespace WpfApp.Domain
             browseQueueDemoItem,
         };
 
+        /// <summary>
+        /// Gets the home demo items.
+        /// </summary>
+        /// <value>
+        /// The home demo items.
+        /// </value>
+        private static DemoItem[] HomeDemoItems { get; } = new[]
+        {
+            homeDemoItem
+        };
+
         #endregion
 
         #region Constructor
@@ -146,45 +157,51 @@ namespace WpfApp.Domain
         /// Initializes a new instance of the <see cref="MainWindowViewModel" /> class.
         /// </summary>
         /// <param name="snackbarMessageQueue">The snackbar message queue.</param>
+        /// <param name="isValidToProcess">if set to <c>true</c> [is valid to process].</param>
         /// <exception cref="ArgumentNullException">snackbarMessageQueue</exception>
-        public MainWindowViewModel(ISnackbarMessageQueue snackbarMessageQueue)
+        public MainWindowViewModel(ISnackbarMessageQueue snackbarMessageQueue, bool isValidToProcess)
         {
             if (snackbarMessageQueue == null) throw new ArgumentNullException(nameof(snackbarMessageQueue));
 
-            if (App.BaseUserControl.UserModel != null)
+            if (isValidToProcess)
             {
-                UserName = App.BaseUserControl.UserModel.Name;
-
-                // user type based menu selection
-                WellKnownUserType userType = (WellKnownUserType)App.BaseUserControl.UserModel.UserType;
-                Usertype = "(" + EnumHelper.StringValueOf((WellKnownUserType)userType) + ")";
-
-                switch (userType)
+                if (App.BaseUserControl.UserModel != null)
                 {
-                    case WellKnownUserType.GuestUser:
-                        DemoItems = GuestUserDemoItems;
-                        break;
-                    case WellKnownUserType.Student:
-                        DemoItems = StudentDemoItems;
-                        break;
-                    case WellKnownUserType.Interviewer:
-                        DemoItems = InterviewerDemoItems;
-                        break;
-                    case WellKnownUserType.AdminUser:
-                        DemoItems = AdminDemoItems;
+                    UserName = App.BaseUserControl.UserModel.Name;
 
-                        break;
-                    default:
-                        break;
+                    // user type based menu selection
+                    WellKnownUserType userType = (WellKnownUserType)App.BaseUserControl.UserModel.UserType;
+                    Usertype = "(" + EnumHelper.StringValueOf((WellKnownUserType)userType) + ")";
+
+                    switch (userType)
+                    {
+                        case WellKnownUserType.GuestUser:
+                            DemoItems = GuestUserDemoItems;
+                            break;
+                        case WellKnownUserType.Student:
+                            DemoItems = StudentDemoItems;
+                            break;
+                        case WellKnownUserType.Interviewer:
+                            DemoItems = InterviewerDemoItems;
+                            break;
+                        case WellKnownUserType.AdminUser:
+                            DemoItems = AdminDemoItems;
+
+                            break;
+                        default:
+                            break;
+                    }
+
                 }
-
+                else
+                {
+                    DemoItems = GuestUserDemoItems;
+                }
             }
             else
             {
-
-                DemoItems = GuestUserDemoItems;
+                DemoItems = HomeDemoItems;
             }
-
         }
 
         #endregion

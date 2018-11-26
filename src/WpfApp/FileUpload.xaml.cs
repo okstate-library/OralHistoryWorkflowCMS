@@ -46,6 +46,8 @@ namespace WpfApp
 
                 fileUploadLabel.Content = filePath;
 
+                System.Threading.Thread.Sleep(2000);
+
                 DataTable dt = ReadExcelFile(filePath);
 
                 List<TranscriptionModel> transcriptionModels = new List<TranscriptionModel>();
@@ -136,7 +138,16 @@ namespace WpfApp
                     TranscriptionModels = transcriptionModels,
                 };
 
-                App.BaseUserControl.InternalService.ImportTranscription(requestModel);
+                ResponseModel response = App.BaseUserControl.InternalService.ImportTranscription(requestModel);
+
+                if (response.IsOperationSuccess)
+                {
+                    App.ShowMessage(true, string.Format(" {0} record(s) were \n successfully imported!", transcriptionModels.Count));
+                }
+                else
+                {
+                    App.ShowMessage(false, response.ErrorMessage);
+                }
             }
         }
         
@@ -150,23 +161,22 @@ namespace WpfApp
             using (OleDbConnection conn = new OleDbConnection())
             {
                 DataTable dt = new DataTable();
-                string Import_FileName = path;
-                string fileExtension = System.IO.Path.GetExtension(Import_FileName);
+                string fileExtension = System.IO.Path.GetExtension(path);
 
                 if (fileExtension == ".xls")
                 {
-                    conn.ConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + Import_FileName + ";" + "Extended Properties='Excel 8.0;HDR=YES;'";
+                    conn.ConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + path + ";" + "Extended Properties='Excel 8.0;HDR=YES;'";
                 }
                 else if (fileExtension == ".xlsx")
                 {
-                    conn.ConnectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + Import_FileName + ";" + "Extended Properties='Excel 12.0 Xml;HDR=YES;'";
+                    conn.ConnectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + path + ";" + "Extended Properties='Excel 12.0 Xml;HDR=YES;'";
                 }
 
                 conn.Open();
 
                 DataTable dts = conn.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
 
-                String[] excelSheets = new String[dts.Rows.Count];
+                string[] excelSheets = new string[dts.Rows.Count];
 
                 int i = 0;
 

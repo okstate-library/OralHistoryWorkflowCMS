@@ -1,18 +1,8 @@
-﻿using Model.Transfer;
+﻿using MaterialDesignThemes.Wpf;
+using Model.Transfer;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace WpfApp
 {
@@ -32,22 +22,35 @@ namespace WpfApp
         }
 
         /// <summary>
-        /// Handles the Click event of the ClearDBButton control.
+        /// Handles the OnDialogClosing event of the Confirmaiton control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
-        private void ClearDBButton_Click(object sender, RoutedEventArgs e)
+        /// <param name="eventArgs">The <see cref="DialogClosingEventArgs"/> instance containing the event data.</param>
+        private void Confirmaiton_OnDialogClosing(object sender, DialogClosingEventArgs eventArgs)
+        {
+            if (eventArgs.Parameter.Equals("true"))
+            {
+                ClearDatabase();
+            }
+
+        }
+
+        /// <summary>
+        /// Clears the database.
+        /// </summary>
+        private void ClearDatabase()
         {
             ResponseModel response = App.BaseUserControl.InternalService.ResetDatabase(null);
 
             if (response.IsOperationSuccess)
             {
-                App.ShowMessage(true, string.Empty);
+                App.ShowMessage(true, "You successfully deleted \n records from database.");
             }
             else
             {
                 App.ShowMessage(false, response.ErrorMessage);
             }
         }
+
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace Model.Transfer.Requests.Search
+namespace Model.Transfer.Search
 {
     /// <summary>
     ///

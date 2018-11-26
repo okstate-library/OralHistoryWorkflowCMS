@@ -56,23 +56,7 @@ namespace BusinessServices
 
             return uow.Response;
         }
-
-        /// <summary>
-        /// Initializes the transcription queue.
-        /// </summary>
-        /// <param name="requestModel">The request model.</param>
-        /// <returns></returns>
-        public ResponseModel InitializeTranscriptionQueue(RequestModel requestModel)
-        {
-            InitializeTranscriptionQueueUow uow = new InitializeTranscriptionQueueUow();
-
-            uow.Request = requestModel;
-
-            uow.DoWork();
-
-            return uow.Response;
-        }
-
+               
         /// <summary>
         /// Modifies the transcription.
         /// </summary>

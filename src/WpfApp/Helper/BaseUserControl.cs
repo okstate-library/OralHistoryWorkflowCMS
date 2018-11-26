@@ -25,7 +25,7 @@ namespace WpfApp.Helper
         /// <value>
         /// The transcrption queue record count.
         /// </value>
-        public static int TranscrptionQueueRecordCount { get; set; }
+        public int TranscrptionQueueRecordCount { get; set; }
 
         /// <summary>
         /// Gets or sets the browse record count.
@@ -33,7 +33,7 @@ namespace WpfApp.Helper
         /// <value>
         /// The browse record count.
         /// </value>
-        public static int BrowseRecordCount { get; set; }
+        public int BrowseRecordCount { get; set; }
 
         /// <summary>
         /// The instance

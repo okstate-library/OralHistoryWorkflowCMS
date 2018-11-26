@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
@@ -20,6 +21,15 @@ namespace WpfApp
     /// <seealso cref="System.Windows.Application" />
     public partial class App : Application
     {
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is valid to process.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this instance is valid to process; otherwise, <c>false</c>.
+        /// </value>
+        public static bool IsValidToProcess { get; set; }
+
         /// <summary>
         /// Gets or sets the base user control.
         /// </summary>
@@ -27,7 +37,7 @@ namespace WpfApp
         /// The base user control.
         /// </value>
         public static BaseUserControl BaseUserControl { get; set; }
-        
+
         /// <summary>
         /// Gets or sets my property.
         /// </summary>
@@ -50,13 +60,43 @@ namespace WpfApp
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="App"/> class.
+        /// Initializes a new instance of the <see cref="App" /> class.
         /// </summary>
         public App()
         {
             BaseUserControl = new BaseUserControl();
 
-            BaseUserControl.InitializeComponent();
+            if (CheckForInternetConnection())
+            {
+                BaseUserControl.InitializeComponent();
+
+                IsValidToProcess = true;
+            }
+            else
+            {
+                IsValidToProcess = false;
+            }
+        }
+        
+        /// <summary>
+        /// Checks for internet connection.
+        /// </summary>
+        /// <returns></returns>
+        public static bool CheckForInternetConnection()
+        {
+            try
+            {
+                using (var client = new WebClient())
+
+                using (client.OpenRead("http://clients3.google.com/generate_204"))
+                {
+                    return true;
+                }
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         /// <summary>
@@ -69,7 +109,7 @@ namespace WpfApp
             var sampleMessageDialog = new SampleMessageDialog
             {
                 PackIcon = { Kind = sucess ? PackIconKind.CheckCircleOutline : PackIconKind.CloseCircleOutline },
-                Message = { Text = sucess ? "Record submit" : message }
+                Message = { Text = string.IsNullOrEmpty(message) ? "Record submit" : message }
             };
 
             DialogHost.Show(sampleMessageDialog, "RootDialog");
@@ -79,7 +119,7 @@ namespace WpfApp
         /// Applications the dispatcher unhandled exception.
         /// </summary>
         /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="DispatcherUnhandledExceptionEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="DispatcherUnhandledExceptionEventArgs" /> instance containing the event data.</param>
         private void AppDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
             ShowUnhandledException(e);
@@ -88,7 +128,7 @@ namespace WpfApp
         /// <summary>
         /// Shows the unhandled exception.
         /// </summary>
-        /// <param name="e">The <see cref="DispatcherUnhandledExceptionEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="DispatcherUnhandledExceptionEventArgs" /> instance containing the event data.</param>
         private void ShowUnhandledException(DispatcherUnhandledExceptionEventArgs e)
         {
             e.Handled = true;
@@ -100,10 +140,10 @@ namespace WpfApp
 
             e.Exception.Message + (e.Exception.InnerException != null ? "\n" +
             e.Exception.InnerException.Message : null));
-                                    
+
             if (MessageBox.Show(errorMessage, "Application Error", MessageBoxButton.YesNoCancel, MessageBoxImage.Error) == MessageBoxResult.No)
             {
-                if (MessageBox.Show("WARNING: The application will close. Any changes will not be saved!\nDo you really want to close it?", 
+                if (MessageBox.Show("WARNING: The application will close. Any changes will not be saved!\nDo you really want to close it?",
                     "Close the application!", MessageBoxButton.YesNoCancel, MessageBoxImage.Warning) == MessageBoxResult.Yes)
                 {
                     Application.Current.Shutdown();

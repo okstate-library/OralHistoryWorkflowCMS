@@ -160,9 +160,23 @@
 
                         <Label Style="{StaticResource BoldLabel}" Grid.Row="16" Grid.Column="0">Release form</Label>
 
-                        <ToggleButton  Grid.Row="16" Grid.Column="1" Style="{StaticResource YesNoToggleButtonStyle}"
+                        <StackPanel   Grid.Row="16" Grid.Column="1" Orientation="Horizontal">
+
+                            <CheckBox Name="ReleaseFromYesCheckBox"
+                                            Style="{StaticResource MaterialDesignCheckBox}" Checked="ReleaseFrom_Check">
+                                Yes
+                            </CheckBox>
+
+                            <CheckBox Name="ReleaseFromNoCheckBox"
+                                            Style="{StaticResource MaterialDesignCheckBox}" Checked="ReleaseFrom_Check">
+                                No
+                            </CheckBox>
+
+                        </StackPanel>
+
+                        <!--<ToggleButton  Grid.Row="16" Grid.Column="1" Style="{StaticResource YesNoToggleButtonStyle}"
                                   IsChecked="True" Name="ReleaseFormToggleButton">
-                        </ToggleButton>
+                        </ToggleButton>-->
 
                         <Label Style="{StaticResource BoldLabel}" Grid.Row="16" Grid.Column="2" Margin="15 0 0 0" >Record format</Label>
                       
@@ -180,9 +194,23 @@
 
                         <Label Style="{StaticResource BoldLabel}" Grid.Row="18" Grid.Column="0">Restriction/Legal note</Label>
 
-                        <ToggleButton  Grid.Row="18" Grid.Column="1" Style="{StaticResource YesNoToggleButtonStyle}"
+                        <StackPanel   Grid.Row="18" Grid.Column="1" Orientation="Horizontal">
+
+                            <CheckBox Name="RestrictionYesCheckBox"
+                                            Style="{StaticResource MaterialDesignCheckBox}" Checked="Restriction_Check">
+                                Yes
+                            </CheckBox>
+
+                            <CheckBox Name="RestrictionNoCheckBox"
+                                            Style="{StaticResource MaterialDesignCheckBox}" Checked="Restriction_Check">
+                                No
+                            </CheckBox>
+
+                        </StackPanel>
+                        
+                        <!--<ToggleButton  Grid.Row="18" Grid.Column="1" Style="{StaticResource YesNoToggleButtonStyle}"
                                   IsChecked="True" Name="RestrictionToggleButton">
-                        </ToggleButton>
+                        </ToggleButton>-->
 
                         <TextBox Name="LegalNoteTextBox" Grid.Row="18" Grid.Column="2" Grid.ColumnSpan="2"   Style="{StaticResource EditableTextBox}" />
 

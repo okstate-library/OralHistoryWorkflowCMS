@@ -98,23 +98,30 @@ namespace BusinessServices.Servcices
         /// The actual Work to be done.
         /// </summary>
         protected override void Execute()
-        {          
+        {
             Util Util = new Util();
-            
+
             List<TranscriptionModel> transcriptionModels = new List<TranscriptionModel>();
 
             IQueryable<transcription> transcriptions = TranscriptionRepository
                 .FindBy(i => i.UpdatedBy == this.Request.UserModel.UserId)
                 .OrderByDescending(i => i.CreatedDate)
                 .Take(10);
-            
+
             foreach (transcription item in transcriptions.ToList())
             {
                 transcriptionModels.Add(Util.ConvertToTranscriptionModel(item));
             }
 
+            MainFormModel mainFormModel = new MainFormModel()
+            {
+                BrowseRecordCount = this.TranscriptionRepository.GetAll().Count(),
+                TranscrptionQueueRecordCount = this.TranscriptionRepository.FindBy(t => t.TranscriptStatus == false).Count(),
+            };
+
             this.Response = new ResponseModel()
             {
+                MainFormModel = mainFormModel,
                 Transcriptions = transcriptionModels,
                 IsOperationSuccess = true
             };

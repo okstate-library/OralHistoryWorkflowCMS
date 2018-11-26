@@ -8,7 +8,7 @@ namespace WpfApp
     /// Define correct and colse pack icons in gridview
     /// </summary>
     /// <seealso cref="System.Windows.Data.IValueConverter" />
-    public class PackIconConverter : IValueConverter
+    public class                                                                                                                                                                                                                                                                                                                                                                                                                                         PackIconConverter : IValueConverter
     {
         /// <summary>
         /// Converts a value.

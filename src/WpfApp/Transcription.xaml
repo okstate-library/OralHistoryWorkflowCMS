@@ -70,20 +70,20 @@
 
             </materialDesign:Card>
 
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left"   Grid.Row="1" Grid.Column="1">
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Left"   Grid.Row="1" Grid.Column="1">
 
                 <!--General Details-->
-                <Expander  Name="GeneralExpander" Background="{DynamicResource AlternativeColor}" ExpandDirection="Right" Expander.Expanded="Expander_Expanded">
+                <Expander  Name="GeneralExpander" Background="{DynamicResource AlternativeColor}" 
+                          Expander.Expanded="Expander_Expanded">
+
                     <Expander.Header>
-                        <TextBlock Text="General" RenderTransformOrigin=".5,.5">
-                            <TextBlock.LayoutTransform>
-                                <RotateTransform Angle="90" />
-                            </TextBlock.LayoutTransform>
-                        </TextBlock>
+                        <Border BorderThickness="0,0,0,2" BorderBrush="{DynamicResource PrimaryHueMidBrush}">
+                                <TextBlock Margin="5" Style="{StaticResource MaterialDesignTitleTextBlock}"># General</TextBlock>
+                            </Border>
                     </Expander.Header>
                     <StackPanel Orientation="Vertical"
                             TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
-                                Margin="20,24,50,24"  >
+                                Margin="20,00,50,24"  >
 
                         <Grid  VerticalAlignment="Top" >
                             <Grid.RowDefinitions>
@@ -124,8 +124,6 @@
                                 <ColumnDefinition Width="200" />
                                 <ColumnDefinition Width="300" />
                             </Grid.ColumnDefinitions>
-
-                            <TextBlock Grid.Row="0" Style="{StaticResource MaterialDesignTitleTextBlock}">General</TextBlock>
 
                             <Border  Grid.Row="1"  Style="{StaticResource EmptyBorder}"   />
 
@@ -228,18 +226,16 @@
 
                 <!--Transcript Details-->
 
-                <Expander Name="TranscriptExpander" ExpandDirection="Right" Background="{DynamicResource PrimaryHueLightBrush}" Expander.Expanded="Expander_Expanded">
+                <Expander Name="TranscriptExpander" Background="{DynamicResource PrimaryHueLightBrush}" Expander.Expanded="Expander_Expanded">
+                    
                     <Expander.Header>
-                        <TextBlock Text="Transcript" RenderTransformOrigin=".5,.5">
-                            <TextBlock.LayoutTransform>
-                                <RotateTransform Angle="90" />
-                            </TextBlock.LayoutTransform>
-                        </TextBlock>
+                        <Border BorderThickness="0,0,0,2" BorderBrush="{DynamicResource PrimaryHueMidBrush}">
+                            <TextBlock Margin="5" Style="{StaticResource MaterialDesignTitleTextBlock}"># Transcript</TextBlock>
+                        </Border>
                     </Expander.Header>
-
                     <StackPanel Orientation="Vertical"
                             TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
-                            Margin="20,24,50,24"  >
+                                Margin="20,00,50,24"  >
 
 
                         <Grid  VerticalAlignment="Top" >
@@ -282,8 +278,6 @@
                                 <ColumnDefinition Width="50" />
                                 <ColumnDefinition Width="200" />
                             </Grid.ColumnDefinitions>
-
-                            <TextBlock Grid.Row="0" Style="{StaticResource MaterialDesignTitleTextBlock}">Transcript</TextBlock>
 
                             <Border  Grid.Row="1"  Style="{StaticResource EmptyBorder}"   />
 
@@ -339,9 +333,17 @@
 
                             <Label Style="{StaticResource BoldLabel}" Grid.Row="20" Grid.Column="0" >Transcript status</Label>
                             <StackPanel  Grid.Row="20" Grid.Column="2"  Orientation="Horizontal" >
-                                <ToggleButton Style="{StaticResource ProgressToggleButtonStyle}"
-                                  IsChecked="True" Name="TranscriptStatusToggleButton">
-                                </ToggleButton>
+
+                                <CheckBox Name="TranscriptStatusCompleteCheckBox"
+                                            Style="{StaticResource MaterialDesignCheckBox}" Checked="TranscriptStatus_Check">
+                                    Complete
+                                </CheckBox>
+
+                                <CheckBox Name="TranscriptStatusInProgressCheckBox"
+                                            Style="{StaticResource MaterialDesignCheckBox}" Checked="TranscriptStatus_Check">
+                                    In progress
+                                </CheckBox>
+                                
                             </StackPanel>
 
                             <Border  Grid.Row="21"  Style="{StaticResource EmptyBorder}"   />
@@ -368,18 +370,15 @@
                 <Border Background="{DynamicResource MaterialDesignDivider}" Width="1" VerticalAlignment="Stretch" SnapsToDevicePixels="True" />
 
                 <!--Media Details-->
-                <Expander Name="MediaExpander" ExpandDirection="Right" Background="{DynamicResource AlternativeColor}" Expander.Expanded="Expander_Expanded">
+                <Expander Name="MediaExpander" Background="{DynamicResource AlternativeColor}" Expander.Expanded="Expander_Expanded">
                     <Expander.Header>
-                        <TextBlock Text="Media" RenderTransformOrigin=".5,.5">
-                            <TextBlock.LayoutTransform>
-                                <RotateTransform Angle="90" />
-                            </TextBlock.LayoutTransform>
-                        </TextBlock>
+                        <Border BorderThickness="0,0,0,2" BorderBrush="{DynamicResource PrimaryHueMidBrush}">
+                            <TextBlock Margin="5" Style="{StaticResource MaterialDesignTitleTextBlock}"># Media</TextBlock>
+                        </Border>
                     </Expander.Header>
                     <StackPanel Orientation="Vertical"
                             TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
-                            Margin="20,24,50,24"  >
-
+                                Margin="20,00,50,24"  >
 
                         <Grid  VerticalAlignment="Top" >
                             <Grid.RowDefinitions>
@@ -421,9 +420,6 @@
                                 <ColumnDefinition Width="50" />
                                 <ColumnDefinition Width="200" />
                             </Grid.ColumnDefinitions>
-
-                            <TextBlock Grid.Row="0" Style="{StaticResource MaterialDesignTitleTextBlock}">Media</TextBlock>
-
                             <Border  Grid.Row="1"  Style="{StaticResource EmptyBorder}"   />
 
                             <Label Style="{StaticResource BoldLabel}" Grid.Row="2" Grid.Column="0">Media</Label>
@@ -440,9 +436,17 @@
 
                             <Label Style="{StaticResource BoldLabel}" Grid.Row="4" Grid.Column="0" >Born digital</Label>
                             <StackPanel  Grid.Row="4" Grid.Column="2"  Orientation="Horizontal">
-                                <ToggleButton Style="{StaticResource YesNoToggleButtonStyle}"
-                                  IsChecked="True" Name="BornDigitalToggleButton">
-                                </ToggleButton>
+
+                                <CheckBox Name="BornDigitalYesCheckBox"
+                                            Style="{StaticResource MaterialDesignCheckBox}" Checked="BornDigital_Check">
+                                    Yes
+                                </CheckBox>
+
+                                <CheckBox Name="BornDigitalNoCheckBox"
+                                            Style="{StaticResource MaterialDesignCheckBox}" Checked="BornDigital_Check">
+                                   No
+                                </CheckBox>
+                               
                             </StackPanel>
 
                             <Border  Grid.Row="5"  Style="{StaticResource EmptyBorder}"   />
@@ -464,9 +468,15 @@
                             <Label Style="{StaticResource BoldLabel}" Grid.Row="9" Grid.Column="0" Margin="50 0 0 0">Converted</Label>
 
                             <StackPanel  Grid.Row="9" Grid.Column="2"  Orientation="Horizontal">
-                                <ToggleButton Style="{StaticResource YesNoToggleButtonStyle}"
-                                  IsChecked="True" Name="DigitalConvertedToggleButton">
-                                </ToggleButton>
+                                <CheckBox Name="ConvertedYesCheckBox"
+                                            Style="{StaticResource MaterialDesignCheckBox}" Checked="Converted_Check">
+                                    Yes
+                                </CheckBox>
+
+                                <CheckBox Name="ConvertedNoCheckBox"
+                                            Style="{StaticResource MaterialDesignCheckBox}" Checked="Converted_Check">
+                                    No
+                                </CheckBox>
                             </StackPanel>
 
                             <DatePicker Name="DateDigitalConvertedDateDatePicker"  Grid.Row="9" Grid.ColumnSpan="2"   Grid.Column="3" Style="{StaticResource MaterialDesignFloatingHintDatePicker}"  />
@@ -475,9 +485,20 @@
 
                             <Label Style="{StaticResource BoldLabel}" Grid.Row="11" Grid.Column="0" >Access media status</Label>
                             <StackPanel  Grid.Row="11" Grid.Column="2" Grid.ColumnSpan="3"  Orientation="Horizontal">
-                                <ToggleButton Style="{StaticResource ProgressToggleButtonStyle}"
+
+                                <CheckBox Name="AccessMediaStatusCompleteCheckBox"
+                                            Style="{StaticResource MaterialDesignCheckBox}" Checked="AccessMediaStatus_Check">
+                                    Complete
+                                </CheckBox>
+
+                                <CheckBox Name="AccessMediaStatusInProgressCheckBox"
+                                            Style="{StaticResource MaterialDesignCheckBox}" Checked="AccessMediaStatus_Check">
+                                    In progress
+                                </CheckBox>
+                                
+                                <!--<ToggleButton Style="{StaticResource ProgressToggleButtonStyle}"
                                   IsChecked="True" Name="AccessMediaToggleButton">
-                                </ToggleButton>
+                                </ToggleButton>-->
                             </StackPanel>
 
                             <Border  Grid.Row="12"  Style="{StaticResource EmptyBorder}"   />
@@ -504,17 +525,16 @@
                 <Border Background="{DynamicResource MaterialDesignDivider}" Width="1" VerticalAlignment="Stretch" SnapsToDevicePixels="True" />
 
                 <!--Metadata Details-->
-                <Expander Name="MetadataExpander" ExpandDirection="Right" Background="{DynamicResource PrimaryHueLightBrush}" Expander.Expanded="Expander_Expanded">
+                <Expander Name="MetadataExpander" Background="{DynamicResource PrimaryHueLightBrush}" Expander.Expanded="Expander_Expanded">
+
                     <Expander.Header>
-                        <TextBlock Text="Metadata" RenderTransformOrigin=".5,.5">
-                            <TextBlock.LayoutTransform>
-                                <RotateTransform Angle="90" />
-                            </TextBlock.LayoutTransform>
-                        </TextBlock>
+                        <Border BorderThickness="0,0,0,2" BorderBrush="{DynamicResource PrimaryHueMidBrush}">
+                            <TextBlock Margin="5" Style="{StaticResource MaterialDesignTitleTextBlock}"># Metadata</TextBlock>
+                        </Border>
                     </Expander.Header>
                     <StackPanel Orientation="Vertical"
                             TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
-                            Margin="20,24,50,24"  >
+                                Margin="20,00,50,24"  >
 
 
                         <Grid  VerticalAlignment="Top" >
@@ -556,8 +576,6 @@
                                 <ColumnDefinition Width="200" />
                                 <ColumnDefinition Width="300" />
                             </Grid.ColumnDefinitions>
-
-                            <TextBlock Grid.Row="0" Style="{StaticResource MaterialDesignTitleTextBlock}">Metadata</TextBlock>
 
                             <Border  Grid.Row="1"  Style="{StaticResource EmptyBorder}"   />
 
@@ -675,23 +693,18 @@
 
                     </StackPanel>
                 </Expander>
-
-
                 <Border Background="{DynamicResource MaterialDesignDivider}" Width="1" VerticalAlignment="Stretch" SnapsToDevicePixels="True" />
 
                 <!--Supplimental Details-->
-                <Expander  Name="SupplementalExpander" ExpandDirection="Right" Background="{DynamicResource AlternativeColor}" Expander.Expanded="Expander_Expanded">
+                <Expander  Name="SupplementalExpander"  Background="{DynamicResource AlternativeColor}" Expander.Expanded="Expander_Expanded">
                     <Expander.Header>
-                        <TextBlock Text="Supplemental" RenderTransformOrigin=".5,.5">
-                            <TextBlock.LayoutTransform>
-                                <RotateTransform Angle="90" />
-                            </TextBlock.LayoutTransform>
-                        </TextBlock>
+                        <Border BorderThickness="0,0,0,2" BorderBrush="{DynamicResource PrimaryHueMidBrush}">
+                            <TextBlock Margin="5" Style="{StaticResource MaterialDesignTitleTextBlock}"># Supplement</TextBlock>
+                        </Border>
                     </Expander.Header>
                     <StackPanel Orientation="Vertical"
                             TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
-                            Margin="20,24,50,24">
-
+                                Margin="20,00,50,24"  >
 
                         <Grid  VerticalAlignment="Top" >
                             <Grid.RowDefinitions>
@@ -734,46 +747,65 @@
                                 <ColumnDefinition Width="200" />
                             </Grid.ColumnDefinitions>
 
-                            <TextBlock Grid.Row="0" Style="{StaticResource MaterialDesignTitleTextBlock}">Supplement</TextBlock>
-
-                            <Border  Grid.Row="1"  Style="{StaticResource EmptyBorder}"   />
+                            <Border  Grid.Row="0"  Style="{StaticResource EmptyBorder}"   />
 
                             <Label Style="{StaticResource BoldLabel}" Grid.Row="2" Grid.Column="0">On CONTENT dm</Label>
 
                             <StackPanel  Grid.Row="2" Grid.Column="2"  Orientation="Horizontal">
-                                <ToggleButton Style="{StaticResource YesNoToggleButtonStyle}"
-                                  IsChecked="True" Name="OnContentDmToggleButton">
-                                </ToggleButton>
+
+                                <CheckBox Name="OnContentDmYesCheckBox"  Style="{StaticResource MaterialDesignCheckBox}" Checked="OnContentDmNo_Check">
+                                    Yes
+                                </CheckBox>
+
+                                <CheckBox Name="OnContentDmNoCheckBox" Style="{StaticResource MaterialDesignCheckBox}" Checked="OnContentDmNo_Check">
+                                    No
+                                </CheckBox>
+                            
                             </StackPanel>
 
                             <Border  Grid.Row="3"  Style="{StaticResource EmptyBorder}"   />
 
                             <Label Style="{StaticResource BoldLabel}" Grid.Row="4" Grid.Column="0">In Rosetta</Label>
                             <StackPanel  Grid.Row="4" Grid.Column="2"  Orientation="Horizontal">
-                                <ToggleButton Style="{StaticResource YesNoToggleButtonStyle}"
-                                  IsChecked="True" Name="InRosettaToggleButton">
-                                </ToggleButton>
+
+                                <CheckBox Name="InRosettaYesCheckBox"  Style="{StaticResource MaterialDesignCheckBox}" Checked="InRosetta_Check">
+                                    Yes
+                                </CheckBox>
+
+                                <CheckBox Name="InRosettaNoCheckBox" Style="{StaticResource MaterialDesignCheckBox}" Checked="InRosetta_Check">
+                                    No
+                                </CheckBox>
+                              
                             </StackPanel>
 
                             <Border  Grid.Row="5"  Style="{StaticResource EmptyBorder}"   />
 
                             <Label Style="{StaticResource BoldLabel}" Grid.Row="6" Grid.Column="0">Release form</Label>
                             <StackPanel  Grid.Row="6" Grid.Column="2"  Orientation="Horizontal">
-                                <ToggleButton Style="{StaticResource YesNoToggleButtonStyle}"
-                                  IsChecked="True" Name="ReleaseFormToggleButton">
-                                </ToggleButton>
+                                <CheckBox Name="ReleaseFormYesCheckBox"  Style="{StaticResource MaterialDesignCheckBox}" Checked="ReleaseForm_Check">
+                                    Yes
+                                </CheckBox>
+
+                                <CheckBox Name="ReleaseFormNoCheckBox" Style="{StaticResource MaterialDesignCheckBox}" Checked="ReleaseForm_Check">
+                                    No
+                                </CheckBox>
                             </StackPanel>
 
-                            <Border  Grid.Row="7"  Style="{StaticResource EmptyBorder}"   />
+                            <Border Name="RestrictionsBorder1"  Grid.Row="7"  Style="{StaticResource EmptyBorder}"   />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="8" Grid.Column="0">Restrictions</Label>
-                            <StackPanel  Grid.Row="8" Grid.Column="2"  Orientation="Horizontal"    >
-                                <ToggleButton Style="{StaticResource YesNoToggleButtonStyle}"
-                                  IsChecked="True" Name="RestrictionsToggleButton">
-                                </ToggleButton>
+                            <Label Name="RestrictionsLabel"  Style="{StaticResource BoldLabel}" Grid.Row="8" Grid.Column="0">Restrictions</Label>
+                            <StackPanel Name="RestrictionsStackPanel"  Grid.Row="8" Grid.Column="2"  Orientation="Horizontal"    >
+                                <CheckBox Name="RestrictionsYesCheckBox"  Style="{StaticResource MaterialDesignCheckBox}" Checked="Restrictions_Check">
+                                    Yes
+                                </CheckBox>
+
+                                <CheckBox Name="RestrictionsNoCheckBox" Style="{StaticResource MaterialDesignCheckBox}" Checked="Restrictions_Check">
+                                    No
+                                </CheckBox>
+                              
                             </StackPanel>
 
-                            <Border  Grid.Row="9"   Style="{StaticResource EmptyBorder}"   />
+                            <Border  Name="RestrictionsBorder2" Grid.Row="9"   Style="{StaticResource EmptyBorder}"   />
 
                             <TextBox Name="RestrictionNoteTextBox" BorderThickness="1"  Grid.Row="10" Grid.Column="2"  Grid.ColumnSpan="3"
                                     Height="100" AcceptsReturn="True" TextWrapping="Wrap"   VerticalScrollBarVisibility="Auto"      Style="{StaticResource EditableTextBox}" />
