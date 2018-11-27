@@ -1,7 +1,5 @@
 ﻿using MaterialDesignThemes.Wpf;
 using Model.Transfer;
-using System;
-using System.Windows;
 using System.Windows.Controls;
 
 namespace WpfApp
@@ -13,6 +11,8 @@ namespace WpfApp
     /// <seealso cref="System.Windows.Markup.IComponentConnector" />
     public partial class Setting : UserControl
     {
+        #region Constructor
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Setting"/> class.
         /// </summary>
@@ -20,6 +20,10 @@ namespace WpfApp
         {
             InitializeComponent();
         }
+
+        #endregion
+
+        #region Events
 
         /// <summary>
         /// Handles the OnDialogClosing event of the Confirmaiton control.
@@ -34,6 +38,10 @@ namespace WpfApp
             }
 
         }
+
+        #endregion
+
+        #region Methods
 
         /// <summary>
         /// Clears the database.
@@ -52,5 +60,6 @@ namespace WpfApp
             }
         }
 
+        #endregion
     }
 }

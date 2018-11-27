@@ -22,6 +22,7 @@ namespace WpfApp
     /// <seealso cref="System.Windows.Markup.IComponentConnector" />
     public partial class LoginWindow : Window
     {
+        #region Constructor
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LoginWindow"/> class.
@@ -30,6 +31,10 @@ namespace WpfApp
         {
             InitializeComponent();
         }
+
+        #endregion
+
+        #region Events
 
         /// <summary>
         /// Handles the Click event of the LoginButton control.
@@ -88,5 +93,7 @@ namespace WpfApp
         {
             Application.Current.Shutdown();
         }
+
+        #endregion
     }
 }

@@ -49,7 +49,7 @@ namespace BusinessServices.Services
                 {
                     subseriesList = subseryRepository.GetAll();
                 }
-            
+
                 return subseriesList;
             }
         }
@@ -92,7 +92,7 @@ namespace BusinessServices.Services
                 SubseryName = subsery.SubseriesName
             };
         }
-              
+
         /// <summary>
         /// Converts to keyword model.
         /// </summary>
@@ -151,7 +151,7 @@ namespace BusinessServices.Services
                 ProjectCode = transcription.ProjectCode,
                 AccessFileLocation = transcription.AccessFileLocation,
                 AuditCheckCompleted = transcription.AuditCheckCompleted,
-                AuditCheckCompletedDate = transcription.AuditCheckCompletedDate != null ? transcription.AuditCheckCompletedDate : null ,
+                AuditCheckCompletedDate = transcription.AuditCheckCompletedDate != null ? transcription.AuditCheckCompletedDate : null,
                 ConvertToDigitalDate = transcription.ConvertToDigitalDate != null ? transcription.ConvertToDigitalDate : null,
                 CoverageSpatial = transcription.CoverageSpatial,
                 CoverageTemporal = transcription.CoverageTemporal,
@@ -197,7 +197,14 @@ namespace BusinessServices.Services
                 UpdatedBy = transcription.UpdatedBy,
                 UpdatedDate = transcription.UpdatedDate.Date,
                 Identifier = transcription.Identifier,
-                
+
+                InterviewerDescription = transcription.InterviewerDescription,
+                InterviewerKeywords = transcription.InterviewerKeywords,
+                InterviewerSubjects = transcription.InterviewerSubjects,
+                SentOut = transcription.SentOut,
+                EquipmentNumber = transcription.EquipmentNumber,
+                MetadataDraft = transcription.MetadataDraft,
+
                 CollectionName = collectionListInstance.First(c => c.Id == transcription.CollectionId).CollectionName,
                 SubseriesName = SubseriesListInstance.First(s => s.Id == transcription.SubseriesId).SubseriesName,
             };
@@ -209,7 +216,7 @@ namespace BusinessServices.Services
         /// <param name="transcriptionModel">The transcription model.</param>
         /// <returns></returns>
         public static transcription ConvertToTranscription(TranscriptionModel transcriptionModel)
-        { 
+        {
             return new transcription()
             {
                 CollectionId = (short)transcriptionModel.CollectionId,
@@ -228,6 +235,14 @@ namespace BusinessServices.Services
                 ReleaseForm = transcriptionModel.ReleaseForm,
                 Subject = transcriptionModel.Subject,
                 Title = transcriptionModel.Title,
+
+                MetadataDraft = transcriptionModel.MetadataDraft,
+                SentOut = transcriptionModel.SentOut,
+                EquipmentNumber = transcriptionModel.EquipmentNumber,
+
+                InterviewerDescription =GetSubString(transcriptionModel.InterviewerDescription),
+                InterviewerKeywords =  GetSubString(transcriptionModel.InterviewerKeywords),
+                InterviewerSubjects =GetSubString(transcriptionModel.InterviewerSubjects),
 
                 //AuditCheckCompletedDate = DateTime.MinValue,//DBNull.Value, //transcriptionModel.CreatedDate,
                 //EditWithCorrectionDate = DateTime.MinValue,
@@ -283,6 +298,17 @@ namespace BusinessServices.Services
                 UpdatedBy = transcriptionModel.UpdatedBy,
                 UpdatedDate = transcriptionModel.UpdatedDate
             };
+        }
+
+        private static string GetSubString(string value)
+        {
+
+            if (!string.IsNullOrEmpty(value))
+            {
+                return value.Length > 1000 ? value.Substring(1000) : value;
+            }
+
+            return string.Empty;
         }
 
         /// <summary>
@@ -446,8 +472,8 @@ namespace BusinessServices.Services
         /// <param name="userModel">The user model.</param>
         /// <returns></returns>
         internal static user ConvertToUser(user daUser, UserModel userModel)
-        {          
-           return daUser;
+        {
+            return daUser;
         }
     }
 }

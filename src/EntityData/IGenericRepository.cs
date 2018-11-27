@@ -1,15 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EntityData
-{ /// <summary>
-  /// Interface method that have to implement within the repositories.
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
+{
+    /// <summary>
+    /// Interface method that have to implement within the repositories.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public interface IGenericRepository<T> where T : class
     {
         /// <summary>

@@ -2,12 +2,9 @@
 using Model;
 using Model.Transfer;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 using WpfApp.Helper;
 
 namespace WpfApp
@@ -128,6 +125,10 @@ namespace WpfApp
 
                 TranscriptStatus = TranscriptStatusCompleteCheckBox.IsChecked.Value,// TranscriptStatusToggleButton.IsChecked.Value,
 
+                SentOut = SentOutYesCheckBox.IsChecked.Value,
+
+                MetadataDraft = MetadataDraftTextBox.Text,
+
                 FinalSentDate = FinalSentDatePicker.SelectedDate != null ?
                 FinalSentDatePicker.SelectedDate.Value.Date
                 : (DateTime?)null,
@@ -242,6 +243,11 @@ namespace WpfApp
                 IsVideoFormat = RecordingFormatVideoCheckBox.IsChecked.Value ? true : false,
 
                 EquipmentUsed = EquipmentUsedTextBox.Text,
+                EquipmentNumber = EquipmentNumberTextBox.Text,
+                InterviewerDescription = InterviewerDescriptionTextBox.Text,
+                InterviewerKeywords = InterviewerKeywordsTextBox.Text,
+                InterviewerSubjects = InterviewerSubjectsTextBox.Text,
+
                 Place = PlaceTextBox.Text,
                 InterviewerNote = InterviewerNoteTextBox.Text
             };
@@ -338,17 +344,31 @@ namespace WpfApp
         }
 
         /// <summary>
-        /// Called when [content dm no check].
+        /// Called when [content dm check].
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
-        private void OnContentDmNo_Check(object sender, RoutedEventArgs e)
+        private void OnContentDm_Check(object sender, RoutedEventArgs e)
         {
             CheckBox currentCheckBox = (CheckBox)sender;
 
             UIHelper.SetMutualExclusivity((CheckBox)sender,
                 OnContentDmYesCheckBox,
                 OnContentDmNoCheckBox);
+        }
+
+        /// <summary>
+        ///  Called when [sent out check].
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SentOut_Check(object sender, RoutedEventArgs e)
+        {
+            CheckBox currentCheckBox = (CheckBox)sender;
+
+            UIHelper.SetMutualExclusivity((CheckBox)sender,
+                SentOutYesCheckBox,
+                SentOutNoCheckBox);
         }
 
         /// <summary>
@@ -505,11 +525,16 @@ namespace WpfApp
                 FinalEditCompletedTDateDatePicker.Text = transcriptionModel.FirstEditCompletedDate != null ?
                     ((DateTime)transcriptionModel.FirstEditCompletedDate).ToShortDateString() : string.Empty;
 
+                MetadataDraftTextBox.Text = transcriptionModel.MetadataDraft;
+
                 FinalSentDatePicker.Text = transcriptionModel.FinalSentDate != null ?
                     ((DateTime)transcriptionModel.FinalSentDate).ToShortDateString() : string.Empty;
 
                 TranscriptStatusCompleteCheckBox.IsChecked = transcriptionModel.TranscriptStatus;
                 TranscriptStatusInProgressCheckBox.IsChecked = !transcriptionModel.TranscriptStatus;
+
+                SentOutYesCheckBox.IsChecked = transcriptionModel.SentOut;
+                SentOutNoCheckBox.IsChecked = !transcriptionModel.SentOut;
 
                 TranscriberLocationTextBox.Text = transcriptionModel.TranscriberLocation;
 
@@ -588,8 +613,13 @@ namespace WpfApp
                 RecordingFormatAudioCheckBox.IsChecked = transcriptionModel.IsAudioFormat;
                 RecordingFormatVideoCheckBox.IsChecked = transcriptionModel.IsVideoFormat;
 
-
                 EquipmentUsedTextBox.Text = transcriptionModel.EquipmentUsed;
+
+                EquipmentNumberTextBox.Text = transcriptionModel.EquipmentNumber;
+                InterviewerDescriptionTextBox.Text = transcriptionModel.InterviewerDescription;
+                InterviewerKeywordsTextBox.Text = transcriptionModel.InterviewerKeywords;
+                InterviewerSubjectsTextBox.Text = transcriptionModel.InterviewerSubjects;
+
                 PlaceTextBox.Text = transcriptionModel.Place;
                 InterviewerNoteTextBox.Text = transcriptionModel.InterviewerNote;
 
@@ -672,19 +702,20 @@ namespace WpfApp
                     RestrictionsStackPanel.Visibility = Visibility.Collapsed;
                     RestrictionsBorder2.Visibility = Visibility.Collapsed;
                     RestrictionNoteTextBox.Visibility = Visibility.Collapsed;
+                    RestrictionNoteLabel.Visibility = Visibility.Collapsed;
                     break;
                 case WellKnownUserType.AdminUser:
-
                     RestrictionsBorder1.Visibility = Visibility.Visible;
                     RestrictionsLabel.Visibility = Visibility.Visible;
                     RestrictionsStackPanel.Visibility = Visibility.Visible;
                     RestrictionsBorder2.Visibility = Visibility.Visible;
                     RestrictionNoteTextBox.Visibility = Visibility.Visible;
+                    RestrictionNoteLabel.Visibility = Visibility.Visible;
                     break;
                 default:
                     break;
             }
-            
+
         }
 
         #endregion

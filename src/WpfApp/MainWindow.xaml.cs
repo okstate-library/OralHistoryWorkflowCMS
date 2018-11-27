@@ -18,11 +18,16 @@ namespace WpfApp
     /// <seealso cref="System.Windows.Markup.IComponentConnector" />
     public partial class MainWindow : Window
     {
+        #region Public properties
+
         /// <summary>
         /// The snackbar
         /// </summary>
         public static Snackbar Snackbar;
 
+        #endregion
+
+        #region Constructor
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWindow" /> class.
@@ -48,6 +53,10 @@ namespace WpfApp
 
             DataContext = new MainWindowViewModel(MainSnackbar.MessageQueue, App.IsValidToProcess);
         }
+
+        #endregion
+
+        #region Events
 
         /// <summary>
         /// Handles the Loaded event of the MainWindow control.
@@ -133,5 +142,7 @@ namespace WpfApp
 
             MainWindow_Loaded(null, null);
         }
+
+        #endregion
     }
 }

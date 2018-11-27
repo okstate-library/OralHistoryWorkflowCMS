@@ -18,11 +18,20 @@ namespace WpfApp
     /// <summary>
     /// Interaction logic for ControlledVocabulary.xaml
     /// </summary>
+    /// <seealso cref="System.Windows.Controls.UserControl" />
+    /// <seealso cref="System.Windows.Markup.IComponentConnector" />
     public partial class ControlledVocabulary : UserControl
     {
+        #region Constructor
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ControlledVocabulary"/> class.
+        /// </summary>
         public ControlledVocabulary()
         {
             InitializeComponent();
-        }
+        } 
+
+        #endregion
     }
 }

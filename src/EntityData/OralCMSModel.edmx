@@ -52,9 +52,9 @@
           <Property Name="Description" Type="varchar" MaxLength="2000" />
           <Property Name="Keywords" Type="varchar" MaxLength="500" />
           <Property Name="Subject" Type="varchar" MaxLength="500" />
-          <Property Name="InterviewerDescription" Type="varchar" MaxLength="250" />
-          <Property Name="InterviewerKeywords" Type="varchar" MaxLength="250" />
-          <Property Name="InterviewerSubjects" Type="varchar" MaxLength="250" />
+          <Property Name="InterviewerDescription" Type="varchar" MaxLength="1000" />
+          <Property Name="InterviewerKeywords" Type="varchar" MaxLength="1000" />
+          <Property Name="InterviewerSubjects" Type="varchar" MaxLength="1000" />
           <Property Name="ScopeAndContents" Type="varchar" MaxLength="500" />
           <Property Name="Format" Type="varchar" MaxLength="250" />
           <Property Name="Type" Type="varchar" MaxLength="250" />
@@ -73,7 +73,7 @@
           <Property Name="IsRestriction" Type="bool" Nullable="false" />
           <Property Name="LegalNote" Type="varchar" MaxLength="500" />
           <Property Name="EquipmentUsed" Type="varchar" MaxLength="250" />
-          <Property Name="EuipmentNumber" Type="varchar" MaxLength="50" />
+          <Property Name="EquipmentNumber" Type="varchar" MaxLength="50" />
           <Property Name="InterviewerNote" Type="varchar" MaxLength="250" />
           <Property Name="ReleaseForm" Type="bool" Nullable="false" />
           <Property Name="Place" Type="varchar" MaxLength="250" />
@@ -92,6 +92,7 @@
           <Property Name="FinalEditDate" Type="datetime" Precision="6" />
           <Property Name="FinalSentDate" Type="datetime" Precision="6" />
           <Property Name="TranscriptStatus" Type="bool" Nullable="false" />
+		  <Property Name="MetadataDraft" Type="varchar" MaxLength="50" />
           <Property Name="TranscriptLocation" Type="utinyint" Nullable="false" />
           <Property Name="TranscriptNote" Type="varchar" MaxLength="500" />
           <Property Name="IsAudioFormat" Type="bool" Nullable="false" />
@@ -257,11 +258,12 @@
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" />
           <Property Name="UpdatedBy" Type="Int32" Nullable="false" />
           <Property Name="UpdatedDate" Type="DateTime" Nullable="false" />
-          <Property Name="InterviewerDescription" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="InterviewerKeywords" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="InterviewerSubjects" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="EuipmentNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="InterviewerDescription" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="InterviewerKeywords" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="InterviewerSubjects" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="EquipmentNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="SentOut" Type="Boolean" Nullable="false" />
+		  <Property Name="MetadataDraft" Type="String" Nullable="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -320,7 +322,7 @@
             <EntityTypeMapping TypeName="oralcmsdbModel.transcription">
               <MappingFragment StoreEntitySet="transcriptions">
                 <ScalarProperty Name="SentOut" ColumnName="SentOut" />
-                <ScalarProperty Name="EuipmentNumber" ColumnName="EuipmentNumber" />
+                <ScalarProperty Name="EquipmentNumber" ColumnName="EquipmentNumber" />
                 <ScalarProperty Name="InterviewerSubjects" ColumnName="InterviewerSubjects" />
                 <ScalarProperty Name="InterviewerKeywords" ColumnName="InterviewerKeywords" />
                 <ScalarProperty Name="InterviewerDescription" ColumnName="InterviewerDescription" />
@@ -390,6 +392,7 @@
                 <ScalarProperty Name="ReasonForPriority" ColumnName="ReasonForPriority" />
                 <ScalarProperty Name="IsPriority" ColumnName="IsPriority" />
                 <ScalarProperty Name="ProjectCode" ColumnName="ProjectCode" />
+				<ScalarProperty Name="MetadataDraft" ColumnName="MetadataDraft" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

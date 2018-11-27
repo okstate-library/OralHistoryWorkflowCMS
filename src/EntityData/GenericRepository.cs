@@ -1,13 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using LinqKit;
+using System;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
-using LinqKit;
 
 namespace EntityData
 {
+    /// <summary>
+    /// Defiens the generic methods for the generic repository class.
+    /// </summary>
+    /// <typeparam name="C"></typeparam>
+    /// <typeparam name="T"></typeparam>
+    /// <seealso cref="EntityData.IGenericRepository{T}" />
     public abstract class GenericRepository<C, T> :
        IGenericRepository<T>
           where T : class
@@ -22,6 +25,9 @@ namespace EntityData
         /// <summary>
         /// The database context for the repository
         /// </summary>
+        /// <value>
+        /// The context.
+        /// </value>
         public C Context
         {
             get { return _entities; }
@@ -31,7 +37,6 @@ namespace EntityData
         /// <summary>
         /// Gets all entities matching the predicate
         /// </summary>
-        /// <param name="predicate">The filter clause</param>
         /// <returns>
         /// All entities matching the predicate.
         /// </returns>
@@ -45,7 +50,9 @@ namespace EntityData
         /// Set based on where condition
         /// </summary>
         /// <param name="predicate">The predicate</param>
-        /// <returns>The records matching the given condition</returns>
+        /// <returns>
+        /// The records matching the given condition
+        /// </returns>
         public IQueryable<T> FindBy(Expression<Func<T, bool>> predicate)
         {
             IQueryable<T> query = _entities.Set<T>().AsExpandable().Where(predicate);
@@ -56,7 +63,9 @@ namespace EntityData
         /// Returns the first entity that matches the predicate
         /// </summary>
         /// <param name="predicate">The filter clause</param>
-        /// <returns>An entity matching the predicate</returns>
+        /// <returns>
+        /// An entity matching the predicate
+        /// </returns>
         public T First(Expression<Func<T, bool>> predicate)
         {
             return _entities.Set<T>().First(predicate);
@@ -66,7 +75,9 @@ namespace EntityData
         /// Returns the first entity that matches the predicate else null
         /// </summary>
         /// <param name="predicate">The filter clause</param>
-        /// <returns>An entity matching the predicate else null</returns>
+        /// <returns>
+        /// An entity matching the predicate else null
+        /// </returns>
         public T FirstToDelete(Expression<Func<T, bool>> predicate)
         {
             T t = _entities.Set<T>().FirstOrDefault(predicate);
@@ -79,7 +90,9 @@ namespace EntityData
         /// Returns the first entity that matches the predicate else null
         /// </summary>
         /// <param name="predicate">The filter clause</param>
-        /// <returns>An entity matching the predicate else null</returns>
+        /// <returns>
+        /// An entity matching the predicate else null
+        /// </returns>
         public T FirstOrDefault(Expression<Func<T, bool>> predicate)
         {
             return _entities.Set<T>().FirstOrDefault(predicate);
@@ -110,7 +123,9 @@ namespace EntityData
         /// Deletes a given entity from the context
         /// </summary>
         /// <param name="predicate">The predicate.</param>
-        /// <returns></returns>
+        /// <returns>
+        /// Return No of records that deleted.
+        /// </returns>
         public virtual int Delete(Expression<Func<T, bool>> predicate)
         {
             IQueryable<T> query = _entities.Set<T>().Where(predicate);
@@ -139,6 +154,9 @@ namespace EntityData
         /// <summary>
         /// Saves this instance.
         /// </summary>
+        /// <returns>
+        /// Returns the id of the saved entry.
+        /// </returns>
         public virtual int Save()
         {
             return _entities.SaveChanges();
@@ -147,7 +165,9 @@ namespace EntityData
         /// <summary>
         /// Counts the specified predicate.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>
+        /// Retrns the record count.
+        /// </returns>
         public int Count()
         {
             return _entities.Set<T>().Count();
@@ -157,7 +177,9 @@ namespace EntityData
         /// Counts the specified predicate.
         /// </summary>
         /// <param name="predicate">The predicate.</param>
-        /// <returns></returns>
+        /// <returns>
+        /// Returns the record count for the given predicate.
+        /// </returns>
         public int Count(Expression<Func<T, bool>> predicate)
         {
             return _entities.Set<T>().Count(predicate);

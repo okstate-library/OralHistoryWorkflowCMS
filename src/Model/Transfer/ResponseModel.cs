@@ -1,14 +1,10 @@
 ﻿using Model.Transfer.Search;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Model.Transfer
 {
     /// <summary>
-    /// 
+    /// Defines the properties for the response model.
     /// </summary>
     /// <seealso cref="Model.BaseResponse" />
     public class ResponseModel : BaseResponse

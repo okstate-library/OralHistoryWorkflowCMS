@@ -15,6 +15,7 @@ namespace WpfApp
     public partial class FindReplace : UserControl
     {
         #region Constructor
+
         /// <summary>
         /// Initializes a new instance of the <see cref="FindReplace" /> class.
         /// </summary>
@@ -101,9 +102,7 @@ namespace WpfApp
 
             ClearData();
         }
-
-
-
+               
         #endregion
 
         #region Methods

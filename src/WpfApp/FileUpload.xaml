@@ -96,6 +96,24 @@
                         Rights<LineBreak/>	
                         Language<LineBreak/>
                         Project Code<LineBreak/>
+                        Transcription Notes<LineBreak/>                                
+                        Equipment #<LineBreak/>
+                        Metadata Draft<LineBreak/>	
+                        Location of Interview<LineBreak/>	
+                        Interviewer Description<LineBreak/>	
+                        Interviewer Keywords<LineBreak/>	
+                        Interviewer Subjects<LineBreak/>	
+                        Release Form<LineBreak/>
+                        Restrictions<LineBreak/>	
+                        Restriction Notes<LineBreak/>	
+                        Recording Format<LineBreak/>	
+                        Equipment Used<LineBreak/>	
+                        Interviewer Notes<LineBreak/>	
+                        Sent Out<LineBreak/>	
+                        Transcription Status<LineBreak/>	
+                        Access Media Status<LineBreak/>	
+                        Born digital<LineBreak/>	
+                        On CONTENTdm<LineBreak/>
 
                             </TextBlock>
                         </StackPanel>

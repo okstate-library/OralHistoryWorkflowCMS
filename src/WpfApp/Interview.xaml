@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:domain1="clr-namespace:WpfApp.Domain"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
@@ -38,7 +39,39 @@
                       Foreground="{DynamicResource PrimaryHueLightForegroundBrush}"
                       Width="180" Margin="0 0 1 0">
                 <StackPanel>
-                    <TextBlock Margin="20">Add interview details</TextBlock>
+
+                    <Grid Margin="10 10 0 10"  >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <StackPanel  Grid.Row="0">
+                            <TextBlock Text="Instructions" FontWeight="Bold" FontSize="18" />
+                        </StackPanel>
+                        <Border Grid.Row="1" Style="{StaticResource EmptyBorder}"   />
+                        <StackPanel  Grid.Row="2">
+                            <TextBlock Text=" Required fields:" FontWeight="Bold" FontSize="13" />
+                            <TextBlock Margin="10 0 0 0" FontSize="12">
+                        Title<LineBreak/>	
+                        Interviewee	<LineBreak/>
+                        Interviewer<LineBreak/>	
+                        Interview Date <LineBreak/>
+                        Collection	<LineBreak/>
+                        Subseries <LineBreak/>
+                            </TextBlock>
+                        </StackPanel>
+
+                    </Grid>
                 </StackPanel>
             </materialDesign:Card>
 
@@ -46,7 +79,7 @@
 
                 <StackPanel Orientation="Vertical"
                             TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
-                            Margin="20,0,50,24"  >
+                            Margin="20,50,50,24"  >
 
 
                     <Grid  VerticalAlignment="Top" >
@@ -91,24 +124,58 @@
 
                         <Label Style="{StaticResource BoldLabel}" Grid.Row="0" Grid.Column="0">Title</Label>
 
-                        <TextBox Name="TitleTextBox" Grid.Row="0"  Grid.Column="1" Grid.ColumnSpan="3"   Style="{StaticResource EditableTextBox}" />
+                        <TextBox Name="TitleTextBox" Grid.Row="0"  Grid.Column="1" Grid.ColumnSpan="3"   Style="{StaticResource EditableTextBox}" >
+                            <TextBox.Text>
+                                <Binding Path="Title" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <domain1:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
 
                         <Border  Grid.Row="1"  Style="{StaticResource EmptyBorder}"   />
 
                         <Label Style="{StaticResource BoldLabel}" Grid.Row="2" Grid.Column="0">Interviewee</Label>
-                       
-                        <TextBox Name="IntervieweeTextBox"  Grid.Row="2" Grid.Column="1"   Style="{StaticResource EditableTextBox}" />
+
+                        <TextBox Name="IntervieweeTextBox"  Grid.Row="2" Grid.Column="1"   Style="{StaticResource EditableTextBox}">
+                            <TextBox.Text>
+                                <Binding Path="Interviewee" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <domain1:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
 
                         <Label Style="{StaticResource BoldLabel}" Margin="15 0 0 0" Grid.Row="2" Grid.Column="2">Interviewer</Label>
 
-                        <TextBox Name="InterviewerTextBox" Grid.Row="2" Grid.Column="3"   Style="{StaticResource EditableTextBox}" />
+                        <TextBox Name="InterviewerTextBox" Grid.Row="2" Grid.Column="3"   Style="{StaticResource EditableTextBox}" >
+                            <TextBox.Text>
+                                <Binding Path="Interviewer" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <domain1:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
 
                         <Border  Grid.Row="3"  Style="{StaticResource EmptyBorder}"   />
 
                         <Label Style="{StaticResource BoldLabel}" Grid.Row="4" Grid.Column="0">Interview date</Label>
 
-                        <DatePicker Name="InterviewDateDateDatePicker"  Grid.Row="4" Grid.ColumnSpan="1"   Grid.Column="1" Style="{StaticResource MaterialDesignFloatingHintDatePicker}"  />
-
+                        <DatePicker Name="InterviewDateDateDatePicker"  Grid.Row="4" Grid.ColumnSpan="1"   Grid.Column="1"
+                                    Style="{StaticResource MaterialDesignFloatingHintDatePicker}"  >
+                            <DatePicker.SelectedDate>
+                                <Binding      Path="InterviewDate"      UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <domain1:PastDateValidationRule
+                                            ValidatesOnTargetUpdated="True" xmlns:domain="clr-namespace:MaterialDesignDemo.Domain" />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </DatePicker.SelectedDate>
+                        </DatePicker>
+                     
                         <Label Style="{StaticResource BoldLabel}" Grid.Row="4" Grid.Column="2" Margin="15 0 0 0" >Place (City and county)</Label>
 
                         <TextBox Name="PlaceTextBox" Grid.Row="4" Grid.Column="3"   Style="{StaticResource EditableTextBox}" />
@@ -117,18 +184,38 @@
 
                         <Label Style="{StaticResource BoldLabel}" Grid.Row="6" Grid.Column="0">Collection</Label>
 
-                        <ComboBox  Grid.Row="6" Grid.Column="1" Name="CollectionComboBox" SelectionChanged="CollectionComboBox_SelectionChanged" DisplayMemberPath="CollectionName"/>
+                        <ComboBox Grid.Row="6" Grid.Column="1" ItemsSource="{Binding Collections}" DisplayMemberPath="Name" 
+                                  HorizontalAlignment="Left" Name="CollectionComboBox" VerticalAlignment="Top" Width="300" >
+                            <ComboBox.Text>
+                                <Binding Path="SelectedCollection" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <domain1:NotEmptyValidationRule ValidatesOnTargetUpdated="True"/>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </ComboBox.Text>
+                        </ComboBox>
+
+                        <!--<ComboBox  Grid.Row="6" Grid.Column="1" Name="CollectionComboBox" SelectionChanged="CollectionComboBox_SelectionChanged" />-->
 
                         <Label Style="{StaticResource BoldLabel}" Grid.Row="6" Grid.Column="2" Margin="15 0 0 0" >Subseries</Label>
 
-                        <TextBox Name="LabguageTextBox" Grid.Row="6" Grid.Column="3"   Style="{StaticResource EditableTextBox}" />
+                        <ComboBox Grid.Row="6" Grid.Column="3" ItemsSource="{Binding SelectedItem.Series, ElementName=CollectionComboBox}"   DisplayMemberPath="Value" 
+                                  HorizontalAlignment="Left" Name="SubseriesComboBox" VerticalAlignment="Top"   Width="300" >
+                            <ComboBox.Text>
+                                <Binding Path="SelectedCollection" Mode="OneWay" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <domain1:NotEmptyValidationRule ValidatesOnTargetUpdated="True"/>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </ComboBox.Text>
+                        </ComboBox>
 
-                        <ComboBox  Grid.Row="6" Grid.Column="3" Name="SubseriesComboBox" DisplayMemberPath="SubseryName"/>
+                        <!--<ComboBox  Grid.Row="6" Grid.Column="3" Name="SubseriesComboBox" DisplayMemberPath="SubseryName"/>-->
 
                         <Border  Grid.Row="7"  Style="{StaticResource EmptyBorder}"   />
 
                         <Label Style="{StaticResource BoldLabel}" Grid.Row="8" Grid.Column="0">Subject</Label>
-                       
+
                         <TextBox Name="SubjectTextBox" Grid.Row="8"  Grid.Column="1" Grid.ColumnSpan="3"  Height="50" AcceptsReturn="True" 
                                      TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"   Style="{StaticResource EditableTextBox}" />
 
@@ -179,7 +266,7 @@
                         </ToggleButton>-->
 
                         <Label Style="{StaticResource BoldLabel}" Grid.Row="16" Grid.Column="2" Margin="15 0 0 0" >Record format</Label>
-                      
+
                         <StackPanel  Grid.Row="16" Grid.Column="3"  Orientation="Horizontal"    >
                             <CheckBox Name="MediaAudioCheckBox">
                                 Audio
@@ -207,7 +294,7 @@
                             </CheckBox>
 
                         </StackPanel>
-                        
+
                         <!--<ToggleButton  Grid.Row="18" Grid.Column="1" Style="{StaticResource YesNoToggleButtonStyle}"
                                   IsChecked="True" Name="RestrictionToggleButton">
                         </ToggleButton>-->
@@ -224,13 +311,13 @@
 
                         <Label Style="{StaticResource BoldLabel}" Grid.Row="22" Grid.Column="0">Notes</Label>
 
-                        <TextBox Name="NoteTextBox"  Grid.Row="22" Grid.Column="1" Grid.ColumnSpan="3"   Style="{StaticResource EditableTextBox}" />
+                        <TextBox Name="NoteTextBox"  Grid.Row="22" Grid.Column="1" Grid.ColumnSpan="3"  Height="50" Style="{StaticResource EditableTextBox}" />
 
                         <Button Grid.Row="28"  Grid.ColumnSpan="5"  Margin="0,20,0,0"  Style="{StaticResource MaterialDesignRaisedAccentButton}" Click="InterviewSubmitButton_Click" 
                         ToolTip="Submit metadata details">
                             _Submit
                         </Button>
-                        
+
                     </Grid>
 
                 </StackPanel>

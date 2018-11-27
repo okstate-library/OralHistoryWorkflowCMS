@@ -136,6 +136,7 @@ namespace BusinessServices.Servcices
                         daTranscription.SecondEditCompletedDate = transcriptionModel.SecondEditCompletedDate;
 
                         daTranscription.DraftSentDate = transcriptionModel.DraftSentDate;
+                        daTranscription.SentOut = transcriptionModel.SentOut;
 
                         daTranscription.EditWithCorrectionCompleted = transcriptionModel.EditWithCorrectionCompleted;
                         daTranscription.EditWithCorrectionDate = transcriptionModel.EditWithCorrectionDate;
@@ -144,6 +145,7 @@ namespace BusinessServices.Servcices
                         daTranscription.FirstEditCompletedDate = transcriptionModel.FirstEditCompletedDate;
 
                         daTranscription.FinalSentDate = transcriptionModel.FinalSentDate;
+                        daTranscription.MetadataDraft = transcriptionModel.MetadataDraft;
 
                         daTranscription.TranscriptStatus = transcriptionModel.TranscriptStatus;
 
@@ -201,11 +203,20 @@ namespace BusinessServices.Servcices
                         daTranscription.ReleaseForm = transcriptionModel.ReleaseForm;
                         daTranscription.IsRestriction = transcriptionModel.IsRestriction;
 
+                        daTranscription.MetadataDraft = transcriptionModel.MetadataDraft;
+                        daTranscription.TranscriptStatus = transcriptionModel.TranscriptStatus;
+
                         daTranscription.LegalNote = transcriptionModel.LegalNote;
                         daTranscription.IsAudioFormat = transcriptionModel.IsAudioFormat;
                         //daTranscription.IsVideoFormat = transcriptionModel.IsVideoFormat;
                         daTranscription.EquipmentUsed = transcriptionModel.EquipmentUsed;
+                        daTranscription.EquipmentNumber = transcriptionModel.EquipmentNumber;
+                                                
                         daTranscription.Place = transcriptionModel.Place;
+
+                        daTranscription.InterviewerDescription = transcriptionModel.InterviewerDescription;
+                        daTranscription.InterviewerKeywords = transcriptionModel.InterviewerKeywords;
+                        daTranscription.InterviewerSubjects = transcriptionModel.InterviewerSubjects;
                         daTranscription.InterviewerNote = transcriptionModel.InterviewerNote;
                         break;
                     default:

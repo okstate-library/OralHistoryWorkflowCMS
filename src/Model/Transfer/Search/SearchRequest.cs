@@ -3,7 +3,7 @@
 namespace Model.Transfer.Search
 {
     /// <summary>
-    /// 
+    /// Defiens the properties for the search request model.
     /// </summary>
     [Serializable]
     public class SearchRequest
@@ -56,8 +56,10 @@ namespace Model.Transfer.Search
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SearchRequest"/> class.
+        /// Initializes a new instance of the <see cref="SearchRequest" /> class.
         /// </summary>
+        /// <param name="currentPage">The current page.</param>
+        /// <param name="listLength">Length of the list.</param>
         public SearchRequest(int currentPage, int listLength)
         {
             this.CurrentPage = currentPage;

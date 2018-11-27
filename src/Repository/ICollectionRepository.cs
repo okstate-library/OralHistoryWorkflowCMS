@@ -1,14 +1,10 @@
-﻿using System;
+﻿using EntityData;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using EntityData;
 
 namespace Repository
 {
     /// <summary>
-    /// 
+    ///  Methods needs to implement in Collection Repository
     /// </summary>
     /// <seealso cref="EntityData.IGenericRepository{EntityData.collection}" />
     public interface ICollectionRepository : IGenericRepository<collection>

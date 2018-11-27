@@ -71,15 +71,15 @@
                         </ListBox>
 
                         <StackPanel Grid.Row="2" Margin="0 100 0 0" >
-                            <Label   HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="13" 
+                            <Label   HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="12" 
                                      Style="{StaticResource BoldLabel}">Oral History workflow CMS 2018</Label>
 
-                            <Label    HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="11" 
+                            <Label    HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="10" 
                                      Style="{StaticResource BoldLabel}" Content="{Binding ApplicationVersion}"></Label>
 
-                            <Label    HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="11" 
+                            <Label    HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="10" 
                                      Style="{StaticResource BoldLabel}">Copyright ©  2018 Oklahoma State University </Label>
-                            <Label    HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="11" 
+                            <Label    HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="10" 
                                      Style="{StaticResource BoldLabel}">Digital Resources and Discovery Services</Label>
 
                         </StackPanel>
@@ -94,38 +94,6 @@
 
                         <ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}" IsChecked="False"
                                         x:Name="MenuToggleButton"/>
-
-
-                        <!--<ComboBox ItemsSource="{Binding Path=Persons}"   SelectionChanged="UserTypeComboBox_SelectionChanged"
-                      SelectedItem="{Binding Path=SPerson}"  
-                      Width="120"  
-                      HorizontalAlignment="Left"   
-                      Margin="183,39,0,0"   
-                      VerticalAlignment="Top"  >
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="{Binding Path=Id}"/>
-                                        <TextBlock Text=" - "/>
-                                        <TextBlock Text="{Binding Path=Name}"/>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-
-                        
-                        <ComboBox Grid.Row="6" Grid.Column="2" Name="UserTypeComboBox"  >
-                            <ComboBoxItem Name="AdminUser" >
-                                AdminUser
-                            </ComboBoxItem>
-                            <ComboBoxItem Name="Interviewer"  >
-                                Interviewer
-                            </ComboBoxItem>
-                            <ComboBoxItem  Name="Student"    IsSelected="True" >
-                                Student
-                            </ComboBoxItem>
-                        </ComboBox>-->
-                        
                       
                         <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Name="ApplicationNameTextBlock"  FontSize="22"></TextBlock>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"
@@ -166,10 +134,10 @@
                                   HorizontalScrollBarVisibility="{Binding ElementName=DemoItemsListBox, Path=SelectedItem.HorizontalScrollBarVisibilityRequirement}"
                                   VerticalScrollBarVisibility="{Binding ElementName=DemoItemsListBox, Path=SelectedItem.VerticalScrollBarVisibilityRequirement}" 
                                   Padding="{Binding ElementName=DemoItemsListBox, Path=SelectedItem.MarginRequirement}">
-                        <StackPanel>
+                        <!--<StackPanel>-->
                             <!--< ContentControl - Frame-->
-                            <ContentControl Name="MainContentControl" Content="{Binding ElementName=DemoItemsListBox, Path=SelectedItem.Content}" VerticalAlignment="Top"  />
-                        </StackPanel>
+                        <ContentControl Name="MainContentControl" Content="{Binding ElementName=DemoItemsListBox, Path=SelectedItem.Content}" VerticalAlignment="Top" />
+                        <!--</StackPanel>-->
                     </ScrollViewer>
 
                     <materialDesign:Snackbar MessageQueue="{materialDesign:MessageQueue}" x:Name="MainSnackbar"

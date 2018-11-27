@@ -24,12 +24,22 @@ namespace WpfApp
     /// </summary>
     public partial class SignIn : UserControl
     {
+        #region Public properties
+
         public Boolean IsClose { get; internal set; }
+
+        #endregion
+
+        #region Constructor
 
         public SignIn()
         {
             InitializeComponent();
         }
+
+        #endregion
+
+        #region Events
 
         private void ButtonLogin_Click(object sender, RoutedEventArgs e)
         {
@@ -59,11 +69,11 @@ namespace WpfApp
 
         }
 
-
-
         private void ButtonCancle_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
         }
+
+        #endregion
     }
 }

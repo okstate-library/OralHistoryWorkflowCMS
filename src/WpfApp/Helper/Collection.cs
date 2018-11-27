@@ -1,9 +1,11 @@
-﻿namespace Model
+﻿using System.Collections.Generic;
+
+namespace WpfApp.Helper
 {
     /// <summary>
-    /// Defines the base model.
+    /// Collection model use for binding two combo boxes. ie Collectino and series
     /// </summary>
-    public class BaseModel
+    public class Collection
     {
         /// <summary>
         /// Gets or sets the identifier.
@@ -20,5 +22,13 @@
         /// The name.
         /// </value>
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the series.
+        /// </summary>
+        /// <value>
+        /// The series.
+        /// </value>
+        public List<KeyValuePair<int,string>> Series { get; set; }
     }
 }

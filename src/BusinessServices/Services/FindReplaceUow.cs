@@ -1,5 +1,4 @@
-﻿using Core;
-using EntityData;
+﻿using EntityData;
 using Model;
 using Model.Transfer;
 using Repository;
@@ -10,18 +9,23 @@ using System.Linq;
 
 namespace BusinessServices.Servcices
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <seealso cref="BusinessServices.UnitOfWork" />
     public class FindReplaceUow : UnitOfWork
     {
-
         /// <summary>
         /// Gets or sets the request.
         /// </summary>
+        /// <value>
+        /// The request.
+        /// </value>
         public RequestModel Request
         {
             get;
             set;
         }
-
 
         /// <summary>
         /// Gets or sets the response.
@@ -81,9 +85,11 @@ namespace BusinessServices.Servcices
         /// <summary>
         /// 
         /// </summary>
+        /// <seealso cref="BusinessServices.WellKnownServiceErrors" />
         private class WellKnownErrors : WellKnownServiceErrors
         {
             // <summary>
+            /// <summary>
             /// The invalid username well known error
             /// </summary>
             public static readonly Tuple<int, string> InvalidUsernameWellKnownError =

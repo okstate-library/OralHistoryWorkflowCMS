@@ -1007,14 +1007,17 @@ namespace WpfApp
         /// The identifier
         /// </summary>
         public string id;
+
         /// <summary>
         /// The title
         /// </summary>
         public string title;
+
         /// <summary>
         /// The first name
         /// </summary>
         public string firstName;
+
         /// <summary>
         /// The last name
         /// </summary>

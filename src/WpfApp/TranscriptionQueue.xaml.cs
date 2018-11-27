@@ -90,6 +90,13 @@ namespace WpfApp
         /// </value>
         public bool IsPageInitialize { get; private set; } = false;
 
+        /// <summary>
+        /// Gets or sets the current page list.
+        /// </summary>
+        /// <value>
+        /// The current page list.
+        /// </value>
+        public int CurrentPageList { get; set; }
         #endregion
 
         #region Constructor
@@ -136,7 +143,9 @@ namespace WpfApp
             SearchList = new List<string>();
 
             this.SearchRequest = new SearchRequest(SearchHelper.InitialCurrentPage,
-                int.Parse(SearchHelper.PageSizeList[0]));
+                  SearchHelper.InitialListLength);
+
+            this.CurrentPageList = SearchHelper.InitialListLength;
 
             PopulateList();
 
@@ -218,9 +227,9 @@ namespace WpfApp
         /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void CheckBox_Click(object sender, RoutedEventArgs e)
         {
-            var toggleButton = ((System.Windows.FrameworkElement)sender);
+            var toggleButton = ((FrameworkElement)sender);
 
-            string toggleButtonName = ((System.Windows.FrameworkElement)sender).Name;
+            string toggleButtonName = ((FrameworkElement)sender).Name;
 
             string selectOption = toggleButtonName.Replace("ToggleButton", "");
 
@@ -238,6 +247,8 @@ namespace WpfApp
                 }
 
                 SearchList.Add(selectedOption);
+
+                this.SearchRequest = new SearchRequest(SearchHelper.InitialCurrentPage, this.CurrentPageList);
             }
             else
             {
@@ -245,8 +256,10 @@ namespace WpfApp
                 {
                     SearchList.Remove(selectedOption);
                 }
+                
+              
             }
-
+            
             PopulateList();
         }
 
@@ -319,18 +332,6 @@ namespace WpfApp
         }
 
         /// <summary>
-        /// CheckBoxes the changed.
-        /// </summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
-        private void CheckBoxChanged(object sender, RoutedEventArgs e)
-        {
-            SearchList.Add(WellKnownTranscriptionQueueOption.All.ToString());
-
-            PopulateList();
-        }
-
-        /// <summary>
         /// Handles the Loaded event of the PageLengthComboBox control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
@@ -361,7 +362,9 @@ namespace WpfApp
                 // ... Set SelectedItem as Window Title.
                 string value = comboBox.SelectedItem as string;
 
-                this.SearchRequest.ListLength = int.Parse(value);
+                int pageList = int.Parse(value);
+                this.SearchRequest.ListLength = pageList;
+                this.CurrentPageList = pageList;
 
                 this.SearchRequest.CurrentPage = 1;
                 NextPageNumber = 0;
@@ -398,12 +401,8 @@ namespace WpfApp
             {
                 TranscriptionQueueListView.ItemsSource = response.Transcriptions;
 
-                RecordCountWordTextBox.Text = SearchHelper.GetRecordCountText(response.Transcriptions.Count
-                    , response.PaginationInfo.TotalListLength);
-
                 SetPagination(response.PaginationInfo);
             }
-
         }
 
         /// <summary>
@@ -412,7 +411,6 @@ namespace WpfApp
         /// <param name="paginationInfo">The pagination information.</param>
         private void SetPagination(PaginationInfo paginationInfo)
         {
-
             NextTextBlock.Visibility = Visibility.Hidden;
             PrevoiousTextBlock.Visibility = Visibility.Hidden;
 
@@ -435,6 +433,9 @@ namespace WpfApp
             }
            
             CurrentPageTextBox.Text = paginationInfo.CurrentPage + " Page";
+
+            RecordCountWordTextBox.Text = SearchHelper.GetRecordCountText(paginationInfo.ListLength ,
+                paginationInfo.CurrentPage, paginationInfo.TotalListLength);
         }
 
         /// <summary>

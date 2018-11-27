@@ -326,13 +326,35 @@
 
                             <Border  Grid.Row="17"  Style="{StaticResource EmptyBorder}"   />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="18" Grid.Column="0" >Final sent</Label>
-                            <DatePicker Name="FinalSentDatePicker" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Grid.Row="18" Grid.Column="2"   />
+                            <Label Style="{StaticResource BoldLabel}" Grid.Row="18" Grid.Column="0">Sent out</Label>
 
+                            <StackPanel  Grid.Row="18" Grid.Column="2"  Orientation="Horizontal">
+
+                                <CheckBox Name="SentOutYesCheckBox"  Style="{StaticResource MaterialDesignCheckBox}" Checked="SentOut_Check">
+                                    Yes
+                                </CheckBox>
+
+                                <CheckBox Name="SentOutNoCheckBox" Style="{StaticResource MaterialDesignCheckBox}" Checked="SentOut_Check">
+                                    No
+                                </CheckBox>
+
+                            </StackPanel>
+                            
                             <Border  Grid.Row="19"  Style="{StaticResource EmptyBorder}"   />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="20" Grid.Column="0" >Transcript status</Label>
-                            <StackPanel  Grid.Row="20" Grid.Column="2"  Orientation="Horizontal" >
+                            <Label Style="{StaticResource BoldLabel}" Grid.Row="20" Grid.Column="0" >Final sent</Label>
+                            <DatePicker Name="FinalSentDatePicker" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Grid.Row="20" Grid.Column="2"   />
+
+
+                            <Border  Grid.Row="21"  Style="{StaticResource EmptyBorder}"   />
+
+                            <Label Style="{StaticResource BoldLabel}" Grid.Row="22" Grid.Column="0" >Metadata draft</Label>
+                            <TextBox Name="MetadataDraftTextBox"  Grid.Row="22" Grid.Column="2"  Grid.ColumnSpan="3" Style="{StaticResource EditableTextBox}" />
+                            
+                            <Border  Grid.Row="23"  Style="{StaticResource EmptyBorder}"   />
+
+                            <Label Style="{StaticResource BoldLabel}" Grid.Row="24" Grid.Column="0" >Transcript status</Label>
+                            <StackPanel  Grid.Row="24" Grid.Column="2"  Orientation="Horizontal" >
 
                                 <CheckBox Name="TranscriptStatusCompleteCheckBox"
                                             Style="{StaticResource MaterialDesignCheckBox}" Checked="TranscriptStatus_Check">
@@ -346,15 +368,15 @@
                                 
                             </StackPanel>
 
-                            <Border  Grid.Row="21"  Style="{StaticResource EmptyBorder}"   />
+                            <Border  Grid.Row="25"  Style="{StaticResource EmptyBorder}"   />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="22" Grid.Column="0" >Transcriber location</Label>
-                            <TextBox Name="TranscriberLocationTextBox"  Grid.Row="22" Grid.Column="2"  Grid.ColumnSpan="3" Style="{StaticResource EditableTextBox}" />
+                            <Label Style="{StaticResource BoldLabel}" Grid.Row="26" Grid.Column="0" >Transcriber location</Label>
+                            <TextBox Name="TranscriberLocationTextBox"  Grid.Row="26" Grid.Column="2"  Grid.ColumnSpan="3" Style="{StaticResource EditableTextBox}" />
 
-                            <Border  Grid.Row="23"  Style="{StaticResource EmptyBorder}"   />
+                            <Border  Grid.Row="27"  Style="{StaticResource EmptyBorder}"   />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="24" Grid.Column="0" >Transcriber notes</Label>
-                            <TextBox Name="TranscriberNoteTextBox"  Grid.Row="24" Grid.Column="2" Grid.ColumnSpan="3" 
+                            <Label Style="{StaticResource BoldLabel}" Grid.Row="28" Grid.Column="0" >Transcription note</Label>
+                            <TextBox Name="TranscriberNoteTextBox"  Grid.Row="28" Grid.Column="2" Grid.ColumnSpan="3" 
                                      VerticalAlignment="Top" Height="100" AcceptsReturn="True" TextWrapping="Wrap"   VerticalScrollBarVisibility="Auto"  
                                      Style="{StaticResource EditableTextBox}" />
 
@@ -753,11 +775,11 @@
 
                             <StackPanel  Grid.Row="2" Grid.Column="2"  Orientation="Horizontal">
 
-                                <CheckBox Name="OnContentDmYesCheckBox"  Style="{StaticResource MaterialDesignCheckBox}" Checked="OnContentDmNo_Check">
+                                <CheckBox Name="OnContentDmYesCheckBox"  Style="{StaticResource MaterialDesignCheckBox}" Checked="OnContentDm_Check">
                                     Yes
                                 </CheckBox>
 
-                                <CheckBox Name="OnContentDmNoCheckBox" Style="{StaticResource MaterialDesignCheckBox}" Checked="OnContentDmNo_Check">
+                                <CheckBox Name="OnContentDmNoCheckBox" Style="{StaticResource MaterialDesignCheckBox}" Checked="OnContentDm_Check">
                                     No
                                 </CheckBox>
                             
@@ -807,6 +829,8 @@
 
                             <Border  Name="RestrictionsBorder2" Grid.Row="9"   Style="{StaticResource EmptyBorder}"   />
 
+                            <Label  Name="RestrictionNoteLabel" Style="{StaticResource BoldLabel}" Grid.Row="10" Grid.Column="0">Restriction notes</Label>
+                            
                             <TextBox Name="RestrictionNoteTextBox" BorderThickness="1"  Grid.Row="10" Grid.Column="2"  Grid.ColumnSpan="3"
                                     Height="100" AcceptsReturn="True" TextWrapping="Wrap"   VerticalScrollBarVisibility="Auto"      Style="{StaticResource EditableTextBox}" />
 
@@ -830,19 +854,49 @@
 
                             <Border  Grid.Row="15" Style="{StaticResource EmptyBorder}"   />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="16" Grid.Column="0" >Place</Label>
-                            <TextBox Name="PlaceTextBox"  Grid.Row="16" Grid.Column="2"  Grid.ColumnSpan="3" Style="{StaticResource EditableTextBox}" />
+                            <Label Style="{StaticResource BoldLabel}" Grid.Row="16" Grid.Column="0" >Equipment  number</Label>
+                            <TextBox Name="EquipmentNumberTextBox"  Grid.Row="16" Grid.Column="2"  Grid.ColumnSpan="3" Style="{StaticResource EditableTextBox}" />
+                            
+                            <Border  Grid.Row="17" Style="{StaticResource EmptyBorder}"   />
 
-                            <Border  Grid.Row="17"   Style="{StaticResource EmptyBorder}"   />
+                            <Label Style="{StaticResource BoldLabel}" Grid.Row="18" Grid.Column="0" >Location of interview</Label>
+                            <TextBox Name="PlaceTextBox"  Grid.Row="18" Grid.Column="2"  Grid.ColumnSpan="3" Style="{StaticResource EditableTextBox}" />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="18" Grid.Column="0" >Interviewer notes</Label>
 
-                            <TextBox Name="InterviewerNoteTextBox"  Grid.Row="18" Grid.Column="2" Grid.ColumnSpan="3"
+                            <Border  Grid.Row="19"   Style="{StaticResource EmptyBorder}"   />
+
+                            <Label Style="{StaticResource BoldLabel}" Grid.Row="20" Grid.Column="0" >Interviewer description</Label>
+
+                            <TextBox Name="InterviewerDescriptionTextBox"  Grid.Row="20" Grid.Column="2" Grid.ColumnSpan="3"
                          VerticalAlignment="Top" Height="100"    TextWrapping="Wrap" BorderThickness="1"
-                         VerticalScrollBarVisibility="Auto" Style="{StaticResource EditableTextBox}"
-                         />
+                         VerticalScrollBarVisibility="Auto" Style="{StaticResource EditableTextBox}"                         />
 
-                            <Button Grid.Row="19"  Grid.ColumnSpan="5"  Margin="0,20,0,0"  Style="{StaticResource MaterialDesignRaisedAccentButton}" Click="SupplementDetailsButton_Click" 
+                            <Border  Grid.Row="21"   Style="{StaticResource EmptyBorder}"   />
+
+                            <Label Style="{StaticResource BoldLabel}" Grid.Row="22" Grid.Column="0" >Interviewer keywords</Label>
+
+                            <TextBox Name="InterviewerKeywordsTextBox"  Grid.Row="22" Grid.Column="2" Grid.ColumnSpan="3"
+                         VerticalAlignment="Top" Height="100"    TextWrapping="Wrap" BorderThickness="1"
+                         VerticalScrollBarVisibility="Auto" Style="{StaticResource EditableTextBox}" />
+
+                            <Border  Grid.Row="23"   Style="{StaticResource EmptyBorder}"   />
+
+                            <Label Style="{StaticResource BoldLabel}" Grid.Row="24" Grid.Column="0" >Interviewer subjects</Label>
+
+                            <TextBox Name="InterviewerSubjectsTextBox"  Grid.Row="24" Grid.Column="2" Grid.ColumnSpan="3"
+                         VerticalAlignment="Top" Height="100"    TextWrapping="Wrap" BorderThickness="1"
+                         VerticalScrollBarVisibility="Auto" Style="{StaticResource EditableTextBox}"/>
+                            
+                            
+                            <Border  Grid.Row="25"   Style="{StaticResource EmptyBorder}"/>
+
+                            <Label Style="{StaticResource BoldLabel}" Grid.Row="26" Grid.Column="0" >Interviewer notes</Label>
+
+                            <TextBox Name="InterviewerNoteTextBox"  Grid.Row="26" Grid.Column="2" Grid.ColumnSpan="3"
+                         VerticalAlignment="Top" Height="100"    TextWrapping="Wrap" BorderThickness="1"
+                         VerticalScrollBarVisibility="Auto" Style="{StaticResource EditableTextBox}"/>
+
+                            <Button Grid.Row="27"  Grid.ColumnSpan="5"  Margin="0,20,0,0"  Style="{StaticResource MaterialDesignRaisedAccentButton}" Click="SupplementDetailsButton_Click" 
                         ToolTip="Submit transcript details">
                                 _Submit
                             </Button>

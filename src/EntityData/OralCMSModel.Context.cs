@@ -14,13 +14,14 @@ namespace EntityData
     using System.Data.Entity.Infrastructure;
 
     [DbConfigurationType(typeof(MySql.Data.EntityFramework.MySqlEFConfiguration))]
+
     public partial class OralCMSDBEntities : DbContext
     {
         public OralCMSDBEntities()
             : base("name=OralCMSDBEntities")
         {
         }
-    
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();

@@ -1,14 +1,11 @@
-﻿using System;
+﻿using EntityData;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using EntityData;
 
 namespace Repository.Implementations
 {
     /// <summary>
-    ///
+    /// Methods define in User Repository
     /// </summary>
     public class SubseryRepository :
         GenericRepository<OralCMSDBEntities, subsery>, ISubseryRepository
@@ -17,11 +14,13 @@ namespace Repository.Implementations
         /// Gets the user.
         /// </summary>
         /// <param name="userId">The user identifier.</param>
-        /// <returns></returns>
+        /// <returns>
+        /// Returns the subseries.
+        /// </returns>
         public List<subsery> GetSubseries()
         {
             return this.GetAll().ToList();
         }
-             
+
     }
 }

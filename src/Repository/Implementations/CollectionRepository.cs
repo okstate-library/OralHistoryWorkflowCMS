@@ -1,14 +1,11 @@
-﻿using System;
+﻿using EntityData;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using EntityData;
 
 namespace Repository.Implementations
 {
     /// <summary>
-    /// 
+    /// Methods define in Collection Repository
     /// </summary>
     /// <seealso cref="EntityData.GenericRepository{EntityData.OralCMSDBEntities, EntityData.collection}" />
     /// <seealso cref="Repository.ICollectionRepository" />
@@ -18,12 +15,12 @@ namespace Repository.Implementations
         /// <summary>
         /// Gets the user.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>
+        /// returns the sepcific user object.
+        /// </returns>
         public List<collection> GetCollections()
         {
             return this.GetAll().ToList();
         }
-
-     
     }
 }
