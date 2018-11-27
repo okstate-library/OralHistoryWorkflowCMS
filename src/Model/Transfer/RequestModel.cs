@@ -1,16 +1,12 @@
 ﻿
 using Core.Enums;
 using Model.Transfer.Search;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Model.Transfer
 {
     /// <summary>
-    /// 
+    /// Defiens the properties for the request model.
     /// </summary>
     public class RequestModel
     {

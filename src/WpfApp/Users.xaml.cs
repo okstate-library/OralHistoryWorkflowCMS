@@ -5,28 +5,20 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using WpfApp.Helper;
 
 namespace WpfApp
 {
     /// <summary>
     /// Interaction logic for Users.xaml
     /// </summary>
+    /// <seealso cref="System.Windows.Controls.UserControl" />
+    /// <seealso cref="System.Windows.Markup.IComponentConnector" />
     public partial class Users : UserControl
     {
-
         #region private properties
 
         /// <summary>
@@ -37,7 +29,19 @@ namespace WpfApp
         /// </value>
         private List<string> SearchList { get; set; }
 
+        /// <summary>
+        /// The last header clicked
+        /// </summary>
+        GridViewColumnHeader _lastHeaderClicked = null;
+
+        /// <summary>
+        /// The last direction
+        /// </summary>
+        ListSortDirection _lastDirection = ListSortDirection.Ascending;
+
         #endregion
+
+        #region Constructor
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TranscriptionQueue" /> class.
@@ -53,12 +57,15 @@ namespace WpfApp
             Loaded += TranscriptionQueueUserControl_Loaded;
         }
 
+        #endregion
+
+        #region Events
 
         /// <summary>
         /// Handles the Loaded event of the MyWindow control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
         private void TranscriptionQueueUserControl_Loaded(object sender, RoutedEventArgs e)
         {
             MainGrid.Visibility = Visibility.Visible;
@@ -71,21 +78,141 @@ namespace WpfApp
         }
 
         /// <summary>
-        /// The last header clicked
+        /// Sorts the specified sort by.
         /// </summary>
-        GridViewColumnHeader _lastHeaderClicked = null;
+        /// <param name="sortBy">The sort by.</param>
+        /// <param name="direction">The direction.</param>
+        private void Sort(string sortBy, ListSortDirection direction)
+        {
+            ICollectionView dataView =
+              CollectionViewSource.GetDefaultView(UsersListView.ItemsSource);
+
+            dataView.SortDescriptions.Clear();
+            SortDescription sd = new SortDescription(sortBy, direction);
+            dataView.SortDescriptions.Add(sd);
+            dataView.Refresh();
+        }
+
         /// <summary>
-        /// The last direction
+        /// Handles the MouseDoubleClick event of the TranscriptionQueueListView control.
         /// </summary>
-        ListSortDirection _lastDirection = ListSortDirection.Ascending;
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="MouseButtonEventArgs" /> instance containing the event data.</param>
+        void UsersListViewListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            UIElement clicked = e.OriginalSource as UIElement;
+
+            string name = ((FrameworkElement)clicked).Name;
+
+            if (clicked != null && !string.IsNullOrEmpty(name))
+            {
+                string[] words = name.Split('_');
+
+                if (words.Length > 1)
+                {
+                    BackToListButton.Visibility = Visibility.Visible;
+
+                    UserModel userModel = ((FrameworkElement)e.OriginalSource).DataContext as UserModel;
+
+                    MainGrid.Visibility = Visibility.Hidden;
+
+                    cc.Content = new User(userModel.UserId);
+                }
+
+            }
+        }
+
+        /// <summary>
+        /// Handles the Click event of the BackToListButton control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
+        private void BackToListButton_Click(object sender, EventArgs e)
+        {
+            cc.Content = null;
+
+            MainGrid.Visibility = Visibility.Visible;
+
+            BackToListButton.Visibility = Visibility.Hidden;
+        }
+
+        /// <summary>
+        /// Handles the Click event of the ResetButton control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
+        private void ResetButton_Click(object sender, EventArgs e)
+        {
+            SearchWordTextBox.Text = string.Empty;
+
+            PopulateList(false);
+        }
+
+        /// <summary>
+        /// Handles the Click event of the SearchButton control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
+        private void SearchButton_Click(object sender, EventArgs e)
+        {
+            PopulateList(false);
+        }
+
+        /// <summary>
+        /// Handles the Click event of the AddNewUserButton control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+        private void AddNewUserButton_Click(object sender, RoutedEventArgs e)
+        {
+            BackToListButton.Visibility = Visibility.Visible;
+
+            UserModel userModel = ((FrameworkElement)e.OriginalSource).DataContext as UserModel;
+
+            MainGrid.Visibility = Visibility.Hidden;
+
+            cc.Content = new User(0);
+        }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Populatrs the list.
+        /// </summary>
+        /// <param name="isInitialTime">if set to <c>true</c> [is initial time].</param>
+        private void PopulateList(bool isInitialTime)
+        {
+            RequestModel requestModel = new RequestModel()
+            {
+                FilterKeyWords = SearchList,
+                SearchWord = SearchWordTextBox.Text.Trim(),
+            };
+
+            ResponseModel response = App.BaseUserControl.InternalService.GetUsers(requestModel);
+
+            if (response.IsOperationSuccess)
+            {
+                UsersListView.ItemsSource = response.Users;
+
+                RecordCountWordTextBox.Text = response.Users.Count() + " record(s)";
+
+                if (isInitialTime)
+                {
+                    NumberUsersTextBlock.Text = response.Users.Count() + " user(s)";
+                    AdminUsersTextBlock.Text = response.Users.Where(a => a.UserType == (byte)WellKnownUserType.AdminUser).Count() + " admin user(s)";
+                }
+            }
+
+        }
 
         /// <summary>
         /// Grids the view column header clicked handler.
         /// </summary>
         /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
-        void GridViewColumnHeaderClickedHandler(object sender,
-                                                RoutedEventArgs e)
+        /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
+        void GridViewColumnHeaderClickedHandler(object sender, RoutedEventArgs e)
         {
             var headerClicked = e.OriginalSource as GridViewColumnHeader;
             ListSortDirection direction;
@@ -138,125 +265,6 @@ namespace WpfApp
             }
         }
 
-        /// <summary>
-        /// Sorts the specified sort by.
-        /// </summary>
-        /// <param name="sortBy">The sort by.</param>
-        /// <param name="direction">The direction.</param>
-        private void Sort(string sortBy, ListSortDirection direction)
-        {
-            ICollectionView dataView =
-              CollectionViewSource.GetDefaultView(UsersListView.ItemsSource);
-
-            dataView.SortDescriptions.Clear();
-            SortDescription sd = new SortDescription(sortBy, direction);
-            dataView.SortDescriptions.Add(sd);
-            dataView.Refresh();
-        }
-
-        /// <summary>
-        /// Handles the MouseDoubleClick event of the TranscriptionQueueListView control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="MouseButtonEventArgs"/> instance containing the event data.</param>
-        void UsersListViewListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            UIElement clicked = e.OriginalSource as UIElement;
-
-            string name = ((FrameworkElement)clicked).Name;
-
-            if (clicked != null && !string.IsNullOrEmpty(name))
-            {
-                string[] words = name.Split('_');
-
-                if (words.Length > 1)
-                {
-                    BackToListButton.Visibility = Visibility.Visible;
-                    
-                    UserModel userModel = ((FrameworkElement)e.OriginalSource).DataContext as UserModel;
-
-                    MainGrid.Visibility = Visibility.Hidden;
-
-                    cc.Content = new User(userModel.UserId);
-                }
-
-            }
-        }
-
-
-        /// <summary>
-        /// Handles the Click event of the BackToListButton control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
-        private void BackToListButton_Click(object sender, EventArgs e)
-        {
-            cc.Content = null;
-
-            MainGrid.Visibility = Visibility.Visible;
-
-            BackToListButton.Visibility = Visibility.Hidden;
-        }
-
-        /// <summary>
-        /// Handles the Click event of the ResetButton control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
-        private void ResetButton_Click(object sender, EventArgs e)
-        {
-            SearchWordTextBox.Text = string.Empty;
-
-            PopulateList(false);
-        }
-
-        /// <summary>
-        /// Handles the Click event of the SearchButton control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
-        private void SearchButton_Click(object sender, EventArgs e)
-        {
-            PopulateList(false);
-        }
-
-        /// <summary>
-        /// Populatrs the list.
-        /// </summary>
-        private void PopulateList(bool isInitialTime)
-        {
-            RequestModel requestModel = new RequestModel()
-            {
-                FilterKeyWords = SearchList,
-                SearchWord = SearchWordTextBox.Text.Trim(),
-            };
-
-            ResponseModel response = App.BaseUserControl.InternalService.GetUsers(requestModel);
-
-            if (response.IsOperationSuccess)
-            {
-                UsersListView.ItemsSource = response.Users;
-
-                RecordCountWordTextBox.Text = response.Users.Count() + " record(s)";
-
-                if (isInitialTime)
-                {
-                    NumberUsersTextBlock.Text = response.Users.Count() + " user(s)";
-                    AdminUsersTextBlock.Text = response.Users.Where(a => a.UserType == (byte)WellKnownUserType.AdminUser).Count() + " admin user(s)";
-                }
-            }
-
-        }
-
-        private void AddNewUserButton_Click(object sender, RoutedEventArgs e)
-        {
-            BackToListButton.Visibility = Visibility.Visible;
-
-            UserModel userModel = ((FrameworkElement)e.OriginalSource).DataContext as UserModel;
-
-            MainGrid.Visibility = Visibility.Hidden;
-
-            cc.Content = new User(0);
-        }
+        #endregion
     }
 }

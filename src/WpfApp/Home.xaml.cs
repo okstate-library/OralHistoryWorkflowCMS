@@ -1,6 +1,7 @@
 ﻿using Core.Enums;
 using Model;
 using Model.Transfer;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -14,23 +15,30 @@ namespace WpfApp
     /// <seealso cref="System.Windows.Markup.IComponentConnector" />
     public partial class Home : UserControl
     {
+        #region Constructor
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="Home"/> class.
+        /// Initializes a new instance of the <see cref="Home" /> class.
         /// </summary>
         public Home()
         {
             InitializeComponent();
 
-            this.DataContext = App.BaseUserControl;
-            
+            this.TranscriptionQueueTextBlock.Text = App.BaseUserControl.TranscrptionQueueRecordCount.ToString();
+            this.AllRecordsTextBlock.Text = App.BaseUserControl.BrowseRecordCount.ToString();
+
             Loaded += HomePage_Load;
         }
+
+        #endregion
+
+        #region Events
 
         /// <summary>
         /// Handles the Load event of the HomePage control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
         private void HomePage_Load(object sender, RoutedEventArgs e)
         {
             if (App.IsValidToProcess)
@@ -48,8 +56,8 @@ namespace WpfApp
                     {
                         LatestTranscriptions.ItemsSource = response.Transcriptions;
 
-                        App.BaseUserControl.TranscrptionQueueRecordCount = response.MainFormModel.TranscrptionQueueRecordCount;
-                        App.BaseUserControl.BrowseRecordCount = response.MainFormModel.BrowseRecordCount;
+                        this.TranscriptionQueueTextBlock.Text = response.MainFormModel.TranscrptionQueueRecordCount.ToString();
+                        this.AllRecordsTextBlock.Text = response.MainFormModel.BrowseRecordCount.ToString();
                     }
                 }
                 else
@@ -61,15 +69,16 @@ namespace WpfApp
             else
             {
                 App.ShowMessage(false, " No internet access.\n Please check the connection.");
-
-                //Application.Current.Shutdown();
             }
-           
-
         }
 
+        /// <summary>
+        /// Handles the MouseDoubleClick event of the LatestTranscriptionsListView control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="MouseButtonEventArgs"/> instance containing the event data.</param>
         void LatestTranscriptionsListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {            
+        {
             //UIElement clicked = e.OriginalSource as UIElement;
 
             //if (clicked != null)
@@ -95,5 +104,7 @@ namespace WpfApp
             //transcriptionQueue.cc.Content = new Transcription(itemTranscriptionModel.Id, Helper.WellKnownExpander.General);
 
         }
+
+        #endregion
     }
 }

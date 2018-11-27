@@ -17,7 +17,7 @@ namespace WpfApp.Helper
         /// <value>
         /// The name of the application.
         /// </value>
-        public string ApplicationName  { get; } = Settings.Default.WelComeApplicationTitle;
+        public string ApplicationName { get; } = Settings.Default.WelComeApplicationTitle;
 
         /// <summary>
         /// Gets or sets the transcrption queue record count.
@@ -44,7 +44,7 @@ namespace WpfApp.Helper
         /// Gets or sets the user model.
         /// </summary>
         /// <value>
-        /// The user model.
+        /// The user model
         /// </value>
         public UserModel UserModel { get; set; }
 
@@ -78,7 +78,7 @@ namespace WpfApp.Helper
         /// <value>
         /// The collecions.
         /// </value>
-        public List<CollectionModel> Collecions { get; set; }
+        public List<Model.CollectionModel> Collecions { get; set; }
 
         /// <summary>
         /// The default collection identifier
@@ -99,6 +99,7 @@ namespace WpfApp.Helper
                 {
                     instance = new InternalService();
                 }
+
                 return instance;
             }
         }

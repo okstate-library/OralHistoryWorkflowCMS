@@ -11,7 +11,7 @@ namespace EntityData
 {
     using System;
     using System.Collections.Generic;
-
+    
     public partial class transcription
     {
         public int Id { get; set; }
@@ -84,8 +84,9 @@ namespace EntityData
         public string InterviewerDescription { get; set; }
         public string InterviewerKeywords { get; set; }
         public string InterviewerSubjects { get; set; }
-        public string EuipmentNumber { get; set; }
+        public string EquipmentNumber { get; set; }
         public bool SentOut { get; set; }
+
         public string MetadataDraft { get; set; }
     }
 }

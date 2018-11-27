@@ -20,12 +20,25 @@ namespace WpfApp
     /// <seealso cref="System.Windows.Markup.IComponentConnector" />
     public partial class FileImport : UserControl
     {
+        #region Constructor
+
         /// <summary>
         /// Initializes a new instance of the <see cref="FileUpload" /> class.
         /// </summary>
         public FileImport()
         {
             InitializeComponent();
+
+            Loaded += FileImportUserControl_Loaded;
+        }
+
+        #endregion
+
+        #region Events
+
+        private void FileImportUserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            ClearAll();
         }
 
         /// <summary>
@@ -54,10 +67,10 @@ namespace WpfApp
 
                 foreach (DataRow item in dt.Rows)
                 {
-                    CollectionModel collection = App.BaseUserControl.Collecions.FirstOrDefault(c => c.CollectionName.Contains(getStringValue(item, "Collection Name")));
+                    Model.CollectionModel collection = App.BaseUserControl.Collecions.FirstOrDefault(c => c.CollectionName.Contains(GetStringValue(item, "Collection Name")));
                     short collectionId = collection != null ? (short)collection.Id : (short)1;
 
-                    SubseryModel subseries = App.BaseUserControl.Subseries.FirstOrDefault(c => c.SubseryName.Contains(getStringValue(item, "Subseries")));
+                    SubseryModel subseries = App.BaseUserControl.Subseries.FirstOrDefault(c => c.SubseryName.Contains(GetStringValue(item, "Subseries")));
                     short subseriesId = subseries != null ? (short)subseries.Id : (short)1;
 
                     TranscriptionModel transcriptionModel = new TranscriptionModel()
@@ -67,12 +80,15 @@ namespace WpfApp
                         //AuditCheckCompleted = GetStringValue(item, "Audit Check Completed"),
                         //AuditCheckCompletedDate = getDateValue(item, "Audit Check Completed Date"),
                         CollectionId = 1,//collectionId,
-                        ConvertToDigitalDate = getDateValue(item, "Date Digital"),
-                        CoverageSpatial = getStringValue(item, "Coverage-Spatial"),
-                        CoverageTemporal = getStringValue(item, "Coverage-Temporal"),
+                        ConvertToDigitalDate = GetDateValue(item, "Date Digital"),
+                        CoverageSpatial = GetStringValue(item, "Coverage-Spatial"),
+                        CoverageTemporal = GetStringValue(item, "Coverage-Temporal"),
                         CreatedBy = App.BaseUserControl.UserModel.UserId,
                         CreatedDate = DateTime.Now,
-                        Description = getStringValue(item, "Description"),
+                        Description = GetStringValue(item, "Description"),
+                        TranscriptNote = GetStringValue(item, "Transcription Notes"),
+                        EquipmentNumber = GetStringValue(item, "Equipment #"),
+                        MetadataDraft = GetStringValue(item, "Metadata Draft"),
                         //DraftSentDate = getDateValue(item, "Draft Sent Date"),
                         //EditWithCorrectionCompleted = GetStringValue(item, "Edit With Correction Completed"),
                         //EditWithCorrectionDate = getDateValue(item, "Edit With Correction Date"),
@@ -83,39 +99,45 @@ namespace WpfApp
                         //FinalSentDate = getDateValue(item, "Final Sent Date"),
                         //FirstEditCompleted = GetStringValue(item, "First Edit Completed"),
                         //FirstEditCompletedDate = getDateValue(item, "First Edit Completed Date"),
-                        Format = getStringValue(item, "Format"),
+                        Format = GetStringValue(item, "Format"),
                         //Identifier = GetStringValue(item, "Identifier"),
                         //InitialNote = GetStringValue(item, "Initial Note"),
-                        InterviewDate = (DateTime)getDateValue(item, "Date Original"),
-                        Interviewee = getStringValue(item, "Interviewee"),
-                        Interviewer = getStringValue(item, "Interviewer"),
-                        //InterviewerNote = GetStringValue(item, "Interviewer Note"),
-                        IsAccessMediaStatus = false, // getBoolValue(item, "Access Media Status"),
-                        IsAudioFormat = false, // getBoolValue(item, "Audio"),
-                        IsBornDigital = false, //getBoolValue(item, "Born Digital"),
+                        InterviewDate = (DateTime)GetDateValue(item, "Date Original"),
+                        Interviewee = GetStringValue(item, "Interviewee"),
+                        Interviewer = GetStringValue(item, "Interviewer"),
+                        InterviewerNote = GetStringValue(item, "Interviewer Notes"),
+                        IsAccessMediaStatus = CheckStringContains(GetStringValue(item, "Access Media Status"), "complete"),
+
+                        IsBornDigital = GetBoolValue(item, "Born digital"),
                         IsConvertToDigital = false, //getBoolValue(item, "Convert To Digital"),
-                        IsInContentDm = false, //getBoolValue(item, "In ContentDm"),
+                        IsInContentDm = GetBoolValue(item, "On CONTENTdm"),
                         IsPriority = false, //getBoolValue(item, "Priority"),
-                        IsRestriction = false, // getBoolValue(item, "Restriction"),
+                        IsRestriction = GetBoolValue(item, "Restrictions"),
+                        LegalNote = GetStringValue(item, "Restriction Notes"),
+                        EquipmentUsed = GetStringValue(item, "Equipment Used"),
+
+                        IsVideoFormat = CheckStringContains(GetStringValue(item, "Recording Format"), "video"),
+                        IsAudioFormat = CheckStringContains(GetStringValue(item, "Recording Format"), "audio"),
+
                         IsRosetta = false, // getBoolValue(item, "Rosetta"),
                         IsRosettaForm = false, //getBoolValue(item, "Rosetta Form"),
-                        Keywords = getStringValue(item, "Keyword"),
-                        Language = getStringValue(item, "Language"),
+                        Keywords = GetStringValue(item, "Keyword"),
+                        Language = GetStringValue(item, "Language"),
                         //LegalNote = GetStringValue(item, "Legal Note"),
                         //MasterFileLocation = GetStringValue(item, "Master File"),
                         //OriginalMedium = GetStringValue(item, "Original Medium"),
                         OriginalMediumType = 1,// GetStringValue(item, "Original Medium"),
                                                //Place = GetStringValue(item, "Place"),
-                        ProjectCode = getStringValue(item, "Project Code"),
-                        Publisher = getStringValue(item, "Publisher"),
+                        ProjectCode = GetStringValue(item, "Project Code"),
+                        Publisher = GetStringValue(item, "Publisher"),
                         //ReasonForPriority = GetStringValue(item, "Reason For Priority"),
                         //RelationIsPartOf = GetStringValue(item, "RelationIsPartOf"),
-                        ReleaseForm = false, // getBoolValue(item, "Release Form"),
-                        Rights = getStringValue(item, "Rights"),
-                        ScopeAndContents = getStringValue(item, "Scope And Contents"),
+                        ReleaseForm = GetBoolValue(item, "Release Form"), // getBoolValue(item, "Release Form"),
+                        Rights = GetStringValue(item, "Rights"),
+                        ScopeAndContents = GetStringValue(item, "Scope And Contents"),
                         //SecondEditCompleted = GetStringValue(item, "Second Edit Completed"),
                         //SecondEditCompletedDate =getDateValue(item, "Second Edit Completed Date"),
-                        Subject = getStringValue(item, "Subject"),
+                        Subject = GetStringValue(item, "Subject"),
                         SubseriesId = 1,//subseriesId,
                                         //TranscriberAssigned = GetStringValue(item, "Transcriber Assigned"),
                                         //TranscriberCompleted = getDateValue(item, "Transcriber Completed"),
@@ -123,9 +145,16 @@ namespace WpfApp
                                         //Transcript = GetStringValue(item, "Transcript"),
                         TranscriptLocation = 1, //GetStringValue(item, "TranscriptLocation"),
                                                 //TranscriptNote = GetStringValue(item, "Transcript Note"),
-                        TranscriptStatus = false, //getBoolValue(item, "Transcript Status"),
-                        Title = getStringValue(item, "Title"),
-                        Type = getStringValue(item, "Type"),
+                        TranscriptStatus = CheckStringContains(GetStringValue(item, "Transcription Status"), "complete"),
+                        Place = GetStringValue(item, "Location of Interview"),
+                        Title = GetStringValue(item, "Title"),
+                        Type = GetStringValue(item, "Type"),
+                        InterviewerDescription = GetStringValue(item, "Interviewer Description"),
+                        InterviewerKeywords = GetStringValue(item, "Interviewer Keywords"),
+                        InterviewerSubjects = GetStringValue(item, "Interviewer Subjects"),
+
+                        SentOut = GetBoolValue(item, "Sent Out"),
+
                         UpdatedBy = App.BaseUserControl.UserModel.UserId,
                         UpdatedDate = DateTime.Now,
                     };
@@ -150,7 +179,46 @@ namespace WpfApp
                 }
             }
         }
-        
+
+        /// <summary>
+        /// Handles the Click event of the DownoadSampleButton control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
+        private void DownoadSampleButton_Click(object sender, RoutedEventArgs e)
+        {
+            var path = System.IO.Path.GetFullPath("Assets/cms_sample.xlsx");
+            Process.Start(path);
+        }
+
+        /// <summary>
+        /// Handles the Click event of the Hyperlink control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RequestNavigateEventArgs" /> instance containing the event data.</param>
+        private void Hyperlink_Click(object sender, RequestNavigateEventArgs e)
+        {
+            Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
+            e.Handled = true;
+        }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Check the vlue contain in the string
+        /// </summary>
+        /// <param name="word">The word.</param>
+        /// <param name="value">The value.</param>
+        /// <returns></returns>
+        private bool CheckStringContains(string word, string value)
+        {
+
+            bool iss = word.ToLower().Contains(value);
+            return iss;
+        }
+
         /// <summary>
         /// Reads the excel file.
         /// </summary>
@@ -215,7 +283,7 @@ namespace WpfApp
         /// <param name="columnName">Name of the column.</param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        private string getStringValue(DataRow row, string columnName)
+        private string GetStringValue(DataRow row, string columnName)
         {
             object value = row[columnName];
 
@@ -233,7 +301,7 @@ namespace WpfApp
         /// <param name="row">The row.</param>
         /// <param name="columnName">Name of the column.</param>
         /// <returns></returns>
-        private DateTime? getDateValue(DataRow row, string columnName)
+        private DateTime? GetDateValue(DataRow row, string columnName)
         {
             if (!row.IsNull(columnName))
             {
@@ -249,26 +317,29 @@ namespace WpfApp
         /// <param name="row">The row.</param>
         /// <param name="columnName">Name of the column.</param>
         /// <returns></returns>
-        private bool getBoolValue(DataRow row, string columnName)
+        private bool GetBoolValue(DataRow row, string columnName)
         {
             if (!row.IsNull(columnName))
             {
-                return bool.Parse(row[columnName].ToString());
+                if (row[columnName].ToString().ToLower().Equals("yes"))
+                {
+                    return true;
+                }
+
+                return false;
             }
 
             return false;
         }
-        
-        private void DownoadSampleButton_Click(object sender, RoutedEventArgs e)
+
+        /// <summary>
+        /// Clears all.
+        /// </summary>
+        private void ClearAll()
         {
-            var path = System.IO.Path.GetFullPath("Assets/cms_sample.xlsx");
-            Process.Start(path);
+            fileUploadLabel.Content = string.Empty;
         }
- 
-        private void Hyperlink_Click(object sender, RequestNavigateEventArgs e)
-        {
-            Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
-            e.Handled = true;
-        }
+
+        #endregion
     }
 }

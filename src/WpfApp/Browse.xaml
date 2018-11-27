@@ -76,22 +76,22 @@
                                 <ColumnDefinition Width="5*" />
                             </Grid.ColumnDefinitions>
 
-                            <TextBlock  Margin="20 10 0 8" Grid.Column="0" HorizontalAlignment="Center" Text="Show"  />
+                            <TextBlock  Margin="20 21 0 8" Grid.Column="0" HorizontalAlignment="Center" Text="Show"  />
 
-                            <ComboBox Name="PageComboBox" Background="#aeea00"  Margin="20 0 0 0" Width="50" HorizontalAlignment="Center" materialDesign:HintAssist.HintOpacity=".26"
+                            <ComboBox Name="PageComboBox" Background="#aeea00"  Margin="20 0 0 0" Width="100" HorizontalAlignment="Center" materialDesign:HintAssist.HintOpacity=".26"
                                   Grid.Column="1" VerticalAlignment="Center" VerticalContentAlignment="Center" />
 
-                            <TextBlock Margin="20 10 0 8"  Grid.Column="2" HorizontalAlignment="Center" Text="entries"  />
+                            <TextBlock Margin="20 21 0 8"  Grid.Column="2" HorizontalAlignment="Center" Text="entries"  />
 
-                            <TextBlock Name="PrevoiousTextBlock" Margin="25 10 20 0" Grid.Column="3" Visibility="Hidden">
+                            <TextBlock Name="PrevoiousTextBlock" Margin="25 21 20 0" Grid.Column="3" Visibility="Hidden">
                                 <Hyperlink Name="PrevoiousHyperlink" Click="PageClickButton_Click">
                                     <TextBlock  Text="« Previous Page " />
                                 </Hyperlink>    
                             </TextBlock>
 
-                            <TextBlock  Margin="0 10 0 8" Name="CurrentPageTextBox" Grid.Column="4"  />
+                            <TextBlock  Margin="0 21 0 8" Name="CurrentPageTextBox" Grid.Column="4"  />
 
-                            <TextBlock Name="NextTextBlock" Margin="0 10 20 0" Grid.Column="5"  Visibility="Hidden">
+                            <TextBlock Name="NextTextBlock" Margin="0 21 20 0" Grid.Column="5"  Visibility="Hidden">
                                 <Hyperlink Name="NextHyperlink" Click="PageClickButton_Click">
                                     <TextBlock Text="Next Page »" />
                                 </Hyperlink>    
@@ -111,7 +111,7 @@
                                 Export
                             </Button>-->
 
-                            <Button Margin="20 10 0 8" Grid.Column="6" MaxWidth="100"
+                            <Button Margin="20 10 0 8" Grid.Column="6" MaxWidth="100" ToolTip="Export to excel.."
                                     Content="Export" Style="{StaticResource MaterialDesignRaisedAccentButton}" Click="ExportButton_Click"/>
 
                         </Grid>
@@ -215,7 +215,7 @@
                         <GridView>
 
                             <!--Id-->
-                            <GridViewColumn Header="Id" 
+                            <!--<GridViewColumn Header="Id" 
                                             HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}" >
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
@@ -224,7 +224,7 @@
                                         </StackPanel>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
+                            </GridViewColumn>-->
 
 
                             <!--Interviewee-->

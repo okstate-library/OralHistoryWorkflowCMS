@@ -1,28 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Windows.Controls;
 
 namespace WpfApp
 {
     /// <summary>
     /// Interaction logic for Reports.xaml
     /// </summary>
+    /// <seealso cref="System.Windows.Controls.UserControl" />
+    /// <seealso cref="System.Windows.Markup.IComponentConnector" />
     public partial class Reports : UserControl
     {
+        #region Constructor
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Reports"/> class.
+        /// </summary>
         public Reports()
         {
             InitializeComponent();
-        }
+        } 
+
+        #endregion
     }
 }

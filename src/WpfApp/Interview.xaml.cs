@@ -1,9 +1,12 @@
 ﻿using Model;
 using Model.Transfer;
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using WpfApp.Domain;
 using WpfApp.Helper;
 
 namespace WpfApp
@@ -18,15 +21,15 @@ namespace WpfApp
         #region Constructor
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Interview"/> class.
+        /// Initializes a new instance of the <see cref="Interview" /> class.
         /// </summary>
         public Interview()
         {
             InitializeComponent();
 
-            SubseriesComboBox.ItemsSource = App.BaseUserControl.Subseries;
+            DataContext = new InterviewModel();
 
-            CollectionComboBox.ItemsSource = App.BaseUserControl.Collecions;
+            Loaded += InterviewUserControl_Loaded;
         }
 
         #endregion
@@ -34,66 +37,95 @@ namespace WpfApp
         #region Events
 
         /// <summary>
-        /// Handles the Click event of the InterviewSubmitButton control.
+        /// Handles the Loaded event of the InterviewUserControl control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
-        private void InterviewSubmitButton_Click(object sender, RoutedEventArgs e)
+        private void InterviewUserControl_Loaded(object sender, RoutedEventArgs e)
         {
-
-            CollectionModel collectionModel = (CollectionModel)CollectionComboBox.SelectedValue;
-
-            SubseryModel subseryModel = (SubseryModel)SubseriesComboBox.SelectedValue;
-
-            RequestModel requestModel = new RequestModel()
-            {
-
-                TranscriptionModel = new TranscriptionModel()
-                {
-                    CollectionId = (short)collectionModel.Id,
-                    CreatedBy = App.BaseUserControl.UserModel.UserId,
-                    CreatedDate = DateTime.Today,
-                    Description = DescriptionTextBox.Text,
-                    EquipmentUsed = EquipmentUsedTextBox.Text,
-                    InterviewDate = (DateTime)InterviewDateDateDatePicker.SelectedDate,
-                    Interviewee = IntervieweeTextBox.Text,
-                    Interviewer = InterviewerTextBox.Text,
-                    InterviewerNote = NoteTextBox.Text,
-                    IsAudioFormat = (bool)MediaAudioCheckBox.IsChecked,
-                    IsRestriction = (bool)RestrictionYesCheckBox.IsChecked,
-                    IsVideoFormat = (bool)MediaVideoCheckBox.IsChecked,
-                    Keywords = KeywordsTextBox.Text,
-                    LegalNote = LegalNoteTextBox.Text,
-                    Place = PlaceTextBox.Text,
-                    ReleaseForm = (bool)ReleaseFromYesCheckBox.IsChecked,
-                    Subject = SubjectTextBox.Text,
-                    SubseriesId = (int)subseryModel.Id,
-                    Title = TitleTextBox.Text,
-                    ProjectCode = ProjectCodeTextBox.Text,
-                    TranscriberAssigned = TranscriberAssignedTextBox.Text,
-
-                    UpdatedBy = App.BaseUserControl.UserModel.UserId,
-                    UpdatedDate = DateTime.Today,
-                },
-
-                WellKnownModificationType = Core.Enums.WellKnownModificationType.Add,
-
-            };
-
-            ResponseModel response = App.BaseUserControl.InternalService.ModifyTranscription(requestModel);
-
-            if (response.IsOperationSuccess)
-            {
-                App.ShowMessage(true, string.Empty);
-
-                ClearData();
-            }
-            else
-            {
-                App.ShowMessage(false, response.ErrorMessage);
-            }
+            ClearAll();
         }
 
+        /// <summary>
+        /// Handles the Click event of the InterviewSubmitButton control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
+        private void InterviewSubmitButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (FormValidation())
+            {
+                Collection collectionModel = (Collection)CollectionComboBox.SelectedValue;
+
+                KeyValuePair<int, string> subseryModel = (KeyValuePair<int, string>)SubseriesComboBox.SelectedValue;
+
+                RequestModel requestModel = new RequestModel()
+                {
+                    TranscriptionModel = new TranscriptionModel()
+                    {
+                        CollectionId = (short)collectionModel.Id,
+                        CreatedBy = App.BaseUserControl.UserModel.UserId,
+                        CreatedDate = DateTime.Today,
+                        Description = DescriptionTextBox.Text,
+                        EquipmentUsed = EquipmentUsedTextBox.Text,
+                        InterviewDate = (DateTime)InterviewDateDateDatePicker.SelectedDate,
+                        Interviewee = IntervieweeTextBox.Text,
+                        Interviewer = InterviewerTextBox.Text,
+                        InterviewerNote = NoteTextBox.Text,
+                        IsAudioFormat = (bool)MediaAudioCheckBox.IsChecked,
+                        IsRestriction = (bool)RestrictionYesCheckBox.IsChecked,
+                        IsVideoFormat = (bool)MediaVideoCheckBox.IsChecked,
+                        Keywords = KeywordsTextBox.Text,
+                        LegalNote = LegalNoteTextBox.Text,
+                        Place = PlaceTextBox.Text,
+                        ReleaseForm = (bool)ReleaseFromYesCheckBox.IsChecked,
+                        Subject = SubjectTextBox.Text,
+                        SubseriesId = subseryModel.Key,
+                        Title = TitleTextBox.Text,
+                        ProjectCode = ProjectCodeTextBox.Text,
+                        TranscriberAssigned = TranscriberAssignedTextBox.Text,
+                        EquipmentNumber = string.Empty,
+                        MetadataDraft = string.Empty,
+                        UpdatedBy = App.BaseUserControl.UserModel.UserId,
+                        UpdatedDate = DateTime.Today,
+                    },
+
+                    WellKnownModificationType = Core.Enums.WellKnownModificationType.Add,
+
+                };
+
+                ResponseModel response = App.BaseUserControl.InternalService.ModifyTranscription(requestModel);
+
+                if (response.IsOperationSuccess)
+                {
+                    App.ShowMessage(true, string.Empty);
+
+                    ClearAll();
+                }
+                else
+                {
+                    App.ShowMessage(false, response.ErrorMessage);
+                }
+            }
+
+        }
+
+        private bool FormValidation()
+        {
+            if (CollectionComboBox.SelectedValue != null && 
+                SubseriesComboBox.SelectedValue != null)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Handles the Check event of the ReleaseFrom control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void ReleaseFrom_Check(object sender, RoutedEventArgs e)
         {
             CheckBox currentCheckBox = (CheckBox)sender;
@@ -103,6 +135,11 @@ namespace WpfApp
                 ReleaseFromYesCheckBox);
         }
 
+        /// <summary>
+        /// Handles the Check event of the Restriction control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void Restriction_Check(object sender, RoutedEventArgs e)
         {
             CheckBox currentCheckBox = (CheckBox)sender;
@@ -111,46 +148,39 @@ namespace WpfApp
                 RestrictionYesCheckBox,
                 RestrictionNoCheckBox);
         }
+        
+        #endregion
 
+        #region Methods
 
         /// <summary>
-        /// Handles the SelectionChanged event of the CollectionComboBox control.
+        /// Clears all.
         /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="SelectionChangedEventArgs"/> instance containing the event data.</param>
-        private void CollectionComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ClearAll()
         {
-            //SubseriesComboBox.ItemsSource = null;
+            DescriptionTextBox.Text = string.Empty;
+            EquipmentUsedTextBox.Text = string.Empty;
+            InterviewDateDateDatePicker.SelectedDate = null;
+            IntervieweeTextBox.Text = string.Empty;
+            InterviewerTextBox.Text = string.Empty;
+            NoteTextBox.Text = string.Empty;
+            MediaAudioCheckBox.IsChecked = false;
+            RestrictionYesCheckBox.IsChecked = false;
+            MediaVideoCheckBox.IsChecked = false;
+            KeywordsTextBox.Text = string.Empty;
+            LegalNoteTextBox.Text = string.Empty;
+            PlaceTextBox.Text = string.Empty;
+            ReleaseFromYesCheckBox.IsChecked = false;
+            SubjectTextBox.Text = string.Empty;
+            TitleTextBox.Text = string.Empty;
+            ProjectCodeTextBox.Text = string.Empty;
+            TranscriberAssignedTextBox.Text = string.Empty;
 
-            //if (e.AddedItems[0] != null)
-            //{
-            //    CollectionModel collection = (CollectionModel)e.AddedItems[0];
-
-            //    SubseriesComboBox.ItemsSource = App.BaseUserControl.Subseries.Select(s => s.CollectionId == collection.Id);
-            //}
-
+            CollectionComboBox.SelectedValue = null;
+            SubseriesComboBox.SelectedValue = null;
         }
 
         #endregion
-
-        /// <summary>
-        /// Clears the data.
-        /// </summary>
-        private void ClearData()
-        {
-            TitleTextBox.Text = string.Empty;
-            IntervieweeTextBox.Text = string.Empty;
-            InterviewerTextBox.Text = string.Empty;
-            PlaceTextBox.Text = string.Empty;
-            SubjectTextBox.Text = string.Empty;
-            KeywordsTextBox.Text = string.Empty;
-            DescriptionTextBox.Text = string.Empty;
-            TranscriberAssignedTextBox.Text = string.Empty;
-            ProjectCodeTextBox.Text = string.Empty;
-            LegalNoteTextBox.Text = string.Empty;
-            EquipmentUsedTextBox.Text = string.Empty;
-            NoteTextBox.Text = string.Empty;
-        }
-
     }
 }
+

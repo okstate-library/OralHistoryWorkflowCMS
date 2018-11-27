@@ -64,12 +64,12 @@
                         </Grid.ColumnDefinitions>
                         <StackPanel Grid.Column="0">
 
-                            <TextBlock Text="{Binding BrowseRecordCount}" 
+                            <TextBlock Name="AllRecordsTextBlock"
                                        Style="{StaticResource MaterialDesignHeadlineTextBlock}" Margin="16 16 16 8" HorizontalAlignment="Center" FontSize="50"/>
 
                         </StackPanel>
                         <StackPanel Grid.Column="1" >
-                            <TextBlock  Margin="16 16 16 8"  HorizontalAlignment="Center" VerticalAlignment="Center"> All <LineBreak/>
+                            <TextBlock  Margin="16 16 16 8"  HorizontalAlignment="Center" VerticalAlignment="Center"> All 
            
                                 Records(s)</TextBlock>
 
@@ -88,12 +88,13 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <StackPanel Grid.Column="0">
-                            <TextBlock Text="{Binding TranscrptionQueueRecordCount}" 
-                                       Style="{StaticResource MaterialDesignHeadlineTextBlock}" Margin="16 16 16 8" HorizontalAlignment="Center" FontSize="50"></TextBlock>
+                            <TextBlock Name="TranscriptionQueueTextBlock"
+                                       Style="{StaticResource MaterialDesignHeadlineTextBlock}"
+                                       Margin="16 16 16 8" HorizontalAlignment="Center" FontSize="50"></TextBlock>
 
                         </StackPanel>
                         <StackPanel Grid.Column="1" >
-                            <TextBlock VerticalAlignment="Center"  Margin="16 16 16 8"  HorizontalAlignment="Center"> Transcription <LineBreak/> Queue(s)
+                            <TextBlock VerticalAlignment="Center"  Margin="16 16 16 8"  HorizontalAlignment="Center"> Transcription Queue(s)
                             </TextBlock>
 
                         </StackPanel>

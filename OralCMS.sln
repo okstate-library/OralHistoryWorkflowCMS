@@ -36,6 +36,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "query", "query", "{014FB1FB-4A8C-4917-8C8F-839076DD5560}"
 	ProjectSection(SolutionItems) = preProject
 		db\mysql\query\definition.1.0.0.0.sql = db\mysql\query\definition.1.0.0.0.sql
+		db\mysql\query\definition.1.1.0.0.sql = db\mysql\query\definition.1.1.0.0.sql
 		db\mysql\query\masterData.1.0.0.0.sql = db\mysql\query\masterData.1.0.0.0.sql
 	EndProjectSection
 EndProject

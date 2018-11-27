@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using EntityData;
+﻿using EntityData;
 
 namespace Repository
 {
+    /// <summary>
+    /// Methods needs to implement in Subsery Repository
+    /// </summary>
+    /// <seealso cref="EntityData.IGenericRepository{EntityData.subsery}" />
     public interface ISubseryRepository : IGenericRepository<subsery>
     {
     }

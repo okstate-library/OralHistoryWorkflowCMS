@@ -1,12 +1,10 @@
-﻿using MaterialDesignThemes.Wpf;
-using Model;
+﻿using Model;
 using Model.Transfer;
 using Model.Transfer.Search;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -101,6 +99,14 @@ namespace WpfApp
         /// </value>
         public List<int> CurrentIdList { get; set; }
 
+        /// <summary>
+        /// Gets or sets the current page list.
+        /// </summary>
+        /// <value>
+        /// The current page list.
+        /// </value>
+        public int CurrentPageList { get; set; }
+
         #endregion
 
         #region Constructor
@@ -159,7 +165,7 @@ namespace WpfApp
             cc.Content = null;
 
             this.SearchRequest = new SearchRequest(SearchHelper.InitialCurrentPage,
-              int.Parse(SearchHelper.PageSizeList[0]));
+                SearchHelper.InitialListLength);
 
             PopulateIntializeView();
 
@@ -320,6 +326,8 @@ namespace WpfApp
                 }
             }
 
+            this.SearchRequest = new SearchRequest(SearchHelper.InitialCurrentPage, this.CurrentPageList);
+
             PopulateList();
         }
 
@@ -354,7 +362,9 @@ namespace WpfApp
                 // ... Set SelectedItem as Window Title.
                 string value = comboBox.SelectedItem as string;
 
-                this.SearchRequest.ListLength = int.Parse(value);
+                int pageList = int.Parse(value);
+                this.SearchRequest.ListLength = pageList;
+                this.CurrentPageList = pageList;
 
                 this.SearchRequest.CurrentPage = 1;
                 NextPageNumber = 0;
@@ -632,9 +642,6 @@ namespace WpfApp
 
                 CurrentIdList = response.TranscriptionIds;
 
-                RecordCountWordTextBox.Text = SearchHelper.GetRecordCountText(response.Transcriptions.Count
-                  , response.PaginationInfo.TotalListLength);
-
                 SetPagination(response.PaginationInfo);
             }
             else
@@ -666,13 +673,16 @@ namespace WpfApp
                 NextPageNumber = paginationInfo.CurrentPage + 1;
                 PreviousPageNumber = paginationInfo.CurrentPage - 1;
             }
-            else if (paginationInfo.TotalPages == paginationInfo.CurrentPage)
+            else if (paginationInfo.TotalPages == paginationInfo.CurrentPage && paginationInfo.CurrentPage != 1)
             {
                 PrevoiousTextBlock.Visibility = Visibility.Visible;
                 PreviousPageNumber = paginationInfo.CurrentPage - 1;
             }
 
             CurrentPageTextBox.Text = paginationInfo.CurrentPage + " Page";
+
+            RecordCountWordTextBox.Text = SearchHelper.GetRecordCountText(paginationInfo.ListLength,
+              paginationInfo.CurrentPage, paginationInfo.TotalListLength);
         }
 
         /// <summary>

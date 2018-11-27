@@ -3,7 +3,7 @@
 namespace Model
 {
     /// <summary>
-    /// 
+    /// Defines the properties of the fins and replace model
     /// </summary>
     /// <seealso cref="Model.BaseModel" />
     public class FindReplaceModel : BaseModel

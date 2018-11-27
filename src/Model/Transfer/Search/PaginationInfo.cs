@@ -1,10 +1,7 @@
-﻿using System;
-using System.Runtime.Serialization;
-
-namespace Model.Transfer.Search
+﻿namespace Model.Transfer.Search
 {
     /// <summary>
-    ///
+    ///Defiens the properties for the pagination info model.
     /// </summary>
     public class PaginationInfo
     {

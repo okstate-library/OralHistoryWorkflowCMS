@@ -80,6 +80,8 @@
     <Compile Include="ControlledVocabulary.xaml.cs">
       <DependentUpon>ControlledVocabulary.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Domain\InterviewModel.cs" />
+    <Compile Include="Domain\PastDateValidationRule.cs" />
     <Compile Include="FileUpload.xaml.cs">
       <DependentUpon>FileUpload.xaml</DependentUpon>
     </Compile>
@@ -87,6 +89,7 @@
       <DependentUpon>FindReplace.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helper\BaseUserControl.cs" />
+    <Compile Include="Helper\Collection.cs" />
     <Compile Include="Helper\FileHelper.cs" />
     <Compile Include="Helper\PackIconConverter.cs" />
     <Compile Include="Helper\SearchHelper.cs" />
