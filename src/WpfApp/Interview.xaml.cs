@@ -1,4 +1,5 @@
-﻿using Model;
+﻿using Core.Enums;
+using Model;
 using Model.Transfer;
 using System;
 using System.Collections.Generic;
@@ -30,6 +31,7 @@ namespace WpfApp
             DataContext = new InterviewModel();
 
             Loaded += InterviewUserControl_Loaded;
+
         }
 
         #endregion
@@ -43,6 +45,8 @@ namespace WpfApp
         /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void InterviewUserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            ControlsVisibility();
+
             ClearAll();
         }
 
@@ -76,7 +80,7 @@ namespace WpfApp
                         IsRestriction = (bool)RestrictionYesCheckBox.IsChecked,
                         IsVideoFormat = (bool)MediaVideoCheckBox.IsChecked,
                         Keywords = KeywordsTextBox.Text,
-                        LegalNote = LegalNoteTextBox.Text,
+                        LegalNote = RestrictionNoteTextBox.Text,
                         Place = PlaceTextBox.Text,
                         ReleaseForm = (bool)ReleaseFromYesCheckBox.IsChecked,
                         Subject = SubjectTextBox.Text,
@@ -168,7 +172,7 @@ namespace WpfApp
             RestrictionYesCheckBox.IsChecked = false;
             MediaVideoCheckBox.IsChecked = false;
             KeywordsTextBox.Text = string.Empty;
-            LegalNoteTextBox.Text = string.Empty;
+            RestrictionNoteTextBox.Text = string.Empty;
             PlaceTextBox.Text = string.Empty;
             ReleaseFromYesCheckBox.IsChecked = false;
             SubjectTextBox.Text = string.Empty;
@@ -178,6 +182,39 @@ namespace WpfApp
 
             CollectionComboBox.SelectedValue = null;
             SubseriesComboBox.SelectedValue = null;
+        }
+
+        /// <summary>
+        /// Controlses the visibility.
+        /// </summary>
+        private void ControlsVisibility()
+        {
+            WellKnownUserType selUserType = (WellKnownUserType)App.BaseUserControl.UserModel.UserType;
+
+            switch (selUserType)
+            {
+                case WellKnownUserType.GuestUser:
+                case WellKnownUserType.Student:
+                case WellKnownUserType.Interviewer:
+                    RestrictionsBorder1.Visibility = Visibility.Collapsed;
+                    RestrictionsLabel.Visibility = Visibility.Collapsed;
+                    RestrictionsStackPanel.Visibility = Visibility.Collapsed;
+                    RestrictionsBorder2.Visibility = Visibility.Collapsed;
+                    RestrictionNoteTextBox.Visibility = Visibility.Collapsed;
+                    RestrictionNoteLabel.Visibility = Visibility.Collapsed;
+                    break;
+                case WellKnownUserType.AdminUser:
+                    RestrictionsBorder1.Visibility = Visibility.Visible;
+                    RestrictionsLabel.Visibility = Visibility.Visible;
+                    RestrictionsStackPanel.Visibility = Visibility.Visible;
+                    RestrictionsBorder2.Visibility = Visibility.Visible;
+                    RestrictionNoteTextBox.Visibility = Visibility.Visible;
+                    RestrictionNoteLabel.Visibility = Visibility.Visible;
+                    break;
+                default:
+                    break;
+            }
+
         }
 
         #endregion

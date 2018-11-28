@@ -15,7 +15,7 @@ using Model.Transfer.Search;
 namespace BusinessServices.Servcices
 {
     /// <summary>
-    /// 
+    /// Defines the properties, construtor and methods related to GetTranscriptionsUow
     /// </summary>
     /// <seealso cref="BusinessServices.UnitOfWork" />
     internal class GetTranscriptionsUow : UnitOfWork

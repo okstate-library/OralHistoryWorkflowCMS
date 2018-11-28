@@ -31,7 +31,7 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <Border Margin="0 0 0 10" Grid.Row="0" Grid.Column="1" VerticalAlignment="Top">
+            <Border Margin="0 50 0 10" Grid.Row="0" Grid.Column="1" VerticalAlignment="Top">
                 <Grid  Background="{DynamicResource PrimaryHueMidBrush}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />

@@ -1,19 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BusinessServices.Services;
-using EntityData;
+﻿using EntityData;
 using Model;
 using Model.Transfer;
 using Repository.Implementations;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace BusinessServices.Servcices
 {
+    /// <summary>
+    /// Defines the properties, construtor and methods related to InitializeBrowseFormUow
+    /// </summary>
+    /// <seealso cref="BusinessServices.UnitOfWork" />
     internal class InitializeBrowseFormUow : UnitOfWork
     {
-
         /// <summary>
         /// Gets or sets the response.
         /// </summary>
@@ -27,8 +26,11 @@ namespace BusinessServices.Servcices
         }
 
         /// <summary>
-        /// 
+        /// Gets or sets the collection repository.
         /// </summary>
+        /// <value>
+        /// The collection repository.
+        /// </value>
         private CollectionRepository CollectionRepository
         {
             get;
@@ -81,6 +83,7 @@ namespace BusinessServices.Servcices
         /// <summary>
         /// 
         /// </summary>
+        /// <seealso cref="BusinessServices.WellKnownServiceErrors" />
         private class WellKnownErrors : WellKnownServiceErrors
         {
         }
@@ -187,7 +190,6 @@ namespace BusinessServices.Servcices
                 browseFormModel.SubjectList.Add(SetPair(subject.Value, subject.Count));
             }
             
-
             this.Response = new ResponseModel()
             {
                 BrowseFormModel = browseFormModel,
@@ -196,6 +198,12 @@ namespace BusinessServices.Servcices
 
         }
 
+        /// <summary>
+        /// Sets the pair.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <param name="count">The count.</param>
+        /// <returns></returns>
         private KeyValuePair<string, string> SetPair(string name, int count)
         {
             return new KeyValuePair<string, string>(name + " (" + count + ")",name);

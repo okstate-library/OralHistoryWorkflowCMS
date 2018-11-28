@@ -1,29 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BusinessServices.Services;
-using EntityData;
+﻿using BusinessServices.Services;
 using Model;
 using Model.Transfer;
 using Repository.Implementations;
 
 namespace BusinessServices.Servcices
 {
+    /// <summary>
+    /// Defines the properties, construtor and methods related to GetTranscriptionUow
+    /// </summary>
+    /// <seealso cref="BusinessServices.UnitOfWork" />
     internal class GetTranscriptionUow : UnitOfWork
     {
-
         /// <summary>
         /// Gets or sets the request.
         /// </summary>
+        /// <value>
+        /// The request.
+        /// </value>
         public RequestModel Request
         {
             get;
             set;
         }
-
-
+        
         /// <summary>
         /// Gets or sets the response.
         /// </summary>
@@ -47,7 +46,7 @@ namespace BusinessServices.Servcices
             get;
             set;
         }
-        
+
         /// <summary>
         /// Gets or sets the well known error.
         /// </summary>
@@ -82,6 +81,7 @@ namespace BusinessServices.Servcices
         /// <summary>
         /// 
         /// </summary>
+        /// <seealso cref="BusinessServices.WellKnownServiceErrors" />
         private class WellKnownErrors : WellKnownServiceErrors
         {
         }
@@ -103,7 +103,6 @@ namespace BusinessServices.Servcices
         /// </summary>
         protected override void Execute()
         {
-
             TranscriptionModel transcription = Util.ConvertToTranscriptionModel(
                 TranscriptionRepository.GetTranscription(this.Request.TranscriptionId));
 

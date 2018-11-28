@@ -4,6 +4,7 @@ using Model.Transfer;
 using System;
 using System.Windows;
 using System.Windows.Controls;
+using WpfApp.Domain;
 
 namespace WpfApp
 {
@@ -22,6 +23,8 @@ namespace WpfApp
         public FindReplace()
         {
             InitializeComponent();
+
+            DataContext = new FindandReplaceModel();
         }
 
         #endregion
@@ -35,74 +38,78 @@ namespace WpfApp
         /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
         private void FindAndReplaceButton_Click(object sender, RoutedEventArgs e)
         {
-            WellKnownFindAndReplaceType field = WellKnownFindAndReplaceType.None;
-
-            RequestModel requestModel = new RequestModel()
+            if (FormFindAndReplaceValidation())
             {
+                WellKnownFindAndReplaceType field = WellKnownFindAndReplaceType.None;
 
-                FindReplaceModel = new FindReplaceModel()
+                RequestModel requestModel = new RequestModel()
                 {
-                    Field = field,
-                    FindWord = FindTextBox.Text,
-                    ReplaceWord = ReplaceTextBox.Text
-                },
+                    FindReplaceModel = new FindReplaceModel()
+                    {
+                        Field = field,
+                        FindWord = FindTextBox.Text,
+                        ReplaceWord = ReplaceTextBox.Text
+                    },
 
-            };
+                };
 
-            ResponseModel response = App.BaseUserControl.InternalService.FindReplace(requestModel);
+                ResponseModel response = App.BaseUserControl.InternalService.FindReplace(requestModel);
 
-            if (response.IsOperationSuccess)
-            {
-                App.ShowMessage(true, string.Empty);
+                if (response.IsOperationSuccess)
+                {
+                    App.ShowMessage(true, response.ErrorMessage + " record(s) updated.");
+                }
+                else
+                {
+                    App.ShowMessage(false, response.ErrorMessage);
+                }
+
+                ClearData();
             }
-            else
-            {
-                App.ShowMessage(false, response.ErrorMessage);
-            }
 
-            ClearData();
         }
-
+        
         /// <summary>
         /// Handles the Click event of the FindAndReplaceFieldButton control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
         private void FindAndReplaceFieldButton_Click(object sender, RoutedEventArgs e)
         {
-            WellKnownFindAndReplaceType field = WellKnownFindAndReplaceType.None;
+            if (FormFindAndReplaceFieldValidation())
+            {                
+                WellKnownFindAndReplaceType field = WellKnownFindAndReplaceType.None;
 
-            if (!string.IsNullOrEmpty(FieldComboBox.SelectedValue.ToString()))
-            {
-                field = (WellKnownFindAndReplaceType)Enum.Parse(typeof(WellKnownFindAndReplaceType),
-                    ((ComboBoxItem)FieldComboBox.SelectedValue).Content.ToString(), true);
-            }
-
-            RequestModel requestModel = new RequestModel()
-            {
-                FindReplaceModel = new FindReplaceModel()
+                if (!string.IsNullOrEmpty(FieldsComboBox.SelectedValue.ToString()))
                 {
-                    Field = field,
-                    FindWord = FindFieldWordTextBox.Text,
-                    ReplaceWord = ReplaceFieldWordTextBox.Text
-                },
+                    field = (WellKnownFindAndReplaceType)Enum.Parse(typeof(WellKnownFindAndReplaceType), FieldsComboBox.SelectedValue.ToString(), true);
+                }
 
-            };
+                RequestModel requestModel = new RequestModel()
+                {
+                    FindReplaceModel = new FindReplaceModel()
+                    {
+                        Field = field,
+                        FindWord = FindFieldWordTextBox.Text,
+                        ReplaceWord = ReplaceFieldWordTextBox.Text
+                    },
+                };
 
-            ResponseModel response = App.BaseUserControl.InternalService.FindReplace(requestModel);
+                ResponseModel response = App.BaseUserControl.InternalService.FindReplace(requestModel);
 
-            if (response.IsOperationSuccess)
-            {
-                App.ShowMessage(true, string.Empty);
+                if (response.IsOperationSuccess)
+                {
+                    App.ShowMessage(true, response.ErrorMessage + " record(s) updated.");
+                }
+                else
+                {
+                    App.ShowMessage(false, response.ErrorMessage);
+                }
+
+                ClearData();
             }
-            else
-            {
-                App.ShowMessage(false, response.ErrorMessage);
-            }
-
-            ClearData();
         }
-               
+
         #endregion
 
         #region Methods
@@ -114,6 +121,40 @@ namespace WpfApp
         {
             FindTextBox.Text = string.Empty;
             ReplaceTextBox.Text = string.Empty;
+
+            FindFieldWordTextBox.Text = string.Empty;
+            ReplaceFieldWordTextBox.Text = string.Empty;
+        }
+
+        /// <summary>
+        /// Forms the find and replace validation.
+        /// </summary>
+        /// <returns></returns>
+        private bool FormFindAndReplaceValidation()
+        {
+            if (!string.IsNullOrEmpty(FindTextBox.Text) &&
+                      !string.IsNullOrEmpty(ReplaceTextBox.Text))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Forms the find and replace field validation.
+        /// </summary>
+        /// <returns></returns>
+        private bool FormFindAndReplaceFieldValidation()
+        {
+            if (!string.IsNullOrEmpty(FindFieldWordTextBox.Text) &&
+                      !string.IsNullOrEmpty(ReplaceFieldWordTextBox.Text) &&
+                      !string.IsNullOrEmpty(FieldsComboBox.SelectedValue.ToString()))
+            {
+                return true;
+            }
+
+            return false;
         }
 
         #endregion

@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Text;
-using Core;
-
-namespace BusinessServices
+﻿namespace BusinessServices
 {
     /// <summary>
     /// Provides access to configuration data.

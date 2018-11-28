@@ -79,30 +79,32 @@ namespace WpfApp
         /// <param name="e">The <see cref="MouseButtonEventArgs"/> instance containing the event data.</param>
         void LatestTranscriptionsListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            //UIElement clicked = e.OriginalSource as UIElement;
+            UIElement clicked = e.OriginalSource as UIElement;
 
-            //if (clicked != null)
-            //{
-            //    //GridViewColumn row = clicked.ParentOfType<GridViewColumn>();
+            if (clicked != null)
+            {
+                //GridViewColumn row = clicked.ParentOfType<GridViewColumn>();
 
-            //    //if (row != null)
-            //    //{
-            //    //    GridViewColumn cell = row.ChildrenOfType<GridViewColumn>().Where(c => c.Column.UniqueName == "FilePath").FirstOrDefault();
-            //    //    if (cell != null)
-            //    //    {
-            //    //        MessageBox.Show(cell.Content.ToString());
-            //    //    }
-            //    //}
-            //}
+                //if (row != null)
+                //{
+                //    GridViewColumn cell = row.ChildrenOfType<GridViewColumn>().Where(c => c.Column.UniqueName == "FilePath").FirstOrDefault();
+                //    if (cell != null)
+                //    {
+                //        MessageBox.Show(cell.Content.ToString());
+                //    }
+                //}
+            }
+                       
 
-            //TranscriptionModel itemTranscriptionModel = ((FrameworkElement)e.OriginalSource).DataContext as TranscriptionModel;
+            TranscriptionModel itemTranscriptionModel = ((FrameworkElement)e.OriginalSource).DataContext as TranscriptionModel;
 
-            //TranscriptionQueue transcriptionQueue = new TranscriptionQueue();
+            TranscriptionQueue transcriptionQueue = new TranscriptionQueue();
 
-            //transcriptionQueue.MainGrid.Visibility = Visibility.Hidden;
+            transcriptionQueue.MainGrid.Visibility = Visibility.Hidden;
 
-            //transcriptionQueue.cc.Content = new Transcription(itemTranscriptionModel.Id, Helper.WellKnownExpander.General);
+            transcriptionQueue.cc.Content = new Transcription(itemTranscriptionModel.Id, Helper.WellKnownExpander.General);
 
+            //MainWindow.ContentControl.Content = transcriptionQueue;
         }
 
         #endregion

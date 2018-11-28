@@ -134,10 +134,9 @@
                                   HorizontalScrollBarVisibility="{Binding ElementName=DemoItemsListBox, Path=SelectedItem.HorizontalScrollBarVisibilityRequirement}"
                                   VerticalScrollBarVisibility="{Binding ElementName=DemoItemsListBox, Path=SelectedItem.VerticalScrollBarVisibilityRequirement}" 
                                   Padding="{Binding ElementName=DemoItemsListBox, Path=SelectedItem.MarginRequirement}">
-                        <!--<StackPanel>-->
-                            <!--< ContentControl - Frame-->
+                      
                         <ContentControl Name="MainContentControl" Content="{Binding ElementName=DemoItemsListBox, Path=SelectedItem.Content}" VerticalAlignment="Top" />
-                        <!--</StackPanel>-->
+                      
                     </ScrollViewer>
 
                     <materialDesign:Snackbar MessageQueue="{materialDesign:MessageQueue}" x:Name="MainSnackbar"

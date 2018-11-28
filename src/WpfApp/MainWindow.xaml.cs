@@ -1,7 +1,9 @@
 ﻿using MaterialDesignThemes.Wpf;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -19,7 +21,7 @@ namespace WpfApp
     public partial class MainWindow : Window
     {
         #region Public properties
-
+                 
         /// <summary>
         /// The snackbar
         /// </summary>
@@ -68,13 +70,13 @@ namespace WpfApp
             if (App.IsValidToProcess)
             {
                 //TODO: Login window
-                LoginWindow win1 = new LoginWindow
+                LoginWindow loginWindow = new LoginWindow
                 {
                     Owner = this,
                     WindowStartupLocation = WindowStartupLocation.CenterOwner
                 };
 
-                win1.ShowDialog();
+                loginWindow.ShowDialog();
 
                 //App.BaseUserControl.UserModel = new Model.UserModel()
                 //{
@@ -122,25 +124,30 @@ namespace WpfApp
         /// Handles the Click event of the SearchButton control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
         private void SearchButton_Click(object sender, RoutedEventArgs e)
         {
             //MainContentControl.Visibility = Visibility.Hidden;
-            //SubContentControl.Visibility = Visibility.Visible;
+            ////SubContentControl.Visibility = Visibility.Visible;
 
             //MainContentControl.Content = null;
-            //SubContentControl.Content = new Browse(MainSearchTextBox.Text.Trim());
+            //MainContentControl.Content = new Browse(MainSearchTextBox.Text.Trim());
 
             //MainSearchTextBox.Text = string.Empty;
         }
 
+        /// <summary>
+        /// Handles the Click event of the LogoutButton control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RequestNavigateEventArgs"/> instance containing the event data.</param>
         private void LogoutButton_Click(object sender, RequestNavigateEventArgs e)
         {
             App.BaseUserControl.UserModel = null;
 
             MenuToggleButton.IsChecked = false;
 
-            MainWindow_Loaded(null, null);
+            MainWindow_Loaded(null, null);            
         }
 
         #endregion

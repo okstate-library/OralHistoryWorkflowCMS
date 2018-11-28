@@ -1,28 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
-using BusinessServices.Services;
+﻿using BusinessServices.Services;
 using EntityData;
-using Model;
 using Model.Transfer;
-using Repository;
 using Repository.Implementations;
 
 namespace BusinessServices.Servcices
 {
     /// <summary>
-    /// 
-    /// 
+    /// Defines the properties, construtor and methods related to GetUserUow
     /// </summary>
+    /// <seealso cref="BusinessServices.UnitOfWork" />
     internal class GetUserUow : UnitOfWork
     {
 
         /// <summary>
         /// gets and sets the request model
         /// </summary>
+        /// <value>
+        /// The request.
+        /// </value>
         public RequestModel Request
         {
             get;
@@ -87,6 +82,7 @@ namespace BusinessServices.Servcices
         /// <summary>
         /// 
         /// </summary>
+        /// <seealso cref="BusinessServices.WellKnownServiceErrors" />
         private class WellKnownErrors : WellKnownServiceErrors
         {
         }

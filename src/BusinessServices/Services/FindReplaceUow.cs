@@ -10,7 +10,7 @@ using System.Linq;
 namespace BusinessServices.Servcices
 {
     /// <summary>
-    /// 
+    /// Defines business logic functionalities of getting find and replace uow.
     /// </summary>
     /// <seealso cref="BusinessServices.UnitOfWork" />
     public class FindReplaceUow : UnitOfWork
@@ -144,10 +144,10 @@ namespace BusinessServices.Servcices
                 if (this.Request.FindReplaceModel.Field == Core.Enums.WellKnownFindAndReplaceType.None)
                 {
                     item.Title = item.Title.Replace(this.Request.FindReplaceModel.FindWord,
-                      this.Request.FindReplaceModel.ReplaceWord);
+                        this.Request.FindReplaceModel.ReplaceWord);
 
                     item.Description = item.Description.Replace(this.Request.FindReplaceModel.FindWord,
-                  this.Request.FindReplaceModel.ReplaceWord);
+                        this.Request.FindReplaceModel.ReplaceWord);
 
                     item.Keywords = item.Keywords.Replace(this.Request.FindReplaceModel.FindWord,
                         this.Request.FindReplaceModel.ReplaceWord);
@@ -187,7 +187,8 @@ namespace BusinessServices.Servcices
 
             this.Response = new ResponseModel()
             {
-                IsOperationSuccess = true
+                IsOperationSuccess = true,
+                ErrorMessage = all.Count.ToString(),
             };
         }
 
