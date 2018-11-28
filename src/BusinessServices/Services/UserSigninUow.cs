@@ -1,23 +1,25 @@
 ﻿using Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BusinessServices.Services;
 using EntityData;
 using Model;
 using Model.Transfer;
 using Repository.Implementations;
+using System;
 
 namespace BusinessServices.Servcices
 {
+    /// <summary>
+    /// Defines the properties, construtor and methods related to UserSigninUow
+    /// </summary>
+    /// <seealso cref="BusinessServices.UnitOfWork" />
     public class UserSigninUow : UnitOfWork
     {
 
         /// <summary>
         /// Gets or sets the request.
         /// </summary>
+        /// <value>
+        /// The request.
+        /// </value>
         public RequestModel Request
         {
             get;
@@ -83,9 +85,11 @@ namespace BusinessServices.Servcices
         /// <summary>
         /// 
         /// </summary>
+        /// <seealso cref="BusinessServices.WellKnownServiceErrors" />
         private class WellKnownErrors : WellKnownServiceErrors
         {
             // <summary>
+            /// <summary>
             /// The invalid username well known error
             /// </summary>
             public static readonly Tuple<int, string> InvalidUsernameWellKnownError =

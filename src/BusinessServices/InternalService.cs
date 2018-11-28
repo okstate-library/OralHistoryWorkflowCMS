@@ -8,7 +8,6 @@ namespace BusinessServices
     /// </summary>
     public class InternalService
     {
-
         /// <summary>
         /// Gets the transcription.
         /// </summary>
@@ -16,9 +15,10 @@ namespace BusinessServices
         /// <returns></returns>
         public ResponseModel GetTranscription(RequestModel requestModel)
         {
-            GetTranscriptionUow uow = new GetTranscriptionUow();
-
-            uow.Request = requestModel;
+            GetTranscriptionUow uow = new GetTranscriptionUow
+            {
+                Request = requestModel
+            };
 
             uow.DoWork();
 
@@ -32,9 +32,10 @@ namespace BusinessServices
         /// <returns></returns>
         public ResponseModel UserSignIn(RequestModel requestModel)
         {
-            UserSigninUow uow = new UserSigninUow();
-
-            uow.Request = requestModel;
+            UserSigninUow uow = new UserSigninUow
+            {
+                Request = requestModel
+            };
 
             uow.DoWork();
 
@@ -48,9 +49,10 @@ namespace BusinessServices
         /// <returns></returns>
         public ResponseModel GetTranscriptions(RequestModel requestModel)
         {
-            GetTranscriptionsUow uow = new GetTranscriptionsUow();
-
-            uow.Request = requestModel;
+            GetTranscriptionsUow uow = new GetTranscriptionsUow
+            {
+                Request = requestModel
+            };
 
             uow.DoWork();
 
@@ -64,9 +66,10 @@ namespace BusinessServices
         /// <returns></returns>
         public ResponseModel ModifyTranscription(RequestModel requestModel)
         {
-            ModifyTranscriptionUow uow = new ModifyTranscriptionUow();
-
-            uow.Request = requestModel;
+            ModifyTranscriptionUow uow = new ModifyTranscriptionUow
+            {
+                Request = requestModel
+            };
 
             uow.DoWork();
 
@@ -93,9 +96,10 @@ namespace BusinessServices
         /// <returns></returns>
         public ResponseModel GetTranscriptionsForBrowse(RequestModel requestModel)
         {
-            GetTranscriptionsForBrowseUow uow = new GetTranscriptionsForBrowseUow();
-
-            uow.Request = requestModel;
+            GetTranscriptionsForBrowseUow uow = new GetTranscriptionsForBrowseUow
+            {
+                Request = requestModel
+            };
 
             uow.DoWork();
 
@@ -122,9 +126,10 @@ namespace BusinessServices
         /// <returns></returns>
         public ResponseModel GetPostInitializeMainForm(RequestModel request)
         {
-            PostInitializeMainFormUow uow = new PostInitializeMainFormUow();
-
-            uow.Request = request;
+            PostInitializeMainFormUow uow = new PostInitializeMainFormUow
+            {
+                Request = request
+            };
 
             uow.DoWork();
 
@@ -138,9 +143,10 @@ namespace BusinessServices
         /// <returns></returns>
         public ResponseModel GetUsers(RequestModel request)
         {
-            GetUsersUow uow = new GetUsersUow();
-
-            uow.Request = request;
+            GetUsersUow uow = new GetUsersUow
+            {
+                Request = request
+            };
 
             uow.DoWork();
 
@@ -154,9 +160,10 @@ namespace BusinessServices
         /// <returns></returns>
         public ResponseModel ResetUserPassword(RequestModel request)
         {
-            UserResetUow uow = new UserResetUow();
-
-            uow.Request = request;
+            UserResetUow uow = new UserResetUow
+            {
+                Request = request
+            };
 
             uow.DoWork();
 
@@ -170,9 +177,10 @@ namespace BusinessServices
         /// <returns></returns>
         public ResponseModel GetUser(RequestModel request)
         {
-            GetUserUow uow = new GetUserUow();
-
-            uow.Request = request;
+            GetUserUow uow = new GetUserUow
+            {
+                Request = request
+            };
 
             uow.DoWork();
 
@@ -186,9 +194,10 @@ namespace BusinessServices
         /// <returns></returns>
         public ResponseModel ModifyUser(RequestModel request)
         {
-            ModifyUserUow uow = new ModifyUserUow();
-
-            uow.Request = request;
+            ModifyUserUow uow = new ModifyUserUow
+            {
+                Request = request
+            };
 
             uow.DoWork();
 
@@ -204,9 +213,10 @@ namespace BusinessServices
         /// </returns>
         public ResponseModel ImportTranscription(RequestModel request)
         {
-            ImportTranscriptionUow uow = new ImportTranscriptionUow();
-
-            uow.Request = request;
+            ImportTranscriptionUow uow = new ImportTranscriptionUow
+            {
+                Request = request
+            };
 
             uow.DoWork();
 

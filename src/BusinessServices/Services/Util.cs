@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Core.Enums;
+﻿using Core.Enums;
 using EntityData;
 using Model;
 using Repository.Implementations;
+using System.Linq;
 
 namespace BusinessServices.Services
 {
@@ -15,18 +11,29 @@ namespace BusinessServices.Services
     /// </summary>
     internal class Util
     {
+        #region Proerties
+
         /// <summary>
         /// The collection repository
         /// </summary>
-        static CollectionRepository collectionRepository = new CollectionRepository();
+        private static CollectionRepository collectionRepository = new CollectionRepository();
 
         /// <summary>
         /// The subsery repository
         /// </summary>
-        static SubseryRepository subseryRepository = new SubseryRepository();
+        private static SubseryRepository subseryRepository = new SubseryRepository();
 
-
+        /// <summary>
+        /// The collection list
+        /// </summary>
         private static IQueryable<collection> collectionList = null;
+
+        /// <summary>
+        /// Gets the collection list instance.
+        /// </summary>
+        /// <value>
+        /// The collection list instance.
+        /// </value>
         public static IQueryable<collection> collectionListInstance
         {
             get
@@ -40,7 +47,17 @@ namespace BusinessServices.Services
             }
         }
 
+        /// <summary>
+        /// The subseries list
+        /// </summary>
         private static IQueryable<subsery> subseriesList = null;
+
+        /// <summary>
+        /// Gets the subseries list instance.
+        /// </summary>
+        /// <value>
+        /// The subseries list instance.
+        /// </value>
         public static IQueryable<subsery> SubseriesListInstance
         {
             get
@@ -54,8 +71,12 @@ namespace BusinessServices.Services
             }
         }
 
+        #endregion
+
+        #region Constructor
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="Util"/> class.
+        /// Initializes a new instance of the <see cref="Util" /> class.
         /// </summary>
         public Util()
         {
@@ -63,6 +84,8 @@ namespace BusinessServices.Services
             subseryRepository = new SubseryRepository();
 
         }
+
+        #endregion
 
         /// <summary>
         /// Converts to collection model.
@@ -300,6 +323,11 @@ namespace BusinessServices.Services
             };
         }
 
+        /// <summary>
+        /// Gets the sub string.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <returns></returns>
         private static string GetSubString(string value)
         {
 

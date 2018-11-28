@@ -143,7 +143,7 @@ namespace WpfApp
 
             SearchWordTextBox.Text = searchWord;
 
-            PopulateList();
+            //PopulateList();
 
             Loaded += BrowseUserControl_Loaded;
 

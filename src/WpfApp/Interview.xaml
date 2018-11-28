@@ -176,7 +176,7 @@
                             </DatePicker.SelectedDate>
                         </DatePicker>
                      
-                        <Label Style="{StaticResource BoldLabel}" Grid.Row="4" Grid.Column="2" Margin="15 0 0 0" >Place (City and county)</Label>
+                        <Label Style="{StaticResource BoldLabel}" Grid.Row="4" Grid.Column="2" Margin="15 0 0 0" >Location of interview</Label>
 
                         <TextBox Name="PlaceTextBox" Grid.Row="4" Grid.Column="3"   Style="{StaticResource EditableTextBox}" />
 
@@ -195,8 +195,6 @@
                             </ComboBox.Text>
                         </ComboBox>
 
-                        <!--<ComboBox  Grid.Row="6" Grid.Column="1" Name="CollectionComboBox" SelectionChanged="CollectionComboBox_SelectionChanged" />-->
-
                         <Label Style="{StaticResource BoldLabel}" Grid.Row="6" Grid.Column="2" Margin="15 0 0 0" >Subseries</Label>
 
                         <ComboBox Grid.Row="6" Grid.Column="3" ItemsSource="{Binding SelectedItem.Series, ElementName=CollectionComboBox}"   DisplayMemberPath="Value" 
@@ -209,8 +207,6 @@
                                 </Binding>
                             </ComboBox.Text>
                         </ComboBox>
-
-                        <!--<ComboBox  Grid.Row="6" Grid.Column="3" Name="SubseriesComboBox" DisplayMemberPath="SubseryName"/>-->
 
                         <Border  Grid.Row="7"  Style="{StaticResource EmptyBorder}"   />
 
@@ -277,11 +273,11 @@
                         </StackPanel>
 
 
-                        <Border  Grid.Row="17"  Style="{StaticResource EmptyBorder}"   />
+                        <Border Name="RestrictionsBorder1" Grid.Row="17"  Style="{StaticResource EmptyBorder}"   />
 
-                        <Label Style="{StaticResource BoldLabel}" Grid.Row="18" Grid.Column="0">Restriction/Legal note</Label>
+                        <Label Name="RestrictionsLabel" Style="{StaticResource BoldLabel}" Grid.Row="18" Grid.Column="0">Restriction</Label>
 
-                        <StackPanel   Grid.Row="18" Grid.Column="1" Orientation="Horizontal">
+                        <StackPanel Name="RestrictionsStackPanel"  Grid.Row="18" Grid.Column="1" Orientation="Horizontal">
 
                             <CheckBox Name="RestrictionYesCheckBox"
                                             Style="{StaticResource MaterialDesignCheckBox}" Checked="Restriction_Check">
@@ -295,23 +291,23 @@
 
                         </StackPanel>
 
-                        <!--<ToggleButton  Grid.Row="18" Grid.Column="1" Style="{StaticResource YesNoToggleButtonStyle}"
-                                  IsChecked="True" Name="RestrictionToggleButton">
-                        </ToggleButton>-->
+                        <Border  Name="RestrictionsBorder2"  Grid.Row="19"  Style="{StaticResource EmptyBorder}"   />
 
-                        <TextBox Name="LegalNoteTextBox" Grid.Row="18" Grid.Column="2" Grid.ColumnSpan="2"   Style="{StaticResource EditableTextBox}" />
+                        <Label  Name="RestrictionNoteLabel" Style="{StaticResource BoldLabel}" Grid.Row="20" Grid.Column="0">Restriction note</Label>
 
-                        <Border  Grid.Row="19"  Style="{StaticResource EmptyBorder}"   />
-
-                        <Label Style="{StaticResource BoldLabel}" Grid.Row="20" Grid.Column="0">Equipment used</Label>
-
-                        <TextBox Name="EquipmentUsedTextBox"  Grid.Row="20" Grid.Column="1"   Style="{StaticResource EditableTextBox}" />
+                        <TextBox Name="RestrictionNoteTextBox" Grid.Row="20" Grid.Column="1" Grid.ColumnSpan="2" Height="50" Style="{StaticResource EditableTextBox}" />
 
                         <Border  Grid.Row="21"  Style="{StaticResource EmptyBorder}"   />
 
-                        <Label Style="{StaticResource BoldLabel}" Grid.Row="22" Grid.Column="0">Notes</Label>
+                        <Label Style="{StaticResource BoldLabel}" Grid.Row="22" Grid.Column="0">Equipment used</Label>
 
-                        <TextBox Name="NoteTextBox"  Grid.Row="22" Grid.Column="1" Grid.ColumnSpan="3"  Height="50" Style="{StaticResource EditableTextBox}" />
+                        <TextBox Name="EquipmentUsedTextBox"  Grid.Row="22" Grid.Column="1"   Style="{StaticResource EditableTextBox}" />
+
+                        <Border  Grid.Row="23"  Style="{StaticResource EmptyBorder}"   />
+
+                        <Label Style="{StaticResource BoldLabel}" Grid.Row="24" Grid.Column="0">Notes</Label>
+
+                        <TextBox Name="NoteTextBox"  Grid.Row="24" Grid.Column="1" Grid.ColumnSpan="3"  Height="50" Style="{StaticResource EditableTextBox}" />
 
                         <Button Grid.Row="28"  Grid.ColumnSpan="5"  Margin="0,20,0,0"  Style="{StaticResource MaterialDesignRaisedAccentButton}" Click="InterviewSubmitButton_Click" 
                         ToolTip="Submit metadata details">

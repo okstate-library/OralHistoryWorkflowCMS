@@ -24,6 +24,9 @@ namespace BusinessServices.Servcices
         /// <summary>
         /// gets and sets the request model
         /// </summary>
+        /// <value>
+        /// The request.
+        /// </value>
         public RequestModel Request
         {
             get;
@@ -88,6 +91,7 @@ namespace BusinessServices.Servcices
         /// <summary>
         /// 
         /// </summary>
+        /// <seealso cref="BusinessServices.WellKnownServiceErrors" />
         private class WellKnownErrors : WellKnownServiceErrors
         {
         }
@@ -114,7 +118,7 @@ namespace BusinessServices.Servcices
             List<TranscriptionModel> newlist = new List<TranscriptionModel>();
 
             List<transcription> allTranscriptions = this.TranscriptionRepository.GetAll().ToList();
-            
+
             pagedList = allTranscriptions.ToPagedList(this.Request.SearchRequest.CurrentPage, this.Request.SearchRequest.ListLength);
 
             if (this.Request.TranscriptionSearchModel.IsSearchRecordsExists() || !string.IsNullOrEmpty(this.Request.SearchWord))
@@ -162,7 +166,7 @@ namespace BusinessServices.Servcices
 
                 pagedList = dataset3.ToPagedList(this.Request.SearchRequest.CurrentPage, this.Request.SearchRequest.ListLength);
             }
-            
+
             PaginationInfo page = page = new PaginationInfo()
             {
                 CurrentPage = pagedList.PageNumber,

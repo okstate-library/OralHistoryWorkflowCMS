@@ -80,6 +80,7 @@
     <Compile Include="ControlledVocabulary.xaml.cs">
       <DependentUpon>ControlledVocabulary.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Domain\FindandReplaceModel.cs" />
     <Compile Include="Domain\InterviewModel.cs" />
     <Compile Include="Domain\PastDateValidationRule.cs" />
     <Compile Include="FileUpload.xaml.cs">

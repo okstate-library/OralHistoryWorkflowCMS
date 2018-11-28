@@ -1,8 +1,6 @@
 ﻿#region Imports
 
 using System;
-using System.ComponentModel;
-
 
 #endregion
 
@@ -14,6 +12,12 @@ namespace BusinessServices
     /// </summary>
     internal class WellKnownServiceErrors
     {
+        /// <summary>
+        /// Gets or sets the value.
+        /// </summary>
+        /// <value>
+        /// The value.
+        /// </value>
         public Tuple<int, string> Value
         {
             get;
@@ -30,7 +34,6 @@ namespace BusinessServices
         /// </summary>
         public readonly Tuple<int, string> MissingParameterWellKnownServiceError =
             new Tuple<int, string>(95, "Required Parameter(s) Missing : Unable to identify parameter");
-
 
     }
 

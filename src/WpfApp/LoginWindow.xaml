@@ -3,12 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        xmlns:local="clr-namespace:WpfApp"
-        xmlns:domain="clr-namespace:WpfApp.Domain"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         WindowStyle="None"   Width="400" Height="250"
-        ResizeMode="NoResize">
+        ResizeMode="NoResize"
+        Title="Login">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -39,7 +38,7 @@
             </Binding>
         </TextBox.Text>-->
 
-        <Label  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Content="Login window" FontWeight="Bold" FontSize="13" VerticalAlignment="Center" HorizontalAlignment="Center">
+        <Label  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Content="Login" FontWeight="Bold" FontSize="13" VerticalAlignment="Center" HorizontalAlignment="Center">
         </Label>
         
         <TextBox x:Name="UsernameTextBox"  Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="20 20 0 0" FontSize="15"
