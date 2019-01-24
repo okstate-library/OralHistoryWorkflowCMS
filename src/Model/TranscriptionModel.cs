@@ -238,7 +238,16 @@ namespace Model
         /// <value>
         /// The equipment used.
         /// </value>
-        public string EquipmentUsed { get; set; }
+        public string AudioEquipmentUsed { get; set; }
+
+        /// <summary>
+        /// Gets or sets the equipment used.
+        /// </summary>
+        /// <value>
+        /// The equipment used.
+        /// </value>
+        public string VideoEquipmentUsed { get; set; }
+
         /// <summary>
         /// Gets or sets the interviewer note.
         /// </summary>
@@ -578,5 +587,29 @@ namespace Model
         /// The metadata draft.
         /// </value>
         public string MetadataDraft { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is a new interviewer.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this instance is a new interviewer; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsANewInterviewer { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is a new audio equipment.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this instance is a new audio equipment; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsANewAudioEquipment { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is a new videoo equipment.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this instance is a new videoo equipment; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsANewVideoEquipment { get; set; }
     }
 }

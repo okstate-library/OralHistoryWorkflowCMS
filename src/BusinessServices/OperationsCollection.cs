@@ -71,7 +71,7 @@ namespace BusinessServices
 
             textBuffer.AppendLine(OperationsCollection.OutputFormats.Start);
 
-            foreach (Operation currentOperation in this.Items)
+            foreach (Operation currentOperation in Items)
             {
                 if (index == 0)
                 {
@@ -83,7 +83,7 @@ namespace BusinessServices
                 }
                 else
                 {
-                    Operation previousOperation = this.Items[index - 1];
+                    Operation previousOperation = Items[index - 1];
                     TimeSpan duration = currentOperation.Timestamp - previousOperation.Timestamp;
 
                     textBuffer.AppendFormat(

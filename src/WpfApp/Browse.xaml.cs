@@ -74,16 +74,6 @@ namespace WpfApp
         public int PreviousPageNumber { get; set; }
 
         /// <summary>
-        /// The last header clicked
-        /// </summary>
-        GridViewColumnHeader _lastHeaderClicked = null;
-
-        /// <summary>
-        /// The last direction
-        /// </summary>
-        ListSortDirection _lastDirection = ListSortDirection.Ascending;
-
-        /// <summary>
         /// Gets a value indicating whether this instance is page initialize.
         /// </summary>
         /// <value>
@@ -122,7 +112,7 @@ namespace WpfApp
 
             Loaded += BrowseUserControl_Loaded;
 
-            this.Loaded += (s, args) =>
+            Loaded += (s, args) =>
             {
                 PageComboBox.Loaded += PageLengthComboBox_Loaded;
 
@@ -142,9 +132,7 @@ namespace WpfApp
             InitializeSearchOption();
 
             SearchWordTextBox.Text = searchWord;
-
-            //PopulateList();
-
+            
             Loaded += BrowseUserControl_Loaded;
 
         }
@@ -164,7 +152,7 @@ namespace WpfApp
 
             cc.Content = null;
 
-            this.SearchRequest = new SearchRequest(SearchHelper.InitialCurrentPage,
+            SearchRequest = new SearchRequest(SearchHelper.InitialCurrentPage,
                 SearchHelper.InitialListLength);
 
             PopulateIntializeView();
@@ -179,7 +167,7 @@ namespace WpfApp
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="MouseButtonEventArgs" /> instance containing the event data.</param>
-        void TranscriptionQueueListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        void BrowseListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             UIElement clicked = e.OriginalSource as UIElement;
 
@@ -227,7 +215,7 @@ namespace WpfApp
                 requestPage = PreviousPageNumber;
             }
 
-            this.SearchRequest.CurrentPage = requestPage;
+            SearchRequest.CurrentPage = requestPage;
 
             PopulateList();
         }
@@ -326,7 +314,7 @@ namespace WpfApp
                 }
             }
 
-            this.SearchRequest = new SearchRequest(SearchHelper.InitialCurrentPage, this.CurrentPageList);
+            SearchRequest = new SearchRequest(SearchHelper.InitialCurrentPage, CurrentPageList);
 
             PopulateList();
         }
@@ -345,7 +333,7 @@ namespace WpfApp
             comboBox.ItemsSource = SearchHelper.PageSizeList;
 
             // ... Make the first item selected.
-            comboBox.SelectedIndex = 0;
+            comboBox.SelectedIndex = SearchHelper.SelectedPageSizeIndex;
         }
 
         /// <summary>
@@ -363,74 +351,15 @@ namespace WpfApp
                 string value = comboBox.SelectedItem as string;
 
                 int pageList = int.Parse(value);
-                this.SearchRequest.ListLength = pageList;
-                this.CurrentPageList = pageList;
+                SearchRequest.ListLength = pageList;
+                CurrentPageList = pageList;
 
-                this.SearchRequest.CurrentPage = 1;
+                SearchRequest.CurrentPage = 1;
                 NextPageNumber = 0;
                 PreviousPageNumber = 0;
                 CurrentPageTextBox.Text = string.Empty;
 
                 PopulateList();
-            }
-        }
-
-        /// <summary>
-        /// Grids the view column header clicked handler.
-        /// </summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
-        private void GridViewColumnHeaderClickedHandler(object sender, RoutedEventArgs e)
-        {
-            var headerClicked = e.OriginalSource as GridViewColumnHeader;
-            ListSortDirection direction;
-
-            if (headerClicked != null)
-            {
-                if (headerClicked.Role != GridViewColumnHeaderRole.Padding)
-                {
-                    if (headerClicked != _lastHeaderClicked)
-                    {
-                        direction = ListSortDirection.Ascending;
-                    }
-                    else
-                    {
-                        if (_lastDirection == ListSortDirection.Ascending)
-                        {
-                            direction = ListSortDirection.Descending;
-                        }
-                        else
-                        {
-                            direction = ListSortDirection.Ascending;
-                        }
-                    }
-
-                    var columnBinding = headerClicked.Column.DisplayMemberBinding as Binding;
-                    var sortBy = columnBinding?.Path.Path ?? headerClicked.Column.Header as string;
-
-                    Sort(sortBy, direction);
-
-
-                    if (direction == ListSortDirection.Ascending)
-                    {
-                        headerClicked.Column.HeaderTemplate =
-                          Resources["HeaderTemplateArrowUp"] as DataTemplate;
-                    }
-                    else
-                    {
-                        headerClicked.Column.HeaderTemplate =
-                          Resources["HeaderTemplateArrowDown"] as DataTemplate;
-                    }
-
-                    // Remove arrow from previously sorted header  
-                    if (_lastHeaderClicked != null && _lastHeaderClicked != headerClicked)
-                    {
-                        _lastHeaderClicked.Column.HeaderTemplate = null;
-                    }
-
-                    _lastHeaderClicked = headerClicked;
-                    _lastDirection = direction;
-                }
             }
         }
 
@@ -441,37 +370,7 @@ namespace WpfApp
         /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void ExportButton_Click(object sender, RoutedEventArgs e)
         {
-
-
-            Excel.Application xlApp;
-            Excel.Workbook xlWorkBook;
-            Excel.Worksheet xlWorkSheet;
-            object misValue = System.Reflection.Missing.Value;
-
-            xlApp = new Excel.Application();
-            xlWorkBook = xlApp.Workbooks.Add(misValue);
-            xlWorkSheet = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1);
-
-            xlWorkSheet.Cells[1, 1] = "Title";
-            xlWorkSheet.Cells[1, 2] = "Interviewee";
-            xlWorkSheet.Cells[1, 3] = "Interviewer";
-            xlWorkSheet.Cells[1, 4] = "Date Original";
-            xlWorkSheet.Cells[1, 5] = "Date Digital";
-            xlWorkSheet.Cells[1, 6] = "Subject";
-            xlWorkSheet.Cells[1, 7] = "Keyword";
-            xlWorkSheet.Cells[1, 8] = "Description";
-            xlWorkSheet.Cells[1, 9] = "Scope and Contents";
-            xlWorkSheet.Cells[1, 10] = "Format Type";
-            xlWorkSheet.Cells[1, 11] = "Publisher";
-            xlWorkSheet.Cells[1, 12] = "Collection Name";
-            xlWorkSheet.Cells[1, 13] = "Subseries";
-            xlWorkSheet.Cells[1, 14] = "Coverage - Spatial";
-            xlWorkSheet.Cells[1, 15] = "Coverage - Temporal";
-            xlWorkSheet.Cells[1, 16] = "Rights";
-            xlWorkSheet.Cells[1, 17] = "Language";
-            xlWorkSheet.Cells[1, 18] = "Project Code";
-
-            int i = 2;
+            List<TranscriptionModel> transcriptions = new List<TranscriptionModel>();
 
             foreach (int transcriptionId in CurrentIdList)
             {
@@ -482,64 +381,12 @@ namespace WpfApp
 
                 ResponseModel response = App.BaseUserControl.InternalService.GetTranscription(requestModel);
 
-                TranscriptionModel transcriptionModel = response.Transcription;
-
-                xlWorkSheet.Cells[i, 1] = transcriptionModel.Title;
-                xlWorkSheet.Cells[i, 2] = transcriptionModel.Interviewee;
-                xlWorkSheet.Cells[i, 3] = transcriptionModel.Interviewer;
-                xlWorkSheet.Cells[i, 4] = transcriptionModel.CreatedDate;
-                xlWorkSheet.Cells[i, 5] = transcriptionModel.ConvertToDigitalDate;
-                xlWorkSheet.Cells[i, 6] = transcriptionModel.Subject;
-                xlWorkSheet.Cells[i, 7] = transcriptionModel.Keywords;
-                xlWorkSheet.Cells[i, 8] = transcriptionModel.Description;
-                xlWorkSheet.Cells[i, 9] = transcriptionModel.ScopeAndContents;
-
-                string format = string.Empty;
-
-                if (transcriptionModel.IsAudioFormat && transcriptionModel.IsVideoFormat)
-                {
-                    format = "Audio/Video";
-                }
-                else if (transcriptionModel.IsAudioFormat)
-                {
-                    format = "Audio";
-                }
-                else if (transcriptionModel.IsVideoFormat)
-                {
-                    format = "Video";
-                }
-
-                xlWorkSheet.Cells[i, 10] = format;
-
-                xlWorkSheet.Cells[i, 11] = transcriptionModel.Publisher;
-                xlWorkSheet.Cells[i, 12] = transcriptionModel.CollectionName;
-                xlWorkSheet.Cells[i, 13] = transcriptionModel.SubseriesName;
-                xlWorkSheet.Cells[i, 14] = transcriptionModel.CoverageSpatial;
-                xlWorkSheet.Cells[i, 15] = transcriptionModel.CoverageTemporal;
-                xlWorkSheet.Cells[i, 16] = transcriptionModel.Rights;
-                xlWorkSheet.Cells[i, 17] = transcriptionModel.Language;
-                xlWorkSheet.Cells[i, 18] = transcriptionModel.ProjectCode;
-
-                i++;
+                transcriptions.Add(response.Transcription);
             }
 
+            ExportHelper helper = new ExportHelper();
 
-            var path = System.IO.Path.GetFullPath("out.xls");
-
-            FileHelper.DeleteFile(path);
-
-            xlWorkBook.SaveAs(path,
-                Excel.XlFileFormat.xlWorkbookNormal, misValue, misValue, misValue, misValue, Excel.XlSaveAsAccessMode.xlExclusive,
-                misValue, misValue, misValue, misValue, misValue);
-
-            xlWorkBook.Close(true, misValue, misValue);
-            xlApp.Quit();
-
-            ReleaseObject(xlWorkSheet);
-            ReleaseObject(xlWorkBook);
-            ReleaseObject(xlApp);
-
-            Process.Start(path);
+            helper.Export(transcriptions);
 
         }
 
@@ -556,27 +403,11 @@ namespace WpfApp
 
             SearchList = new List<string>();
 
-            this.TranscriptionSearchModel = new TranscriptionSearchModel();
-            this.TranscriptionSearchModel.Contentdms = new List<string>();
-            this.TranscriptionSearchModel.CollectionNames = new List<string>();
-            this.TranscriptionSearchModel.Interviewers = new List<string>();
-            this.TranscriptionSearchModel.Subjects = new List<string>();
-        }
-
-        /// <summary>
-        /// Sorts the specified sort by.
-        /// </summary>
-        /// <param name="sortBy">The sort by.</param>
-        /// <param name="direction">The direction.</param>
-        private void Sort(string sortBy, ListSortDirection direction)
-        {
-            ICollectionView dataView =
-              CollectionViewSource.GetDefaultView(TranscriptionQueueListView.ItemsSource);
-
-            dataView.SortDescriptions.Clear();
-            SortDescription sd = new SortDescription(sortBy, direction);
-            dataView.SortDescriptions.Add(sd);
-            dataView.Refresh();
+            TranscriptionSearchModel = new TranscriptionSearchModel();
+            TranscriptionSearchModel.Contentdms = new List<string>();
+            TranscriptionSearchModel.CollectionNames = new List<string>();
+            TranscriptionSearchModel.Interviewers = new List<string>();
+            TranscriptionSearchModel.Subjects = new List<string>();
         }
 
         /// <summary>
@@ -596,29 +427,6 @@ namespace WpfApp
         }
 
         /// <summary>
-        /// Releases the object.
-        /// </summary>
-        /// <param name="obj">The object.</param>
-        private void ReleaseObject(object obj)
-        {
-            try
-            {
-                System.Runtime.InteropServices.Marshal.ReleaseComObject(obj);
-                obj = null;
-            }
-            catch (Exception ex)
-            {
-                obj = null;
-                MessageBox.Show("Exception Occured while releasing object " + ex.ToString());
-            }
-            finally
-            {
-                GC.Collect();
-            }
-
-        }
-
-        /// <summary>
         /// Populatrs the list.
         /// </summary>
         private void PopulateList()
@@ -627,8 +435,8 @@ namespace WpfApp
 
             RequestModel requestModel = new RequestModel()
             {
-                SearchRequest = this.SearchRequest,
-                TranscriptionSearchModel = this.TranscriptionSearchModel,
+                SearchRequest = SearchRequest,
+                TranscriptionSearchModel = TranscriptionSearchModel,
                 SearchWord = SearchWordTextBox.Text.Trim()
             };
 
@@ -636,19 +444,39 @@ namespace WpfApp
 
             if (response.IsOperationSuccess)
             {
-                TranscriptionQueueListView.ItemsSource = response.Transcriptions;
+                BrowseListView.ItemsSource = response.Transcriptions;
 
                 response.SetTranscriptionIds();
 
                 CurrentIdList = response.TranscriptionIds;
 
-                SetPagination(response.PaginationInfo);
+                if (response.Transcriptions.Count == 0)
+                {
+                    SetZeroListMessage();
+                }
+                else
+                {
+                    SetPagination(response.PaginationInfo);
+                }
+
             }
             else
             {
-
+                App.ShowMessage(false, response.ErrorMessage);
             }
 
+        }
+
+        /// <summary>
+        /// Sets the zero list message.
+        /// </summary>
+        private void SetZeroListMessage()
+        {
+            ExportButton.Visibility = Visibility.Hidden;
+
+            CurrentPageTextBox.Visibility = Visibility.Hidden;
+
+            RecordCountWordTextBox.Text = SearchHelper.NoRecordsFoundMessage;
         }
 
         /// <summary>
@@ -683,6 +511,11 @@ namespace WpfApp
 
             RecordCountWordTextBox.Text = SearchHelper.GetRecordCountText(paginationInfo.ListLength,
               paginationInfo.CurrentPage, paginationInfo.TotalListLength);
+
+            CurrentPageTextBox.Visibility = Visibility.Visible;
+            RecordCountWordTextBox.Visibility = Visibility.Visible;
+
+            ExportButton.Visibility = Visibility.Visible;
         }
 
         /// <summary>

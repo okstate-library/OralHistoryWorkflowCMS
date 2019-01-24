@@ -24,10 +24,10 @@ namespace Core.Enums
         Student = 2,
 
         /// <summary>
-        /// The Interviewer
-        /// </summary>
-        [Description("Interviewer")]
-        Interviewer = 3,
+        /// The Staff
+        /// </summary
+        [Description("Staff")]
+        Staff = 3,
 
         /// <summary>
         /// The admin

@@ -93,12 +93,12 @@ namespace BusinessServices.Servcices
         /// </summary>
         protected override void PreExecute()
         {
-            this.WellKnownError = new WellKnownErrors();
+            WellKnownError = new WellKnownErrors();
 
-            this.TranscriptionRepository = new TranscriptionRepository();
-            this.CollectionRepository = new CollectionRepository();
+            TranscriptionRepository = new TranscriptionRepository();
+            CollectionRepository = new CollectionRepository();
 
-            this.WellKnownError.Value = WellKnownError.NoError;
+            WellKnownError.Value = WellKnownError.NoError;
         }
 
         /// <summary>
@@ -109,7 +109,7 @@ namespace BusinessServices.Servcices
 
             BrowseFormModel browseFormModel = new BrowseFormModel();
 
-            IQueryable<transcription> transcriptions = this.TranscriptionRepository.GetAll();
+            IQueryable<transcription> transcriptions = TranscriptionRepository.GetAll();
             
             // Interview list
             var intervieweeList = transcriptions
@@ -136,7 +136,7 @@ namespace BusinessServices.Servcices
                                 });
 
 
-            List<collection> daCollections = this.CollectionRepository.GetCollections();
+            List<collection> daCollections = CollectionRepository.GetCollections();
 
             foreach (var item in collections)
             {
@@ -171,11 +171,14 @@ namespace BusinessServices.Servcices
 
             foreach (transcription item in transcriptions)
             {
-                string[] words = item.Subject.Split(',');
+                string[] words = item.Subject.Split(';');
 
                 foreach (string word in words)
                 {
-                    subjectList.Add(word);
+                    if (!string.IsNullOrEmpty(word))
+                    {
+                        subjectList.Add(word);
+                    }                    
                 }
             }
 
@@ -190,7 +193,7 @@ namespace BusinessServices.Servcices
                 browseFormModel.SubjectList.Add(SetPair(subject.Value, subject.Count));
             }
             
-            this.Response = new ResponseModel()
+            Response = new ResponseModel()
             {
                 BrowseFormModel = browseFormModel,
                 IsOperationSuccess = true
@@ -214,15 +217,15 @@ namespace BusinessServices.Servcices
         /// </summary>
         protected override void PostExecute()
         {
-            int errorCode = this.WellKnownError.Value.Item1;
+            int errorCode = WellKnownError.Value.Item1;
 
             if (errorCode > 0)
             {
-                this.Response = new ResponseModel()
+                Response = new ResponseModel()
                 {
                     ErrorCode = errorCode.ToString(),
 
-                    ErrorMessage = this.WellKnownError.Value.Item2,
+                    ErrorMessage = WellKnownError.Value.Item2,
 
                     IsOperationSuccess = false
 

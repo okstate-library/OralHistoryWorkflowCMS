@@ -62,7 +62,7 @@
                         <StackPanel  Grid.Row="2">
                             <TextBlock Text=" Required fields:" FontWeight="Bold" FontSize="13" />
                             <TextBlock Margin="10 0 0 0" FontSize="12">
-                        Title<LineBreak/>	
+                        Project code<LineBreak/>	
                         Interviewee	<LineBreak/>
                         Interviewer<LineBreak/>	
                         Interview Date <LineBreak/>
@@ -79,7 +79,7 @@
 
                 <StackPanel Orientation="Vertical"
                             TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
-                            Margin="20,50,50,24"  >
+                            Margin="20,10,50,24"  >
 
 
                     <Grid  VerticalAlignment="Top" >
@@ -122,11 +122,11 @@
                             <ColumnDefinition Width="300" />
                         </Grid.ColumnDefinitions>
 
-                        <Label Style="{StaticResource BoldLabel}" Grid.Row="0" Grid.Column="0">Title</Label>
+                        <Label Style="{StaticResource BoldLabel}" Grid.Row="0" Grid.Column="0">Project Code</Label>
 
-                        <TextBox Name="TitleTextBox" Grid.Row="0"  Grid.Column="1" Grid.ColumnSpan="3"   Style="{StaticResource EditableTextBox}" >
+                        <TextBox Name="ProjectCodeTextBox" Grid.Row="0"  Grid.Column="1" Grid.ColumnSpan="1"  LostFocus="ProjectCodeTextBox_LostFocus"   Style="{StaticResource EditableTextBox}" >
                             <TextBox.Text>
-                                <Binding Path="Title" UpdateSourceTrigger="PropertyChanged">
+                                <Binding Path="ProjectCode" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
                                         <domain1:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
                                     </Binding.ValidationRules>
@@ -149,16 +149,20 @@
                         </TextBox>
 
                         <Label Style="{StaticResource BoldLabel}" Margin="15 0 0 0" Grid.Row="2" Grid.Column="2">Interviewer</Label>
+                      
 
-                        <TextBox Name="InterviewerTextBox" Grid.Row="2" Grid.Column="3"   Style="{StaticResource EditableTextBox}" >
-                            <TextBox.Text>
-                                <Binding Path="Interviewer" UpdateSourceTrigger="PropertyChanged">
-                                    <Binding.ValidationRules>
-                                        <domain1:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
-                                    </Binding.ValidationRules>
-                                </Binding>
-                            </TextBox.Text>
-                        </TextBox>
+                        <StackPanel Orientation="Horizontal"  Grid.Row="2" Grid.Column="3" >
+
+                            <TextBlock/>
+
+                            <domain1:FilteredComboBox x:Name="InterviewerFilteredComboBox"  materialDesign:HintAssist.HintOpacity=".26"  
+                            HorizontalAlignment="Left" VerticalAlignment="Top" Width="300"/>
+
+                        </StackPanel>
+
+
+                        <Label Grid.Row="3" Margin="-2 0 0 0" Style="{StaticResource TextBoxInputFormatLabel}" Grid.Column="1">Last name, first name</Label>
+
 
                         <Border  Grid.Row="3"  Style="{StaticResource EmptyBorder}"   />
 
@@ -175,7 +179,7 @@
                                 </Binding>
                             </DatePicker.SelectedDate>
                         </DatePicker>
-                     
+
                         <Label Style="{StaticResource BoldLabel}" Grid.Row="4" Grid.Column="2" Margin="15 0 0 0" >Location of interview</Label>
 
                         <TextBox Name="PlaceTextBox" Grid.Row="4" Grid.Column="3"   Style="{StaticResource EditableTextBox}" />
@@ -231,14 +235,36 @@
 
                         <Border  Grid.Row="13"  Style="{StaticResource EmptyBorder}"   />
 
-                        <Label Style="{StaticResource BoldLabel}" Grid.Row="14" Grid.Column="0">Project code</Label>
+                        <Label Style="{StaticResource BoldLabel}" Grid.Row="14" Grid.Column="0">Audio equipment</Label>
 
-                        <TextBox Name="ProjectCodeTextBox"  Grid.Row="14" Grid.Column="1"   Style="{StaticResource EditableTextBox}" />
+                        <StackPanel Orientation="Horizontal"  Grid.Row="14" Grid.Column="1" >
 
-                        <Label Style="{StaticResource BoldLabel}" Grid.Row="14" Grid.Column="2" Margin="15 0 0 0" >Transcriber assigned</Label>
+                            <TextBlock                />
 
-                        <TextBox Name="TranscriberAssignedTextBox" Grid.Row="14" Grid.Column="3"   Style="{StaticResource EditableTextBox}" />
+                            <domain1:FilteredComboBox x:Name="AudioEquipmentUsedFilteredComboBox" materialDesign:HintAssist.HintOpacity=".26"  ItemsPanel="{DynamicResource ItemsTemplate}" 
 
+                            HorizontalAlignment="Left" VerticalAlignment="Top" Width="300"/>
+
+                        </StackPanel>
+
+                        <Label Style="{StaticResource BoldLabel}" Grid.Row="14" Grid.Column="2" Margin="15 0 0 0">Video equipment</Label>
+
+                        <StackPanel Orientation="Horizontal"  Grid.Row="14" Grid.Column="3" >
+
+                            <TextBlock                />
+
+                            <domain1:FilteredComboBox x:Name="VideoEquipmentUsedFilteredComboBox" materialDesign:HintAssist.HintOpacity=".26"  ItemsPanel="{DynamicResource ItemsTemplate}" 
+
+                            HorizontalAlignment="Left" VerticalAlignment="Top" Width="300"/>
+
+                        </StackPanel>
+
+                        <!--<ComboBox Name="EquipmentUsedComboBox"  materialDesign:HintAssist.HintOpacity=".26"
+                                   >
+                        </ComboBox>-->
+
+                        <!--<TextBox Name="EquipmentUsedTextBox"  Grid.Row="14" Grid.Column="1"   Style="{StaticResource EditableTextBox}" />-->
+                       
                         <Border  Grid.Row="15"  Style="{StaticResource EmptyBorder}"   />
 
                         <Label Style="{StaticResource BoldLabel}" Grid.Row="16" Grid.Column="0">Release form</Label>
@@ -257,10 +283,6 @@
 
                         </StackPanel>
 
-                        <!--<ToggleButton  Grid.Row="16" Grid.Column="1" Style="{StaticResource YesNoToggleButtonStyle}"
-                                  IsChecked="True" Name="ReleaseFormToggleButton">
-                        </ToggleButton>-->
-
                         <Label Style="{StaticResource BoldLabel}" Grid.Row="16" Grid.Column="2" Margin="15 0 0 0" >Record format</Label>
 
                         <StackPanel  Grid.Row="16" Grid.Column="3"  Orientation="Horizontal"    >
@@ -271,7 +293,6 @@
                                 Video
                             </CheckBox>
                         </StackPanel>
-
 
                         <Border Name="RestrictionsBorder1" Grid.Row="17"  Style="{StaticResource EmptyBorder}"   />
 
@@ -291,25 +312,23 @@
 
                         </StackPanel>
 
+                        <Label Style="{StaticResource BoldLabel}" Grid.Row="18" Grid.Column="2" Margin="15 0 0 0" >Transcriber assigned</Label>
+
+                        <TextBox Name="TranscriberAssignedTextBox" Grid.Row="18" Grid.Column="3"   Style="{StaticResource EditableTextBox}" />
+
                         <Border  Name="RestrictionsBorder2"  Grid.Row="19"  Style="{StaticResource EmptyBorder}"   />
 
                         <Label  Name="RestrictionNoteLabel" Style="{StaticResource BoldLabel}" Grid.Row="20" Grid.Column="0">Restriction note</Label>
 
-                        <TextBox Name="RestrictionNoteTextBox" Grid.Row="20" Grid.Column="1" Grid.ColumnSpan="2" Height="50" Style="{StaticResource EditableTextBox}" />
+                        <TextBox Name="RestrictionNoteTextBox" Grid.Row="20" Grid.Column="1" Grid.ColumnSpan="3" Height="50" Style="{StaticResource EditableTextBox}" />
 
                         <Border  Grid.Row="21"  Style="{StaticResource EmptyBorder}"   />
 
-                        <Label Style="{StaticResource BoldLabel}" Grid.Row="22" Grid.Column="0">Equipment used</Label>
+                        <Label Style="{StaticResource BoldLabel}" Grid.Row="22" Grid.Column="0">Notes</Label>
 
-                        <TextBox Name="EquipmentUsedTextBox"  Grid.Row="22" Grid.Column="1"   Style="{StaticResource EditableTextBox}" />
+                        <TextBox Name="NoteTextBox"  Grid.Row="22" Grid.Column="1" Grid.ColumnSpan="3"  Height="50" Style="{StaticResource EditableTextBox}" />
 
-                        <Border  Grid.Row="23"  Style="{StaticResource EmptyBorder}"   />
-
-                        <Label Style="{StaticResource BoldLabel}" Grid.Row="24" Grid.Column="0">Notes</Label>
-
-                        <TextBox Name="NoteTextBox"  Grid.Row="24" Grid.Column="1" Grid.ColumnSpan="3"  Height="50" Style="{StaticResource EditableTextBox}" />
-
-                        <Button Grid.Row="28"  Grid.ColumnSpan="5"  Margin="0,20,0,0"  Style="{StaticResource MaterialDesignRaisedAccentButton}" Click="InterviewSubmitButton_Click" 
+                        <Button Grid.Row="23"  Grid.ColumnSpan="5"  Margin="0,20,0,0"  Style="{StaticResource MaterialDesignRaisedAccentButton}" Click="InterviewSubmitButton_Click" 
                         ToolTip="Submit metadata details">
                             _Submit
                         </Button>

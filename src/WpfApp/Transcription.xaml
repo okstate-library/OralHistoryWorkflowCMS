@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+              xmlns:domain1="clr-namespace:WpfApp.Domain"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
@@ -121,6 +122,7 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="200" />
                                 <ColumnDefinition Width="300" />
+                                <ColumnDefinition Width="50" />
                                 <ColumnDefinition Width="200" />
                                 <ColumnDefinition Width="300" />
                             </Grid.ColumnDefinitions>
@@ -131,9 +133,9 @@
 
                             <TextBox Name="Title2Label"  Grid.Row="2"  Grid.Column="1" Style="{StaticResource readOnlyTextBox}" />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="2" Grid.Column="2" >Transcription status</Label>
+                            <Label Style="{StaticResource BoldLabel}" Grid.Row="2" Grid.Column="3" >Transcribed</Label>
 
-                            <TextBox Name="TranscriptionStatusTextBox"  Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="3" Style="{StaticResource readOnlyTextBox}" />
+                            <TextBox Name="TranscriptionStatusTextBox"  Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="3" Style="{StaticResource readOnlyTextBox}" />
 
                             <Border  Grid.Row="3"  Style="{StaticResource EmptyBorder}"   />
 
@@ -141,9 +143,9 @@
 
                             <TextBox Name="IntervieweeTextBox"  Grid.Row="4" Grid.Column="1"  Style="{StaticResource readOnlyTextBox}" />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="4" Grid.Column="2" >Interviewer</Label>
+                            <Label Style="{StaticResource BoldLabel}" Grid.Row="4" Grid.Column="3" >Interviewer</Label>
 
-                            <TextBox Name="InterviewerTextBox"  Grid.Row="4" Grid.Column="3" Style="{StaticResource readOnlyTextBox}"/>
+                            <TextBox Name="InterviewerTextBox"  Grid.Row="4" Grid.Column="4" Style="{StaticResource readOnlyTextBox}"/>
 
                             <Border  Grid.Row="5"  Style="{StaticResource EmptyBorder}"   />
 
@@ -151,9 +153,9 @@
 
                             <TextBox Name="ProjectCodeTextBox"  Grid.Row="6" Grid.Column="1" Style="{StaticResource readOnlyTextBox}"/>
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="6" Grid.Column="2" >Format(s)</Label>
+                            <Label Style="{StaticResource BoldLabel}" Grid.Row="6" Grid.Column="3" >Format(s)</Label>
 
-                            <TextBox Name="FormatTextBox"  Grid.Row="6" Grid.Column="3" Grid.ColumnSpan="3" Style="{StaticResource readOnlyTextBox}"/>
+                            <TextBox Name="FormatTextBox"  Grid.Row="6" Grid.Column="4" Style="{StaticResource readOnlyTextBox}"/>
 
                             <Border  Grid.Row="7"  Style="{StaticResource EmptyBorder}"   />
 
@@ -161,19 +163,19 @@
 
                             <TextBox Name="InterviewDateTextBox"  Grid.Row="8" Grid.Column="1"  Style="{StaticResource readOnlyTextBox}"/>
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="8" Grid.Column="2" >Access media status</Label>
+                            <Label Style="{StaticResource BoldLabel}" Grid.Row="8" Grid.Column="3" >Access media status</Label>
 
-                            <TextBox Name="AccessMediaStatusTextBox"  Grid.Row="8" Grid.Column="3" Style="{StaticResource readOnlyTextBox}"/>
+                            <TextBox Name="AccessMediaStatusTextBox"  Grid.Row="8" Grid.Column="4" Style="{StaticResource readOnlyTextBox}"/>
 
                             <Border  Grid.Row="9"  Style="{StaticResource EmptyBorder}"   />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="10" Grid.Column="0" >On CONTENT dm</Label>
+                            <Label Style="{StaticResource BoldLabel}" Grid.Row="10" Grid.Column="0" >Online</Label>
 
                             <TextBox Name="OnContentDmTextBox"  Grid.Row="10" Grid.Column="1" Style="{StaticResource readOnlyTextBox}"/>
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="10" Grid.Column="2" >In Rosetta</Label>
+                            <Label Style="{StaticResource BoldLabel}" Grid.Row="10" Grid.Column="3" >In Rosetta</Label>
 
-                            <TextBox Name="InRosettaTextBox"  Grid.Row="10" Grid.Column="3" Style="{StaticResource readOnlyTextBox}"/>
+                            <TextBox Name="InRosettaTextBox"  Grid.Row="10" Grid.Column="4" Style="{StaticResource readOnlyTextBox}"/>
 
                             <Border  Grid.Row="11"  Style="{StaticResource EmptyBorder}"   />
 
@@ -181,41 +183,41 @@
 
                             <TextBox Name="ReleaseFormTextBox"  Grid.Row="12" Grid.Column="1" Style="{StaticResource readOnlyTextBox}"/>
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="12" Grid.Column="2" >Restrictions</Label>
+                            <Label Style="{StaticResource BoldLabel}" Grid.Row="12" Grid.Column="3" >Restrictions</Label>
 
-                            <TextBox Name="RestrictionsTextBox"  Grid.Row="12" Grid.Column="3" Style="{StaticResource readOnlyTextBox}"/>
+                            <TextBox Name="RestrictionsTextBox"  Grid.Row="12" Grid.Column="4" Style="{StaticResource readOnlyTextBox}"/>
 
                             <Border  Grid.Row="13"  Style="{StaticResource EmptyBorder}"   />
 
                             <Label Style="{StaticResource BoldLabel}" Grid.Row="14" Grid.Column="0" >Collection</Label>
 
-                            <TextBox Name="CollectionNameTextBox"  Grid.Row="14" Grid.Column="1" Grid.ColumnSpan="4" Style="{StaticResource readOnlyTextBox}"/>
+                            <TextBox Name="CollectionNameTextBox"  Grid.Row="14" Grid.Column="1" Grid.ColumnSpan="5" Style="{StaticResource readOnlyTextBox}"/>
 
                             <Border  Grid.Row="15"  Style="{StaticResource EmptyBorder}"   />
 
                             <Label Style="{StaticResource BoldLabel}" Grid.Row="16" Grid.Column="0" >Subseries</Label>
 
-                            <TextBox Name="SubseriesTextBox"  Grid.Row="17"  Grid.ColumnSpan="4" Style="{StaticResource readOnlyTextBox}"/>
+                            <TextBox Name="SubseriesTextBox"  Grid.Row="16"   Grid.Column="1" Grid.ColumnSpan="5" Style="{StaticResource readOnlyTextBox}"/>
 
-                            <Border  Grid.Row="18"  Style="{StaticResource EmptyBorder}"   />
+                            <Border  Grid.Row="17"  Style="{StaticResource EmptyBorder}"   />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="19" Grid.Column="0" >Subject</Label>
+                            <Label Style="{StaticResource BoldLabel}" Grid.Row="18" Grid.Column="0" >Subject</Label>
 
-                            <TextBox Name="SubjectTextBox"  Grid.Row="20"  Grid.ColumnSpan="4"  Height="50" AcceptsReturn="True" 
+                            <TextBox Name="SubjectTextBox"  Grid.Row="18"  Grid.Column="1" Grid.ColumnSpan="5"  Height="50" AcceptsReturn="True" 
+                                     TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Style="{StaticResource readOnlyTextBox}"/>
+
+                            <Border  Grid.Row="19"  Style="{StaticResource EmptyBorder}"   />
+
+                            <Label Style="{StaticResource BoldLabel}" Grid.Row="20" Grid.Column="0" >Keywords</Label>
+
+                            <TextBox Name="KeywordsTextBox"  Grid.Row="20"  Grid.Column="1" Grid.ColumnSpan="5"  Height="50" AcceptsReturn="True"
                                      TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Style="{StaticResource readOnlyTextBox}"/>
 
                             <Border  Grid.Row="21"  Style="{StaticResource EmptyBorder}"   />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="22" Grid.Column="0" >Keywords</Label>
+                            <Label Style="{StaticResource BoldLabel}" Grid.Row="22" Grid.Column="0" >Description</Label>
 
-                            <TextBox Name="KeywordsTextBox"  Grid.Row="23"  Grid.ColumnSpan="4"  Height="50" AcceptsReturn="True"
-                                     TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Style="{StaticResource readOnlyTextBox}"/>
-
-                            <Border  Grid.Row="24"  Style="{StaticResource EmptyBorder}"   />
-
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="25" Grid.Column="0" >Description</Label>
-
-                            <TextBox Name="DescriptionTextBox"  Grid.Row="26"  Grid.ColumnSpan="4"  Height="50" AcceptsReturn="True"
+                            <TextBox Name="DescriptionTextBox"  Grid.Row="22"  Grid.Column="1" Grid.ColumnSpan="5"  Height="50" AcceptsReturn="True"
                                      TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Style="{StaticResource readOnlyTextBox}"/>
 
                         </Grid>
@@ -272,11 +274,12 @@
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="200" />
-                                <ColumnDefinition Width="50" />
-                                <ColumnDefinition Width="200" />
-                                <ColumnDefinition Width="50" />
-                                <ColumnDefinition Width="200" />
+                                <ColumnDefinition Width="250" />
+                                <ColumnDefinition Width="75" />
+                                <ColumnDefinition Width="300" />
+                                <ColumnDefinition Width="75" />
+                                <ColumnDefinition Width="300" />
+                                
                             </Grid.ColumnDefinitions>
 
                             <Border  Grid.Row="1"  Style="{StaticResource EmptyBorder}"   />
@@ -353,7 +356,7 @@
                             
                             <Border  Grid.Row="23"  Style="{StaticResource EmptyBorder}"   />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="24" Grid.Column="0" >Transcript status</Label>
+                            <Label Style="{StaticResource BoldLabel}" Grid.Row="24" Grid.Column="0" >Transcribed</Label>
                             <StackPanel  Grid.Row="24" Grid.Column="2"  Orientation="Horizontal" >
 
                                 <CheckBox Name="TranscriptStatusCompleteCheckBox"
@@ -595,6 +598,7 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="200" />
                                 <ColumnDefinition Width="300" />
+                                <ColumnDefinition Width="50" />
                                 <ColumnDefinition Width="200" />
                                 <ColumnDefinition Width="300" />
                             </Grid.ColumnDefinitions>
@@ -603,7 +607,7 @@
 
                             <Label Style="{StaticResource BoldLabel}" Grid.Row="2" Grid.Column="0">Title</Label>
 
-                            <TextBox Name="TitleTextBox" Grid.Row="2"  Grid.Column="1" Grid.ColumnSpan="3"   Style="{StaticResource EditableTextBox}" />
+                            <TextBox Name="TitleTextBox" Grid.Row="2"  Grid.Column="1" Grid.ColumnSpan="4"   Style="{StaticResource EditableTextBox}" />
 
                             <Border  Grid.Row="3"  Style="{StaticResource EmptyBorder}"   />
 
@@ -611,9 +615,20 @@
 
                             <TextBox Name="Interviewee2TextBox"  Grid.Row="4" Grid.Column="1"   Style="{StaticResource EditableTextBox}" />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="4" Grid.Column="2">Interviewer</Label>
+                            <Label Style="{StaticResource BoldLabel}" Grid.Row="4" Grid.Column="3">Interviewer</Label>
 
-                            <TextBox Name="Interviewer2TextBox" Grid.Row="4" Grid.Column="3"   Style="{StaticResource EditableTextBox}" />
+                            <!--<TextBox Name="Interviewer2TextBox"   Style="{StaticResource EditableTextBox}" />-->
+
+                            <StackPanel Orientation="Horizontal"  Grid.Row="4" Grid.Column="4"  >
+
+                                <TextBlock/>
+
+                                <domain1:FilteredComboBox x:Name="InterviewerFilteredComboBox"  materialDesign:HintAssist.HintOpacity=".26"  
+                            HorizontalAlignment="Left" VerticalAlignment="Top" Width="300"/>
+
+                            </StackPanel>
+
+                            <Label Grid.Row="5" Margin="-2 0 0 0" Style="{StaticResource TextBoxInputFormatLabel}" Grid.Column="1">Last name, first name</Label>
 
                             <Border  Grid.Row="5"  Style="{StaticResource EmptyBorder}"   />
 
@@ -621,92 +636,92 @@
 
                             <DatePicker Name="InterviewDate2DateDatePicker"  Grid.Row="6" Grid.ColumnSpan="1"   Grid.Column="1" Style="{StaticResource MaterialDesignFloatingHintDatePicker}"  />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="6" Grid.Column="2">Date Digital</Label>
+                            <Label Style="{StaticResource BoldLabel}" Grid.Row="6" Grid.Column="3">Date Digital</Label>
 
-                            <DatePicker Name="DateDigitalConverted2DateDatePicker"  Grid.Row="6"   Grid.Column="3" Style="{StaticResource MaterialDesignFloatingHintDatePicker}"  />
+                            <DatePicker Name="DateDigitalConverted2DateDatePicker"  Grid.Row="6"   Grid.Column="4" Style="{StaticResource MaterialDesignFloatingHintDatePicker}"  />
 
                             <Border  Grid.Row="7"  Style="{StaticResource EmptyBorder}"   />
 
                             <Label Style="{StaticResource BoldLabel}" Grid.Row="8" Grid.Column="0">Subject</Label>
 
-                            <TextBox Name="Subject2TextBox" Grid.Row="9"  Grid.ColumnSpan="4"  Height="50" AcceptsReturn="True" 
+                            <TextBox Name="Subject2TextBox" Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="5"  Height="50" AcceptsReturn="True" 
                                      TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"   Style="{StaticResource EditableTextBox}" />
 
-                            <Border  Grid.Row="10"  Style="{StaticResource EmptyBorder}"   />
+                            <Border  Grid.Row="9"  Style="{StaticResource EmptyBorder}"   />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="11" Grid.Column="0">Keywords</Label>
+                            <Label Style="{StaticResource BoldLabel}" Grid.Row="10" Grid.Column="0">Keywords</Label>
 
-                            <TextBox Name="Keywords2TextBox"  Grid.Row="12"  Grid.ColumnSpan="4"  Height="50" AcceptsReturn="True"
+                            <TextBox Name="Keywords2TextBox"  Grid.Row="10" Grid.Column="1" Grid.ColumnSpan="5"  Height="50" AcceptsReturn="True"
                                      TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"   Style="{StaticResource EditableTextBox}" />
 
-                            <Border  Grid.Row="13"  Style="{StaticResource EmptyBorder}" />
+                            <Border  Grid.Row="11"  Style="{StaticResource EmptyBorder}" />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="14" Grid.Column="0" >Description</Label>
+                            <Label Style="{StaticResource BoldLabel}" Grid.Row="12" Grid.Column="0" >Description</Label>
 
-                            <TextBox Name="Description2TextBox"  Grid.Row="15"  Grid.ColumnSpan="4"  Height="50" AcceptsReturn="True"
+                            <TextBox Name="Description2TextBox"  Grid.Row="12" Grid.Column="1" Grid.ColumnSpan="5"  Height="50" AcceptsReturn="True"
                                      TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"   Style="{StaticResource EditableTextBox}" />
 
-                            <Border  Grid.Row="16"  Style="{StaticResource EmptyBorder}"   />
+                            <Border  Grid.Row="13"  Style="{StaticResource EmptyBorder}"   />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="17" Grid.Column="0">Scope and Contents</Label>
+                            <Label Style="{StaticResource BoldLabel}" Grid.Row="14" Grid.Column="0">Scope and Contents</Label>
 
-                            <TextBox Name="ScopeAndContentTextBox"  Grid.Row="17" Grid.Column="1"   Style="{StaticResource EditableTextBox}" />
+                            <TextBox Name="ScopeAndContentTextBox"  Grid.Row="14" Grid.Column="1"   Style="{StaticResource EditableTextBox}" />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="17" Grid.Column="2">Rights</Label>
+                            <Label Style="{StaticResource BoldLabel}" Grid.Row="14" Grid.Column="3">Rights</Label>
 
-                            <TextBox Name="RightsTextBox" Grid.Row="17" Grid.Column="3"   Style="{StaticResource EditableTextBox}" />
+                            <TextBox Name="RightsTextBox" Grid.Row="14" Grid.Column="4"   Style="{StaticResource EditableTextBox}" />
 
-                            <Border  Grid.Row="18"  Style="{StaticResource EmptyBorder}"   />
+                            <Border  Grid.Row="15"  Style="{StaticResource EmptyBorder}"   />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="19" Grid.Column="0">Format</Label>
+                            <Label Style="{StaticResource BoldLabel}" Grid.Row="16" Grid.Column="0">Format</Label>
 
-                            <TextBox Name="Format2TextBox"  Grid.Row="19" Grid.Column="1"   Style="{StaticResource EditableTextBox}" />
+                            <TextBox Name="Format2TextBox"  Grid.Row="16" Grid.Column="1"   Style="{StaticResource EditableTextBox}" />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="19" Grid.Column="2">Language</Label>
+                            <Label Style="{StaticResource BoldLabel}" Grid.Row="16" Grid.Column="3">Language</Label>
 
-                            <TextBox Name="LabguageTextBox" Grid.Row="19" Grid.Column="3"   Style="{StaticResource EditableTextBox}" />
+                            <TextBox Name="LabguageTextBox" Grid.Row="16" Grid.Column="4"   Style="{StaticResource EditableTextBox}" />
 
-                            <Border  Grid.Row="20"  Style="{StaticResource EmptyBorder}"   />
+                            <Border  Grid.Row="17"  Style="{StaticResource EmptyBorder}"   />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="21" Grid.Column="0">Type</Label>
+                            <Label Style="{StaticResource BoldLabel}" Grid.Row="18" Grid.Column="0">Type</Label>
 
-                            <TextBox Name="TypeTextBox"  Grid.Row="21" Grid.Column="1"   Style="{StaticResource EditableTextBox}" />
+                            <TextBox Name="TypeTextBox"  Grid.Row="18" Grid.Column="1"   Style="{StaticResource EditableTextBox}" />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="21" Grid.Column="2">Identifier</Label>
+                            <Label Style="{StaticResource BoldLabel}" Grid.Row="18" Grid.Column="3">Identifier</Label>
 
-                            <TextBox Name="IdentifierTextBox" Grid.Row="21" Grid.Column="3"   Style="{StaticResource EditableTextBox}" />
+                            <TextBox Name="IdentifierTextBox" Grid.Row="18" Grid.Column="4"   Style="{StaticResource EditableTextBox}" />
 
-                            <Border  Grid.Row="22"  Style="{StaticResource EmptyBorder}"   />
+                            <Border  Grid.Row="19"  Style="{StaticResource EmptyBorder}"   />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="23" Grid.Column="0">Publisher</Label>
+                            <Label Style="{StaticResource BoldLabel}" Grid.Row="20" Grid.Column="0">Publisher</Label>
 
-                            <TextBox Name="PublisherTextBox"  Grid.Row="23" Grid.Column="1"   Style="{StaticResource EditableTextBox}" />
+                            <TextBox Name="PublisherTextBox"  Grid.Row="20" Grid.Column="1"   Style="{StaticResource EditableTextBox}" />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="23" Grid.Column="2">Transcript</Label>
+                            <Label Style="{StaticResource BoldLabel}" Grid.Row="20" Grid.Column="3">Transcript</Label>
 
-                            <TextBox Name="TranscriptTextBox" Grid.Row="23" Grid.Column="3"   Style="{StaticResource EditableTextBox}" />
+                            <TextBox Name="TranscriptTextBox" Grid.Row="20" Grid.Column="4"   Style="{StaticResource EditableTextBox}" />
 
-                            <Border  Grid.Row="24"  Style="{StaticResource EmptyBorder}"   />
+                            <Border  Grid.Row="21"  Style="{StaticResource EmptyBorder}"   />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="25" Grid.Column="0">Relation-is part of</Label>
+                            <Label Style="{StaticResource BoldLabel}" Grid.Row="22" Grid.Column="0">Relation-is part of</Label>
 
-                            <TextBox Name="RelationIsPartofTextBox"  Grid.Row="25" Grid.Column="1"   Style="{StaticResource EditableTextBox}" />
+                            <TextBox Name="RelationIsPartofTextBox"  Grid.Row="22" Grid.Column="1"   Style="{StaticResource EditableTextBox}" />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="25" Grid.Column="2">File name</Label>
+                            <Label Style="{StaticResource BoldLabel}" Grid.Row="22" Grid.Column="3">File name</Label>
 
-                            <TextBox Name="FileNameTextBox" Grid.Row="25" Grid.Column="3"   Style="{StaticResource EditableTextBox}" />
+                            <TextBox Name="FileNameTextBox" Grid.Row="22" Grid.Column="4"   Style="{StaticResource EditableTextBox}" />
 
-                            <Border  Grid.Row="26"  Style="{StaticResource EmptyBorder}"   />
+                            <Border  Grid.Row="23"  Style="{StaticResource EmptyBorder}"   />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="27" Grid.Column="0">Coverage-spatial</Label>
+                            <Label Style="{StaticResource BoldLabel}" Grid.Row="24" Grid.Column="0">Coverage-spatial</Label>
 
-                            <TextBox Name="CoverageSpatialTextBox"  Grid.Row="27" Grid.Column="1"   Style="{StaticResource EditableTextBox}" />
+                            <TextBox Name="CoverageSpatialTextBox"  Grid.Row="24" Grid.Column="1"   Style="{StaticResource EditableTextBox}" />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="27" Grid.Column="2">Coverage-temporal</Label>
+                            <Label Style="{StaticResource BoldLabel}" Grid.Row="24" Grid.Column="3">Coverage-temporal</Label>
 
-                            <TextBox Name="CoverageTemporalTextBox" Grid.Row="27" Grid.Column="3"   Style="{StaticResource EditableTextBox}" />
+                            <TextBox Name="CoverageTemporalTextBox" Grid.Row="24" Grid.Column="4"   Style="{StaticResource EditableTextBox}" />
 
-                            <Button Grid.Row="28"  Grid.ColumnSpan="5"  Margin="0,20,0,0"  Style="{StaticResource MaterialDesignRaisedAccentButton}" Click="MetadataButton_Click" 
+                            <Button Grid.Row="25"  Grid.ColumnSpan="5"  Margin="0,20,0,0"  Style="{StaticResource MaterialDesignRaisedAccentButton}" Click="MetadataButton_Click" 
                         ToolTip="Submit metadata details">
                                 _Submit
                             </Button>
@@ -763,17 +778,17 @@
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="200" />
+                                <ColumnDefinition Width="300" />
                                 <ColumnDefinition Width="50" />
                                 <ColumnDefinition Width="200" />
-                                <ColumnDefinition Width="50" />
-                                <ColumnDefinition Width="200" />
+                                <ColumnDefinition Width="300" />                                
                             </Grid.ColumnDefinitions>
 
                             <Border  Grid.Row="0"  Style="{StaticResource EmptyBorder}"   />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="2" Grid.Column="0">On CONTENT dm</Label>
+                            <Label Style="{StaticResource BoldLabel}" Grid.Row="2" Grid.Column="0">Online</Label>
 
-                            <StackPanel  Grid.Row="2" Grid.Column="2"  Orientation="Horizontal">
+                            <StackPanel  Grid.Row="2" Grid.Column="1"  Orientation="Horizontal">
 
                                 <CheckBox Name="OnContentDmYesCheckBox"  Style="{StaticResource MaterialDesignCheckBox}" Checked="OnContentDm_Check">
                                     Yes
@@ -785,10 +800,10 @@
                             
                             </StackPanel>
 
-                            <Border  Grid.Row="3"  Style="{StaticResource EmptyBorder}"   />
+                            <!--<Border  Grid.Row="3"  Style="{StaticResource EmptyBorder}"   />-->
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="4" Grid.Column="0">In Rosetta</Label>
-                            <StackPanel  Grid.Row="4" Grid.Column="2"  Orientation="Horizontal">
+                            <Label Style="{StaticResource BoldLabel}" Grid.Row="2" Grid.Column="3">In Rosetta</Label>
+                            <StackPanel  Grid.Row="2" Grid.Column="4"  Orientation="Horizontal">
 
                                 <CheckBox Name="InRosettaYesCheckBox"  Style="{StaticResource MaterialDesignCheckBox}" Checked="InRosetta_Check">
                                     Yes
@@ -800,10 +815,10 @@
                               
                             </StackPanel>
 
-                            <Border  Grid.Row="5"  Style="{StaticResource EmptyBorder}"   />
+                            <Border  Grid.Row="3"  Style="{StaticResource EmptyBorder}"   />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="6" Grid.Column="0">Release form</Label>
-                            <StackPanel  Grid.Row="6" Grid.Column="2"  Orientation="Horizontal">
+                            <Label Style="{StaticResource BoldLabel}" Grid.Row="4" Grid.Column="0">Release form</Label>
+                            <StackPanel  Grid.Row="4" Grid.Column="1"  Orientation="Horizontal">
                                 <CheckBox Name="ReleaseFormYesCheckBox"  Style="{StaticResource MaterialDesignCheckBox}" Checked="ReleaseForm_Check">
                                     Yes
                                 </CheckBox>
@@ -813,10 +828,8 @@
                                 </CheckBox>
                             </StackPanel>
 
-                            <Border Name="RestrictionsBorder1"  Grid.Row="7"  Style="{StaticResource EmptyBorder}"   />
-
-                            <Label Name="RestrictionsLabel"  Style="{StaticResource BoldLabel}" Grid.Row="8" Grid.Column="0">Restrictions</Label>
-                            <StackPanel Name="RestrictionsStackPanel"  Grid.Row="8" Grid.Column="2"  Orientation="Horizontal"    >
+                            <Label Name="RestrictionsLabel"  Style="{StaticResource BoldLabel}" Grid.Row="4" Grid.Column="3">Restrictions</Label>
+                            <StackPanel Name="RestrictionsStackPanel"  Grid.Row="4" Grid.Column="4"  Orientation="Horizontal"    >
                                 <CheckBox Name="RestrictionsYesCheckBox"  Style="{StaticResource MaterialDesignCheckBox}" Checked="Restrictions_Check">
                                     Yes
                                 </CheckBox>
@@ -827,17 +840,17 @@
                               
                             </StackPanel>
 
-                            <Border  Name="RestrictionsBorder2" Grid.Row="9"   Style="{StaticResource EmptyBorder}"   />
+                            <Border  Name="RestrictionsBorder2" Grid.Row="5"   Style="{StaticResource EmptyBorder}"   />
 
-                            <Label  Name="RestrictionNoteLabel" Style="{StaticResource BoldLabel}" Grid.Row="10" Grid.Column="0">Restriction notes</Label>
+                            <Label  Name="RestrictionNoteLabel" Style="{StaticResource BoldLabel}" Grid.Row="6" Grid.Column="0">Restriction notes</Label>
                             
-                            <TextBox Name="RestrictionNoteTextBox" BorderThickness="1"  Grid.Row="10" Grid.Column="2"  Grid.ColumnSpan="3"
+                            <TextBox Name="RestrictionNoteTextBox" BorderThickness="1"  Grid.Row="6" Grid.Column="1"  Grid.ColumnSpan="5"
                                     Height="100" AcceptsReturn="True" TextWrapping="Wrap"   VerticalScrollBarVisibility="Auto"      Style="{StaticResource EditableTextBox}" />
 
-                            <Border  Grid.Row="11"   Style="{StaticResource EmptyBorder}"   />
+                            <Border  Grid.Row="7"   Style="{StaticResource EmptyBorder}"   />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="12" Grid.Column="0">Recording format</Label>
-                            <StackPanel  Grid.Row="12" Grid.Column="2"  Orientation="Horizontal"    >
+                            <Label Style="{StaticResource BoldLabel}" Grid.Row="8" Grid.Column="0">Recording format</Label>
+                            <StackPanel  Grid.Row="8" Grid.Column="1"  Orientation="Horizontal"    >
 
                                 <CheckBox Name="RecordingFormatAudioCheckBox">
                                     Audio
@@ -847,27 +860,51 @@
                                 </CheckBox>
                             </StackPanel>
 
-                            <Border  Grid.Row="13" Style="{StaticResource EmptyBorder}"   />
+                            <Label Style="{StaticResource BoldLabel}" Grid.Row="8" Grid.Column="3" >Equipment  number</Label>
+                            <TextBox Name="EquipmentNumberTextBox"  Grid.Row="8" Grid.Column="4"  Grid.ColumnSpan="3" Style="{StaticResource EditableTextBox}" />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="14" Grid.Column="0" >Equipment  used</Label>
-                            <TextBox Name="EquipmentUsedTextBox"  Grid.Row="14" Grid.Column="2"  Grid.ColumnSpan="3" Style="{StaticResource EditableTextBox}" />
+                            <Border  Grid.Row="9" Style="{StaticResource EmptyBorder}"   />
 
-                            <Border  Grid.Row="15" Style="{StaticResource EmptyBorder}"   />
+                            <Label Style="{StaticResource BoldLabel}" Grid.Row="10" Grid.Column="0" >Audio equipment  used</Label>
+                            <!--<ComboBox Name="AudioEquipmentUsedComboBox"  materialDesign:HintAssist.HintOpacity=".26"
+                                  Grid.Row="10" Grid.Column="2"  >
+                            </ComboBox>-->
+                            <StackPanel Orientation="Horizontal"   Grid.Row="10" Grid.Column="1">
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="16" Grid.Column="0" >Equipment  number</Label>
-                            <TextBox Name="EquipmentNumberTextBox"  Grid.Row="16" Grid.Column="2"  Grid.ColumnSpan="3" Style="{StaticResource EditableTextBox}" />
-                            
+                                <TextBlock                />
+
+                                <domain1:FilteredComboBox x:Name="AudioEquipmentUsedFilteredComboBox"  materialDesign:HintAssist.HintOpacity=".26"  ItemsPanel="{DynamicResource ItemsTemplate}" 
+
+                            HorizontalAlignment="Left" VerticalAlignment="Top" Width="200"/>
+
+                            </StackPanel>
+
+                            <Label Style="{StaticResource BoldLabel}" Grid.Row="10" Grid.Column="3" >Video equipment  used</Label>
+                            <!--<ComboBox Name="VideoEquipmentUsedComboBox"  materialDesign:HintAssist.HintOpacity=".26"
+                                  Grid.Row="10" Grid.Column="4"  >
+                            </ComboBox>-->
+
+                            <StackPanel Orientation="Horizontal"   Grid.Row="10" Grid.Column="4" >
+
+                                <TextBlock                />
+
+                                <domain1:FilteredComboBox x:Name="VideoEquipmentUsedFilteredComboBox"  materialDesign:HintAssist.HintOpacity=".26"  ItemsPanel="{DynamicResource ItemsTemplate}" 
+
+                            HorizontalAlignment="Left" VerticalAlignment="Top" Width="200"/>
+
+                            </StackPanel>
+
                             <Border  Grid.Row="17" Style="{StaticResource EmptyBorder}"   />
 
                             <Label Style="{StaticResource BoldLabel}" Grid.Row="18" Grid.Column="0" >Location of interview</Label>
-                            <TextBox Name="PlaceTextBox"  Grid.Row="18" Grid.Column="2"  Grid.ColumnSpan="3" Style="{StaticResource EditableTextBox}" />
+                            <TextBox Name="PlaceTextBox"  Grid.Row="18" Grid.Column="1"  Grid.ColumnSpan="5" Style="{StaticResource EditableTextBox}" />
 
 
                             <Border  Grid.Row="19"   Style="{StaticResource EmptyBorder}"   />
 
                             <Label Style="{StaticResource BoldLabel}" Grid.Row="20" Grid.Column="0" >Interviewer description</Label>
 
-                            <TextBox Name="InterviewerDescriptionTextBox"  Grid.Row="20" Grid.Column="2" Grid.ColumnSpan="3"
+                            <TextBox Name="InterviewerDescriptionTextBox"  Grid.Row="20" Grid.Column="1" Grid.ColumnSpan="4"
                          VerticalAlignment="Top" Height="100"    TextWrapping="Wrap" BorderThickness="1"
                          VerticalScrollBarVisibility="Auto" Style="{StaticResource EditableTextBox}"                         />
 
@@ -875,7 +912,7 @@
 
                             <Label Style="{StaticResource BoldLabel}" Grid.Row="22" Grid.Column="0" >Interviewer keywords</Label>
 
-                            <TextBox Name="InterviewerKeywordsTextBox"  Grid.Row="22" Grid.Column="2" Grid.ColumnSpan="3"
+                            <TextBox Name="InterviewerKeywordsTextBox"  Grid.Row="22" Grid.Column="1" Grid.ColumnSpan="4"
                          VerticalAlignment="Top" Height="100"    TextWrapping="Wrap" BorderThickness="1"
                          VerticalScrollBarVisibility="Auto" Style="{StaticResource EditableTextBox}" />
 
@@ -883,7 +920,7 @@
 
                             <Label Style="{StaticResource BoldLabel}" Grid.Row="24" Grid.Column="0" >Interviewer subjects</Label>
 
-                            <TextBox Name="InterviewerSubjectsTextBox"  Grid.Row="24" Grid.Column="2" Grid.ColumnSpan="3"
+                            <TextBox Name="InterviewerSubjectsTextBox"  Grid.Row="24" Grid.Column="1" Grid.ColumnSpan="4"
                          VerticalAlignment="Top" Height="100"    TextWrapping="Wrap" BorderThickness="1"
                          VerticalScrollBarVisibility="Auto" Style="{StaticResource EditableTextBox}"/>
                             
@@ -892,7 +929,7 @@
 
                             <Label Style="{StaticResource BoldLabel}" Grid.Row="26" Grid.Column="0" >Interviewer notes</Label>
 
-                            <TextBox Name="InterviewerNoteTextBox"  Grid.Row="26" Grid.Column="2" Grid.ColumnSpan="3"
+                            <TextBox Name="InterviewerNoteTextBox"  Grid.Row="26" Grid.Column="1" Grid.ColumnSpan="4"
                          VerticalAlignment="Top" Height="100"    TextWrapping="Wrap" BorderThickness="1"
                          VerticalScrollBarVisibility="Auto" Style="{StaticResource EditableTextBox}"/>
 

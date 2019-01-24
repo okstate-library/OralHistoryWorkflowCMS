@@ -58,7 +58,7 @@ namespace BusinessServices
 
             return uow.Response;
         }
-               
+
         /// <summary>
         /// Modifies the transcription.
         /// </summary>
@@ -144,23 +144,6 @@ namespace BusinessServices
         public ResponseModel GetUsers(RequestModel request)
         {
             GetUsersUow uow = new GetUsersUow
-            {
-                Request = request
-            };
-
-            uow.DoWork();
-
-            return uow.Response;
-        }
-
-        /// <summary>
-        /// Resets the user password.
-        /// </summary>
-        /// <param name="request">The request.</param>
-        /// <returns></returns>
-        public ResponseModel ResetUserPassword(RequestModel request)
-        {
-            UserResetUow uow = new UserResetUow
             {
                 Request = request
             };
@@ -257,6 +240,45 @@ namespace BusinessServices
             return uow.Response;
         }
 
+        /// <summary>
+        /// Gets the unique project code.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns>
+        /// Wether the project code is not unique or not.
+        /// </returns>
+        public ResponseModel GetUniqueProjectCode(RequestModel request)
+        {
+            GetUniqueProjectCodeUow uow = new GetUniqueProjectCodeUow
+            {
+                Request = request
+            };
+
+            uow.DoWork();
+
+            return uow.Response;
+        }
+
+        /// <summary>
+        /// Gets the report.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns>
+        /// Returns the list of transcriptions.
+        /// </returns>
+        public ResponseModel GetReport(RequestModel request)
+        {
+            GetReportUow uow = new GetReportUow
+            {
+                Request = request
+            };
+
+            uow.DoWork();
+
+            return uow.Response;
+        }
+
+        
     }
 
 }

@@ -179,8 +179,8 @@ namespace BusinessServices
         /// </param>
         protected UnitOfWork(bool isReadOnly)
         {
-            this.IsReadOnly = isReadOnly;
-            this.OperationsLog = new OperationsCollection();
+            IsReadOnly = isReadOnly;
+            OperationsLog = new OperationsCollection();
         }
 
         #endregion
@@ -193,47 +193,47 @@ namespace BusinessServices
         /// <exception cref="BusinessException">An error occurs while doing the Work.</exception>
         public void DoWork()
         {
-            this.LogStart();
+            LogStart();
 
             bool hasErrorOccurred = false;
 
             try
             {
-                this.AttemptToDoWork();
+                AttemptToDoWork();
             }
             catch (Exception ex)
             {
-                this.LogStartErrorHandling();
+                LogStartErrorHandling();
 
                 hasErrorOccurred = true;
 
                 Exception handledException = ExceptionManager.HandleException(
-                    this.GetType(),
+                    GetType(),
                     ex,
                     ErrorSeverity.Error,
                     UnitOfWork.ExceptionPolicy.DoWork);
 
                 if (handledException != null)
                 {
-                    this.LogEndErrorHandling();
+                    LogEndErrorHandling();
                     throw new BusinessException(handledException.Message, handledException);
                 }
                 else
                 {
-                    this.LogEndErrorHandling();
+                    LogEndErrorHandling();
                     throw new BusinessException(ex.Message, ex);
                 }
 
             }
             finally
             {
-                this.LogStartCleanup();
-                this.AttemptCleanUp(hasErrorOccurred);
-                this.LogEndCleanup();
+                LogStartCleanup();
+                AttemptCleanUp(hasErrorOccurred);
+                LogEndCleanup();
 
-                this.LogEnd();
+                LogEnd();
 
-                this.WriteOperationsLog();
+                WriteOperationsLog();
             }
         }
 
@@ -242,31 +242,31 @@ namespace BusinessServices
         /// </summary>
         private void AttemptToDoWork()
         {
-            this.LogStartPreExecute();
+            LogStartPreExecute();
 
-            this.PreExecute();
+            PreExecute();
 
-            this.LogEndPreExecute();
+            LogEndPreExecute();
 
-            if (this.IsReadOnly)
+            if (IsReadOnly)
             {
-                if (this.IsTransactionRequired)
+                if (IsTransactionRequired)
                 {
-                    this.ExecuteTransaction();
+                    ExecuteTransaction();
                 }
                 else
                 {
-                    this.ExecuteNonTransaction();
+                    ExecuteNonTransaction();
                 }
             }
             else
             {
-                this.ExecuteTransaction();
+                ExecuteTransaction();
             }
 
-            this.LogStartPostExecute();
-            this.PostExecute();
-            this.LogEndPostExecute();
+            LogStartPostExecute();
+            PostExecute();
+            LogEndPostExecute();
         }
 
         /// <summary>
@@ -274,16 +274,16 @@ namespace BusinessServices
         /// </summary>
         private void ExecuteTransaction()
         {
-            this.LogStartWork();
+            LogStartWork();
 
             using (TransactionScope transactionScope = new TransactionScope())
             {
-                this.Execute();
+                Execute();
 
                 transactionScope.Complete();
             }
 
-            this.LogEndWork();
+            LogEndWork();
         }
 
         /// <summary>
@@ -291,11 +291,11 @@ namespace BusinessServices
         /// </summary>
         private void ExecuteNonTransaction()
         {
-            this.LogStartWork();
+            LogStartWork();
 
-            this.Execute();
+            Execute();
 
-            this.LogEndWork();
+            LogEndWork();
         }
 
         /// <summary>
@@ -328,12 +328,12 @@ namespace BusinessServices
         {
             try
             {
-                this.CleanUp(hasErrorOccurred);
+                CleanUp(hasErrorOccurred);
             }
             catch (Exception ex)
             {
                 ExceptionManager.HandleException(
-                    this.GetType(),
+                    GetType(),
                     ex,
                     ErrorSeverity.Warning,
                     UnitOfWork.ExceptionPolicy.AttemptCleanUp);
@@ -376,7 +376,7 @@ namespace BusinessServices
                 operation.Timestamp = DateTimeHelper.Now;
                 operation.Message = message;
 
-                this.OperationsLog.Add(operation);
+                OperationsLog.Add(operation);
 
             }
         }
@@ -388,10 +388,10 @@ namespace BusinessServices
         {
             if (ConfigurationData.MustLogOperationalPerformance)
             {
-                string logText = this.OperationsLog.ToString();
+                string logText = OperationsLog.ToString();
 
                 LogManager.Log(
-                    this.GetType(),
+                    GetType(),
                     ErrorSeverity.Information,
                     logText);
             }
@@ -402,7 +402,7 @@ namespace BusinessServices
         /// </summary>
         private void LogStart()
         {
-            this.LogOperation(UnitOfWork.OperationsLogMessages.LogStart);
+            LogOperation(UnitOfWork.OperationsLogMessages.LogStart);
         }
 
         /// <summary>
@@ -410,7 +410,7 @@ namespace BusinessServices
         /// </summary>
         private void LogEnd()
         {
-            this.LogOperation(UnitOfWork.OperationsLogMessages.LogEnd);
+            LogOperation(UnitOfWork.OperationsLogMessages.LogEnd);
         }
 
         /// <summary>
@@ -418,7 +418,7 @@ namespace BusinessServices
         /// </summary>
         private void LogStartPreExecute()
         {
-            this.LogOperation(UnitOfWork.OperationsLogMessages.LogStartPreExecute);
+            LogOperation(UnitOfWork.OperationsLogMessages.LogStartPreExecute);
         }
 
         /// <summary>
@@ -426,7 +426,7 @@ namespace BusinessServices
         /// </summary>
         private void LogEndPreExecute()
         {
-            this.LogOperation(UnitOfWork.OperationsLogMessages.LogEndPreExecute);
+            LogOperation(UnitOfWork.OperationsLogMessages.LogEndPreExecute);
         }
 
         /// <summary>
@@ -434,7 +434,7 @@ namespace BusinessServices
         /// </summary>
         private void LogStartWork()
         {
-            this.LogOperation(UnitOfWork.OperationsLogMessages.LogStartWork);
+            LogOperation(UnitOfWork.OperationsLogMessages.LogStartWork);
         }
 
         /// <summary>
@@ -442,7 +442,7 @@ namespace BusinessServices
         /// </summary>
         private void LogEndWork()
         {
-            this.LogOperation(UnitOfWork.OperationsLogMessages.LogEndWork);
+            LogOperation(UnitOfWork.OperationsLogMessages.LogEndWork);
         }
 
         /// <summary>
@@ -450,7 +450,7 @@ namespace BusinessServices
         /// </summary>
         private void LogStartPostExecute()
         {
-            this.LogOperation(UnitOfWork.OperationsLogMessages.LogStartPostExecute);
+            LogOperation(UnitOfWork.OperationsLogMessages.LogStartPostExecute);
         }
 
         /// <summary>
@@ -458,7 +458,7 @@ namespace BusinessServices
         /// </summary>
         private void LogEndPostExecute()
         {
-            this.LogOperation(UnitOfWork.OperationsLogMessages.LogEndPostExecute);
+            LogOperation(UnitOfWork.OperationsLogMessages.LogEndPostExecute);
         }
 
         /// <summary>
@@ -466,7 +466,7 @@ namespace BusinessServices
         /// </summary>
         private void LogStartErrorHandling()
         {
-            this.LogOperation(UnitOfWork.OperationsLogMessages.LogStartErrorHandling);
+            LogOperation(UnitOfWork.OperationsLogMessages.LogStartErrorHandling);
         }
 
         /// <summary>
@@ -474,7 +474,7 @@ namespace BusinessServices
         /// </summary>
         private void LogEndErrorHandling()
         {
-            this.LogOperation(UnitOfWork.OperationsLogMessages.LogEndErrorHandling);
+            LogOperation(UnitOfWork.OperationsLogMessages.LogEndErrorHandling);
         }
 
         /// <summary>
@@ -482,7 +482,7 @@ namespace BusinessServices
         /// </summary>
         private void LogStartCleanup()
         {
-            this.LogOperation(UnitOfWork.OperationsLogMessages.LogStartCleanup);
+            LogOperation(UnitOfWork.OperationsLogMessages.LogStartCleanup);
         }
 
         /// <summary>
@@ -490,7 +490,7 @@ namespace BusinessServices
         /// </summary>
         private void LogEndCleanup()
         {
-            this.LogOperation(UnitOfWork.OperationsLogMessages.LogEndCleanup);
+            LogOperation(UnitOfWork.OperationsLogMessages.LogEndCleanup);
         }
 
         #endregion

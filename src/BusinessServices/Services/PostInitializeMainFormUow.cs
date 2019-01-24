@@ -94,11 +94,11 @@ namespace BusinessServices.Servcices
         /// </summary>
         protected override void PreExecute()
         {
-            this.WellKnownError = new WellKnownErrors();
+            WellKnownError = new WellKnownErrors();
 
-            this.TranscriptionRepository = new TranscriptionRepository();
+            TranscriptionRepository = new TranscriptionRepository();
 
-            this.WellKnownError.Value = WellKnownError.NoError;
+            WellKnownError.Value = WellKnownError.NoError;
         }
 
         /// <summary>
@@ -111,7 +111,7 @@ namespace BusinessServices.Servcices
             List<TranscriptionModel> transcriptionModels = new List<TranscriptionModel>();
 
             IQueryable<transcription> transcriptions = TranscriptionRepository
-                .FindBy(i => i.UpdatedBy == this.Request.UserModel.UserId)
+                .FindBy(i => i.UpdatedBy == Request.UserModel.UserId)
                 .OrderByDescending(i => i.CreatedDate)
                 .Take(10);
 
@@ -122,11 +122,11 @@ namespace BusinessServices.Servcices
 
             MainFormModel mainFormModel = new MainFormModel()
             {
-                BrowseRecordCount = this.TranscriptionRepository.GetAll().Count(),
-                TranscrptionQueueRecordCount = this.TranscriptionRepository.FindBy(t => t.TranscriptStatus == false).Count(),
+                BrowseRecordCount = TranscriptionRepository.GetAll().Count(),
+                TranscrptionQueueRecordCount = TranscriptionRepository.FindBy(t => t.TranscriptStatus == false).Count(),
             };
 
-            this.Response = new ResponseModel()
+            Response = new ResponseModel()
             {
                 MainFormModel = mainFormModel,
                 Transcriptions = transcriptionModels,
@@ -151,15 +151,15 @@ namespace BusinessServices.Servcices
         /// </summary>
         protected override void PostExecute()
         {
-            int errorCode = this.WellKnownError.Value.Item1;
+            int errorCode = WellKnownError.Value.Item1;
 
             if (errorCode > 0)
             {
-                this.Response = new ResponseModel()
+                Response = new ResponseModel()
                 {
                     ErrorCode = errorCode.ToString(),
 
-                    ErrorMessage = this.WellKnownError.Value.Item2,
+                    ErrorMessage = WellKnownError.Value.Item2,
 
                     IsOperationSuccess = false
 

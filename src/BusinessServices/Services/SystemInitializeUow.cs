@@ -87,6 +87,53 @@ namespace BusinessServices.Servcices
         }
 
         /// <summary>
+        /// Gets or sets the interviewer repository.
+        /// </summary>
+        /// <value>
+        /// The interviewer repository.
+        /// </value>
+        public InterviewerRepository InterviewerRepository
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets the audio equipment used repository.
+        /// </summary>
+        /// <value>
+        /// The audio equipment used repository.
+        /// </value>
+        public AudioEquipmentUsedRepository AudioEquipmentUsedRepository
+        {
+            get;
+            set;
+        }
+        /// <summary>
+        /// Gets or sets the video equipment used repository.
+        /// </summary>
+        /// <value>
+        /// The video equipment used repository.
+        /// </value>
+        public VideoEquipmentUsedRepository VideoEquipmentUsedRepository
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets the user type repository.
+        /// </summary>
+        /// <value>
+        /// The user type repository.
+        /// </value>
+        public UserTypeRepository UserTypeRepository
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Gets or sets the well known error.
         /// </summary>
         /// <value>
@@ -130,15 +177,19 @@ namespace BusinessServices.Servcices
         /// </summary>
         protected override void PreExecute()
         {
-            this.WellKnownError = new WellKnownErrors();
+            WellKnownError = new WellKnownErrors();
 
-            this.TranscriptionRepository = new TranscriptionRepository();
-            this.CollectionRepository = new CollectionRepository();
-            this.SubseryRepository = new SubseryRepository();
-            this.SubjectRepository = new SubjectRepository();
-            this.KeywordRepository = new KeywordRepository();
+            TranscriptionRepository = new TranscriptionRepository();
+            CollectionRepository = new CollectionRepository();
+            SubseryRepository = new SubseryRepository();
+            SubjectRepository = new SubjectRepository();
+            KeywordRepository = new KeywordRepository();
+            InterviewerRepository = new InterviewerRepository();
+            AudioEquipmentUsedRepository = new AudioEquipmentUsedRepository();
+            VideoEquipmentUsedRepository = new VideoEquipmentUsedRepository();
+            UserTypeRepository = new UserTypeRepository();
 
-            this.WellKnownError.Value = WellKnownError.NoError;
+            WellKnownError.Value = WellKnownError.NoError;
         }
 
         /// <summary>
@@ -149,8 +200,8 @@ namespace BusinessServices.Servcices
 
             MainFormModel mainFormModel = new MainFormModel()
             {
-                BrowseRecordCount = this.TranscriptionRepository.GetAll().Count(),
-                TranscrptionQueueRecordCount = this.TranscriptionRepository.FindBy(t => t.TranscriptStatus == false).Count(),
+                BrowseRecordCount = TranscriptionRepository.GetAll().Count(),
+                TranscrptionQueueRecordCount = TranscriptionRepository.FindBy(t => t.TranscriptStatus == false).Count(),
             };
 
             List<CollectionModel> newlist = new List<CollectionModel>();
@@ -181,12 +232,29 @@ namespace BusinessServices.Servcices
                 keywordList.Add(Util.ConvertToKeywordModel(item));
             }
 
-            this.Response = new ResponseModel()
+            List<string> interviewerList = InterviewerRepository.List();
+
+            List<string> audioEquipmentsUsed = AudioEquipmentUsedRepository.List();
+
+            List<string> videoEquipmentsUsed = VideoEquipmentUsedRepository.List();
+            
+            List<UserTypeModel> userTypes = new List<UserTypeModel>();
+
+            foreach (usertype item in UserTypeRepository.GetAll())
+            {
+                userTypes.Add(Util.ConvertToUsertypeModel(item));
+            }
+
+            Response = new ResponseModel()
             {
                 Subseries = newSubseriesList,
                 Collecions = newlist,
                 Subjects = subjectList,
                 Keywords = keywordList,
+                Interviewers = interviewerList,
+                AudioEquipmentsUsed = audioEquipmentsUsed,
+                VideoEquipmentsUsed = videoEquipmentsUsed,
+                UserTypes = userTypes,
 
                 MainFormModel = mainFormModel,
                 IsOperationSuccess = true
@@ -210,15 +278,15 @@ namespace BusinessServices.Servcices
         /// </summary>
         protected override void PostExecute()
         {
-            int errorCode = this.WellKnownError.Value.Item1;
+            int errorCode = WellKnownError.Value.Item1;
 
             if (errorCode > 0)
             {
-                this.Response = new ResponseModel()
+                Response = new ResponseModel()
                 {
                     ErrorCode = errorCode.ToString(),
 
-                    ErrorMessage = this.WellKnownError.Value.Item2,
+                    ErrorMessage = WellKnownError.Value.Item2,
 
                     IsOperationSuccess = false
 

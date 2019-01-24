@@ -26,5 +26,10 @@ namespace Core.Enums
         /// </summary>
         Delete = 3,
 
+        /// <summary>
+        /// The reset
+        /// </summary>
+        Reset = 4,
+
     }
 }

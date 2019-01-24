@@ -42,8 +42,11 @@
 
                     <StackPanel Grid.Row="1" Margin="20 10 0 8" Orientation="Horizontal"  Grid.Column="1">
                         <Label  Style="{StaticResource BoldLabel}" Content="Upload the file"  />
-                        <Label  Width="500" Margin="20 10 0 8" Name="fileUploadLabel"   />
-                        <Button Margin="20 10 0 8" Content="Upload" Style="{StaticResource MaterialDesignRaisedAccentButton}"  Click="UploadButton_Click"/>
+                        <Label  Width="500" Margin="20 10 0 8" Name="fileUploadLabel" Background="{StaticResource AlternativeColor}"   />
+
+                        <Button Margin="20 10 0 8" Content="Browse" Style="{StaticResource MaterialDesignRaisedAccentButton}"  Click="BrowseButton_Click"/>
+                        
+                        <Button Name="UploadButton" Margin="20 10 0 8" Content="Upload" Style="{StaticResource MaterialDesignRaisedAccentButton}" Visibility="Hidden"  Click="UploadButton_Click"/>
                     </StackPanel>
 
                 </Grid>

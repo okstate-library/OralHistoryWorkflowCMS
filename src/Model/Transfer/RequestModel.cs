@@ -58,13 +58,25 @@ namespace Model.Transfer
         /// </value>
         public WellKnownTranscriptionModificationType WellKnownTranscriptionModificationType { get; set; }
 
+        private string searchWord;
+
         /// <summary>
         /// Gets or sets the search word.
         /// </summary>
         /// <value>
         /// The search word.
         /// </value>
-        public string SearchWord { get; set; }
+        public string SearchWord
+        {
+            get
+            {
+                return searchWord.ToLower();
+            }
+            set
+            {
+                searchWord = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the filter key words.
@@ -105,5 +117,13 @@ namespace Model.Transfer
         /// The search request dto.
         /// </value>
         public SearchRequest SearchRequest { get; set; }
+
+        /// <summary>
+        /// Gets or sets the report model.
+        /// </summary>
+        /// <value>
+        /// The report model.
+        /// </value>
+        public ReportModel ReportModel { get; set; }
     }
 }

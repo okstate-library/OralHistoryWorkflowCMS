@@ -37,7 +37,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "query", "query", "{014FB1FB
 	ProjectSection(SolutionItems) = preProject
 		db\mysql\query\definition.1.0.0.0.sql = db\mysql\query\definition.1.0.0.0.sql
 		db\mysql\query\definition.1.1.0.0.sql = db\mysql\query\definition.1.1.0.0.sql
+		db\mysql\query\definition.2.0.0.0.sql = db\mysql\query\definition.2.0.0.0.sql
 		db\mysql\query\masterData.1.0.0.0.sql = db\mysql\query\masterData.1.0.0.0.sql
+		db\mysql\query\masterData.2.0.0.0.sql = db\mysql\query\masterData.2.0.0.0.sql
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "config", "config", "{AF716937-A44B-4EE8-AA43-DAAEB6D31C14}"

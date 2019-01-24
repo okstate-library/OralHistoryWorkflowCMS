@@ -101,11 +101,11 @@ namespace BusinessServices.Servcices
         /// </summary>
         protected override void PreExecute()
         {
-            this.WellKnownError = new WellKnownErrors();
+            WellKnownError = new WellKnownErrors();
 
-            this.TranscriptionRepository = new TranscriptionRepository();
+            TranscriptionRepository = new TranscriptionRepository();
 
-            this.WellKnownError.Value = WellKnownError.NoError;
+            WellKnownError.Value = WellKnownError.NoError;
         }
 
         /// <summary>
@@ -120,9 +120,9 @@ namespace BusinessServices.Servcices
 
             predicate = predicate.And(p => p.TranscriptStatus == false);
 
-            if (this.Request.FilterKeyWords != null && this.Request.FilterKeyWords.Count > 0)
+            if (Request.FilterKeyWords != null && Request.FilterKeyWords.Count > 0)
             {
-                foreach (string keyword in this.Request.FilterKeyWords)
+                foreach (string keyword in Request.FilterKeyWords)
                 {
 
                     WellKnownTranscriptionQueueOption option =
@@ -167,48 +167,49 @@ namespace BusinessServices.Servcices
                 }
             }
 
-            if (!string.IsNullOrEmpty(this.Request.SearchWord))
+            if (!string.IsNullOrEmpty(Request.SearchWord))
             {
-                predicate = predicate.And(p => p.Interviewer.Contains(this.Request.SearchWord) ||
-                                                p.AuditCheckCompleted.Contains(this.Request.SearchWord) ||
-                                                p.AccessFileLocation.Contains(this.Request.SearchWord) ||
-                                                p.CoverageSpatial.Contains(this.Request.SearchWord) ||
-                                                p.CoverageTemporal.Contains(this.Request.SearchWord) ||
-                                                p.Description.Contains(this.Request.SearchWord) ||
-                                                p.EditWithCorrectionCompleted.Contains(this.Request.SearchWord) ||
-                                                p.EquipmentUsed.Contains(this.Request.SearchWord) ||
-                                                p.FileName.Contains(this.Request.SearchWord) ||
-                                                p.FinalEditCompleted.Contains(this.Request.SearchWord) ||
-                                                p.FirstEditCompleted.Contains(this.Request.SearchWord) ||
-                                                p.Format.Contains(this.Request.SearchWord) ||
-                                                p.Identifier.Contains(this.Request.SearchWord) ||
-                                                p.InitialNote.Contains(this.Request.SearchWord) ||
-                                                p.Interviewee.Contains(this.Request.SearchWord) ||
-                                                p.InterviewerNote.Contains(this.Request.SearchWord) ||
-                                                p.Keywords.Contains(this.Request.SearchWord) ||
-                                                p.LegalNote.Contains(this.Request.SearchWord) ||
-                                                p.Place.Contains(this.Request.SearchWord) ||
-                                                p.ProjectCode.Contains(this.Request.SearchWord) ||
-                                                p.Publisher.Contains(this.Request.SearchWord) ||
-                                                p.ReasonForPriority.Contains(this.Request.SearchWord) ||
-                                                p.RelationIsPartOf.Contains(this.Request.SearchWord) ||
-                                                p.Rights.Contains(this.Request.SearchWord) ||
-                                                p.ScopeAndContents.Contains(this.Request.SearchWord) ||
-                                                p.SecondEditCompleted.Contains(this.Request.SearchWord) ||
-                                                p.Rights.Contains(this.Request.SearchWord) ||
-                                                p.Title.Contains(this.Request.SearchWord) ||
-                                                p.Subject.Contains(this.Request.SearchWord) ||
-                                                p.TranscriberAssigned.Contains(this.Request.SearchWord) ||
-                                                p.TranscriberLocation.Contains(this.Request.SearchWord) ||
-                                                p.Transcript.Contains(this.Request.SearchWord) ||
-                                                p.TranscriptNote.Contains(this.Request.SearchWord) ||
-                                                p.Type.Contains(this.Request.SearchWord)
+                predicate = predicate.And(p => p.Interviewer.Contains(Request.SearchWord) ||
+                                                p.AuditCheckCompleted.Contains(Request.SearchWord) ||
+                                                p.AccessFileLocation.Contains(Request.SearchWord) ||
+                                                p.CoverageSpatial.Contains(Request.SearchWord) ||
+                                                p.CoverageTemporal.Contains(Request.SearchWord) ||
+                                                p.Description.Contains(Request.SearchWord) ||
+                                                p.EditWithCorrectionCompleted.Contains(Request.SearchWord) ||
+                                                p.AudioEquipmentUsed.Contains(Request.SearchWord) ||
+                                                p.VideoEquipmentUsed.Contains(Request.SearchWord) ||
+                                                p.FileName.Contains(Request.SearchWord) ||
+                                                p.FinalEditCompleted.Contains(Request.SearchWord) ||
+                                                p.FirstEditCompleted.Contains(Request.SearchWord) ||
+                                                p.Format.Contains(Request.SearchWord) ||
+                                                p.Identifier.Contains(Request.SearchWord) ||
+                                                p.InitialNote.Contains(Request.SearchWord) ||
+                                                p.Interviewee.Contains(Request.SearchWord) ||
+                                                p.InterviewerNote.Contains(Request.SearchWord) ||
+                                                p.Keywords.Contains(Request.SearchWord) ||
+                                                p.LegalNote.Contains(Request.SearchWord) ||
+                                                p.Place.Contains(Request.SearchWord) ||
+                                                p.ProjectCode.Contains(Request.SearchWord) ||
+                                                p.Publisher.Contains(Request.SearchWord) ||
+                                                p.ReasonForPriority.Contains(Request.SearchWord) ||
+                                                p.RelationIsPartOf.Contains(Request.SearchWord) ||
+                                                p.Rights.Contains(Request.SearchWord) ||
+                                                p.ScopeAndContents.Contains(Request.SearchWord) ||
+                                                p.SecondEditCompleted.Contains(Request.SearchWord) ||
+                                                p.Rights.Contains(Request.SearchWord) ||
+                                                p.Title.Contains(Request.SearchWord) ||
+                                                p.Subject.Contains(Request.SearchWord) ||
+                                                p.TranscriberAssigned.Contains(Request.SearchWord) ||
+                                                p.TranscriberLocation.Contains(Request.SearchWord) ||
+                                                p.Transcript.Contains(Request.SearchWord) ||
+                                                p.TranscriptNote.Contains(Request.SearchWord) ||
+                                                p.Type.Contains(Request.SearchWord)
                                               );
             }
             
-            IPagedList<transcription> pagedTransactionList = this.TranscriptionRepository.FindBy(predicate).
-                OrderBy(t => t.Title).ToPagedList(this.Request.SearchRequest.CurrentPage,
-               this.Request.SearchRequest.ListLength);
+            IPagedList<transcription> pagedTransactionList = TranscriptionRepository.FindBy(predicate).
+                OrderBy(t => t.Title).ToPagedList(Request.SearchRequest.CurrentPage,
+               Request.SearchRequest.ListLength);
 
             PaginationInfo page = page = new PaginationInfo()
             {
@@ -226,7 +227,7 @@ namespace BusinessServices.Servcices
                 newlist.Add(Util.ConvertToTranscriptionModel(item));
             }
 
-            this.Response = new ResponseModel()
+            Response = new ResponseModel()
             {
                 PaginationInfo = page,
                 Transcriptions = newlist,
@@ -240,15 +241,15 @@ namespace BusinessServices.Servcices
         /// </summary>
         protected override void PostExecute()
         {
-            int errorCode = this.WellKnownError.Value.Item1;
+            int errorCode = WellKnownError.Value.Item1;
 
             if (errorCode > 0)
             {
-                this.Response = new ResponseModel()
+                Response = new ResponseModel()
                 {
                     ErrorCode = errorCode.ToString(),
 
-                    ErrorMessage = this.WellKnownError.Value.Item2,
+                    ErrorMessage = WellKnownError.Value.Item2,
 
                     IsOperationSuccess = false
 

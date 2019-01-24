@@ -47,9 +47,9 @@ namespace WpfApp
         {
             InitializeComponent();
 
-            this.TranscriptionId = transcriptionId;
+            TranscriptionId = transcriptionId;
 
-            if (this.TranscriptionId > 0)
+            if (TranscriptionId > 0)
             {
                 ViewTranscription();
 
@@ -77,6 +77,11 @@ namespace WpfApp
             }
 
             ControlsVisibility();
+
+            Loaded += (s, args) =>
+            {
+                PopulateIntializeView();
+            };
         }
 
         #endregion
@@ -137,7 +142,7 @@ namespace WpfApp
                 TranscriptNote = TranscriberNoteTextBox.Text,
             };
 
-            this.UpdateTranscription(transcriptionModel,
+            UpdateTranscription(transcriptionModel,
                 WellKnownTranscriptionModificationType.Transcript);
 
         }
@@ -175,7 +180,7 @@ namespace WpfApp
             transcriptionModel.MasterFileLocation = MasterFileLocationTextBox.Text;
             transcriptionModel.AccessFileLocation = AccessFileLocationTextBox.Text;
 
-            this.UpdateTranscription(transcriptionModel, WellKnownTranscriptionModificationType.Media);
+            UpdateTranscription(transcriptionModel, WellKnownTranscriptionModificationType.Media);
         }
 
         /// <summary>
@@ -185,11 +190,14 @@ namespace WpfApp
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
         private void MetadataButton_Click(object sender, EventArgs e)
         {
+            bool isANewInterviewer = !BaseUserControl.Interviewers.Contains(InterviewerFilteredComboBox.Text);
+
             TranscriptionModel transcriptionModel = new TranscriptionModel
             {
+
                 Title = TitleTextBox.Text,
                 Interviewee = Interviewee2TextBox.Text,
-                Interviewer = Interviewer2TextBox.Text,
+                Interviewer = InterviewerFilteredComboBox.Text,
 
                 InterviewDate = (DateTime)InterviewDate2DateDatePicker.SelectedDate,
                 //ConvertToDigitalDate = (DateTime)DateDigitalConverted2DateDatePicker.SelectedDate,
@@ -217,10 +225,17 @@ namespace WpfApp
                 FileName = FileNameTextBox.Text,
 
                 CoverageSpatial = CoverageSpatialTextBox.Text,
-                CoverageTemporal = CoverageTemporalTextBox.Text
+                CoverageTemporal = CoverageTemporalTextBox.Text,
+
+                 IsANewInterviewer = isANewInterviewer,
             };
 
-            this.UpdateTranscription(transcriptionModel, WellKnownTranscriptionModificationType.Metadata);
+            UpdateTranscription(transcriptionModel, WellKnownTranscriptionModificationType.Metadata);
+
+            if (isANewInterviewer)
+            {
+                PopulateFilterTextBox();
+            }
         }
 
         /// <summary>
@@ -230,6 +245,12 @@ namespace WpfApp
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
         private void SupplementDetailsButton_Click(object sender, EventArgs e)
         {
+            bool isANewAudioEquipment = !string.IsNullOrEmpty(AudioEquipmentUsedFilteredComboBox.Text) &&
+                   !BaseUserControl.AudioEquipments.Contains(AudioEquipmentUsedFilteredComboBox.Text);
+
+            bool isANewVideoEquipment = !string.IsNullOrEmpty(VideoEquipmentUsedFilteredComboBox.Text) &&
+                !BaseUserControl.VideoEquipments.Contains(VideoEquipmentUsedFilteredComboBox.Text);
+
             TranscriptionModel transcriptionModel = new TranscriptionModel
             {
                 IsInContentDm = OnContentDmYesCheckBox.IsChecked.Value,
@@ -242,17 +263,27 @@ namespace WpfApp
                 IsAudioFormat = RecordingFormatAudioCheckBox.IsChecked.Value ? true : false,
                 IsVideoFormat = RecordingFormatVideoCheckBox.IsChecked.Value ? true : false,
 
-                EquipmentUsed = EquipmentUsedTextBox.Text,
+                AudioEquipmentUsed = AudioEquipmentUsedFilteredComboBox.Text,
+                VideoEquipmentUsed = VideoEquipmentUsedFilteredComboBox.Text,
+
                 EquipmentNumber = EquipmentNumberTextBox.Text,
                 InterviewerDescription = InterviewerDescriptionTextBox.Text,
                 InterviewerKeywords = InterviewerKeywordsTextBox.Text,
                 InterviewerSubjects = InterviewerSubjectsTextBox.Text,
 
                 Place = PlaceTextBox.Text,
-                InterviewerNote = InterviewerNoteTextBox.Text
+                InterviewerNote = InterviewerNoteTextBox.Text,
+
+                IsANewAudioEquipment = isANewAudioEquipment,
+                IsANewVideoEquipment = isANewVideoEquipment,
             };
 
-            this.UpdateTranscription(transcriptionModel, WellKnownTranscriptionModificationType.Supplement);
+            UpdateTranscription(transcriptionModel, WellKnownTranscriptionModificationType.Supplement);
+
+            if (isANewAudioEquipment || isANewVideoEquipment)
+            {
+                PopulateFilterTextBox();
+            }
         }
 
         /// <summary>
@@ -358,10 +389,10 @@ namespace WpfApp
         }
 
         /// <summary>
-        ///  Called when [sent out check].
+        /// Called when [sent out check].
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void SentOut_Check(object sender, RoutedEventArgs e)
         {
             CheckBox currentCheckBox = (CheckBox)sender;
@@ -375,7 +406,7 @@ namespace WpfApp
         /// Handles the Check event of the InRosetta control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
         private void InRosetta_Check(object sender, RoutedEventArgs e)
         {
             CheckBox currentCheckBox = (CheckBox)sender;
@@ -403,7 +434,7 @@ namespace WpfApp
         /// Handles the Check event of the Restrictions control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
         private void Restrictions_Check(object sender, RoutedEventArgs e)
         {
             CheckBox currentCheckBox = (CheckBox)sender;
@@ -441,7 +472,7 @@ namespace WpfApp
         {
             RequestModel requestModel = new RequestModel()
             {
-                TranscriptionId = this.TranscriptionId,
+                TranscriptionId = TranscriptionId,
             };
 
             ResponseModel response = App.BaseUserControl.InternalService.GetTranscription(requestModel);
@@ -568,7 +599,7 @@ namespace WpfApp
                 //// Tab 4 
                 TitleTextBox.Text = transcriptionModel.Title;
                 Interviewee2TextBox.Text = transcriptionModel.Interviewee;
-                Interviewer2TextBox.Text = transcriptionModel.Interviewer;
+                InterviewerFilteredComboBox.Text = transcriptionModel.Interviewer;
 
                 InterviewDate2DateDatePicker.Text = transcriptionModel.InterviewDate != null ?
                     transcriptionModel.InterviewDate.ToShortDateString() : string.Empty;
@@ -613,7 +644,8 @@ namespace WpfApp
                 RecordingFormatAudioCheckBox.IsChecked = transcriptionModel.IsAudioFormat;
                 RecordingFormatVideoCheckBox.IsChecked = transcriptionModel.IsVideoFormat;
 
-                EquipmentUsedTextBox.Text = transcriptionModel.EquipmentUsed;
+                AudioEquipmentUsedFilteredComboBox.Text = transcriptionModel.AudioEquipmentUsed;
+                VideoEquipmentUsedFilteredComboBox.Text = transcriptionModel.VideoEquipmentUsed;
 
                 EquipmentNumberTextBox.Text = transcriptionModel.EquipmentNumber;
                 InterviewerDescriptionTextBox.Text = transcriptionModel.InterviewerDescription;
@@ -634,7 +666,7 @@ namespace WpfApp
         private void UpdateTranscription(TranscriptionModel transcriptionModel, WellKnownTranscriptionModificationType modificationType)
         {
 
-            transcriptionModel.Id = this.TranscriptionId;
+            transcriptionModel.Id = TranscriptionId;
             transcriptionModel.UpdatedBy = App.BaseUserControl.UserModel.UserId;
             transcriptionModel.UpdatedDate = DateTime.Now;
 
@@ -696,8 +728,7 @@ namespace WpfApp
             {
                 case WellKnownUserType.GuestUser:
                 case WellKnownUserType.Student:
-                case WellKnownUserType.Interviewer:
-                    RestrictionsBorder1.Visibility = Visibility.Collapsed;
+                case WellKnownUserType.Staff:
                     RestrictionsLabel.Visibility = Visibility.Collapsed;
                     RestrictionsStackPanel.Visibility = Visibility.Collapsed;
                     RestrictionsBorder2.Visibility = Visibility.Collapsed;
@@ -705,7 +736,6 @@ namespace WpfApp
                     RestrictionNoteLabel.Visibility = Visibility.Collapsed;
                     break;
                 case WellKnownUserType.AdminUser:
-                    RestrictionsBorder1.Visibility = Visibility.Visible;
                     RestrictionsLabel.Visibility = Visibility.Visible;
                     RestrictionsStackPanel.Visibility = Visibility.Visible;
                     RestrictionsBorder2.Visibility = Visibility.Visible;
@@ -716,6 +746,35 @@ namespace WpfApp
                     break;
             }
 
+        }
+
+        /// <summary>
+        /// Populates the intialize view.
+        /// </summary>
+        private void PopulateIntializeView()
+        {
+            InterviewerFilteredComboBox.IsEditable = true;
+            InterviewerFilteredComboBox.IsTextSearchEnabled = false;
+            InterviewerFilteredComboBox.ItemsSource = BaseUserControl.Interviewers;
+
+            AudioEquipmentUsedFilteredComboBox.IsEditable = true;
+            AudioEquipmentUsedFilteredComboBox.IsTextSearchEnabled = false;
+            AudioEquipmentUsedFilteredComboBox.ItemsSource = BaseUserControl.AudioEquipments;
+
+
+            VideoEquipmentUsedFilteredComboBox.IsEditable = true;
+            VideoEquipmentUsedFilteredComboBox.IsTextSearchEnabled = false;
+            VideoEquipmentUsedFilteredComboBox.ItemsSource = BaseUserControl.VideoEquipments;
+        }
+
+        /// <summary>
+        /// Populates the filter text box.
+        /// </summary>
+        private void PopulateFilterTextBox()
+        {
+            App.BaseUserControl.InitializeComponent();
+
+            PopulateIntializeView();
         }
 
         #endregion

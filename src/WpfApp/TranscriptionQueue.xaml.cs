@@ -49,16 +49,6 @@ namespace WpfApp
         public SearchRequest SearchRequest { get; set; }
 
         /// <summary>
-        /// The last header clicked
-        /// </summary>
-        GridViewColumnHeader _lastHeaderClicked = null;
-
-        /// <summary>
-        /// The last direction
-        /// </summary>
-        ListSortDirection _lastDirection = ListSortDirection.Ascending;
-
-        /// <summary>
         /// Gets or sets the next page number.
         /// </summary>
         /// <value>
@@ -112,7 +102,7 @@ namespace WpfApp
 
             Loaded += TranscriptionQueueUserControl_Loaded;
 
-            this.Loaded += (s, args) =>
+            Loaded += (s, args) =>
             {
                 PageComboBox.Loaded += PageLengthComboBox_Loaded;
 
@@ -142,10 +132,10 @@ namespace WpfApp
 
             SearchList = new List<string>();
 
-            this.SearchRequest = new SearchRequest(SearchHelper.InitialCurrentPage,
+            SearchRequest = new SearchRequest(SearchHelper.InitialCurrentPage,
                   SearchHelper.InitialListLength);
 
-            this.CurrentPageList = SearchHelper.InitialListLength;
+            CurrentPageList = SearchHelper.InitialListLength;
 
             PopulateList();
 
@@ -248,7 +238,7 @@ namespace WpfApp
 
                 SearchList.Add(selectedOption);
 
-                this.SearchRequest = new SearchRequest(SearchHelper.InitialCurrentPage, this.CurrentPageList);
+                SearchRequest = new SearchRequest(SearchHelper.InitialCurrentPage, CurrentPageList);
             }
             else
             {
@@ -256,10 +246,10 @@ namespace WpfApp
                 {
                     SearchList.Remove(selectedOption);
                 }
-                
-              
+
+
             }
-            
+
             PopulateList();
         }
 
@@ -285,7 +275,7 @@ namespace WpfApp
                 requestPage = PreviousPageNumber;
             }
 
-            this.SearchRequest.CurrentPage = requestPage;
+            SearchRequest.CurrentPage = requestPage;
 
             PopulateList();
         }
@@ -345,7 +335,7 @@ namespace WpfApp
             comboBox.ItemsSource = SearchHelper.PageSizeList;
 
             // ... Make the first item selected.
-            comboBox.SelectedIndex = 0;
+            comboBox.SelectedIndex = SearchHelper.SelectedPageSizeIndex;
         }
 
         /// <summary>
@@ -363,10 +353,10 @@ namespace WpfApp
                 string value = comboBox.SelectedItem as string;
 
                 int pageList = int.Parse(value);
-                this.SearchRequest.ListLength = pageList;
-                this.CurrentPageList = pageList;
+                SearchRequest.ListLength = pageList;
+                CurrentPageList = pageList;
 
-                this.SearchRequest.CurrentPage = 1;
+                SearchRequest.CurrentPage = 1;
                 NextPageNumber = 0;
                 PreviousPageNumber = 0;
                 CurrentPageTextBox.Text = string.Empty;
@@ -392,7 +382,7 @@ namespace WpfApp
             {
                 FilterKeyWords = SearchList,
                 SearchWord = SearchWordTextBox.Text.Trim(),
-                SearchRequest = this.SearchRequest,
+                SearchRequest = SearchRequest,
             };
 
             ResponseModel response = App.BaseUserControl.InternalService.GetTranscriptions(requestModel);
@@ -402,7 +392,30 @@ namespace WpfApp
                 TranscriptionQueueListView.ItemsSource = response.Transcriptions;
 
                 SetPagination(response.PaginationInfo);
+
+                if (response.Transcriptions.Count == 0)
+                {
+                    SetZeroListMessage();
+                }
+                else
+                {
+                    SetPagination(response.PaginationInfo);
+                }
+
             }
+            else
+            {
+                App.ShowMessage(false, response.ErrorMessage);
+            }
+        }
+
+        /// <summary>
+        /// Sets the zero list message.
+        /// </summary>
+        private void SetZeroListMessage()
+        {           
+            CurrentPageTextBox.Visibility = Visibility.Hidden;
+            RecordCountWordTextBox.Text = SearchHelper.NoRecordsFoundMessage;
         }
 
         /// <summary>
@@ -431,86 +444,11 @@ namespace WpfApp
                 PrevoiousTextBlock.Visibility = Visibility.Visible;
                 PreviousPageNumber = paginationInfo.CurrentPage - 1;
             }
-           
+
             CurrentPageTextBox.Text = paginationInfo.CurrentPage + " Page";
 
-            RecordCountWordTextBox.Text = SearchHelper.GetRecordCountText(paginationInfo.ListLength ,
+            RecordCountWordTextBox.Text = SearchHelper.GetRecordCountText(paginationInfo.ListLength,
                 paginationInfo.CurrentPage, paginationInfo.TotalListLength);
-        }
-
-        /// <summary>
-        /// Grids the view column header clicked handler.
-        /// </summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
-        void GridViewColumnHeaderClickedHandler(object sender,
-                                                RoutedEventArgs e)
-        {
-            var headerClicked = e.OriginalSource as GridViewColumnHeader;
-            ListSortDirection direction;
-
-            if (headerClicked != null)
-            {
-                if (headerClicked.Role != GridViewColumnHeaderRole.Padding)
-                {
-                    if (headerClicked != _lastHeaderClicked)
-                    {
-                        direction = ListSortDirection.Ascending;
-                    }
-                    else
-                    {
-                        if (_lastDirection == ListSortDirection.Ascending)
-                        {
-                            direction = ListSortDirection.Descending;
-                        }
-                        else
-                        {
-                            direction = ListSortDirection.Ascending;
-                        }
-                    }
-
-                    var columnBinding = headerClicked.Column.DisplayMemberBinding as Binding;
-                    var sortBy = columnBinding?.Path.Path ?? headerClicked.Column.Header as string;
-
-                    Sort(sortBy, direction);
-
-                    if (direction == ListSortDirection.Ascending)
-                    {
-                        headerClicked.Column.HeaderTemplate =
-                          Resources["HeaderTemplateArrowUp"] as DataTemplate;
-                    }
-                    else
-                    {
-                        headerClicked.Column.HeaderTemplate =
-                          Resources["HeaderTemplateArrowDown"] as DataTemplate;
-                    }
-
-                    // Remove arrow from previously sorted header  
-                    if (_lastHeaderClicked != null && _lastHeaderClicked != headerClicked)
-                    {
-                        _lastHeaderClicked.Column.HeaderTemplate = null;
-                    }
-
-                    _lastHeaderClicked = headerClicked;
-                    _lastDirection = direction;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Sorts the specified sort by.
-        /// </summary>
-        /// <param name="sortBy">The sort by.</param>
-        /// <param name="direction">The direction.</param>
-        private void Sort(string sortBy, ListSortDirection direction)
-        {
-            ICollectionView dataView =
-              CollectionViewSource.GetDefaultView(TranscriptionQueueListView.ItemsSource);
-
-            dataView.SortDescriptions.Clear();
-            SortDescription sd = new SortDescription(sortBy, direction);
-            dataView.SortDescriptions.Add(sd);
-            dataView.Refresh();
         }
 
         #endregion

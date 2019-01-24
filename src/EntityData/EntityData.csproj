@@ -74,11 +74,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="audioequipmentused.cs">
+      <DependentUpon>OralCMSModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="collection.cs">
       <DependentUpon>OralCMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="GenericRepository.cs" />
     <Compile Include="IGenericRepository.cs" />
+    <Compile Include="interviewer.cs">
+      <DependentUpon>OralCMSModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="keyword.cs">
       <DependentUpon>OralCMSModel.tt</DependentUpon>
     </Compile>
@@ -108,6 +114,12 @@
       <DependentUpon>OralCMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="user.cs">
+      <DependentUpon>OralCMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="usertype.cs">
+      <DependentUpon>OralCMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="videoequipmentused.cs">
       <DependentUpon>OralCMSModel.tt</DependentUpon>
     </Compile>
   </ItemGroup>

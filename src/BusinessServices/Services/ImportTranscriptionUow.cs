@@ -95,11 +95,11 @@ namespace BusinessServices.Servcices
         /// </summary>
         protected override void PreExecute()
         {
-            this.WellKnownError = new WellKnownErrors();
+            WellKnownError = new WellKnownErrors();
 
-            this.TranscriptionRepository = new TranscriptionRepository();
+            TranscriptionRepository = new TranscriptionRepository();
 
-            this.WellKnownError.Value = WellKnownError.NoError;
+            WellKnownError.Value = WellKnownError.NoError;
         }
 
         /// <summary>
@@ -107,21 +107,21 @@ namespace BusinessServices.Servcices
         /// </summary>
         protected override void Execute()
         {
-            foreach (TranscriptionModel item in this.Request.TranscriptionModels)
+            foreach (TranscriptionModel item in Request.TranscriptionModels)
             {
                 transcription transcription = Util.ConvertToTranscription(item);
 
-                this.TranscriptionRepository.Add(transcription);
-                this.TranscriptionRepository.Save();
+                TranscriptionRepository.Add(transcription);
+                TranscriptionRepository.Save();
             }
 
             //transcription daTranscription = null;
 
-            //daTranscription = this.TranscriptionRepository.GetTranscription(this.Request.TranscriptionModel.Id);
+            //daTranscription = TranscriptionRepository.GetTranscription(Request.TranscriptionModel.Id);
 
-            //TranscriptionModel transcriptionModel = this.Request.TranscriptionModel;
+            //TranscriptionModel transcriptionModel = Request.TranscriptionModel;
 
-            //switch (this.Request.WellKnownTranscriptionModificationType)
+            //switch (Request.WellKnownTranscriptionModificationType)
             //{
             //    case Core.Enums.WellKnownTranscriptionModificationType.Transcript:
 
@@ -214,10 +214,10 @@ namespace BusinessServices.Servcices
             //daTranscription.UpdatedBy = transcriptionModel.UpdatedBy;
             //daTranscription.UpdatedDate = transcriptionModel.UpdatedDate;
 
-            //this.TranscriptionRepository.Edit(daTranscription);
-            //this.TranscriptionRepository.Save();
+            //TranscriptionRepository.Edit(daTranscription);
+            //TranscriptionRepository.Save();
 
-            this.Response = new ResponseModel()
+            Response = new ResponseModel()
             {
                 IsOperationSuccess = true
             };
@@ -229,15 +229,15 @@ namespace BusinessServices.Servcices
         /// </summary>
         protected override void PostExecute()
         {
-            int errorCode = this.WellKnownError.Value.Item1;
+            int errorCode = WellKnownError.Value.Item1;
 
             if (errorCode > 0)
             {
-                this.Response = new ResponseModel()
+                Response = new ResponseModel()
                 {
                     ErrorCode = errorCode.ToString(),
 
-                    ErrorMessage = this.WellKnownError.Value.Item2,
+                    ErrorMessage = WellKnownError.Value.Item2,
 
                     IsOperationSuccess = false
 

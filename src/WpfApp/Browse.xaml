@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"              
              xmlns:local="clr-namespace:WpfApp"
+             xmlns:domain="clr-namespace:WpfApp.Domain"  
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
@@ -57,8 +58,9 @@
                         <StackPanel Grid.Row="1" Margin="20 10 0 8" Orientation="Horizontal"  Grid.Column="1">
                             <!--Text="{Binding SearchWord}"-->
 
-                            <TextBox  Width="300" Margin="20 10 0 8" Name="SearchWordTextBox"   />
-                            <Button Margin="20 10 0 8"  MaxWidth="100" Content="Search" Style="{StaticResource MaterialDesignRaisedAccentButton}" Click="SearchButton_Click"/>
+                            <TextBox  Width="300" Margin="20 10 0 8" Name="SearchWordTextBox" Background="{StaticResource AlternativeColor}"  />
+                            <Button Margin="20 10 0 8"  MaxWidth="100" KeyboardNavigation.TabIndex="0" Content="Search" 
+                                    Style="{StaticResource MaterialDesignRaisedAccentButton}" Click="SearchButton_Click"/>
                             <Button Margin="20 10 0 8" MaxWidth="100" Content="Reset" Style="{StaticResource MaterialDesignRaisedLightButton}" Click="ResetButton_Click"/>
                         </StackPanel>
 
@@ -97,21 +99,7 @@
                                 </Hyperlink>    
                             </TextBlock>
 
-                            <!--<Button Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" Margin="20 10 0 8" Grid.Column="6" 
-                                      materialDesign:DialogHost.DialogOpened="ExportButton_Click" Width="128">
-                                <Button.CommandParameter>
-                                    <StackPanel Margin="16">
-                                        <ProgressBar Style="{DynamicResource MaterialDesignCircularProgressBar}" HorizontalAlignment="Center" Margin="16" IsIndeterminate="True" Value="0" />
-                                        <Button Style="{StaticResource MaterialDesignFlatButton}" IsCancel="True" 
-                                            Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
-                                            CommandParameter="Sample2Cancel"
-                                            HorizontalAlignment="Center">CANCEL</Button>
-                                    </StackPanel>
-                                </Button.CommandParameter>
-                                Export
-                            </Button>-->
-
-                            <Button Margin="20 10 0 8" Grid.Column="6" MaxWidth="100" ToolTip="Export to excel.."
+                            <Button Margin="20 10 0 8" Grid.Column="6" Name="ExportButton" MaxWidth="100" ToolTip="Export to excel.."
                                     Content="Export" Style="{StaticResource MaterialDesignRaisedAccentButton}" Click="ExportButton_Click"/>
 
                         </Grid>
@@ -143,7 +131,7 @@
                         </Expander>
                         <Border Background="{DynamicResource MaterialDesignDivider}" Height="1" HorizontalAlignment="Stretch" SnapsToDevicePixels="True" />
                         <Expander HorizontalAlignment="Stretch" Background="{DynamicResource PrimaryHueLightBrush}"
-                      Header="Interviewer(s)"  FontWeight="Bold">
+                      Header="Interviewer(s)"   FontWeight="Bold">
                             <StackPanel Orientation="Vertical"
                             TextBlock.Foreground="{DynamicResource MaterialDesignBody}">
                                 <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Visible" >
@@ -164,8 +152,7 @@
                             </StackPanel>
                         </Expander>
                         <Border Background="{DynamicResource MaterialDesignDivider}" Height="1" HorizontalAlignment="Stretch" SnapsToDevicePixels="True" />
-                        <Expander HorizontalAlignment="Stretch" Background="{DynamicResource AlternativeColor}"
-                      Header="Subject(s)" FontWeight="Bold">
+                        <Expander HorizontalAlignment="Stretch" Background="{DynamicResource AlternativeColor}" Header="Subject(s)" FontWeight="Bold">
                             <StackPanel Orientation="Vertical" TextBlock.Foreground="{DynamicResource MaterialDesignBody}" >
                                 <ScrollViewer Height="250"  HorizontalScrollBarVisibility="Auto"  VerticalScrollBarVisibility="Visible" >
                                     <ListBox Name="SubjectListBox" ItemsSource="{Binding TheList}"  Margin="0 0 0 10">
@@ -185,7 +172,7 @@
                         </Expander>
                         <Border Background="{DynamicResource MaterialDesignDivider}" Height="1" HorizontalAlignment="Stretch" SnapsToDevicePixels="True" />
                         <Expander HorizontalAlignment="Stretch" Background="{DynamicResource PrimaryHueLightBrush}"
-                      Header="Content dm(s)" FontWeight="Bold">
+                      Header="Online" FontWeight="Bold">
                             <StackPanel Orientation="Vertical" TextBlock.Foreground="{DynamicResource MaterialDesignBody}" >
 
                                 <ListBox Name="ContentDMListBox" ItemsSource="{Binding TheList}" Margin="0 0 0 10">
@@ -208,53 +195,35 @@
                     </StackPanel>
                 </materialDesign:Card>
 
-                <ListView Margin="10" Name="TranscriptionQueueListView" Grid.Row="1" Grid.Column="1"
-                      GridViewColumnHeader.Click="GridViewColumnHeaderClickedHandler" VerticalAlignment="Top"
-                      MouseDoubleClick="TranscriptionQueueListView_MouseDoubleClick"  ItemContainerStyle="{StaticResource ListViewAlternatingRowStyle}" AlternationCount="2">
+                <ListView Margin="10" Name="BrowseListView" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Width="1240"
+                      VerticalAlignment="Top"
+                      MouseDoubleClick="BrowseListView_MouseDoubleClick"  
+                      ItemContainerStyle="{StaticResource ListViewAlternatingRowStyle}" AlternationCount="2"
+                      domain:GridViewSort.AutoSort="True">
                     <ListView.View>
-                        <GridView>
-
-                            <!--Id-->
-                            <!--<GridViewColumn Header="Id" 
-                                            HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}" >
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <StackPanel>
-                                            <TextBlock Text="{Binding Id}"  />
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>-->
-
-
+                        <GridView>                           
                             <!--Interviewee-->
-                            <GridViewColumn Header="Interviewee" Width="150"  
-                                            HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}" >
+                
+                            <GridViewColumn Header="Interviewee" Width="250"  
+                                            HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}"                                            
+                                            domain:GridViewSort.PropertyName="Interviewee">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel>
-                                            <TextBlock Name="IntervieweeTextBlock_Metadata" ToolTip="{Binding Interviewee}" Text="{Binding Interviewee , Converter={StaticResource ShortTextConverter}}" />
+                                            <TextBlock Name="IntervieweeTextBlock_Metadata" ToolTip="{Binding Interviewee}" 
+                                                       Text="{Binding Interviewee , Converter={StaticResource ShortTextConverter}}" />
                                         </StackPanel>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
 
-                            <!--project code-->
-                            <GridViewColumn Header="Project code" Width="100"  HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}"  >
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <StackPanel>
-                                            <TextBlock Name="ProjectCodeTextBlock_General" 
-                                                       ToolTip="{Binding ProjectCode}" 
-                                                       Text="{Binding ProjectCode , Converter={StaticResource ShortTextConverter}}" />
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-
-                            <!--Interviewer-->
-                            <GridViewColumn Header="Interviewer" Width="150"
-                                            HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}" >
+                            
+                <!--Interviewer-->
+                
+                            <GridViewColumn Header="Interviewer" Width="250"
+                                            HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}"                                            
+                                            domain:GridViewSort.PropertyName="Interviewer">
+                   
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel>
@@ -266,67 +235,44 @@
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
 
-                            <!--Interview on-->
-                            <GridViewColumn Header="Interview on" Width="100"   HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}"  >
+                            
+                <!--Interview on-->
+
+                            <GridViewColumn Header="Interview date" Width="100"   
+                                            HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}"                                           
+                                            domain:GridViewSort.PropertyName="InterviewDate">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel>
-                                            <TextBlock Name="InterviewOnTextBlock_Metadata" ToolTip="{Binding InterviewDate , StringFormat='{}{0:MM/dd/yyyy}'}" Text="{Binding InterviewDate , StringFormat='{}{0:MM/dd/yyyy}'}" />
+                                            <TextBlock Name="InterviewOnTextBlock_Metadata" ToolTip="{Binding InterviewDate , StringFormat='{}{0:MM/dd/yyyy}'}"
+                                                       Text="{Binding InterviewDate , StringFormat='{}{0:MM/dd/yyyy}'}" />
                                         </StackPanel>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
 
-                            <!--Collection-->
-                            <GridViewColumn Header="Collection" Width="150"
-                                            HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}"  >
+                            
+                <!--Collection-->
+                
+                            <GridViewColumn Header="Collection" Width="350"
+                                            HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}"                                            
+                                            domain:GridViewSort.PropertyName="CollectionName">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel>
-                                            <TextBlock Name="CollectionTextBlock_Metadata" ToolTip="{Binding CollectionName}" Text="{Binding CollectionName , Converter={StaticResource ShortTextConverter}}" />
+                                            <TextBlock Name="CollectionTextBlock_Metadata" ToolTip="{Binding CollectionName}" 
+                                                       Text="{Binding CollectionName , Converter={StaticResource ShortTextConverter}}" />
                                         </StackPanel>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
+                           
+                            
+                <!--TranscriptStatus-->
 
-                            <!--Subject-->
-                            <GridViewColumn Header="Subject" Width="150" 
-                                            HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}"  >
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <StackPanel>
-                                            <TextBlock Name="SubjectTextBlock_Metadata" ToolTip="{Binding Subject}" Text="{Binding Subject , Converter={StaticResource ShortTextConverter}}" />
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-
-                            <!--keywords-->
-                            <GridViewColumn Header="Keywords" Width="150" 
-                                             HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}" >
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <StackPanel>
-                                            <TextBlock Name="KeywordsTextBlock_Metadata" ToolTip="{Binding Keywords}" Text="{Binding Keywords , Converter={StaticResource ShortTextConverter}}" />
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-
-                            <!--format-->
-                            <GridViewColumn Header="Format" Width="100"
-                                            HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}"  >
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <StackPanel>
-                                            <TextBlock Name="FormatTextBlock_Media" ToolTip="{Binding FormatText}" Text="{Binding FormatText , Converter={StaticResource ShortTextConverter}}" />
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-
-                            <!--TranscriptStatus-->
-                            <GridViewColumn Width="100"  Header="Transcription&#x0a;status" HeaderContainerStyle="{StaticResource GridViewColumnHeaderMediumFontStyle}"  >
+                            <GridViewColumn Width="100"  Header="Transcribed" 
+                                            HeaderContainerStyle="{StaticResource GridViewColumnHeaderMediumFontStyle}"                                              
+                                            domain:GridViewSort.PropertyName="TranscriptStatus">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel  >
@@ -336,21 +282,14 @@
                                         </StackPanel>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
+                           </GridViewColumn>
 
-                            <!--Access media status-->
-                            <GridViewColumn Width="100"  Header="Access media&#x0a;status" HeaderContainerStyle="{StaticResource GridViewColumnHeaderMediumFontStyle}"  >
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <StackPanel  >
-                                            <materialDesign:PackIcon Name="TranscriptionStatusPackIcon_Media"  Width="80" ToolTip="{Binding IsAccessMediaStatus}"  Kind="{Binding IsAccessMediaStatus , Converter={StaticResource PackIconConverter}}"  />
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-
-                            <!--IsInContentDm-->
-                            <GridViewColumn Width="100"  Header="On Content DM" HeaderContainerStyle="{StaticResource GridViewColumnHeaderMediumFontStyle}"  >
+                            
+                <!--IsInContentDm-->
+                
+                            <GridViewColumn Width="100"  Header="Online" 
+                                            HeaderContainerStyle="{StaticResource GridViewColumnHeaderMediumFontStyle}"                                             
+                                            domain:GridViewSort.PropertyName="IsInContentDm">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel>
@@ -361,22 +300,13 @@
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-
-                            <!--ReleaseForm-->
-                            <GridViewColumn Width="80"  Header="Release form" HeaderContainerStyle="{StaticResource GridViewColumnHeaderMediumFontStyle}"  >
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <StackPanel>
-                                            <materialDesign:PackIcon  Name="ReleaseFormPackIcon_Supplemental" Width="60" 
-                                                                      ToolTip="{Binding ReleaseForm}" 
-                                                                      Kind="{Binding ReleaseForm , Converter={StaticResource PackIconConverter}}"  />
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-
-                            <!--IsRestriction-->
-                            <GridViewColumn Width="80" Header="Restriction" HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}"  >
+                         
+                            
+                <!--IsRestriction-->
+                
+                            <GridViewColumn Width="80" Header="Restriction" 
+                                            HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}"                                              
+                                            domain:GridViewSort.PropertyName="IsRestriction">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
@@ -388,35 +318,13 @@
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
 
-                            <!--In Rosetta-->
-                            <GridViewColumn Width="80" Header="In Rosetta" HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}"  >
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <StackPanel>
-                                            <materialDesign:PackIcon  Name="InRosettaPackIcon_Supplemental" Width="60" 
-                                                                      ToolTip="{Binding IsRosetta}" 
-                                                                      Kind="{Binding IsRosetta , Converter={StaticResource PackIconConverter}}"  />
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-
-                            <!--born digital-->
-                            <GridViewColumn Width="80" Header="Born&#x0a;digital" HeaderContainerStyle="{StaticResource GridViewColumnHeaderMediumFontStyle}"  >
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <StackPanel>
-                                            <materialDesign:PackIcon  Name="BornDigitalPackIcon_Supplemental" Width="50" 
-                                                                      ToolTip="{Binding IsBornDigital}" 
-                                                                      Kind="{Binding IsBornDigital , Converter={StaticResource PackIconConverter}}"  />
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
                         </GridView>
                     </ListView.View>
 
                 </ListView>
+
+
+
             </Grid>
             <StackPanel>
                 <Button Name="BackToListButton" Content="Back to List..." Click="BackToListButton_Click" />

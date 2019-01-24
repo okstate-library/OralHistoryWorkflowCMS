@@ -132,8 +132,7 @@ namespace WpfApp
         /// The loc subjects column name
         /// </summary>
         private static string LocSubjectsColumnName = "Loc Subjects";
-
-
+        
         /// <summary>
         /// Gets or sets the interview json models.
         /// </summary>
@@ -1093,7 +1092,7 @@ namespace WpfApp
         /// </returns>
         public bool Equals(PeopleModel other)
         {
-            return this.Fullname.Equals(other.Fullname);
+            return Fullname.Equals(other.Fullname);
         }
     }
 
@@ -1165,7 +1164,7 @@ namespace WpfApp
         /// </returns>
         public bool Equals(RepositoryModel other)
         {
-            return this.Title.Equals(other.Title);
+            return Title.Equals(other.Title);
         }
     }
 
@@ -1302,7 +1301,7 @@ namespace WpfApp
         /// </returns>
         public bool Equals(CollectionApiModel other)
         {
-            return this.Title.Equals(other.Title);
+            return Title.Equals(other.Title);
         }
     }
 
@@ -1449,7 +1448,7 @@ namespace WpfApp
         /// </returns>
         public bool Equals(InterviewApiModel other)
         {
-            return this.Title.Equals(other.Title);
+            return Title.Equals(other.Title);
         }
     }
 }
