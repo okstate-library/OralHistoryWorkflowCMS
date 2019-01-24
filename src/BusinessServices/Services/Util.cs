@@ -1,7 +1,9 @@
-﻿using Core.Enums;
+﻿using Core;
+using Core.Enums;
 using EntityData;
 using Model;
 using Repository.Implementations;
+using System;
 using System.Linq;
 
 namespace BusinessServices.Services
@@ -160,7 +162,8 @@ namespace BusinessServices.Services
                 Interviewer = transcription.Interviewer,
                 Place = transcription.Place,
                 SubseriesId = transcription.SubseriesId,
-                EquipmentUsed = transcription.EquipmentUsed,
+                AudioEquipmentUsed = transcription.AudioEquipmentUsed,
+                VideoEquipmentUsed = transcription.VideoEquipmentUsed,
                 InterviewDate = transcription.InterviewDate.Date,
                 InterviewerNote = transcription.InterviewerNote,
                 IsAudioFormat = transcription.IsAudioFormat,
@@ -233,6 +236,25 @@ namespace BusinessServices.Services
             };
         }
 
+        internal static UserTypeModel ConvertToUsertypeModel(usertype item)
+        {
+            return new UserTypeModel()
+            {
+                Id = item.Id,
+                UserTypeName = item.UserTypeName,
+                IsHorizontalMenu = item.IsHorizontalMenu,
+            };
+        }
+
+        internal static InterviewerModel ConvertToInterviewerModel(interviewer item)
+        {
+            return new InterviewerModel()
+            {
+                Id = item.Id,
+                Name = item.InterviewerName
+            };
+        }
+
         /// <summary>
         /// Converts to transcription.
         /// </summary>
@@ -248,7 +270,8 @@ namespace BusinessServices.Services
                 Interviewer = transcriptionModel.Interviewer,
                 Place = transcriptionModel.Place,
                 SubseriesId = transcriptionModel.SubseriesId,
-                EquipmentUsed = transcriptionModel.EquipmentUsed,
+                AudioEquipmentUsed = transcriptionModel.AudioEquipmentUsed,
+                VideoEquipmentUsed = transcriptionModel.VideoEquipmentUsed,
                 InterviewDate = transcriptionModel.InterviewDate,
                 InterviewerNote = transcriptionModel.InterviewerNote,
                 IsAudioFormat = transcriptionModel.IsAudioFormat,
@@ -263,9 +286,9 @@ namespace BusinessServices.Services
                 SentOut = transcriptionModel.SentOut,
                 EquipmentNumber = transcriptionModel.EquipmentNumber,
 
-                InterviewerDescription =GetSubString(transcriptionModel.InterviewerDescription),
-                InterviewerKeywords =  GetSubString(transcriptionModel.InterviewerKeywords),
-                InterviewerSubjects =GetSubString(transcriptionModel.InterviewerSubjects),
+                InterviewerDescription = GetSubString(transcriptionModel.InterviewerDescription),
+                InterviewerKeywords = GetSubString(transcriptionModel.InterviewerKeywords),
+                InterviewerSubjects = GetSubString(transcriptionModel.InterviewerSubjects),
 
                 //AuditCheckCompletedDate = DateTime.MinValue,//DBNull.Value, //transcriptionModel.CreatedDate,
                 //EditWithCorrectionDate = DateTime.MinValue,
@@ -357,7 +380,8 @@ namespace BusinessServices.Services
                 Interviewer = interview.Interviewer,
                 Place = interview.Place,
                 SubseriesId = interview.SubseriesId,
-                EquipmentUsed = interview.EquipmentUsed,
+                AudioEquipmentUsed = interview.AudioEquipmentUsed,
+                VideoEquipmentUsed = interview.VideoEquipmentUsed,
                 InterviewDate = interview.InterviewDate,
                 InterviewerNote = interview.InterviewerNote,
                 IsAudioFormat = interview.IsAudioFormat,
@@ -442,7 +466,8 @@ namespace BusinessServices.Services
                 Interviewer = transcriptionModel.Interviewer,
                 Place = transcriptionModel.Place,
                 SubseriesId = transcriptionModel.SubseriesId,
-                EquipmentUsed = transcriptionModel.EquipmentUsed,
+                AudioEquipmentUsed = transcriptionModel.AudioEquipmentUsed,
+                VideoEquipmentUsed = transcriptionModel.VideoEquipmentUsed,
                 InterviewDate = transcriptionModel.InterviewDate,
                 InterviewerNote = transcriptionModel.InterviewerNote,
                 IsAudioFormat = transcriptionModel.IsAudioFormat,
@@ -490,6 +515,7 @@ namespace BusinessServices.Services
                 Name = userModel.Name,
                 Username = userModel.Username,
                 UserType = userModel.UserType,
+                Password = Encryption.Encrypt(Encryption.convertToUNSecureString(userModel.Password)),
             };
         }
 

@@ -22,6 +22,11 @@ namespace WpfApp.Domain
         /// <summary>
         /// The home demo item
         /// </summary>
+        public static DemoItem searchDemoItem = new DemoItem("Search", PackIconKind.DatabaseSearch, new Browse(), ScrollBarVisibility.Auto, ScrollBarVisibility.Auto);
+        
+        /// <summary>
+        /// The home demo item
+        /// </summary>
         public static DemoItem homeDemoItem = new DemoItem("Home", PackIconKind.Home, new Home(), ScrollBarVisibility.Auto, ScrollBarVisibility.Auto);
 
         /// <summary>
@@ -83,12 +88,13 @@ namespace WpfApp.Domain
         /// </value>
         private static DemoItem[] AdminDemoItems { get; } = new[]
         {
+            searchDemoItem,
             homeDemoItem,
             interviewDemoItem ,
             transactionQueueDemoItem,
             browseQueueDemoItem ,
             findAndReplaceQueueDemoItem,
-            controlledVocabularyQueueDemoItem,
+            //controlledVocabularyQueueDemoItem,
             reportsQueueDemoItem,
             usersQueueDemoItem,
             settingsQueueDemoItem,
@@ -97,17 +103,18 @@ namespace WpfApp.Domain
         };
 
         /// <summary>
-        /// Gets the interviewer demo items.
+        /// Gets the staff demo items.
         /// </summary>
         /// <value>
-        /// The interviewer demo items.
+        /// The staff demo items.
         /// </value>
-        private static DemoItem[] InterviewerDemoItems { get; } = new[]
+        private static DemoItem[] StaffDemoItems { get; } = new[]
         {
             homeDemoItem ,
             interviewDemoItem ,
             transactionQueueDemoItem,
             browseQueueDemoItem ,
+            reportsQueueDemoItem,
         };
 
         /// <summary>
@@ -159,7 +166,7 @@ namespace WpfApp.Domain
         /// <param name="snackbarMessageQueue">The snackbar message queue.</param>
         /// <param name="isValidToProcess">if set to <c>true</c> [is valid to process].</param>
         /// <exception cref="ArgumentNullException">snackbarMessageQueue</exception>
-        public MainWindowViewModel(ISnackbarMessageQueue snackbarMessageQueue, bool isValidToProcess)
+        public MainWindowViewModel(ISnackbarMessageQueue snackbarMessageQueue, bool isValidToProcess, string form)
         {
             if (snackbarMessageQueue == null) throw new ArgumentNullException(nameof(snackbarMessageQueue));
 
@@ -181,8 +188,8 @@ namespace WpfApp.Domain
                         case WellKnownUserType.Student:
                             DemoItems = StudentDemoItems;
                             break;
-                        case WellKnownUserType.Interviewer:
-                            DemoItems = InterviewerDemoItems;
+                        case WellKnownUserType.Staff:
+                            DemoItems = StaffDemoItems;
                             break;
                         case WellKnownUserType.AdminUser:
                             DemoItems = AdminDemoItems;
@@ -202,6 +209,8 @@ namespace WpfApp.Domain
             {
                 DemoItems = HomeDemoItems;
             }
+
+            this.Form = form;
         }
 
         #endregion
@@ -239,6 +248,8 @@ namespace WpfApp.Domain
         /// The application version.
         /// </value>
         public string ApplicationVersion { get; set; } = "Version " + Properties.Settings.Default.Version;
+
+        public string Form { get; set; } = "DemoItemsListBox";
 
         #endregion
     }

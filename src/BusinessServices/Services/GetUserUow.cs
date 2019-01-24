@@ -92,11 +92,11 @@ namespace BusinessServices.Servcices
         /// </summary>
         protected override void PreExecute()
         {
-            this.WellKnownError = new WellKnownErrors();
+            WellKnownError = new WellKnownErrors();
 
-            this.UserRepository = new UserRepository();
+            UserRepository = new UserRepository();
 
-            this.WellKnownError.Value = WellKnownError.NoError;
+            WellKnownError.Value = WellKnownError.NoError;
         }
 
         /// <summary>
@@ -104,9 +104,9 @@ namespace BusinessServices.Servcices
         /// </summary>
         protected override void Execute()
         {
-            user user = this.UserRepository.GetUserById(this.Request.UserModel.UserId);
+            user user = UserRepository.GetUserById(Request.UserModel.UserId);
 
-            this.Response = new ResponseModel()
+            Response = new ResponseModel()
             {
                 UserModel = Util.ConvertToUserModel(user),
                 IsOperationSuccess = true
@@ -119,15 +119,15 @@ namespace BusinessServices.Servcices
         /// </summary>
         protected override void PostExecute()
         {
-            int errorCode = this.WellKnownError.Value.Item1;
+            int errorCode = WellKnownError.Value.Item1;
 
             if (errorCode > 0)
             {
-                this.Response = new ResponseModel()
+                Response = new ResponseModel()
                 {
                     ErrorCode = errorCode.ToString(),
 
-                    ErrorMessage = this.WellKnownError.Value.Item2,
+                    ErrorMessage = WellKnownError.Value.Item2,
 
                     IsOperationSuccess = false
 

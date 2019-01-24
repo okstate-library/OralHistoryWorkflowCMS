@@ -84,8 +84,8 @@ namespace BusinessServices.UnitofWork
         /// </param>
         public Operation(DateTime timestamp, string message)
         {
-            this.Timestamp = timestamp;
-            this.Message = string.IsNullOrEmpty(message) ? string.Empty : message;
+            Timestamp = timestamp;
+            Message = string.IsNullOrEmpty(message) ? string.Empty : message;
         }
 
         #endregion

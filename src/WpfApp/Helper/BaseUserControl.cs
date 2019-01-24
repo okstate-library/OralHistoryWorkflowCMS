@@ -7,7 +7,7 @@ using WpfApp.Properties;
 namespace WpfApp.Helper
 {
     /// <summary>
-    /// 
+    /// Define base user control.
     /// </summary>
     public class BaseUserControl
     {
@@ -73,6 +73,38 @@ namespace WpfApp.Helper
         public List<SubjectModel> Subjects { get; set; }
 
         /// <summary>
+        /// Gets or sets the interviewers.
+        /// </summary>
+        /// <value>
+        /// The interviewers.
+        /// </value>
+        public static List<string> Interviewers { get; set; }
+
+        /// <summary>
+        /// Gets or sets the audio equipments.
+        /// </summary>
+        /// <value>
+        /// The audio equipments.
+        /// </value>
+        public static List<string> AudioEquipments { get; set; }
+
+        /// <summary>
+        /// Gets or sets the video equipments.
+        /// </summary>
+        /// <value>
+        /// The video equipments.
+        /// </value>
+        public static List<string> VideoEquipments { get; set; }
+
+        /// <summary>
+        /// Gets the usertypes.
+        /// </summary>
+        /// <value>
+        /// The usertypes.
+        /// </value>
+        public List<UserTypeModel> Usertypes { get; private set; }
+
+        /// <summary>
         /// Gets or sets the collecions.
         /// </summary>
         /// <value>
@@ -105,11 +137,19 @@ namespace WpfApp.Helper
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether this instance is values changed.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this instance is values changed; otherwise, <c>false</c>.
+        /// </value>
+        public static bool IsValuesChanged { get; set; }
+
+        /// <summary>
         /// Initializes the component.
         /// </summary>
         public void InitializeComponent()
         {
-            ResponseModel response = this.InternalService.GetSystemInitialize();
+            ResponseModel response = InternalService.GetSystemInitialize();
 
             if (response.IsOperationSuccess)
             {
@@ -120,8 +160,14 @@ namespace WpfApp.Helper
                 Collecions = response.Collecions;
                 Keywords = response.Keywords;
                 Subjects = response.Subjects;
+
+                Interviewers = response.Interviewers;
+                AudioEquipments = response.AudioEquipmentsUsed;
+                VideoEquipments = response.VideoEquipmentsUsed;
+                Usertypes = response.UserTypes;
             }
 
         }
+
     }
 }

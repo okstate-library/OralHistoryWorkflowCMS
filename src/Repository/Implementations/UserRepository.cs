@@ -19,7 +19,7 @@ namespace Repository.Implementations
         /// </returns>
         public user GetUser(string username)
         {
-            return this.FirstOrDefault(u => u.Username == username);
+            return FirstOrDefault(u => u.Username == username);
         }
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace Repository.Implementations
         /// </returns>
         public user GetUserById(int userId)
         {
-            return this.FirstOrDefault(u => u.UserId == userId);
+            return FirstOrDefault(u => u.UserId == userId);
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace Repository.Implementations
         /// </returns>
         public user GetUserToEdit(int userId)
         {
-            return this.FirstToDelete(i => i.UserId == userId);
+            return FirstToDelete(i => i.UserId == userId);
         }
     }
 }

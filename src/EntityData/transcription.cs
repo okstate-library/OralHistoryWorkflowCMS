@@ -45,7 +45,8 @@ namespace EntityData
         public bool IsRosettaForm { get; set; }
         public bool IsRestriction { get; set; }
         public string LegalNote { get; set; }
-        public string EquipmentUsed { get; set; }
+        public string AudioEquipmentUsed { get; set; }
+        public string VideoEquipmentUsed { get; set; }
         public string InterviewerNote { get; set; }
         public bool ReleaseForm { get; set; }
         public string Place { get; set; }
@@ -86,7 +87,6 @@ namespace EntityData
         public string InterviewerSubjects { get; set; }
         public string EquipmentNumber { get; set; }
         public bool SentOut { get; set; }
-
         public string MetadataDraft { get; set; }
     }
 }

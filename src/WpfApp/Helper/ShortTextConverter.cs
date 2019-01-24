@@ -24,7 +24,7 @@ namespace WpfApp
         {
             if (value != null)
             {
-                int maxlength = 20;
+                int maxlength = 50;
                 string text = value.ToString();
 
                 if (string.IsNullOrEmpty(text)) return value;

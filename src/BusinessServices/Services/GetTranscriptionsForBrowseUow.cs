@@ -101,11 +101,11 @@ namespace BusinessServices.Servcices
         /// </summary>
         protected override void PreExecute()
         {
-            this.WellKnownError = new WellKnownErrors();
+            WellKnownError = new WellKnownErrors();
 
-            this.TranscriptionRepository = new TranscriptionRepository();
+            TranscriptionRepository = new TranscriptionRepository();
 
-            this.WellKnownError.Value = WellKnownError.NoError;
+            WellKnownError.Value = WellKnownError.NoError;
         }
 
         /// <summary>
@@ -117,54 +117,56 @@ namespace BusinessServices.Servcices
 
             List<TranscriptionModel> newlist = new List<TranscriptionModel>();
 
-            List<transcription> allTranscriptions = this.TranscriptionRepository.GetAll().ToList();
+            List<transcription> allTranscriptions = TranscriptionRepository.GetAll().ToList();
 
-            pagedList = allTranscriptions.ToPagedList(this.Request.SearchRequest.CurrentPage, this.Request.SearchRequest.ListLength);
+            pagedList = allTranscriptions.ToPagedList(Request.SearchRequest.CurrentPage, Request.SearchRequest.ListLength);
 
-            if (this.Request.TranscriptionSearchModel.IsSearchRecordsExists() || !string.IsNullOrEmpty(this.Request.SearchWord))
+            if (Request.TranscriptionSearchModel.IsSearchRecordsExists() || !string.IsNullOrEmpty(Request.SearchWord))
             {
                 var predicate = PredicateBuilder.False<transcription>();
 
-                foreach (string item in this.Request.TranscriptionSearchModel.CollectionNames)
+                foreach (string item in Request.TranscriptionSearchModel.CollectionNames)
                 {
                     predicate = predicate.Or(p => p.CollectionId == short.Parse(item));
                 }
 
-                foreach (string item in this.Request.TranscriptionSearchModel.Subjects)
+                foreach (string item in Request.TranscriptionSearchModel.Subjects)
                 {
                     predicate = predicate.Or(p => p.Subject.Contains(item));
                 }
 
-                foreach (string item in this.Request.TranscriptionSearchModel.Interviewers)
+                foreach (string item in Request.TranscriptionSearchModel.Interviewers)
                 {
                     predicate = predicate.Or(p => p.Interviewer.Equals(item));
                 }
 
-                foreach (string item in this.Request.TranscriptionSearchModel.Contentdms)
+                foreach (string item in Request.TranscriptionSearchModel.Contentdms)
                 {
                     predicate = predicate.Or(p => p.IsInContentDm == bool.Parse(item));
                 }
 
-                if (!string.IsNullOrEmpty(this.Request.SearchWord))
-                {
-                    predicate = predicate.And(p =>
-                                                    p.Interviewer.Contains(Request.SearchWord) ||
-                                                    p.AuditCheckCompleted.Contains(this.Request.SearchWord) ||
-                                                    p.AccessFileLocation.Contains(this.Request.SearchWord) ||
-                                                    p.CoverageSpatial.Contains(this.Request.SearchWord) ||
-                                                    p.CoverageTemporal.Contains(this.Request.SearchWord) ||
-                                                    p.Description.Contains(this.Request.SearchWord) ||
-                                                    p.EditWithCorrectionCompleted.Contains(this.Request.SearchWord) ||
-                                                    p.Interviewee.Contains(this.Request.SearchWord) ||
-                                                    p.Keywords.Contains(this.Request.SearchWord) ||
-                                                    p.Title.Contains(this.Request.SearchWord) ||
-                                                    p.Subject.Contains(this.Request.SearchWord)
-                                                  );
-                }
-
                 IEnumerable<transcription> dataset3 = allTranscriptions.Where<transcription>(predicate.Compile());
 
-                pagedList = dataset3.ToPagedList(this.Request.SearchRequest.CurrentPage, this.Request.SearchRequest.ListLength);
+                if (!string.IsNullOrEmpty(Request.SearchWord))
+                {
+                    predicate = (p => p.Interviewer.Contains(Request.SearchWord) ||                                             
+                                               p.Interviewee.Contains(Request.SearchWord) ||
+                                               p.InterviewerNote.Contains(Request.SearchWord) ||
+                                               p.Keywords.Contains(Request.SearchWord) ||
+                                               p.LegalNote.Contains(Request.SearchWord) ||
+                                               p.Place.Contains(Request.SearchWord) ||
+                                               p.ProjectCode.Contains(Request.SearchWord) ||                                              
+                                               p.Title.Contains(Request.SearchWord) ||
+                                               p.Subject.Contains(Request.SearchWord) ||                                            
+                                               p.Transcript.Contains(Request.SearchWord)
+                                             );
+
+                    IEnumerable<transcription> pagedTransactionList = TranscriptionRepository.FindBy(predicate).ToList();
+
+                    dataset3 = dataset3.Union(pagedTransactionList);
+                }
+
+                pagedList = dataset3.ToPagedList(Request.SearchRequest.CurrentPage, Request.SearchRequest.ListLength);
             }
 
             PaginationInfo page = page = new PaginationInfo()
@@ -183,7 +185,7 @@ namespace BusinessServices.Servcices
                 newlist.Add(Util.ConvertToTranscriptionModel(item));
             }
 
-            this.Response = new ResponseModel()
+            Response = new ResponseModel()
             {
                 PaginationInfo = page,
                 Transcriptions = newlist,
@@ -197,15 +199,15 @@ namespace BusinessServices.Servcices
         /// </summary>
         protected override void PostExecute()
         {
-            int errorCode = this.WellKnownError.Value.Item1;
+            int errorCode = WellKnownError.Value.Item1;
 
             if (errorCode > 0)
             {
-                this.Response = new ResponseModel()
+                Response = new ResponseModel()
                 {
                     ErrorCode = errorCode.ToString(),
 
-                    ErrorMessage = this.WellKnownError.Value.Item2,
+                    ErrorMessage = WellKnownError.Value.Item2,
 
                     IsOperationSuccess = false
 

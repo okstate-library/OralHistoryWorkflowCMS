@@ -1,7 +1,24 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="uri:settings" CurrentProfile="(Default)">
-  <Profiles>
-    <Profile Name="(Default)" />
-  </Profiles>
-  <Settings />
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="WpfApp.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="Setting" Type="System.String" Scope="Application">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="Version" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">1.1.0</Value>
+    </Setting>
+    <Setting Name="ApplicationTitle" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Oral History Workflow CMS APP</Value>
+    </Setting>
+    <Setting Name="ExternalApi" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">https://c0100.paas2.tx.modxcloud.com/api/</Value>
+    </Setting>
+    <Setting Name="Log4netConfigPath" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">D:\\OralCMS\\OralCMS\\config\\log4net.config</Value>
+    </Setting>
+    <Setting Name="WelComeApplicationTitle" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Welcome to Oral History Workflow CMS APP</Value>
+    </Setting>
+  </Settings>
 </SettingsFile>

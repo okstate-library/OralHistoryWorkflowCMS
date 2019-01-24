@@ -107,11 +107,11 @@ namespace BusinessServices.Servcices
         /// </summary>
         protected override void PreExecute()
         {
-            this.WellKnownError = new WellKnownErrors();
+            WellKnownError = new WellKnownErrors();
 
-            this.TranscriptionRepository = new TranscriptionRepository();
+            TranscriptionRepository = new TranscriptionRepository();
 
-            this.WellKnownError.Value = WellKnownError.NoError;
+            WellKnownError.Value = WellKnownError.NoError;
         }
 
         /// <summary>
@@ -123,17 +123,17 @@ namespace BusinessServices.Servcices
 
             var predicate = PredicateBuilder.True<transcription>();
 
-            if (!string.IsNullOrEmpty(this.Request.FindReplaceModel.FindWord))
+            if (!string.IsNullOrEmpty(Request.FindReplaceModel.FindWord))
             {
                 predicate = predicate.And(p =>
-                                                p.Description.Contains(this.Request.FindReplaceModel.FindWord) ||
-                                                p.Keywords.Contains(this.Request.FindReplaceModel.FindWord) ||
-                                                p.Title.Contains(this.Request.FindReplaceModel.FindWord) ||
-                                                p.Subject.Contains(this.Request.FindReplaceModel.FindWord)
+                                                p.Description.Contains(Request.FindReplaceModel.FindWord) ||
+                                                p.Keywords.Contains(Request.FindReplaceModel.FindWord) ||
+                                                p.Title.Contains(Request.FindReplaceModel.FindWord) ||
+                                                p.Subject.Contains(Request.FindReplaceModel.FindWord)
                                               );
             }
 
-            List<transcription> allTranscription = this.TranscriptionRepository.GetAll().ToList();
+            List<transcription> allTranscription = TranscriptionRepository.GetAll().ToList();
 
             IEnumerable<transcription> dataset3 = allTranscription.Where<transcription>(predicate.Compile());
 
@@ -141,51 +141,51 @@ namespace BusinessServices.Servcices
 
             foreach (transcription item in all)
             {
-                if (this.Request.FindReplaceModel.Field == Core.Enums.WellKnownFindAndReplaceType.None)
+                if (Request.FindReplaceModel.Field == Core.Enums.WellKnownFindAndReplaceType.None)
                 {
-                    item.Title = item.Title.Replace(this.Request.FindReplaceModel.FindWord,
-                        this.Request.FindReplaceModel.ReplaceWord);
+                    item.Title = item.Title.Replace(Request.FindReplaceModel.FindWord,
+                        Request.FindReplaceModel.ReplaceWord);
 
-                    item.Description = item.Description.Replace(this.Request.FindReplaceModel.FindWord,
-                        this.Request.FindReplaceModel.ReplaceWord);
+                    item.Description = item.Description.Replace(Request.FindReplaceModel.FindWord,
+                        Request.FindReplaceModel.ReplaceWord);
 
-                    item.Keywords = item.Keywords.Replace(this.Request.FindReplaceModel.FindWord,
-                        this.Request.FindReplaceModel.ReplaceWord);
+                    item.Keywords = item.Keywords.Replace(Request.FindReplaceModel.FindWord,
+                        Request.FindReplaceModel.ReplaceWord);
 
-                    item.Subject = item.Subject.Replace(this.Request.FindReplaceModel.FindWord,
-                        this.Request.FindReplaceModel.ReplaceWord);
+                    item.Subject = item.Subject.Replace(Request.FindReplaceModel.FindWord,
+                        Request.FindReplaceModel.ReplaceWord);
                 }
                 else
                 {
-                    switch (this.Request.FindReplaceModel.Field)
+                    switch (Request.FindReplaceModel.Field)
                     {
                         case Core.Enums.WellKnownFindAndReplaceType.Title:
-                            item.Title = item.Title.Replace(this.Request.FindReplaceModel.FindWord,
-                                    this.Request.FindReplaceModel.ReplaceWord);
+                            item.Title = item.Title.Replace(Request.FindReplaceModel.FindWord,
+                                    Request.FindReplaceModel.ReplaceWord);
                             break;
                         case Core.Enums.WellKnownFindAndReplaceType.Description:
 
-                            item.Description = item.Description.Replace(this.Request.FindReplaceModel.FindWord,
-                                    this.Request.FindReplaceModel.ReplaceWord);
+                            item.Description = item.Description.Replace(Request.FindReplaceModel.FindWord,
+                                    Request.FindReplaceModel.ReplaceWord);
                             break;
                         case Core.Enums.WellKnownFindAndReplaceType.Keywords:
-                            item.Keywords = item.Keywords.Replace(this.Request.FindReplaceModel.FindWord,
-                                    this.Request.FindReplaceModel.ReplaceWord);
+                            item.Keywords = item.Keywords.Replace(Request.FindReplaceModel.FindWord,
+                                    Request.FindReplaceModel.ReplaceWord);
                             break;
                         case Core.Enums.WellKnownFindAndReplaceType.Subject:
-                            item.Subject = item.Subject.Replace(this.Request.FindReplaceModel.FindWord,
-                                    this.Request.FindReplaceModel.ReplaceWord);
+                            item.Subject = item.Subject.Replace(Request.FindReplaceModel.FindWord,
+                                    Request.FindReplaceModel.ReplaceWord);
                             break;
                         default:
                             break;
                     }
                 }
 
-                this.TranscriptionRepository.Edit(item);
-                this.TranscriptionRepository.Save();
+                TranscriptionRepository.Edit(item);
+                TranscriptionRepository.Save();
             }
 
-            this.Response = new ResponseModel()
+            Response = new ResponseModel()
             {
                 IsOperationSuccess = true,
                 ErrorMessage = all.Count.ToString(),
@@ -197,15 +197,15 @@ namespace BusinessServices.Servcices
         /// </summary>
         protected override void PostExecute()
         {
-            int errorCode = this.WellKnownError.Value.Item1;
+            int errorCode = WellKnownError.Value.Item1;
 
             if (errorCode > 0)
             {
-                this.Response = new ResponseModel()
+                Response = new ResponseModel()
                 {
                     ErrorCode = errorCode.ToString(),
 
-                    ErrorMessage = this.WellKnownError.Value.Item2,
+                    ErrorMessage = WellKnownError.Value.Item2,
 
                     IsOperationSuccess = false
 

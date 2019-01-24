@@ -91,11 +91,11 @@ namespace BusinessServices.Servcices
         /// </summary>
         protected override void PreExecute()
         {
-            this.WellKnownError = new WellKnownErrors();
+            WellKnownError = new WellKnownErrors();
 
-            this.TranscriptionRepository = new TranscriptionRepository();
+            TranscriptionRepository = new TranscriptionRepository();
 
-            this.WellKnownError.Value = WellKnownError.NoError;
+            WellKnownError.Value = WellKnownError.NoError;
         }
 
         /// <summary>
@@ -104,9 +104,9 @@ namespace BusinessServices.Servcices
         protected override void Execute()
         {
             TranscriptionModel transcription = Util.ConvertToTranscriptionModel(
-                TranscriptionRepository.GetTranscription(this.Request.TranscriptionId));
+                TranscriptionRepository.GetTranscription(Request.TranscriptionId));
 
-            this.Response = new ResponseModel()
+            Response = new ResponseModel()
             {
                 Transcription = transcription,
                 IsOperationSuccess = true
@@ -118,15 +118,15 @@ namespace BusinessServices.Servcices
         /// </summary>
         protected override void PostExecute()
         {
-            int errorCode = this.WellKnownError.Value.Item1;
+            int errorCode = WellKnownError.Value.Item1;
 
             if (errorCode > 0)
             {
-                this.Response = new ResponseModel()
+                Response = new ResponseModel()
                 {
                     ErrorCode = errorCode.ToString(),
 
-                    ErrorMessage = this.WellKnownError.Value.Item2,
+                    ErrorMessage = WellKnownError.Value.Item2,
 
                     IsOperationSuccess = false
 

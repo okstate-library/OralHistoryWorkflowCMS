@@ -42,11 +42,11 @@ namespace WpfApp
         }
 
         /// <summary>
-        /// Handles the Click event of the UploadButton control.
+        /// Handles the Click event of the BrowseButton control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
-        private void UploadButton_Click(object sender, RoutedEventArgs e)
+        private void BrowseButton_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog fileDialog = new OpenFileDialog();
 
@@ -55,16 +55,34 @@ namespace WpfApp
 
             if (fileDialog.ShowDialog() == true)
             {
-                string filePath = fileDialog.FileName;
+                fileUploadLabel.Content = fileDialog.FileName;
 
+                UploadButton.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                UploadButton.Visibility = Visibility.Hidden;
+            }
+        }
+
+        /// <summary>
+        /// Handles the Click event of the UploadButton control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
+        private void UploadButton_Click(object sender, RoutedEventArgs e)
+        {
+            string filePath = fileUploadLabel.Content.ToString();
+
+            if (!string.IsNullOrEmpty(filePath))
+            {
                 fileUploadLabel.Content = filePath;
-
-                System.Threading.Thread.Sleep(2000);
 
                 DataTable dt = ReadExcelFile(filePath);
 
                 List<TranscriptionModel> transcriptionModels = new List<TranscriptionModel>();
 
+                int recordCount = 0;
                 foreach (DataRow item in dt.Rows)
                 {
                     Model.CollectionModel collection = App.BaseUserControl.Collecions.FirstOrDefault(c => c.CollectionName.Contains(GetStringValue(item, "Collection Name")));
@@ -114,7 +132,9 @@ namespace WpfApp
                         IsPriority = false, //getBoolValue(item, "Priority"),
                         IsRestriction = GetBoolValue(item, "Restrictions"),
                         LegalNote = GetStringValue(item, "Restriction Notes"),
-                        EquipmentUsed = GetStringValue(item, "Equipment Used"),
+
+                        AudioEquipmentUsed = GetStringValue(item, "Audio Equipment Used"),
+                        VideoEquipmentUsed = GetStringValue(item, "Video Equipment Used"),
 
                         IsVideoFormat = CheckStringContains(GetStringValue(item, "Recording Format"), "video"),
                         IsAudioFormat = CheckStringContains(GetStringValue(item, "Recording Format"), "audio"),
@@ -160,6 +180,8 @@ namespace WpfApp
                     };
 
                     transcriptionModels.Add(transcriptionModel);
+
+                    recordCount++;
                 }
 
                 RequestModel requestModel = new RequestModel()
@@ -171,12 +193,19 @@ namespace WpfApp
 
                 if (response.IsOperationSuccess)
                 {
-                    App.ShowMessage(true, string.Format(" {0} record(s) were \n successfully imported!", transcriptionModels.Count));
+                    App.ShowMessage(true, string.Format(" {0} record(s) were \n successfully imported!", recordCount));
+
                 }
                 else
                 {
                     App.ShowMessage(false, response.ErrorMessage);
                 }
+
+                ClearAll();
+            }
+            else
+            {
+                App.ShowMessage(false, "Browse and select the file first.");
             }
         }
 
@@ -338,6 +367,7 @@ namespace WpfApp
         private void ClearAll()
         {
             fileUploadLabel.Content = string.Empty;
+            UploadButton.Visibility = Visibility.Hidden;
         }
 
         #endregion

@@ -5,14 +5,15 @@
         xmlns:system="clr-namespace:System;assembly=mscorlib"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:domain1="clr-namespace:WpfApp.Domain"
-        Height="900" Width="1300"       
+        Height="950" Width="1300"       
         TextElement.FontWeight="Regular"
         TextElement.FontSize="15"
         TextOptions.TextFormattingMode="Ideal" 
         TextOptions.TextRenderingMode="Auto"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{DynamicResource MaterialDesignPaper}"
-        FontFamily="{StaticResource MaterialDesignFont}">
+        FontFamily="{StaticResource MaterialDesignFont}"
+        >
 
 
     <Window.Resources>
@@ -35,27 +36,20 @@
                             <RowDefinition Height="5*" />
                         </Grid.RowDefinitions>
 
-                        <Grid  Grid.Row="0"  >                     
+                        <Grid  Grid.Row="0"  >
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="3*" />
                                 <ColumnDefinition Width="1*" />
                             </Grid.ColumnDefinitions>
 
-                            <StackPanel Grid.Column="0" Margin="16">
-                                <Label  Style="{StaticResource BoldLabel}" Content="{Binding UserName}"></Label>
-                                
-                                <Label Style="{StaticResource BoldLabel}" FontSize="10" HorizontalAlignment="Left" Content="{Binding Usertype}"></Label>
-
-                                <TextBlock Margin="5 5 5 0 ">          <Hyperlink NavigateUri="http://www.google.com" RequestNavigate="LogoutButton_Click">      Log out    </Hyperlink>                                </TextBlock>
-                        
-                            </StackPanel>
-                         
-                            <ToggleButton   Grid.Column="1" Style="{StaticResource  MaterialDesignHamburgerToggleButton}" 
+                            <!--Hamburger Menu appear Button-->
+                            <ToggleButton Name="ToggleButton"   Grid.Column="1" Style="{StaticResource  MaterialDesignHamburgerToggleButton}" 
                                     DockPanel.Dock="Top"
                                     HorizontalAlignment="Right" Margin="20"
                                     IsChecked="{Binding ElementName=MenuToggleButton, Path=IsChecked, Mode=TwoWay}" />
                         </Grid>
-                      
+
+                        <!--Hamburger item list-->
                         <ListBox Grid.Row="1" x:Name="DemoItemsListBox"  Margin="0 0 0 0" SelectedIndex="0"  MaxHeight="400"                    
                              ItemsSource="{Binding DemoItems}"
                              PreviewMouseLeftButtonUp="UIElement_OnPreviewMouseLeftButtonUp" >
@@ -78,28 +72,51 @@
                                      Style="{StaticResource BoldLabel}" Content="{Binding ApplicationVersion}"></Label>
 
                             <Label    HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="10" 
-                                     Style="{StaticResource BoldLabel}">Copyright ©  2018 Oklahoma State University </Label>
+                                     Style="{StaticResource BoldLabel}">Copyright ©  2018 Oklahoma State University</Label>
                             <Label    HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="10" 
                                      Style="{StaticResource BoldLabel}">Digital Resources and Discovery Services</Label>
 
                         </StackPanel>
-                        
+
                     </Grid>
                 </DockPanel>
             </materialDesign:DrawerHost.LeftDrawerContent>
             <DockPanel>
-                <materialDesign:ColorZone Padding="16" materialDesign:ShadowAssist.ShadowDepth="Depth2"
+                <materialDesign:ColorZone Padding="2" materialDesign:ShadowAssist.ShadowDepth="Depth2"
                                             Mode="PrimaryMid" DockPanel.Dock="Top">
                     <DockPanel>
 
-                        <ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}" IsChecked="False"
-                                        x:Name="MenuToggleButton"/>
-                      
-                        <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Name="ApplicationNameTextBlock"  FontSize="22"></TextBlock>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"
-                            materialDesign:RippleAssist.IsCentered="True">                            
+                            materialDesign:RippleAssist.IsCentered="True">
+
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="40" />
+                                    <RowDefinition Height="15" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="50" />
+                                    <ColumnDefinition Width="500" />
+                                </Grid.ColumnDefinitions>
+
+                                <ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}" Margin="5" Padding="5"  Grid.Row="0" Grid.Column="0" IsChecked="False"
+                                        x:Name="MenuToggleButton"/>
+
+                                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Name="ApplicationNameTextBlock" Margin="5 5 5 0"  Grid.Row="0" Grid.Column="1" FontSize="18"></TextBlock>
+
+                                <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+                                    <Label  Style="{StaticResource BoldLabel}" Content="{Binding UserName}" Margin="0 -10 0 0" ></Label>
+                                    <Label Style="{StaticResource BoldLabel}" FontSize="10" Content="{Binding Usertype}" Margin="0 -8 0 0"></Label>
+                                    <Label FontSize="10" Style="{StaticResource BoldLabel}" Content="{Binding Form}" Margin="0 -10 0 0"></Label>
+                                </StackPanel>
+                            
+                            </Grid>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"
+                            materialDesign:RippleAssist.IsCentered="True">
                             <materialDesign:ColorZone Mode="Standard" Padding="8 4 8 4" CornerRadius="2" Panel.ZIndex="1"
-                                   Margin="16 0 0 0"
+                                   Margin="10"
                                    materialDesign:ShadowAssist.ShadowDepth="Depth1">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -107,20 +124,46 @@
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
-                                    <Button Style="{DynamicResource MaterialDesignToolButton}">
+                                    <!--<Button Style="{DynamicResource MaterialDesignToolButton}">
                                         <materialDesign:PackIcon Kind="Magnify" Opacity=".56" />
-                                    </Button>
-                                    <TextBox Grid.Column="1" Margin="8 0 0 0" materialDesign:HintAssist.Hint="Search interviews" 
+                                    </Button>-->
+                                    
+                                  
+                                    
+                                    <ListBox Grid.Row="1" Grid.Column="0" x:Name="DemoItemsListBox2"  Margin="0 0 0 0" SelectedIndex="0"  MaxHeight="400"                    
+                             ItemsSource="{Binding DemoItems}" 
+                             PreviewMouseLeftButtonUp="UIElement_OnPreviewMouseLeftButtonUp" >
+                                        <ListBox.ItemTemplate >
+                                            <DataTemplate DataType="domain:DemoItem"  >
+                                                <StackPanel Orientation="Horizontal" Background="{Binding BackColor}" >
+                                                    <materialDesign:PackIcon Width="20" Kind="{Binding PackIcon }"
+                                                                     ToolTip="{Binding Name}" />
+                                                    <!--<TextBlock Text="{Binding Name}" Margin="0 0 0 0" Foreground="{Binding BackColor}" />-->
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                        <ListBox.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <VirtualizingStackPanel IsItemsHost="True" Orientation="Horizontal"/>
+                                            </ItemsPanelTemplate>
+                                        </ListBox.ItemsPanel>
+                                    </ListBox>
+
+                                    <!--<TextBox Grid.Column="1" Margin="8 0 0 0" materialDesign:HintAssist.Hint="Search interviews" 
                                      materialDesign:TextFieldAssist.DecorationVisibility="Hidden" BorderThickness="0"  
                                      MinWidth="200" VerticalAlignment="Center" Name="MainSearchTextBox" >
                                     </TextBox>
                                     <Button  Grid.Column="2" Style="{StaticResource MaterialDesignRaisedAccentButton}" Click="SearchButton_Click">
                                         _Search
-                                    </Button>
+                                    </Button>-->
+
+                                    <TextBlock Margin="5 5 5 0 " Grid.Row="1" Grid.Column="1"> 
+                                        <Hyperlink NavigateUri="http://www.google.com" RequestNavigate="LogoutButton_Click">Exit</Hyperlink>
+                                    </TextBlock>
 
                                 </Grid>
                             </materialDesign:ColorZone>
-                          
+
                         </StackPanel>
                     </DockPanel>
                 </materialDesign:ColorZone>
@@ -130,20 +173,32 @@
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
 
-                    <ScrollViewer Grid.Row="1" 
+                                      
+                    <ScrollViewer Name="MainScrollViewer" Grid.Row="1" Visibility="Visible"
                                   HorizontalScrollBarVisibility="{Binding ElementName=DemoItemsListBox, Path=SelectedItem.HorizontalScrollBarVisibilityRequirement}"
                                   VerticalScrollBarVisibility="{Binding ElementName=DemoItemsListBox, Path=SelectedItem.VerticalScrollBarVisibilityRequirement}" 
                                   Padding="{Binding ElementName=DemoItemsListBox, Path=SelectedItem.MarginRequirement}">
-                      
+
                         <ContentControl Name="MainContentControl" Content="{Binding ElementName=DemoItemsListBox, Path=SelectedItem.Content}" VerticalAlignment="Top" />
-                      
+
                     </ScrollViewer>
+
+                    <ScrollViewer Name="MainScrollViewer2" Grid.Row="1"  Visibility="Visible"
+                                  HorizontalScrollBarVisibility="{Binding ElementName=DemoItemsListBox2, Path=SelectedItem.HorizontalScrollBarVisibilityRequirement}"
+                                  VerticalScrollBarVisibility="{Binding ElementName=DemoItemsListBox2, Path=SelectedItem.VerticalScrollBarVisibilityRequirement}" 
+                                  Padding="{Binding ElementName=DemoItemsListBox2, Path=SelectedItem.MarginRequirement}">
+
+                        <ContentControl Name="MainContentControl2" Content="{Binding ElementName=DemoItemsListBox2, Path=SelectedItem.Content}" VerticalAlignment="Top" />
+
+                    </ScrollViewer>
+                    
 
                     <materialDesign:Snackbar MessageQueue="{materialDesign:MessageQueue}" x:Name="MainSnackbar"
                                             Grid.Row="1" />
 
 
                 </Grid>
+                
             </DockPanel>
         </materialDesign:DrawerHost>
     </materialDesign:DialogHost>

@@ -74,6 +74,30 @@ namespace Model.Transfer
         public List<KeywordModel> Keywords { get; set; }
 
         /// <summary>
+        /// Gets or sets the interviewers.
+        /// </summary>
+        /// <value>
+        /// The interviewers.
+        /// </value>
+        public List<string> Interviewers { get; set; }
+
+        /// <summary>
+        /// Gets or sets the audio equipments used.
+        /// </summary>
+        /// <value>
+        /// The audio equipments used.
+        /// </value>
+        public List<string> AudioEquipmentsUsed { get; set; }
+
+        /// <summary>
+        /// Gets or sets the video equipments used.
+        /// </summary>
+        /// <value>
+        /// The video equipments used.
+        /// </value>
+        public List<string> VideoEquipmentsUsed { get; set; }
+
+        /// <summary>
         /// Gets or sets the subjects.
         /// </summary>
         /// <value>
@@ -114,15 +138,23 @@ namespace Model.Transfer
         public PaginationInfo PaginationInfo { get; set; }
 
         /// <summary>
+        /// Gets or sets the user types.
+        /// </summary>
+        /// <value>
+        /// The user types.
+        /// </value>
+        public List<UserTypeModel> UserTypes { get; set; }
+
+        /// <summary>
         /// Sets the transcription ids.
         /// </summary>
         public void SetTranscriptionIds()
         {
-            this.TranscriptionIds = new List<int>();
+            TranscriptionIds = new List<int>();
 
             foreach (TranscriptionModel item in Transcriptions)
             {
-                this.TranscriptionIds.Add(item.Id);
+                TranscriptionIds.Add(item.Id);
             }
         }
 

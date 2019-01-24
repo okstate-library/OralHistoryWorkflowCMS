@@ -19,7 +19,7 @@ namespace Repository.Implementations
         /// </returns>
         public List<subsery> GetSubseries()
         {
-            return this.GetAll().ToList();
+            return GetAll().ToList();
         }
 
     }

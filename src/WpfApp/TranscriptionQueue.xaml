@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:local="clr-namespace:WpfApp"     
-             xmlns:local1="clr-namespace:WpfApp.Domain"      
+             xmlns:domain="clr-namespace:WpfApp.Domain"      
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
@@ -17,46 +17,30 @@
             </ResourceDictionary.MergedDictionaries>
             <local:PackIconConverter x:Key="PackIconConverter" />
             <local:ShortTextConverter x:Key="ShortTextConverter" />
+            <Style TargetType="{x:Type CheckBox}"  x:Key="listCheckBox">
+                <Setter Property="Margin" Value="0 0 0 0" />
+                <Setter Property="FontSize" Value="13"></Setter>
+                <Setter Property="FontWeight" Value="Normal"></Setter>
+            </Style>
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <!--<ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"                     
-                      Margin="0 0 0 32" >-->
-    <Grid>
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"                     
+                      Margin="0 0 0 32" >
+        <Grid>
 
-        <Grid Name="MainGrid">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="200" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+            <Grid Name="MainGrid">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="200" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
 
-            <Border Margin="0 0 0 0" Grid.Row="0" Grid.Column="1" VerticalAlignment="Top" >
-                <Grid Background="{DynamicResource PrimaryHueMidBrush}" MaxHeight="75">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*" />
-                        <ColumnDefinition Width="1*" />
-                        <ColumnDefinition Width="1*" />
-                        <ColumnDefinition Width="5*" />
-                        <ColumnDefinition Width="5*" />
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Margin="20 10 0 8"  Name="RecordCountWordTextBox" VerticalAlignment="Center"  
-                                   Grid.Column="0" HorizontalAlignment="Stretch" Style="{StaticResource MaterialDesignTitleTextBlock}"  />
-
-                    <StackPanel Grid.Row="1" Margin="20 10 0 8" Orientation="Horizontal"  Grid.Column="1">
-                        <!--Text="{Binding SearchWord}"-->
-                        <TextBox  Width="300" Margin="20 10 0 8" Name="SearchWordTextBox"  Background="{StaticResource AlternativeColor}" />
-                        <Button Margin="20 10 0 8" Style="{StaticResource MaterialDesignRaisedAccentButton}"   Content="Search" Click="SearchButton_Click"/>
-                        <Button Margin="20 10 0 8"  Content="Reset"  Style="{StaticResource MaterialDesignRaisedLightButton}"  Click="ResetButton_Click"/>
-                    </StackPanel>
-
-                    <Grid Grid.Column="2" VerticalAlignment="Center"  Margin="20 10 0 8">
+                <Border Margin="0 0 0 0" Grid.Row="0" Grid.Column="1" VerticalAlignment="Top" >
+                    <Grid Background="{DynamicResource PrimaryHueMidBrush}" MaxHeight="75">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
@@ -66,313 +50,325 @@
                             <ColumnDefinition Width="1*" />
                             <ColumnDefinition Width="5*" />
                             <ColumnDefinition Width="5*" />
-                            <ColumnDefinition Width="5*" />
                         </Grid.ColumnDefinitions>
+                        <TextBlock Margin="20 10 0 8"  Name="RecordCountWordTextBox" VerticalAlignment="Center"  
+                                   Grid.Column="0" HorizontalAlignment="Stretch" Style="{StaticResource MaterialDesignTitleTextBlock}"  />
 
-                        <TextBlock  Margin="20 21 0 8" Grid.Column="0" HorizontalAlignment="Center" Text="Show"  />
+                        <StackPanel Grid.Row="1" Margin="20 10 0 8" Orientation="Horizontal"  Grid.Column="1">
+                            <!--Text="{Binding SearchWord}"-->
+                            <TextBox  Width="300" Margin="20 10 0 8" Name="SearchWordTextBox"  Background="{StaticResource AlternativeColor}" />
+                            <Button Margin="20 10 0 8" Style="{StaticResource MaterialDesignRaisedAccentButton}"   Content="Search" Click="SearchButton_Click"/>
+                            <Button Margin="20 10 0 8"  Content="Reset"  Style="{StaticResource MaterialDesignRaisedLightButton}"  Click="ResetButton_Click"/>
+                        </StackPanel>
 
-                        <ComboBox Name="PageComboBox" Background="#aeea00"  Margin="20 0 0 0" Width="50" HorizontalAlignment="Center" materialDesign:HintAssist.HintOpacity=".26"
+                        <Grid Grid.Column="2" VerticalAlignment="Center"  Margin="20 10 0 8">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="5*" />
+                                <ColumnDefinition Width="5*" />
+                                <ColumnDefinition Width="5*" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock  Margin="20 21 0 8" Grid.Column="0" HorizontalAlignment="Center" Text="Show"  />
+
+                            <ComboBox Name="PageComboBox" Background="#aeea00"  Margin="20 0 0 0" Width="50" HorizontalAlignment="Center" materialDesign:HintAssist.HintOpacity=".26"
                                   Grid.Column="1" VerticalAlignment="Center" VerticalContentAlignment="Center" />
 
-                        <TextBlock Margin="20 21 0 8"  Grid.Column="2" HorizontalAlignment="Center" Text="entries"  />
+                            <TextBlock Margin="20 21 0 8"  Grid.Column="2" HorizontalAlignment="Center" Text="entries"  />
 
-                        <TextBlock Name="PrevoiousTextBlock" Margin="25 21 20 0" Grid.Column="3" Visibility="Hidden">
+                            <TextBlock Name="PrevoiousTextBlock" Margin="25 21 20 0" Grid.Column="3" Visibility="Hidden">
                                 <Hyperlink Name="PrevoiousHyperlink" Click="PageClickButton_Click">
                                     <TextBlock  Text="« Previous Page " />
                                 </Hyperlink>    
                         </TextBlock>
 
-                        <TextBlock  Margin="0 21 0 8" Name="CurrentPageTextBox" Grid.Column="4"  />
+                            <TextBlock  Margin="0 21 0 8" Name="CurrentPageTextBox" Grid.Column="4"  />
 
-                        <TextBlock Name="NextTextBlock" Margin="25 21 20 0" Grid.Column="5"  Visibility="Hidden">
+                            <TextBlock Name="NextTextBlock" Margin="25 21 20 0" Grid.Column="5"  Visibility="Hidden">
                                 <Hyperlink Name="NextHyperlink" Click="PageClickButton_Click">
                                     <TextBlock Text="Next Page »" />
                                 </Hyperlink>    
                          </TextBlock>
-                        
-                    </Grid>
-                </Grid>
-            </Border>
 
-            <materialDesign:Card Background="{DynamicResource PrimaryHueLightBrush}"  Grid.Row="0" Grid.Column="0"  Grid.RowSpan="2"  
+                        </Grid>
+                    </Grid>
+                </Border>
+
+                <materialDesign:Card Background="{DynamicResource PrimaryHueLightBrush}"  Grid.Row="0" Grid.Column="0"  Grid.RowSpan="2"  
                       Foreground="{DynamicResource PrimaryHueLightForegroundBrush}"
                       Width="180" Margin="0 0 20 0">
-                <Grid Margin="10 10 0 10"  >
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <StackPanel Grid.Row="0">
-                        <TextBlock Margin="20 10 0 8" FontWeight="Bold" HorizontalAlignment="Stretch" 
+                    <Grid Margin="10 10 0 10"  >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Row="0">
+                            <TextBlock Margin="20 10 0 8" FontWeight="Bold" HorizontalAlignment="Stretch" 
                                        Text="Select options"  Style="{StaticResource MaterialDesignSubheadingTextBlock}"  />
-                    </StackPanel>
-                    <StackPanel Grid.Row="1"  Orientation="Horizontal">
-                        <CheckBox Margin="10 0 0 0" Grid.Column="0" Name="AllToggleButton"
+                        </StackPanel>
+                        <StackPanel Grid.Row="1"  Orientation="Horizontal">
+                            <CheckBox Margin="10 0 0 0" Grid.Column="0" Name="AllToggleButton"
                                   ToolTip="Select all option" Click="CheckBox_Click" />
-                        <TextBlock Style="{StaticResource OptionToggleButtonTextBlock}" Text="All"   />
-                    </StackPanel>
-                    <StackPanel Grid.Row="2"  Orientation="Horizontal">
-                        <CheckBox Margin="10 0 0 0" Grid.Column="0" Name="PriorityToggleButton"
+                            <TextBlock Style="{StaticResource OptionToggleButtonTextBlock}" Text="All"   />
+                        </StackPanel>
+                        <StackPanel Grid.Row="2"  Orientation="Horizontal">
+                            <CheckBox Margin="10 0 0 0" Grid.Column="0" Name="PriorityToggleButton"
                                   ToolTip="Select priority option" Click="CheckBox_Click"/>
-                        <TextBlock Style="{StaticResource OptionToggleButtonTextBlock}" Text="Priority"  />
-                    </StackPanel>
-                    <StackPanel Grid.Row="3" Orientation="Horizontal">
-                        <CheckBox Margin="10 0 0 0" Grid.Column="0" Name="TranscribedToggleButton" 
+                            <TextBlock Style="{StaticResource OptionToggleButtonTextBlock}" Text="Priority"  />
+                        </StackPanel>
+                        <StackPanel Grid.Row="3" Orientation="Horizontal">
+                            <CheckBox Margin="10 0 0 0" Grid.Column="0" Name="TranscribedToggleButton" 
                                   ToolTip="Select transcribed option" Click="CheckBox_Click"/>
-                        <TextBlock  Text="Transcribed"  Style="{StaticResource OptionToggleButtonTextBlock}"  />
-                    </StackPanel>
-                    <StackPanel Grid.Row="4" Orientation="Horizontal">
-                        <CheckBox Margin="10 0 0 0" Grid.Column="0" Name="AuditCheckToggleButton" 
+                            <TextBlock  Text="Transcribed"  Style="{StaticResource OptionToggleButtonTextBlock}"  />
+                        </StackPanel>
+                        <StackPanel Grid.Row="4" Orientation="Horizontal">
+                            <CheckBox Margin="10 0 0 0" Grid.Column="0" Name="AuditCheckToggleButton" 
                                   ToolTip="Select audit check option" Click="CheckBox_Click"/>
-                        <TextBlock  Text="Audit check"  Style="{StaticResource OptionToggleButtonTextBlock}"  />
-                    </StackPanel>
-                    <StackPanel Grid.Row="5" Orientation="Horizontal">
-                        <CheckBox Margin="10 0 0 0" Grid.Column="0" Name="FirstEditToggleButton" 
+                            <TextBlock  Text="Audit check"  Style="{StaticResource OptionToggleButtonTextBlock}"  />
+                        </StackPanel>
+                        <StackPanel Grid.Row="5" Orientation="Horizontal">
+                            <CheckBox Margin="10 0 0 0" Grid.Column="0" Name="FirstEditToggleButton" 
                                   ToolTip="Select first edit option" Click="CheckBox_Click"/>
-                        <TextBlock  Text="First edit"  Style="{StaticResource OptionToggleButtonTextBlock}"  />
-                    </StackPanel>
-                    <StackPanel Grid.Row="6" Orientation="Horizontal">
-                        <CheckBox Margin="10 0 0 0" Grid.Column="0" Name="SecondEditToggleButton" 
+                            <TextBlock  Text="First edit"  Style="{StaticResource OptionToggleButtonTextBlock}"  />
+                        </StackPanel>
+                        <StackPanel Grid.Row="6" Orientation="Horizontal">
+                            <CheckBox Margin="10 0 0 0" Grid.Column="0" Name="SecondEditToggleButton" 
                                   ToolTip="Select second edit option" Click="CheckBox_Click"/>
-                        <TextBlock  Text="Second edit"  Style="{StaticResource OptionToggleButtonTextBlock}"  />
-                    </StackPanel>
-                    <StackPanel Grid.Row="7" Orientation="Horizontal">
-                        <CheckBox Margin="10 0 0 0" Grid.Column="0" Name="DraftSentToggleButton" 
+                            <TextBlock  Text="Second edit"  Style="{StaticResource OptionToggleButtonTextBlock}"  />
+                        </StackPanel>
+                        <StackPanel Grid.Row="7" Orientation="Horizontal">
+                            <CheckBox Margin="10 0 0 0" Grid.Column="0" Name="DraftSentToggleButton" 
                                   ToolTip="Select draft sent option" Click="CheckBox_Click"/>
-                        <TextBlock Text="Draft sent"  Style="{StaticResource OptionToggleButtonTextBlock}" />
-                    </StackPanel>
-                    <StackPanel Grid.Row="8" Orientation="Horizontal">
-                        <CheckBox Margin="10 0 0 0" Grid.Column="0" Name="CorrectionsToggleButton"  
+                            <TextBlock Text="Draft sent"  Style="{StaticResource OptionToggleButtonTextBlock}" />
+                        </StackPanel>
+                        <StackPanel Grid.Row="8" Orientation="Horizontal">
+                            <CheckBox Margin="10 0 0 0" Grid.Column="0" Name="CorrectionsToggleButton"  
                                   ToolTip="Select correction made option" Click="CheckBox_Click"/>
-                        <TextBlock  Text="Corrections" Style="{StaticResource OptionToggleButtonTextBlock}" />
-                    </StackPanel>
-                    <StackPanel Grid.Row="9" Orientation="Horizontal">
-                        <CheckBox Margin="10 0 0 0" Grid.Column="0" Name="FinalEditToggleButton" 
+                            <TextBlock  Text="Corrections" Style="{StaticResource OptionToggleButtonTextBlock}" />
+                        </StackPanel>
+                        <StackPanel Grid.Row="9" Orientation="Horizontal">
+                            <CheckBox Margin="10 0 0 0" Grid.Column="0" Name="FinalEditToggleButton" 
                                   ToolTip="Select final edit option" Click="CheckBox_Click" />
-                        <TextBlock Text="Final edit" Style="{StaticResource OptionToggleButtonTextBlock}"  />
-                    </StackPanel>
-                    <StackPanel Grid.Row="10" Orientation="Horizontal">
-                        <CheckBox Margin="10 0 0 0" Grid.Column="0" Name="SentOutToggleButton"  
+                            <TextBlock Text="Final edit" Style="{StaticResource OptionToggleButtonTextBlock}"  />
+                        </StackPanel>
+                        <StackPanel Grid.Row="10" Orientation="Horizontal">
+                            <CheckBox Margin="10 0 0 0" Grid.Column="0" Name="SentOutToggleButton"  
                                   ToolTip="Select final edit option" Click="CheckBox_Click"/>
-                        <TextBlock Text="Sent out"  Style="{StaticResource OptionToggleButtonTextBlock}" />
-                    </StackPanel>
-                </Grid>
-            </materialDesign:Card>
+                            <TextBlock Text="Sent out"  Style="{StaticResource OptionToggleButtonTextBlock}" />
+                        </StackPanel>
+                    </Grid>
+                </materialDesign:Card>
+                
+                <ListView Margin="0 10 0 0" Name="TranscriptionQueueListView" Grid.Row="1" Grid.Column="1"  
+                          Grid.RowSpan="7"  VerticalAlignment="Top" HorizontalAlignment="Left"                     
+                          MouseDoubleClick="TranscriptionQueueListView_MouseDoubleClick" 
+                          ItemContainerStyle="{StaticResource ListViewAlternatingRowStyle}" AlternationCount="2"
+                          domain:GridViewSort.AutoSort="True">
+                    <ListView.View>
+                        <GridView>
 
-
-            <ListView Margin="0 10 0 0" Name="TranscriptionQueueListView" Grid.Row="1" Grid.Column="1"  Grid.RowSpan="7"  VerticalAlignment="Top" HorizontalAlignment="Center"
-                      GridViewColumnHeader.Click="GridViewColumnHeaderClickedHandler"
-                      MouseDoubleClick="TranscriptionQueueListView_MouseDoubleClick"  ItemContainerStyle="{StaticResource ListViewAlternatingRowStyle}" AlternationCount="2">
-                <ListView.View>
-                    <GridView>
-
-                        <!--Interviewee-->
-                        <GridViewColumn Header="Interviewee" Width="150"  
-                                            HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}" >
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <StackPanel>
-                                        <TextBlock Name="IntervieweeTextBlock_Metadata" ToolTip="{Binding Interviewee}" 
+                            <!--Interviewee-->
+                            <GridViewColumn Header="Interviewee" Width="150"  
+                                            HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}"                                            
+                                            domain:GridViewSort.PropertyName="Interviewee">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock Name="IntervieweeTextBlock_Metadata" ToolTip="{Binding Interviewee}" 
                                                        Text="{Binding Interviewee , Converter={StaticResource ShortTextConverter}}" />
-                                    </StackPanel>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
 
-                        <!--project code-->
-                        <GridViewColumn Header="Project code" Width="100"  HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}"  >
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <StackPanel>
-                                        <TextBlock  Name="ProjectCodeTextBlock_General" ToolTip="{Binding ProjectCode}" 
-                                                        Text="{Binding ProjectCode , Converter={StaticResource ShortTextConverter}}" />
-                                    </StackPanel>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-
-                        <!--Interviewer-->
-                        <GridViewColumn Header="Interviewer" Width="150"
-                                            HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}" >
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <StackPanel>
-                                        <TextBlock Name="InterviewerTextBlock_Metadata" 
+                            <!--Interviewer-->
+                            <GridViewColumn Header="Interviewer" Width="150"
+                                            HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}"
+                                            domain:GridViewSort.PropertyName="Interviewer">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock Name="InterviewerTextBlock_Metadata" 
                                                        ToolTip="{Binding Interviewer}" 
                                                        Text="{Binding Interviewer , Converter={StaticResource ShortTextConverter}}" />
-                                    </StackPanel>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
 
-                        <!--Interview on-->
-                        <GridViewColumn Header="Interview on" Width="100"   HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}"  >
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <StackPanel>
-                                        <TextBlock Name="InterviewOnTextBlock_Metadata"  
+                            <!--Interview on-->
+                            <GridViewColumn Header="Interview on" Width="100"  
+                                            HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}"  
+                                            domain:GridViewSort.PropertyName="InterviewDate">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock Name="InterviewOnTextBlock_Metadata"  
                                                        VerticalAlignment="Center" HorizontalAlignment="Center" 
                                                        ToolTip="{Binding InterviewDate , StringFormat='{}{0:MM/dd/yyyy}'}" 
                                                        Text="{Binding InterviewDate , StringFormat='{}{0:MM/dd/yyyy}'}" />
-                                    </StackPanel>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
 
-                        <!--Transcriber -->
-                        <GridViewColumn Header="Transcriber" Width="100"
-                                            HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}"  >
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <StackPanel>
-                                        <TextBlock Name="TranscriberTextBlock_Transcript"  
+                            <!--Transcriber -->
+                            <GridViewColumn Header="Transcriber" Width="100"
+                                            HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}" 
+                                            domain:GridViewSort.PropertyName="TranscriberAssigned">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock Name="TranscriberTextBlock_Transcript"  
                                                        ToolTip="{Binding TranscriberAssigned}" 
                                                        Text="{Binding TranscriberAssigned , Converter={StaticResource ShortTextConverter}}" />
-                                    </StackPanel>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
 
-                        <!--Priority-->
-                        <GridViewColumn Width="60"  Header="Priority" HeaderContainerStyle="{StaticResource GridViewColumnHeaderMediumFontStyle}"  >
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <StackPanel>
-                                        <materialDesign:PackIcon Name="PriorityPackIcon_Transcript"  Width="40"  
+                            <!--Priority-->
+                            <GridViewColumn Width="60"  Header="Priority" 
+                                            HeaderContainerStyle="{StaticResource GridViewColumnHeaderMediumFontStyle}" 
+                                            domain:GridViewSort.PropertyName="IsPriority">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <materialDesign:PackIcon Name="PriorityPackIcon_Transcript"  Width="40"  
                                                                      ToolTip="{Binding IsPriority}" 
                                                                      Kind="{Binding IsPriority , Converter={StaticResource PackIconConverter}}"  />
-                                    </StackPanel>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
 
-                        <!--Transcriber completed date-->
-                        <GridViewColumn Header="Transcriber&#x0a;completed" Width="100" 
-                                            HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}"  >
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <StackPanel>
-                                        <TextBlock Name="TranscriberCompletedTextBlock_Transcript"  ToolTip="{Binding TranscriberCompleted , StringFormat='{}{0:MM/dd/yyyy}'}" 
+                            <!--Transcriber completed date-->
+                            <GridViewColumn Header="Transcriber&#x0a;completed" Width="100" 
+                                            HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}" 
+                                            domain:GridViewSort.PropertyName="TranscriberCompleted">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock Name="TranscriberCompletedTextBlock_Transcript"  ToolTip="{Binding TranscriberCompleted , StringFormat='{}{0:MM/dd/yyyy}'}" 
                                                        Text="{Binding TranscriberCompleted , StringFormat='{}{0:MM/dd/yyyy}'}" />
-                                    </StackPanel>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
 
-                        <!--Audit Check Completed-->
-                        <GridViewColumn Header="Audit check" Width="150" 
-                                             HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}" >
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <StackPanel>
-                                        <TextBlock Name="AuditCheckTextBlock_Transcript" 
+                            <!--Audit Check Completed-->
+                            <GridViewColumn Header="Audit check" Width="150" 
+                                             HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}"
+                                             domain:GridViewSort.PropertyName="AuditCheckCompleted">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock Name="AuditCheckTextBlock_Transcript" 
                                                        ToolTip="{Binding AuditCheckCompleted}" 
                                                        Text="{Binding AuditCheckCompleted , Converter={StaticResource ShortTextConverter}}" />
-                                    </StackPanel>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
 
-                        <!--First Edit Completed-->
-                        <GridViewColumn Header="First edit" Width="100"
-                                            HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}"  >
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <StackPanel  >
-                                        <TextBlock Name="FirstEditTextBlock_Transcript" 
+                            <!--First Edit Completed-->
+                            <GridViewColumn Header="First edit" Width="100"
+                                            HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}"
+                                            domain:GridViewSort.PropertyName="FirstEditCompleted">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel  >
+                                            <TextBlock Name="FirstEditTextBlock_Transcript" 
                                                        ToolTip="{Binding FirstEditCompleted}" 
                                                        Text="{Binding FirstEditCompleted , Converter={StaticResource ShortTextConverter}}" />
-                                    </StackPanel>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
 
-                        <!-- Second Edit Completed -->
-                        <GridViewColumn Width="100"  Header="Second edit" HeaderContainerStyle="{StaticResource GridViewColumnHeaderMediumFontStyle}"  >
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <StackPanel  >
-                                        <TextBlock  Name="SecondEditTextBlock_Transcript"
+                            <!-- Second Edit Completed -->
+                            <GridViewColumn Width="100"  Header="Second edit" 
+                                            HeaderContainerStyle="{StaticResource GridViewColumnHeaderMediumFontStyle}" 
+                                            domain:GridViewSort.PropertyName="SecondEditCompleted">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel  >
+                                            <TextBlock  Name="SecondEditTextBlock_Transcript"
                                                         ToolTip="{Binding SecondEditCompleted}" 
                                                         Text="{Binding SecondEditCompleted , Converter={StaticResource ShortTextConverter}}" />
-                                    </StackPanel>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
 
-                        </GridViewColumn>
+                            </GridViewColumn>
 
-                        <!-- Draft Sent Date -->
-                        <GridViewColumn Header="Draft sent" Width="100" 
-                                            HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}"  >
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <StackPanel>
-                                        <TextBlock Name="DraftSentTextBlock_Transcript" ToolTip="{Binding DraftSentDate , StringFormat='{}{0:MM/dd/yyyy}'}" 
+                            <!-- Draft Sent Date -->
+                            <GridViewColumn Header="Draft sent" Width="100" 
+                                            HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}" 
+                                            domain:GridViewSort.PropertyName="DraftSentDate">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock Name="DraftSentTextBlock_Transcript" ToolTip="{Binding DraftSentDate , StringFormat='{}{0:MM/dd/yyyy}'}" 
                                                        Text="{Binding DraftSentDate , StringFormat='{}{0:MM/dd/yyyy}'}" />
-                                    </StackPanel>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
 
-                        <!--Edit With Correction Completed Date-->
-                        <GridViewColumn Header="Correction made" Width="150" 
-                                            HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}"  >
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <StackPanel>
-                                        <TextBlock Name="CorrectionMadeTextBlock_Transcript" ToolTip="{Binding EditWithCorrectionCompleted , StringFormat='{}{0:MM/dd/yyyy}'}" 
+                            <!--Edit With Correction Completed Date-->
+                            <GridViewColumn Header="Correction made" Width="150" 
+                                            HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}" 
+                                            domain:GridViewSort.PropertyName="EditWithCorrectionCompleted">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock Name="CorrectionMadeTextBlock_Transcript" ToolTip="{Binding EditWithCorrectionCompleted , StringFormat='{}{0:MM/dd/yyyy}'}" 
                                                        Text="{Binding EditWithCorrectionCompleted , StringFormat='{}{0:MM/dd/yyyy}'}" />
-                                    </StackPanel>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
 
-                        <!--Final Edit Completed-->
-                        <GridViewColumn Header="Final edit" Width="150" 
-                                            HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}"  >
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <StackPanel>
-                                        <TextBlock Name="FinalEditTextBlock_Transcript" ToolTip="{Binding FinalEditCompleted , StringFormat='{}{0:MM/dd/yyyy}'}" 
+                            <!--Final Edit Completed-->
+                            <GridViewColumn Header="Final edit" Width="150" 
+                                            HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}"   
+                                            domain:GridViewSort.PropertyName="FinalEditCompleted">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock Name="FinalEditTextBlock_Transcript" ToolTip="{Binding FinalEditCompleted , StringFormat='{}{0:MM/dd/yyyy}'}" 
                                                        Text="{Binding FinalEditCompleted , StringFormat='{}{0:MM/dd/yyyy}'}" />
-                                    </StackPanel>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
 
-                        <!--sent out date-->
-                        <GridViewColumn Header="Sent out" Width="150" 
-                                            HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}"  >
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <StackPanel>
-                                        <TextBlock Name="SentOutTextBlock_Transcript" ToolTip="{Binding FinalEditCompleted , StringFormat='{}{0:MM/dd/yyyy}'}" 
-                                                       Text="{Binding FinalEditCompleted , StringFormat='{}{0:MM/dd/yyyy}'}" />
-                                    </StackPanel>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
 
-                    </GridView>
-                </ListView.View>
-
-            </ListView>
+                </ListView>
+            </Grid>
+            <StackPanel>
+                <Button Content="Back to List..."  Name="BackToListButton" Visibility="Hidden" Click="BackToListButton_Click" />
+                <ContentControl x:Name="cc"/>
+            </StackPanel>
         </Grid>
-        <StackPanel>
-            <Button Content="Back to List..."  Name="BackToListButton" Visibility="Hidden" Click="BackToListButton_Click" />
-            <ContentControl x:Name="cc"/>
-        </StackPanel>
-    </Grid>
-    <!--</ScrollViewer>-->
+    </ScrollViewer>
 
 </UserControl>

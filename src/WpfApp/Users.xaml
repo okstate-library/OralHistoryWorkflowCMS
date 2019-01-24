@@ -6,7 +6,7 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:local="clr-namespace:WpfApp"
              mc:Ignorable="d" 
-             xmlns:domain1="clr-namespace:WpfApp.Domain"
+             xmlns:domain="clr-namespace:WpfApp.Domain"
              d:DesignHeight="450" d:DesignWidth="800">
 
     <UserControl.Resources>
@@ -53,9 +53,9 @@
 
                         <StackPanel Grid.Row="1" Margin="20 10 0 8" Orientation="Horizontal"  Grid.Column="1">
                             <!--Text="{Binding SearchWord}"-->
-                            <TextBox  Width="300" Margin="20 10 0 8" Name="SearchWordTextBox"   />
-                            <Button Margin="20 10 0 8"   Content="Search" Click="SearchButton_Click"/>
-                            <Button Margin="20 10 0 8"  Content="Reset" Click="ResetButton_Click"/>
+                            <TextBox  Width="300" Margin="20 10 0 8" Name="SearchWordTextBox"  Background="{StaticResource AlternativeColor}"   />
+                            <Button Margin="20 10 0 8"   Content="Search" Click="SearchButton_Click" Style="{StaticResource MaterialDesignRaisedAccentButton}"/>
+                            <Button Margin="20 10 0 8"  Content="Reset" Click="ResetButton_Click" Style="{StaticResource MaterialDesignRaisedLightButton}"/>
                         </StackPanel>
 
                         <TextBlock Margin="20 10 0 8"  Grid.Column="2" HorizontalAlignment="Stretch" Text="{Binding PageCount}"  Style="{StaticResource MaterialDesignTitleTextBlock}"  />
@@ -100,14 +100,16 @@
                 </materialDesign:Card>
 
 
-                <ListView Margin="0 0 0 0" Name="UsersListView" Grid.Row="1" Grid.Column="1"  Grid.RowSpan="7" GridViewColumnHeader.Click="GridViewColumnHeaderClickedHandler"
-                      MouseDoubleClick="UsersListViewListView_MouseDoubleClick"  ItemContainerStyle="{StaticResource ListViewAlternatingRowStyle}" AlternationCount="2">
+                <ListView Margin="10" Name="UsersListView" Grid.Row="1" Grid.Column="1" Width="407"
+                      MouseDoubleClick="UsersListViewListView_MouseDoubleClick"  ItemContainerStyle="{StaticResource ListViewAlternatingRowStyle}" AlternationCount="2"
+                          HorizontalAlignment="Left" domain:GridViewSort.AutoSort="True">
                     <ListView.View >
                         <GridView>
 
                             <!--name-->
                             <GridViewColumn Header="Name" Width="150"  
-                                            HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}" >
+                                            HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}" 
+                                            domain:GridViewSort.PropertyName="Name">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel>
@@ -119,7 +121,9 @@
                             </GridViewColumn>
 
                             <!--user name-->
-                            <GridViewColumn Header="Username" Width="100"  HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}"  >
+                            <GridViewColumn Header="Username" Width="100"  
+                                            HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}"  
+                                            domain:GridViewSort.PropertyName="Username">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel>
@@ -132,7 +136,8 @@
 
                             <!--User role-->
                             <GridViewColumn Header="User Type" Width="150"
-                                            HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}" >
+                                            HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}" 
+                                            domain:GridViewSort.PropertyName="UserTypeName">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel>

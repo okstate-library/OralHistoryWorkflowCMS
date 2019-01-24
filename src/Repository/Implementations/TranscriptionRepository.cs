@@ -19,7 +19,19 @@ namespace Repository.Implementations
         /// </returns>
         public transcription GetTranscription(int transcriptionId)
         {
-            return this.FirstOrDefault(i => i.Id == transcriptionId);
+            return FirstOrDefault(i => i.Id == transcriptionId);
+        }
+
+        /// <summary>
+        /// Gets the transcription.
+        /// </summary>
+        /// <param name="projectCode">The project code.</param>
+        /// <returns>
+        /// Returns the transcription whether comparing the project code.
+        /// </returns>
+        public transcription GetTranscription(string projectCode)
+        {
+            return FirstOrDefault(i => i.ProjectCode.Equals(projectCode));
         }
     }
 }

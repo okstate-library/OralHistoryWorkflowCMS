@@ -52,7 +52,9 @@ namespace Core
         /// Determines whether [is dropdown visibility] [the specified value].
         /// </summary>
         /// <param name="value">The value.</param>
-        /// <returns></returns>
+        /// <returns>
+        ///   <c>true</c> if [is dropdown visibility] [the specified value]; otherwise, <c>false</c>.
+        /// </returns>
         public static bool IsDropdownVisibility(Enum value)
         {
             FieldInfo fi = value.GetType().GetField(value.ToString());
@@ -83,6 +85,7 @@ namespace Core
         /// <returns>
         /// returns the specific object.
         /// </returns>
+        /// <exception cref="ArgumentException">The string is not a   or value of the specified enum.</exception>
         public static object EnumValueOf(string value, Type enumType)
         {
             string[] names = Enum.GetNames(enumType);
@@ -120,8 +123,11 @@ namespace Core
             return atrtributeNameList;
         }
 
-        /// Supplied enum string values with strin array.
-        /// </returns>
+        /// <summary>
+        /// Converts the enum to string array.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public static string[] ConvertEnumToStringArray<T>()
         {
             List<string> list = Enum.GetNames(typeof(T)).ToList();
@@ -136,6 +142,7 @@ namespace Core
         /// <returns>
         /// list with bind to drop down list.
         /// </returns>
+        /// <exception cref="ArgumentException">Enumeration type is expected.</exception>
         public static IDictionary<int, string> GetAll<TEnum>() where TEnum : struct
         {
             var enumerationType = typeof(TEnum);
@@ -155,8 +162,13 @@ namespace Core
 
             return dictionary;
         }
-
-
+        
+        /// <summary>
+        /// Gets the display name.
+        /// </summary>
+        /// <typeparam name="TEnum">The type of the enum.</typeparam>
+        /// <param name="value">The value.</param>
+        /// <returns></returns>
         public static string GetDisplayName<TEnum>(TEnum value)
         {
             FieldInfo fi = value.GetType().GetField(value.ToString());
@@ -169,8 +181,6 @@ namespace Core
             else
                 return value.ToString();
         }
-
-     
     }
 
 

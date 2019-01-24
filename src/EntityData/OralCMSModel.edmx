@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="oralcmsdbModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="8.0" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="oralcmsdbModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="8.0" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="collections">
           <Key>
             <PropertyRef Name="Id" />
@@ -12,6 +12,40 @@
           <Property Name="Id" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CollectionName" Type="varchar" MaxLength="250" Nullable="false" />
         </EntityType>
+        <EntityType Name="interviewers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="InterviewerName" Type="varchar" MaxLength="250" Nullable="false" />
+        </EntityType>
+
+        <EntityType Name="audioequipmentused">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AudioEquipmentUsedName" Type="varchar" MaxLength="250" Nullable="false" />
+        </EntityType>
+
+        <EntityType Name="videoequipmentused">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VideoEquipmentUsedName" Type="varchar" MaxLength="250" Nullable="false" />
+        </EntityType>
+
+        <EntityType Name="usertype">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserTypeName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IsHorizontalMenu" Type="bool" Nullable="false" />
+        </EntityType>
+
+
         <EntityType Name="keywords">
           <Key>
             <PropertyRef Name="Id" />
@@ -72,7 +106,8 @@
           <Property Name="IsRosettaForm" Type="bool" Nullable="false" />
           <Property Name="IsRestriction" Type="bool" Nullable="false" />
           <Property Name="LegalNote" Type="varchar" MaxLength="500" />
-          <Property Name="EquipmentUsed" Type="varchar" MaxLength="250" />
+          <Property Name="AudioEquipmentUsed" Type="varchar" MaxLength="100" />
+          <Property Name="VideoEquipmentUsed" Type="varchar" MaxLength="100" />
           <Property Name="EquipmentNumber" Type="varchar" MaxLength="50" />
           <Property Name="InterviewerNote" Type="varchar" MaxLength="250" />
           <Property Name="ReleaseForm" Type="bool" Nullable="false" />
@@ -92,7 +127,7 @@
           <Property Name="FinalEditDate" Type="datetime" Precision="6" />
           <Property Name="FinalSentDate" Type="datetime" Precision="6" />
           <Property Name="TranscriptStatus" Type="bool" Nullable="false" />
-		  <Property Name="MetadataDraft" Type="varchar" MaxLength="50" />
+          <Property Name="MetadataDraft" Type="varchar" MaxLength="50" />
           <Property Name="TranscriptLocation" Type="utinyint" Nullable="false" />
           <Property Name="TranscriptNote" Type="varchar" MaxLength="500" />
           <Property Name="IsAudioFormat" Type="bool" Nullable="false" />
@@ -127,13 +162,18 @@
         </EntityType>
         <EntityContainer Name="oralcmsdbModelStoreContainer">
           <EntitySet Name="collections" EntityType="Self.collections" Schema="oralcmsdb" store:Type="Tables" />
+          <EntitySet Name="interviewers" EntityType="Self.interviewers" Schema="oralcmsdb" store:Type="Tables" />
           <EntitySet Name="keywords" EntityType="Self.keywords" Schema="oralcmsdb" store:Type="Tables" />
           <EntitySet Name="subjects" EntityType="Self.subjects" Schema="oralcmsdb" store:Type="Tables" />
           <EntitySet Name="subseries" EntityType="Self.subseries" Schema="oralcmsdb" store:Type="Tables" />
           <EntitySet Name="transcriptions" EntityType="Self.transcriptions" Schema="oralcmsdb" store:Type="Tables" />
           <EntitySet Name="user" EntityType="Self.user" Schema="oralcmsdb" store:Type="Tables" />
+          <EntitySet Name="audioequipmentused" EntityType="Self.audioequipmentused" Schema="oralcmsdb" store:Type="Tables" />
+          <EntitySet Name="videoequipmentused" EntityType="Self.videoequipmentused" Schema="oralcmsdb" store:Type="Tables" />
+          <EntitySet Name="usertype" EntityType="Self.usertype" Schema="oralcmsdb" store:Type="Tables" />
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="oralcmsdbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -144,6 +184,10 @@
           <EntitySet Name="subseries" EntityType="oralcmsdbModel.subsery" />
           <EntitySet Name="users" EntityType="oralcmsdbModel.user" />
           <EntitySet Name="transcriptions" EntityType="oralcmsdbModel.transcription" />
+          <EntitySet Name="interviewers" EntityType="oralcmsdbModel.interviewer" />
+          <EntitySet Name="audioequipmentused" EntityType="oralcmsdbModel.audioequipmentused" />
+          <EntitySet Name="videoequipmentused" EntityType="oralcmsdbModel.videoequipmentused" />
+          <EntitySet Name="usertype" EntityType="oralcmsdbModel.usertype" />
         </EntityContainer>
         <EntityType Name="collection">
           <Key>
@@ -222,7 +266,8 @@
           <Property Name="IsRosettaForm" Type="Boolean" Nullable="false" />
           <Property Name="IsRestriction" Type="Boolean" Nullable="false" />
           <Property Name="LegalNote" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="EquipmentUsed" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="AudioEquipmentUsed" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="VideoEquipmentUsed" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="InterviewerNote" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="ReleaseForm" Type="Boolean" Nullable="false" />
           <Property Name="Place" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
@@ -263,8 +308,39 @@
           <Property Name="InterviewerSubjects" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
           <Property Name="EquipmentNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="SentOut" Type="Boolean" Nullable="false" />
-		  <Property Name="MetadataDraft" Type="String" Nullable="false" />
+          <Property Name="MetadataDraft" Type="String" />
         </EntityType>
+        <EntityType Name="interviewer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="InterviewerName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="audioequipmentused">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AudioEquipmentUsedName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="videoequipmentused">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VideoEquipmentUsedName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+        </EntityType>
+        
+        <EntityType Name="usertype">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserTypeName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsHorizontalMenu" Type="Boolean" Nullable="false" />
+        </EntityType>
+
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -279,6 +355,46 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+
+          <EntitySetMapping Name="interviewers">
+            <EntityTypeMapping TypeName="oralcmsdbModel.interviewer">
+              <MappingFragment StoreEntitySet="interviewers">
+                <ScalarProperty Name="InterviewerName" ColumnName="InterviewerName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+
+          <EntitySetMapping Name="audioequipmentused">
+            <EntityTypeMapping TypeName="oralcmsdbModel.audioequipmentused">
+              <MappingFragment StoreEntitySet="audioequipmentused">
+                <ScalarProperty Name="AudioEquipmentUsedName" ColumnName="AudioEquipmentUsedName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+
+
+          <EntitySetMapping Name="videoequipmentused">
+            <EntityTypeMapping TypeName="oralcmsdbModel.videoequipmentused">
+              <MappingFragment StoreEntitySet="videoequipmentused">
+                <ScalarProperty Name="VideoEquipmentUsedName" ColumnName="VideoEquipmentUsedName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+
+          <EntitySetMapping Name="usertype">
+            <EntityTypeMapping TypeName="oralcmsdbModel.usertype">
+              <MappingFragment StoreEntitySet="usertype">
+                <ScalarProperty Name="IsHorizontalMenu" ColumnName="IsHorizontalMenu" />
+                <ScalarProperty Name="UserTypeName" ColumnName="UserTypeName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          
+
           <EntitySetMapping Name="keywords">
             <EntityTypeMapping TypeName="oralcmsdbModel.keyword">
               <MappingFragment StoreEntitySet="keywords">
@@ -361,7 +477,8 @@
                 <ScalarProperty Name="Place" ColumnName="Place" />
                 <ScalarProperty Name="ReleaseForm" ColumnName="ReleaseForm" />
                 <ScalarProperty Name="InterviewerNote" ColumnName="InterviewerNote" />
-                <ScalarProperty Name="EquipmentUsed" ColumnName="EquipmentUsed" />
+                <ScalarProperty Name="AudioEquipmentUsed" ColumnName="AudioEquipmentUsed" />
+                <ScalarProperty Name="VideoEquipmentUsed" ColumnName="VideoEquipmentUsed" />
                 <ScalarProperty Name="LegalNote" ColumnName="LegalNote" />
                 <ScalarProperty Name="IsRestriction" ColumnName="IsRestriction" />
                 <ScalarProperty Name="IsRosettaForm" ColumnName="IsRosettaForm" />
@@ -392,7 +509,7 @@
                 <ScalarProperty Name="ReasonForPriority" ColumnName="ReasonForPriority" />
                 <ScalarProperty Name="IsPriority" ColumnName="IsPriority" />
                 <ScalarProperty Name="ProjectCode" ColumnName="ProjectCode" />
-				<ScalarProperty Name="MetadataDraft" ColumnName="MetadataDraft" />
+                <ScalarProperty Name="MetadataDraft" ColumnName="MetadataDraft" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

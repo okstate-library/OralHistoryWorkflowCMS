@@ -16,7 +16,7 @@ namespace Core
         /// <param name="isVisibleInDropDown">if set to <c>true</c> [is visible in drop down].</param>
         public DropdownEnableAttribute(bool isVisibleInDropDown)
         {
-            this.IsVisibleInDropDown = isVisibleInDropDown;
+            IsVisibleInDropDown = isVisibleInDropDown;
         }
 
         public bool IsVisibleInDropDown { get; private set; }

@@ -20,7 +20,7 @@ namespace Repository.Implementations
         /// </returns>
         public List<subject> GetSubjects()
         {
-            return this.GetAll().ToList();
+            return GetAll().ToList();
         }
 
     }

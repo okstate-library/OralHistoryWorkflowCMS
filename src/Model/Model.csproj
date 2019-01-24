@@ -50,14 +50,17 @@
     <Compile Include="MainFormModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="KeywordModel.cs" />
+    <Compile Include="InterviewerModel.cs" />
     <Compile Include="SubjectModel.cs" />
     <Compile Include="SubseryModel.cs" />
     <Compile Include="TranscriptionModel.cs" />
+    <Compile Include="ReportModel.cs" />
     <Compile Include="TranscriptionSearchModel.cs" />
     <Compile Include="Transfer\RequestModel.cs" />
     <Compile Include="Transfer\ResponseModel.cs" />
     <Compile Include="Transfer\Search\PaginationInfo.cs" />
     <Compile Include="Transfer\Search\SearchRequest.cs" />
+    <Compile Include="UserTypeModel.cs" />
     <Compile Include="UserModel.cs" />
   </ItemGroup>
   <ItemGroup>

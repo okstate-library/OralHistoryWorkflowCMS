@@ -27,7 +27,7 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Image Source="Resources/logo.png" Stretch="Uniform" Width="300" Height="100" />
-            <StackPanel Grid.Column="1" Margin="24 0 0 0" VerticalAlignment="Center">
+            <!--<StackPanel Grid.Column="1" Margin="24 0 0 0" VerticalAlignment="Center">
                 <TextBlock Style="{StaticResource MaterialDesignDisplay1TextBlock}" TextWrapping="Wrap" Text="{Binding ApplicationName}"></TextBlock>
                 <Button Style="{StaticResource MaterialDesignFlatButton}"
                         Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}"
@@ -37,7 +37,7 @@
                         <TextBlock Margin="8 0 0 0">EXPLORE</TextBlock>
                     </StackPanel>
                 </Button>
-            </StackPanel>         
+            </StackPanel>-->         
         </Grid>
         <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled"
                       HorizontalAlignment="Center"

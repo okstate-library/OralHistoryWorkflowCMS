@@ -8,138 +8,76 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WpfApp.Properties
-{    
-    /// <summary>
-    /// Access the static settings defines in app.config file
-    /// </summary>
-    /// <seealso cref="System.Configuration.ApplicationSettingsBase" />
+namespace WpfApp.Properties {
+    
+    
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.8.0.0")]
-    public sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase
-    {
-
-        /// <summary>
-        /// The default instance
-        /// </summary>
+    public sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
+        
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
-
-        /// <summary>
-        /// Gets the default.
-        /// </summary>
-        /// <value>
-        /// The default.
-        /// </value>
-        public static Settings Default
-        {
-            get
-            {
+        
+        public static Settings Default {
+            get {
                 return defaultInstance;
             }
         }
-
-        /// <summary>
-        /// Gets the setting.
-        /// </summary>
-        /// <value>
-        /// The setting.
-        /// </value>
+        
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string Setting
-        {
-            get
-            {
+        public string Setting {
+            get {
                 return ((string)(this["Setting"]));
             }
         }
-
-        /// <summary>
-        /// Gets the version.
-        /// </summary>
-        /// <value>
-        /// The version.
-        /// </value>
+        
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string Version
-        {
-            get
-            {
+        [global::System.Configuration.DefaultSettingValueAttribute("1.1.0")]
+        public string Version {
+            get {
                 return ((string)(this["Version"]));
             }
         }
-
-        /// <summary>
-        /// Gets the wel come application title.
-        /// </summary>
-        /// <value>
-        /// The wel come application title.
-        /// </value>
+        
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string WelComeApplicationTitle
-        {
-            get
-            {
-                return "Welcome to " + ((string)(this["ApplicationTitle"]));
-            }
-        }
-
-        /// <summary>
-        /// Gets the application title.
-        /// </summary>
-        /// <value>
-        /// The application title.
-        /// </value>
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string ApplicationTitle
-        {
-            get
-            {
+        [global::System.Configuration.DefaultSettingValueAttribute("Oral History Workflow CMS APP")]
+        public string ApplicationTitle {
+            get {
                 return ((string)(this["ApplicationTitle"]));
             }
         }
         
-        /// <summary>
-        /// Gets the external API.
-        /// </summary>
-        /// <value>
-        /// The external API.
-        /// </value>
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string ExternalApi
-        {
-            get
-            {
+        [global::System.Configuration.DefaultSettingValueAttribute("https://c0100.paas2.tx.modxcloud.com/api/")]
+        public string ExternalApi {
+            get {
                 return ((string)(this["ExternalApi"]));
             }
         }
-
-        /// <summary>
-        /// Gets the log4net configuration path.
-        /// </summary>
-        /// <value>
-        /// The log4net configuration path.
-        /// </value>
+        
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string Log4netConfigPath
-        {
-            get
-            {
+        [global::System.Configuration.DefaultSettingValueAttribute("D:\\\\OralCMS\\\\OralCMS\\\\config\\\\log4net.config")]
+        public string Log4netConfigPath {
+            get {
                 return ((string)(this["Log4netConfigPath"]));
             }
         }
-
-
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Welcome to Oral History Workflow CMS APP")]
+        public string WelComeApplicationTitle {
+            get {
+                return ((string)(this["WelComeApplicationTitle"]));
+            }
+            set {
+                this["WelComeApplicationTitle"] = value;
+            }
+        }
     }
 }

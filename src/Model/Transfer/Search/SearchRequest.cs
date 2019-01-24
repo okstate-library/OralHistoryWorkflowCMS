@@ -62,8 +62,8 @@ namespace Model.Transfer.Search
         /// <param name="listLength">Length of the list.</param>
         public SearchRequest(int currentPage, int listLength)
         {
-            this.CurrentPage = currentPage;
-            this.ListLength = listLength;
+            CurrentPage = currentPage;
+            ListLength = listLength;
         }
     }
 }

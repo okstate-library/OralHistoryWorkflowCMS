@@ -21,7 +21,7 @@ namespace EntityData
             : base("name=OralCMSDBEntities")
         {
         }
-
+    
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
@@ -33,5 +33,9 @@ namespace EntityData
         public virtual DbSet<subsery> subseries { get; set; }
         public virtual DbSet<user> users { get; set; }
         public virtual DbSet<transcription> transcriptions { get; set; }
+        public virtual DbSet<interviewer> interviewers { get; set; }
+        public virtual DbSet<audioequipmentused> audioequipmentused { get; set; }
+        public virtual DbSet<videoequipmentused> videoequipmentused { get; set; }
+        public virtual DbSet<usertype> usertype { get; set; }
     }
 }

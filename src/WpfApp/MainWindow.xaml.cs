@@ -1,10 +1,13 @@
 ﻿using MaterialDesignThemes.Wpf;
+using Model;
 using System;
+using System.Collections.ObjectModel;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Navigation;
@@ -21,7 +24,7 @@ namespace WpfApp
     public partial class MainWindow : Window
     {
         #region Public properties
-                 
+
         /// <summary>
         /// The snackbar
         /// </summary>
@@ -47,13 +50,15 @@ namespace WpfApp
 
             }, TaskScheduler.FromCurrentSynchronizationContext());
 
-            this.Title = Settings.Default.ApplicationTitle;
+            Title = Settings.Default.ApplicationTitle;
 
             ApplicationNameTextBlock.Text = Settings.Default.WelComeApplicationTitle;
 
             Loaded += MainWindow_Loaded;
 
-            DataContext = new MainWindowViewModel(MainSnackbar.MessageQueue, App.IsValidToProcess);
+            DataContext = new MainWindowViewModel(MainSnackbar.MessageQueue, App.IsValidToProcess, "DemoItemsListBox");
+
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
 
         #endregion
@@ -86,9 +91,48 @@ namespace WpfApp
                 //    Username = "admin"
                 //};
 
-                DataContext = new MainWindowViewModel(MainSnackbar.MessageQueue, App.IsValidToProcess);
+
+                if (Application.Current != null)
+                {
+                    GenerateUI(App.BaseUserControl.UserModel.UserType);
+                }
+
+                DataContext = new MainWindowViewModel(MainSnackbar.MessageQueue, App.IsValidToProcess, "DemoItemsListBox2");
             }
 
+        }
+
+        /// <summary>
+        /// Generates the UI.
+        /// </summary>
+        /// <param name="userType">Type of the user.</param>
+        /// <exception cref="System.NotImplementedException"></exception>
+        private void GenerateUI(byte userType)
+        {
+
+            UserTypeModel current = App.BaseUserControl.Usertypes.Find(u => u.Id == userType);
+
+            if (current.IsHorizontalMenu)
+            {
+                MenuToggleButton.Visibility = Visibility.Collapsed;
+
+                DemoItemsListBox2.Visibility = Visibility.Visible;
+                MainScrollViewer2.Visibility = Visibility.Visible;
+
+                DemoItemsListBox.Visibility = Visibility.Visible;
+                MainScrollViewer.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                MenuToggleButton.Visibility = Visibility.Visible;
+
+                DemoItemsListBox.Visibility = Visibility.Visible;
+                MainScrollViewer.Visibility = Visibility.Visible;
+
+                DemoItemsListBox2.Visibility = Visibility.Hidden;
+                MainScrollViewer2.Visibility = Visibility.Hidden;
+
+            }
         }
 
         /// <summary>
@@ -105,7 +149,7 @@ namespace WpfApp
 
             string title = Settings.Default.ApplicationTitle + " - " + selectedItem.Name;
 
-            this.Title = title;
+            Title = title;
             ApplicationNameTextBlock.Text = title;
 
             //until we had a StaysOpen glag to Drawer, this will help with scroll bars
@@ -143,11 +187,18 @@ namespace WpfApp
         /// <param name="e">The <see cref="RequestNavigateEventArgs"/> instance containing the event data.</param>
         private void LogoutButton_Click(object sender, RequestNavigateEventArgs e)
         {
+            //Application.Current.Shutdown();
+
+            MainScrollViewer.Visibility = Visibility.Visible;
+            MainScrollViewer2.Visibility = Visibility.Visible;
+
             App.BaseUserControl.UserModel = null;
 
             MenuToggleButton.IsChecked = false;
 
-            MainWindow_Loaded(null, null);            
+            MainWindow_Loaded(null, null);
+
+
         }
 
         #endregion

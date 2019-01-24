@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using WpfApp.Domain;
 using WpfApp.Helper;
 
@@ -19,6 +20,7 @@ namespace WpfApp
     /// <seealso cref="System.Windows.Markup.IComponentConnector" />
     public partial class Interview : UserControl
     {
+
         #region Constructor
 
         /// <summary>
@@ -38,6 +40,34 @@ namespace WpfApp
 
         #region Events
 
+        private void ProjectCodeTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            TextBox textBox = ((TextBox)sender);
+            
+            if (textBox != null && !string.IsNullOrEmpty(textBox.Text))
+            {
+                RequestModel requestModel = new RequestModel()
+                {
+                    TranscriptionModel = new TranscriptionModel()
+                    {
+                        ProjectCode = textBox.Text
+                    },
+                };
+
+                ResponseModel response = App.BaseUserControl.InternalService.GetUniqueProjectCode(requestModel);
+
+                if (!response.IsOperationSuccess)
+                {
+                    App.ShowMessage(false, response.ErrorMessage);
+
+                    ProjectCodeTextBox.Focusable = true;
+                    Keyboard.Focus(ProjectCodeTextBox);
+          
+                }
+            }
+          
+        }
+
         /// <summary>
         /// Handles the Loaded event of the InterviewUserControl control.
         /// </summary>
@@ -48,6 +78,9 @@ namespace WpfApp
             ControlsVisibility();
 
             ClearAll();
+
+            PopulateIntializeView();
+
         }
 
         /// <summary>
@@ -59,6 +92,14 @@ namespace WpfApp
         {
             if (FormValidation())
             {
+                bool isANewInterviewer = !BaseUserControl.Interviewers.Contains(InterviewerFilteredComboBox.Text);
+
+                bool isANewAudioEquipment = !string.IsNullOrEmpty(AudioEquipmentUsedFilteredComboBox.Text) &&
+                    !BaseUserControl.AudioEquipments.Contains(AudioEquipmentUsedFilteredComboBox.Text);
+
+                bool isANewVideoEquipment = !string.IsNullOrEmpty(VideoEquipmentUsedFilteredComboBox.Text) && 
+                    !BaseUserControl.VideoEquipments.Contains(VideoEquipmentUsedFilteredComboBox.Text);
+
                 Collection collectionModel = (Collection)CollectionComboBox.SelectedValue;
 
                 KeyValuePair<int, string> subseryModel = (KeyValuePair<int, string>)SubseriesComboBox.SelectedValue;
@@ -67,14 +108,17 @@ namespace WpfApp
                 {
                     TranscriptionModel = new TranscriptionModel()
                     {
+                        Title = " ",
                         CollectionId = (short)collectionModel.Id,
                         CreatedBy = App.BaseUserControl.UserModel.UserId,
                         CreatedDate = DateTime.Today,
                         Description = DescriptionTextBox.Text,
-                        EquipmentUsed = EquipmentUsedTextBox.Text,
+                        AudioEquipmentUsed = AudioEquipmentUsedFilteredComboBox.Text,
+                        VideoEquipmentUsed = VideoEquipmentUsedFilteredComboBox.Text,
+                        //EquipmentUsed = EquipmentUsedComboBox.Text, //TODO 
                         InterviewDate = (DateTime)InterviewDateDateDatePicker.SelectedDate,
                         Interviewee = IntervieweeTextBox.Text,
-                        Interviewer = InterviewerTextBox.Text,
+                        Interviewer = InterviewerFilteredComboBox.Text,
                         InterviewerNote = NoteTextBox.Text,
                         IsAudioFormat = (bool)MediaAudioCheckBox.IsChecked,
                         IsRestriction = (bool)RestrictionYesCheckBox.IsChecked,
@@ -85,13 +129,16 @@ namespace WpfApp
                         ReleaseForm = (bool)ReleaseFromYesCheckBox.IsChecked,
                         Subject = SubjectTextBox.Text,
                         SubseriesId = subseryModel.Key,
-                        Title = TitleTextBox.Text,
                         ProjectCode = ProjectCodeTextBox.Text,
                         TranscriberAssigned = TranscriberAssignedTextBox.Text,
                         EquipmentNumber = string.Empty,
                         MetadataDraft = string.Empty,
                         UpdatedBy = App.BaseUserControl.UserModel.UserId,
                         UpdatedDate = DateTime.Today,
+
+                        IsANewInterviewer = isANewInterviewer,
+                        IsANewAudioEquipment = isANewAudioEquipment,
+                        IsANewVideoEquipment = isANewVideoEquipment,
                     },
 
                     WellKnownModificationType = Core.Enums.WellKnownModificationType.Add,
@@ -105,6 +152,12 @@ namespace WpfApp
                     App.ShowMessage(true, string.Empty);
 
                     ClearAll();
+
+                    if (isANewInterviewer || isANewAudioEquipment || isANewVideoEquipment)
+                    {
+                        PopulateFilterTextBox();
+                    }
+
                 }
                 else
                 {
@@ -112,17 +165,6 @@ namespace WpfApp
                 }
             }
 
-        }
-
-        private bool FormValidation()
-        {
-            if (CollectionComboBox.SelectedValue != null && 
-                SubseriesComboBox.SelectedValue != null)
-            {
-                return true;
-            }
-
-            return false;
         }
 
         /// <summary>
@@ -152,7 +194,7 @@ namespace WpfApp
                 RestrictionYesCheckBox,
                 RestrictionNoCheckBox);
         }
-        
+             
         #endregion
 
         #region Methods
@@ -163,10 +205,9 @@ namespace WpfApp
         private void ClearAll()
         {
             DescriptionTextBox.Text = string.Empty;
-            EquipmentUsedTextBox.Text = string.Empty;
             InterviewDateDateDatePicker.SelectedDate = null;
             IntervieweeTextBox.Text = string.Empty;
-            InterviewerTextBox.Text = string.Empty;
+            InterviewerFilteredComboBox.Text = string.Empty;
             NoteTextBox.Text = string.Empty;
             MediaAudioCheckBox.IsChecked = false;
             RestrictionYesCheckBox.IsChecked = false;
@@ -176,10 +217,10 @@ namespace WpfApp
             PlaceTextBox.Text = string.Empty;
             ReleaseFromYesCheckBox.IsChecked = false;
             SubjectTextBox.Text = string.Empty;
-            TitleTextBox.Text = string.Empty;
             ProjectCodeTextBox.Text = string.Empty;
             TranscriberAssignedTextBox.Text = string.Empty;
 
+            //EquipmentUsedComboBox.SelectedValue = null; //TODO 
             CollectionComboBox.SelectedValue = null;
             SubseriesComboBox.SelectedValue = null;
         }
@@ -195,7 +236,7 @@ namespace WpfApp
             {
                 case WellKnownUserType.GuestUser:
                 case WellKnownUserType.Student:
-                case WellKnownUserType.Interviewer:
+                case WellKnownUserType.Staff:
                     RestrictionsBorder1.Visibility = Visibility.Collapsed;
                     RestrictionsLabel.Visibility = Visibility.Collapsed;
                     RestrictionsStackPanel.Visibility = Visibility.Collapsed;
@@ -215,6 +256,45 @@ namespace WpfApp
                     break;
             }
 
+        }
+
+        private bool FormValidation()
+        {
+            if (CollectionComboBox.SelectedValue != null &&
+                SubseriesComboBox.SelectedValue != null)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Populates the intialize view.
+        /// </summary>
+        private void PopulateIntializeView()
+        {
+            InterviewerFilteredComboBox.IsEditable = true;
+            InterviewerFilteredComboBox.IsTextSearchEnabled = false;
+            InterviewerFilteredComboBox.ItemsSource = BaseUserControl.Interviewers;
+            
+            AudioEquipmentUsedFilteredComboBox.IsEditable = true;
+            AudioEquipmentUsedFilteredComboBox.IsTextSearchEnabled = false;
+            AudioEquipmentUsedFilteredComboBox.ItemsSource = BaseUserControl.AudioEquipments;
+            
+            VideoEquipmentUsedFilteredComboBox.IsEditable = true;
+            VideoEquipmentUsedFilteredComboBox.IsTextSearchEnabled = false;
+            VideoEquipmentUsedFilteredComboBox.ItemsSource = BaseUserControl.VideoEquipments;
+        }
+
+        /// <summary>
+        /// Populates the filter text box.
+        /// </summary>
+        private void PopulateFilterTextBox()
+        {
+            App.BaseUserControl.InitializeComponent();
+
+            PopulateIntializeView();
         }
 
         #endregion

@@ -1,4 +1,5 @@
 ﻿using BusinessServices.Services;
+using Core;
 using EntityData;
 using Model.Transfer;
 using Repository.Implementations;
@@ -93,11 +94,11 @@ namespace BusinessServices.Servcices
         /// </summary>
         protected override void PreExecute()
         {
-            this.WellKnownError = new WellKnownErrors();
+            WellKnownError = new WellKnownErrors();
 
-            this.UserRepository = new UserRepository();
+            UserRepository = new UserRepository();
 
-            this.WellKnownError.Value = WellKnownError.NoError;
+            WellKnownError.Value = WellKnownError.NoError;
         }
 
         /// <summary>
@@ -111,32 +112,40 @@ namespace BusinessServices.Servcices
             {
                 case Core.Enums.WellKnownModificationType.Add:
 
-                    this.UserRepository.Add(Util.ConvertToUser(this.Request.UserModel));
-                    this.UserRepository.Save();
+                    UserRepository.Add(Util.ConvertToUser(Request.UserModel));
+                    UserRepository.Save();
 
                     break;
                 case Core.Enums.WellKnownModificationType.Edit:
 
-                    daUser = this.UserRepository.GetUserToEdit(this.Request.UserModel.UserId);
+                    daUser = UserRepository.GetUserToEdit(Request.UserModel.UserId);
 
-                    daUser = Util.ConvertToUser(daUser, this.Request.UserModel);
+                    daUser = Util.ConvertToUser(daUser, Request.UserModel);
 
-                    this.UserRepository.Edit(daUser);
-                    this.UserRepository.Save();
+                    UserRepository.Edit(daUser);
+                    UserRepository.Save();
 
                     break;
                 case Core.Enums.WellKnownModificationType.Delete:
 
-                    daUser = this.UserRepository.GetUserToEdit(this.Request.UserModel.UserId);
+                    daUser = UserRepository.GetUserToEdit(Request.UserModel.UserId);
 
-                    this.UserRepository.Delete(daUser);
-                    this.UserRepository.Save();
+                    UserRepository.Delete(daUser);
+                    UserRepository.Save();
+                    break;
+                case Core.Enums.WellKnownModificationType.Reset:
+
+                    daUser = UserRepository.GetUserToEdit(Request.UserModel.UserId);
+
+                    daUser.Password = Encryption.Encrypt("abc123");
+                    UserRepository.Edit(daUser);
+                    UserRepository.Save();
                     break;
                 default:
                     break;
             }
 
-            this.Response = new ResponseModel()
+            Response = new ResponseModel()
             {
                 IsOperationSuccess = true
             };
@@ -148,15 +157,15 @@ namespace BusinessServices.Servcices
         /// </summary>
         protected override void PostExecute()
         {
-            int errorCode = this.WellKnownError.Value.Item1;
+            int errorCode = WellKnownError.Value.Item1;
 
             if (errorCode > 0)
             {
-                this.Response = new ResponseModel()
+                Response = new ResponseModel()
                 {
                     ErrorCode = errorCode.ToString(),
 
-                    ErrorMessage = this.WellKnownError.Value.Item2,
+                    ErrorMessage = WellKnownError.Value.Item2,
 
                     IsOperationSuccess = false
 

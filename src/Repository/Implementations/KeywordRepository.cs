@@ -22,7 +22,7 @@ namespace Repository.Implementations
         /// </returns>
         public List<keyword> GetKeywords()
         {
-            return this.GetAll().ToList();
+            return GetAll().ToList();
         }
 
     }

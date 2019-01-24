@@ -14,6 +14,13 @@
 
     <SolidColorBrush x:Key="AlternativeColor">#DCDCDC</SolidColorBrush>
 
+    <Style x:Key="TextBoxInputFormatLabel"  TargetType="{x:Type Label }" BasedOn="{StaticResource MaterialDesignLabel}">
+        <Setter Property="Margin" Value="0 0 0 0" />
+        <Setter Property="FontSize" Value="11"></Setter>
+        <Setter Property="FontWeight" Value="Bold"></Setter>
+        <Setter Property="VerticalAlignment" Value="Center"></Setter>
+    </Style>
+    
     <Style x:Key="BoldLabel"  TargetType="{x:Type Label }" BasedOn="{StaticResource MaterialDesignLabel}">
         <Setter Property="Margin" Value="0 0 0 0" />
         <Setter Property="FontSize" Value="14"></Setter>
@@ -53,6 +60,7 @@
 
     <Style x:Key="GridViewColumnHeaderLargeFontStyle" BasedOn="{StaticResource GridViewColumnHeaderStyle}" TargetType="{x:Type GridViewColumnHeader}">
         <Setter Property="FontSize" Value="13"></Setter>
+        <Setter Property="Height" Value="45"></Setter>
     </Style>
 
     <Style x:Key="GridViewColumnHeaderMediumFontStyle" BasedOn="{StaticResource GridViewColumnHeaderStyle}" TargetType="{x:Type GridViewColumnHeader}">
@@ -66,6 +74,11 @@
 
     <Style x:Key="VerticalScrollBar" TargetType="{x:Type ScrollBar}">
         <Setter Property="Background" Value="Red"/>
+    </Style>
+
+    <Style x:Key="SideMenuExpander"  TargetType="{x:Type Expander }">
+        <Setter Property="FontSize" Value="15"></Setter>
+        <Setter Property="FontWeight" Value="Bold"></Setter>
     </Style>
 
     <!--Toggle Button Styling-->
@@ -128,6 +141,15 @@
         <Setter Property="FontSize" Value="15"></Setter>
         <Setter Property="Background" Value="#DCDCDC"></Setter>
     </Style>
+
+    <!--TextBlock styling-->
+
+    <Style TargetType="{x:Type TextBlock}"  x:Key="FilteredComboBoxStyle" BasedOn="{StaticResource MaterialDesignTextBox}">
+        <Setter Property="Margin" Value="0 0 0 0" />
+        <Setter Property="FontSize" Value="15"></Setter>
+        <Setter Property="Background" Value="#DCDCDC"></Setter>
+    </Style>
+    
 
     <!--Border styling-->
     

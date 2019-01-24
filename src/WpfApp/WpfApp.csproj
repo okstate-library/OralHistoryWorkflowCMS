@@ -81,6 +81,8 @@
       <DependentUpon>ControlledVocabulary.xaml</DependentUpon>
     </Compile>
     <Compile Include="Domain\FindandReplaceModel.cs" />
+    <Compile Include="Domain\GridViewSort.cs" />
+    <Compile Include="Domain\ReportModel.cs" />
     <Compile Include="Domain\InterviewModel.cs" />
     <Compile Include="Domain\PastDateValidationRule.cs" />
     <Compile Include="FileUpload.xaml.cs">
@@ -91,7 +93,10 @@
     </Compile>
     <Compile Include="Helper\BaseUserControl.cs" />
     <Compile Include="Helper\Collection.cs" />
+    <Compile Include="Helper\ExportHelper.cs" />
     <Compile Include="Helper\FileHelper.cs" />
+    <Compile Include="Domain\FilteredComboBox.cs" />
+    <Compile Include="Helper\InterviewHelper.cs" />
     <Compile Include="Helper\PackIconConverter.cs" />
     <Compile Include="Helper\SearchHelper.cs" />
     <Compile Include="Helper\ShortTextConverter.cs" />
@@ -292,15 +297,6 @@
       <Project>{44e63826-59d4-419c-a24f-ff406865de1d}</Project>
       <Name>Model</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\general.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\media.png" />
-    <Resource Include="Resources\metadata.png" />
-    <Resource Include="Resources\supplemental.png" />
-    <Resource Include="Resources\transcript.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\logo.png" />

@@ -45,7 +45,8 @@ namespace WpfApp
 
             Loaded += UserUserControl_Loaded;
 
-            this.UserId = userId;
+            UserId = userId;
+
         }
 
         #endregion
@@ -59,7 +60,7 @@ namespace WpfApp
         /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void UserUserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            if (this.UserId > 0)
+            if (UserId > 0)
             {
                 ViewUser();
                 IsAddNewRecord = false;
@@ -88,10 +89,11 @@ namespace WpfApp
                 {
                     UserModel = new UserModel()
                     {
-                        UserId = this.UserId,
+                        UserId = UserId,
                         Name = NameTextBox.Text,
                         Username = UsernameTextBox.Text,
                         UserType = (byte)userType,
+                        Password = PasswordTextBox.SecurePassword,
                     },
 
                     WellKnownModificationType = Core.Enums.WellKnownModificationType.Add,
@@ -115,7 +117,7 @@ namespace WpfApp
                 {
                     UserModel = new UserModel()
                     {
-                        UserId = this.UserId,
+                        UserId = UserId,
                         Name = NameTextBox.Text,
                         Username = UsernameTextBox.Text,
                         UserType = (byte)userType,
@@ -151,9 +153,11 @@ namespace WpfApp
                 {
                     UserId = UserId
                 },
+
+                WellKnownModificationType = Core.Enums.WellKnownModificationType.Reset,
             };
 
-            ResponseModel response = App.BaseUserControl.InternalService.ResetUserPassword(requestModel);
+            ResponseModel response = App.BaseUserControl.InternalService.ModifyUser(requestModel);
 
             if (response.IsOperationSuccess)
             {
@@ -178,7 +182,7 @@ namespace WpfApp
             {
                 UserModel = new UserModel()
                 {
-                    UserId = this.UserId
+                    UserId = UserId
                 },
             };
 
@@ -190,7 +194,7 @@ namespace WpfApp
 
                 WellKnownUserType userType = (WellKnownUserType)user.UserType;
 
-                UserTypeComboBox.SelectedItem = userType.ToString();
+                UserTypeComboBox.SelectedIndex = user.UserType - 2;
                 NameTextBox.Text = user.Name;
                 UsernameTextBox.Text = user.Username;
 

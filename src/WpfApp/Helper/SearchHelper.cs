@@ -12,6 +12,11 @@ namespace WpfApp.Helper
     public class SearchHelper
     {
         /// <summary>
+        /// The no records found message
+        /// </summary>
+        public static string NoRecordsFoundMessage = "No records found...";
+
+        /// <summary>
         /// The initial current page
         /// </summary>
         public static int InitialCurrentPage = 1;
@@ -19,16 +24,21 @@ namespace WpfApp.Helper
         /// <summary>
         /// The initial list length
         /// </summary>
-        public static int InitialListLength = 10;
+        public static int InitialListLength = 100;
+
+        /// <summary>
+        /// The selected page size index
+        /// </summary>
+        public static int SelectedPageSizeIndex = 1;
 
         /// <summary>
         /// The page size list
         /// </summary>
         public static List<string> PageSizeList = new List<string>()
         {
-            " 10",
             " 50",
-            " 100"
+            " 100",
+            " 200"
         };
 
         /// <summary>
