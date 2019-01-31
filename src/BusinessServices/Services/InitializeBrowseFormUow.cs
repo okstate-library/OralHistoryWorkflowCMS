@@ -14,6 +14,18 @@ namespace BusinessServices.Servcices
     internal class InitializeBrowseFormUow : UnitOfWork
     {
         /// <summary>
+        /// Gets or sets the request.
+        /// </summary>
+        /// <value>
+        /// The request.
+        /// </value>
+        public RequestModel Request
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Gets or sets the response.
         /// </summary>
         /// <value>
@@ -109,22 +121,58 @@ namespace BusinessServices.Servcices
 
             BrowseFormModel browseFormModel = new BrowseFormModel();
 
-            IQueryable<transcription> transcriptions = TranscriptionRepository.GetAll();
-            
-            // Interview list
-            var intervieweeList = transcriptions
-                                   .GroupBy(n => n.Interviewer)
-                                   .Select(n => new
-                                   {
-                                       Interviewer = n.Key,
-                                       Count = n.Count()
-                                   })
-                                   .OrderBy(n => n.Interviewer);
-            
-            foreach (var item in intervieweeList)
+            IQueryable<transcription> transcriptions = null;
+
+            if (Request.IsAdminUser)
             {
-                browseFormModel.InterviewerList.Add(SetPair(item.Interviewer, item.Count));
+                transcriptions = TranscriptionRepository.GetAll();
             }
+            else
+            {
+                transcriptions = TranscriptionRepository.FindBy(p => !p.IsRestriction);
+            }
+
+            // Interview list
+
+            List<string> interviewerList = new List<string>();
+
+            foreach (transcription item in transcriptions)
+            {
+                string[] words = item.Interviewer.Split(';');
+
+                foreach (string word in words)
+                {
+                    if (!string.IsNullOrEmpty(word))
+                    {
+                        interviewerList.Add(word);
+                    }
+                }
+            }
+
+            var interviewers = from x in interviewerList
+                           group x by x into g
+                           let count = g.Count()
+                           orderby count descending
+                           select new { Value = g.Key, Count = count };
+
+            foreach (var interviewer in interviewers)
+            {
+                browseFormModel.InterviewerList.Add(SetPair(interviewer.Value, interviewer.Count));
+            }
+            
+            //var intervieweeList = transcriptions
+            //                       .GroupBy(n => n.Interviewer)
+            //                       .Select(n => new
+            //                       {
+            //                           Interviewer = n.Key,
+            //                           Count = n.Count()
+            //                       })
+            //                       .OrderBy(n => n.Interviewer);
+
+            //foreach (var item in intervieweeList)
+            //{
+            //    browseFormModel.InterviewerList.Add(SetPair(item.Interviewer, item.Count));
+            //}
 
             //Collection list 
             var collections = transcriptions
@@ -145,7 +193,7 @@ namespace BusinessServices.Servcices
                 browseFormModel.CollectionList.Add(new KeyValuePair<string, string>(
                     collectionOjb.CollectionName + " (" + item.Count + ")", collectionOjb.Id.ToString()));
             }
-            
+
             //Content DM list 
 
             var contentDMs = transcriptions
@@ -178,21 +226,21 @@ namespace BusinessServices.Servcices
                     if (!string.IsNullOrEmpty(word))
                     {
                         subjectList.Add(word);
-                    }                    
+                    }
                 }
             }
 
             var subjects = from x in subjectList
-                    group x by x into g
-                    let count = g.Count()
-                    orderby count descending
-                    select new { Value = g.Key, Count = count };
-            
+                           group x by x into g
+                           let count = g.Count()
+                           orderby count descending
+                           select new { Value = g.Key, Count = count };
+
             foreach (var subject in subjects)
             {
                 browseFormModel.SubjectList.Add(SetPair(subject.Value, subject.Count));
             }
-            
+
             Response = new ResponseModel()
             {
                 BrowseFormModel = browseFormModel,
@@ -209,7 +257,7 @@ namespace BusinessServices.Servcices
         /// <returns></returns>
         private KeyValuePair<string, string> SetPair(string name, int count)
         {
-            return new KeyValuePair<string, string>(name + " (" + count + ")",name);
+            return new KeyValuePair<string, string>(name + " (" + count + ")", name);
         }
 
         /// <summary>

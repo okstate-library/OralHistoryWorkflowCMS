@@ -148,7 +148,7 @@ namespace EntityData
         /// <param name="entity">The entity.</param>
         public virtual void Edit(T entity)
         {
-           _entities.Entry(entity).State = System.Data.Entity.EntityState.Modified;
+            _entities.Entry(entity).State = System.Data.Entity.EntityState.Modified;
         }
 
         /// <summary>
@@ -183,6 +183,16 @@ namespace EntityData
         public int Count(Expression<Func<T, bool>> predicate)
         {
             return _entities.Set<T>().Count(predicate);
+        }
+
+        /// <summary>
+        /// Executes the SQL command.
+        /// </summary>
+        /// <param name="sql">The SQL.</param>
+        /// <param name="parameters">The parameters.</param>
+        public void ExecuteSqlCommand(string sql, object[] parameters)
+        {
+            _entities.Database.ExecuteSqlCommand(sql, parameters);
         }
     }
 }

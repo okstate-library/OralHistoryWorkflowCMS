@@ -3,6 +3,8 @@ using EntityData;
 using Model;
 using Model.Transfer;
 using Repository.Implementations;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace BusinessServices.Servcices
 {
@@ -45,6 +47,18 @@ namespace BusinessServices.Servcices
         /// The collection repository.
         /// </value>
         private TranscriptionRepository TranscriptionRepository
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets the interviewer repository.
+        /// </summary>
+        /// <value>
+        /// The interviewer repository.
+        /// </value>
+        public InterviewerRepository InterviewerRepository
         {
             get;
             set;
@@ -98,6 +112,7 @@ namespace BusinessServices.Servcices
             WellKnownError = new WellKnownErrors();
 
             TranscriptionRepository = new TranscriptionRepository();
+            InterviewerRepository = new InterviewerRepository();
 
             WellKnownError.Value = WellKnownError.NoError;
         }
@@ -107,118 +122,59 @@ namespace BusinessServices.Servcices
         /// </summary>
         protected override void Execute()
         {
+            List<transcription> transcriptions = TranscriptionRepository.GetAll().ToList();
+
+            List<string> codes = transcriptions.Select(s => s.ProjectCode.ToLower()).ToList();
+
+            List<string> interviewerList = InterviewerRepository.List();
+
+            List<string> importInterviewerList = new List<string>();
+
+            int duplicateRecordCount = 0, insertedRecordCount = 0;
+
             foreach (TranscriptionModel item in Request.TranscriptionModels)
             {
-                transcription transcription = Util.ConvertToTranscription(item);
+                if (!codes.Exists(s => s.Contains(item.ProjectCode.ToLower())))
+                {
+                    transcription transcription = Util.ConvertToTranscription(item);
 
-                TranscriptionRepository.Add(transcription);
-                TranscriptionRepository.Save();
+                    TranscriptionRepository.Add(transcription);
+                    TranscriptionRepository.Save();
+
+                    if (!string.IsNullOrEmpty(item.Interviewer))
+                    {
+                        string[] splits = item.Interviewer.Split(';');
+
+                        foreach (string str in splits)
+                        {
+                            if (!importInterviewerList.Contains(str.Trim()))
+                            {
+                                importInterviewerList.Add(str.Trim());
+                            }
+                        }
+                    }
+
+                    insertedRecordCount++;
+                }
+                else
+                {
+                    duplicateRecordCount++;
+                }
             }
 
-            //transcription daTranscription = null;
+            foreach (string item in importInterviewerList.Except(interviewerList))
+            {
+                interviewer interviewer = new interviewer() { InterviewerName = item };
 
-            //daTranscription = TranscriptionRepository.GetTranscription(Request.TranscriptionModel.Id);
+                InterviewerRepository.Add(interviewer);
+                InterviewerRepository.Save();
+            }
 
-            //TranscriptionModel transcriptionModel = Request.TranscriptionModel;
-
-            //switch (Request.WellKnownTranscriptionModificationType)
-            //{
-            //    case Core.Enums.WellKnownTranscriptionModificationType.Transcript:
-
-            //        daTranscription.TranscriberAssigned = transcriptionModel.TranscriberAssigned;
-            //        daTranscription.TranscriberCompleted = transcriptionModel.TranscriberCompleted;
-
-            //        daTranscription.AuditCheckCompleted = transcriptionModel.AuditCheckCompleted;
-            //        daTranscription.AuditCheckCompletedDate = transcriptionModel.AuditCheckCompletedDate;
-
-            //        daTranscription.FirstEditCompleted = transcriptionModel.FirstEditCompleted;
-            //        daTranscription.FirstEditCompletedDate = transcriptionModel.FirstEditCompletedDate;
-
-            //        daTranscription.SecondEditCompleted = transcriptionModel.SecondEditCompleted;
-            //        daTranscription.SecondEditCompletedDate = transcriptionModel.SecondEditCompletedDate;
-
-            //        daTranscription.DraftSentDate = transcriptionModel.DraftSentDate;
-
-            //        daTranscription.EditWithCorrectionCompleted = transcriptionModel.EditWithCorrectionCompleted;
-            //        daTranscription.EditWithCorrectionDate = transcriptionModel.EditWithCorrectionDate;
-
-            //        daTranscription.FirstEditCompleted = transcriptionModel.FirstEditCompleted;
-            //        daTranscription.FirstEditCompletedDate = transcriptionModel.FirstEditCompletedDate;
-
-            //        daTranscription.FinalSentDate = transcriptionModel.FinalSentDate;
-
-            //        daTranscription.TranscriptStatus = transcriptionModel.TranscriptStatus;
-
-            //        daTranscription.TranscriberLocation = transcriptionModel.TranscriberLocation;
-            //        daTranscription.TranscriptNote = transcriptionModel.TranscriptNote;
-
-            //        break;
-            //    case Core.Enums.WellKnownTranscriptionModificationType.Media:
-
-            //        daTranscription.IsAudioFormat = transcriptionModel.IsAudioFormat;
-            //        daTranscription.IsBornDigital = transcriptionModel.IsBornDigital;
-            //        daTranscription.OriginalMediumType = transcriptionModel.OriginalMediumType;
-            //        daTranscription.OriginalMedium = transcriptionModel.OriginalMedium;
-            //        daTranscription.IsConvertToDigital = transcriptionModel.IsConvertToDigital;
-            //        daTranscription.ConvertToDigitalDate = transcriptionModel.ConvertToDigitalDate;
-            //        daTranscription.IsAccessMediaStatus = transcriptionModel.IsAccessMediaStatus;
-            //        daTranscription.MasterFileLocation = transcriptionModel.MasterFileLocation;
-            //        daTranscription.AccessFileLocation = transcriptionModel.AccessFileLocation;
-
-            //        break;
-            //    case Core.Enums.WellKnownTranscriptionModificationType.Metadata:
-
-
-            //        daTranscription.Title = transcriptionModel.Title;
-            //        daTranscription.Interviewee = transcriptionModel.Interviewee;
-            //        daTranscription.Interviewer = transcriptionModel.Interviewer;
-
-            //        daTranscription.InterviewDate = transcriptionModel.InterviewDate;
-            //        daTranscription.ConvertToDigitalDate = transcriptionModel.ConvertToDigitalDate;
-
-            //        daTranscription.Subject = transcriptionModel.Subject;
-            //        daTranscription.Keywords = transcriptionModel.Keywords;
-            //        daTranscription.Description = transcriptionModel.Description;
-            //        daTranscription.ScopeAndContents = transcriptionModel.ScopeAndContents;
-            //        daTranscription.Format = transcriptionModel.Format;
-            //        daTranscription.Type = transcriptionModel.Type;
-            //        daTranscription.Publisher = transcriptionModel.Publisher;
-            //        daTranscription.RelationIsPartOf = transcriptionModel.RelationIsPartOf;
-            //        daTranscription.CoverageSpatial = transcriptionModel.CoverageSpatial;
-            //        daTranscription.CoverageTemporal = transcriptionModel.CoverageTemporal;
-            //        daTranscription.Rights = transcriptionModel.Rights;
-            //        daTranscription.Language = transcriptionModel.Language;
-            //        daTranscription.Identifier = transcriptionModel.Identifier;
-            //        daTranscription.Transcript = transcriptionModel.Transcript;
-            //        daTranscription.FileName = transcriptionModel.FileName;
-
-
-            //        break;
-            //    case Core.Enums.WellKnownTranscriptionModificationType.Supplement:
-
-            //        daTranscription.IsInContentDm = transcriptionModel.IsInContentDm;
-            //        daTranscription.IsRosetta = transcriptionModel.IsRosetta;
-            //        daTranscription.ReleaseForm = transcriptionModel.ReleaseForm;
-            //        daTranscription.IsRestriction = transcriptionModel.IsRestriction;
-
-            //        daTranscription.LegalNote = transcriptionModel.LegalNote;
-            //        daTranscription.IsAudioFormat = transcriptionModel.IsAudioFormat;
-            //        daTranscription.EquipmentUsed = transcriptionModel.EquipmentUsed;
-            //        daTranscription.Place = transcriptionModel.Place;
-            //        daTranscription.InterviewerNote = transcriptionModel.InterviewerNote;
-            //        break;
-            //    default:
-            //        break;
-            //}
-
-            //daTranscription.UpdatedBy = transcriptionModel.UpdatedBy;
-            //daTranscription.UpdatedDate = transcriptionModel.UpdatedDate;
-
-            //TranscriptionRepository.Edit(daTranscription);
-            //TranscriptionRepository.Save();
 
             Response = new ResponseModel()
             {
+                ErrorMessage = string.Format(" {0} record(s) were \n successfully imported and \n found" +
+                " {1} duplicate records.", insertedRecordCount, duplicateRecordCount),
                 IsOperationSuccess = true
             };
 

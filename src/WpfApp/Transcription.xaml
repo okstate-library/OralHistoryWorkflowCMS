@@ -383,7 +383,7 @@
                                      VerticalAlignment="Top" Height="100" AcceptsReturn="True" TextWrapping="Wrap"   VerticalScrollBarVisibility="Auto"  
                                      Style="{StaticResource EditableTextBox}" />
 
-                            <Button Grid.Row="35"  Grid.ColumnSpan="5"  Margin="0,20,0,0" Style="{StaticResource MaterialDesignRaisedAccentButton}" Click="TranscriptionDetailsButton_Click" 
+                            <Button Name="TranscriptionDetailsButton" Grid.Row="35"  Grid.ColumnSpan="5"  Margin="0,20,0,0" Style="{StaticResource MaterialDesignRaisedAccentButton}" Click="TranscriptionDetailsButton_Click" 
                         ToolTip="Submit transcript details">
                                 _Submit
                             </Button>
@@ -537,7 +537,8 @@
                             <TextBox Name="AccessFileLocationTextBox"  Grid.Row="15" Grid.Column="2"  Grid.ColumnSpan="3" Style="{StaticResource EditableTextBox}" />
 
 
-                            <Button Grid.Row="16"  Grid.ColumnSpan="5"  Margin="0,20,0,0"  Style="{StaticResource MaterialDesignRaisedAccentButton}" Click="MediaDetailsButton_Click" 
+                            <Button Name="MediaDetailsButto" Grid.Row="16"  Grid.ColumnSpan="5"  Margin="0,20,0,0"  
+                                    Style="{StaticResource MaterialDesignRaisedAccentButton}" Click="MediaDetailsButton_Click" 
                         ToolTip="Submit transcript details">
                                 _Submit
                             </Button>
@@ -721,7 +722,7 @@
 
                             <TextBox Name="CoverageTemporalTextBox" Grid.Row="24" Grid.Column="4"   Style="{StaticResource EditableTextBox}" />
 
-                            <Button Grid.Row="25"  Grid.ColumnSpan="5"  Margin="0,20,0,0"  Style="{StaticResource MaterialDesignRaisedAccentButton}" Click="MetadataButton_Click" 
+                            <Button Name="MetadataButton" Grid.Row="25"  Grid.ColumnSpan="5"  Margin="0,20,0,0"  Style="{StaticResource MaterialDesignRaisedAccentButton}" Click="MetadataButton_Click" 
                         ToolTip="Submit metadata details">
                                 _Submit
                             </Button>
@@ -933,7 +934,8 @@
                          VerticalAlignment="Top" Height="100"    TextWrapping="Wrap" BorderThickness="1"
                          VerticalScrollBarVisibility="Auto" Style="{StaticResource EditableTextBox}"/>
 
-                            <Button Grid.Row="27"  Grid.ColumnSpan="5"  Margin="0,20,0,0"  Style="{StaticResource MaterialDesignRaisedAccentButton}" Click="SupplementDetailsButton_Click" 
+                            <Button Name="SupplementDetailsButton" Grid.Row="27"  Grid.ColumnSpan="5"  Margin="0,20,0,0"  Style="{StaticResource MaterialDesignRaisedAccentButton}"
+                                    Click="SupplementDetailsButton_Click" 
                         ToolTip="Submit transcript details">
                                 _Submit
                             </Button>

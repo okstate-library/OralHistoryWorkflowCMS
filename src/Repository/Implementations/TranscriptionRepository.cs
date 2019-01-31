@@ -1,4 +1,6 @@
-﻿using EntityData;
+﻿using System;
+using System.Collections.Generic;
+using EntityData;
 
 namespace Repository.Implementations
 {
@@ -33,5 +35,6 @@ namespace Repository.Implementations
         {
             return FirstOrDefault(i => i.ProjectCode.Equals(projectCode));
         }
+
     }
 }

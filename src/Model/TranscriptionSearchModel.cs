@@ -42,6 +42,14 @@ namespace Model
         /// The contentdms.
         /// </value>
         public List<string> Contentdms { get; set; }
+        
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is restriction records.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this instance is restriction records; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsRestrictionRecords { get; set; }
 
         /// <summary>
         /// Determines whether [is search records exists].

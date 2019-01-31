@@ -187,7 +187,7 @@ namespace WpfApp.Domain
         {
             Collections = new ObservableCollection<Collection>();
 
-            foreach (Model.CollectionModel collectionItem in App.BaseUserControl.Collecions)
+            foreach (CollectionModel collectionItem in App.BaseUserControl.Collecions)
             {
                 List<KeyValuePair<int, string>> series = new List<KeyValuePair<int, string>>();
 

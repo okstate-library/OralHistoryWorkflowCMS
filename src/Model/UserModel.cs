@@ -1,4 +1,5 @@
-﻿using System.Security;
+﻿using Core.Enums;
+using System.Security;
 
 namespace Model
 {
@@ -32,6 +33,20 @@ namespace Model
         public byte UserType { get; set; }
 
         /// <summary>
+        /// Gets the type of the current user.
+        /// </summary>
+        /// <value>
+        /// The type of the current user.
+        /// </value>
+        public WellKnownUserType CurrentUserType
+        {
+            get
+            {
+                return (WellKnownUserType)UserType;
+            }
+        }
+        
+        /// <summary>
         /// Gets or sets the username.
         /// </summary>
         /// <value>
@@ -53,7 +68,13 @@ namespace Model
         /// <value>
         /// The name of the user type.
         /// </value>
-        public string UserTypeName { get; set; }
+        public string UserTypeName
+        {
+            get
+            {
+                return ((WellKnownUserType)UserType).ToString();
+            }
+        }
 
     }
 }

@@ -227,7 +227,7 @@ namespace WpfApp
                 CoverageSpatial = CoverageSpatialTextBox.Text,
                 CoverageTemporal = CoverageTemporalTextBox.Text,
 
-                 IsANewInterviewer = isANewInterviewer,
+                IsANewInterviewer = isANewInterviewer,
             };
 
             UpdateTranscription(transcriptionModel, WellKnownTranscriptionModificationType.Metadata);
@@ -682,7 +682,6 @@ namespace WpfApp
             if (response.IsOperationSuccess)
             {
                 App.ShowMessage(true, string.Empty);
-
             }
             else
             {
@@ -728,24 +727,40 @@ namespace WpfApp
             {
                 case WellKnownUserType.GuestUser:
                 case WellKnownUserType.Student:
+                    RestrictionsAndButtonVisibility(Visibility.Collapsed,
+                        Visibility.Collapsed);
+                    break;
                 case WellKnownUserType.Staff:
-                    RestrictionsLabel.Visibility = Visibility.Collapsed;
-                    RestrictionsStackPanel.Visibility = Visibility.Collapsed;
-                    RestrictionsBorder2.Visibility = Visibility.Collapsed;
-                    RestrictionNoteTextBox.Visibility = Visibility.Collapsed;
-                    RestrictionNoteLabel.Visibility = Visibility.Collapsed;
+                    RestrictionsAndButtonVisibility(Visibility.Collapsed,
+                        Visibility.Visible);
                     break;
                 case WellKnownUserType.AdminUser:
-                    RestrictionsLabel.Visibility = Visibility.Visible;
-                    RestrictionsStackPanel.Visibility = Visibility.Visible;
-                    RestrictionsBorder2.Visibility = Visibility.Visible;
-                    RestrictionNoteTextBox.Visibility = Visibility.Visible;
-                    RestrictionNoteLabel.Visibility = Visibility.Visible;
+                    RestrictionsAndButtonVisibility(Visibility.Visible,
+                        Visibility.Visible);
                     break;
                 default:
                     break;
             }
 
+        }
+
+        /// <summary>
+        /// Restrictionses the and button visibility.
+        /// </summary>
+        /// <param name="isButtonDisplay">if set to <c>true</c> [is button display].</param>
+        /// <param name="isRestrictionsDisplay">if set to <c>true</c> [is restrictions display].</param>
+        private void RestrictionsAndButtonVisibility(Visibility isRestrictionsDisplay, Visibility isButtonDisplay)
+        {
+            RestrictionsLabel.Visibility = isRestrictionsDisplay;
+            RestrictionsStackPanel.Visibility = isRestrictionsDisplay;
+            RestrictionsBorder2.Visibility = isRestrictionsDisplay;
+            RestrictionNoteTextBox.Visibility = isRestrictionsDisplay;
+            RestrictionNoteLabel.Visibility = isRestrictionsDisplay;
+
+            TranscriptionDetailsButton.Visibility = isButtonDisplay;
+            MediaDetailsButto.Visibility = isButtonDisplay;
+            MetadataButton.Visibility = isButtonDisplay;
+            SupplementDetailsButton.Visibility = isButtonDisplay;
         }
 
         /// <summary>
@@ -761,7 +776,6 @@ namespace WpfApp
             AudioEquipmentUsedFilteredComboBox.IsTextSearchEnabled = false;
             AudioEquipmentUsedFilteredComboBox.ItemsSource = BaseUserControl.AudioEquipments;
 
-
             VideoEquipmentUsedFilteredComboBox.IsEditable = true;
             VideoEquipmentUsedFilteredComboBox.IsTextSearchEnabled = false;
             VideoEquipmentUsedFilteredComboBox.ItemsSource = BaseUserControl.VideoEquipments;
@@ -772,7 +786,7 @@ namespace WpfApp
         /// </summary>
         private void PopulateFilterTextBox()
         {
-            App.BaseUserControl.InitializeComponent();
+            App.BaseUserControl.InitializeComponent(false);
 
             PopulateIntializeView();
         }

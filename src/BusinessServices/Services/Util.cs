@@ -498,7 +498,7 @@ namespace BusinessServices.Services
                 Name = user.Name,
                 Username = user.Username,
                 UserType = (byte)user.UserType,
-                UserTypeName = ((WellKnownUserType)user.UserType).ToString()
+                //UserTypeName = ((WellKnownUserType)user.UserType).ToString()
             };
         }
 
@@ -527,6 +527,9 @@ namespace BusinessServices.Services
         /// <returns></returns>
         internal static user ConvertToUser(user daUser, UserModel userModel)
         {
+            daUser.Name = userModel.Name;
+            //daUser.Email = userModel.Email;
+
             return daUser;
         }
     }

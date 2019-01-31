@@ -5,12 +5,14 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.OleDb;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using WpfApp.Properties;
 
 namespace WpfApp
@@ -22,7 +24,6 @@ namespace WpfApp
     /// <seealso cref="System.Windows.Markup.IComponentConnector" />
     public partial class Statewidevalidation : UserControl
     {
-
         /// <summary>
         /// The people CSV file path
         /// </summary>
@@ -36,7 +37,7 @@ namespace WpfApp
         /// <summary>
         /// The interview CSV file path
         /// </summary>
-        private static string CollectionCSVFilePath = "interview.csv";
+        private static string CollectionCSVFilePath = "collection.csv";
 
         /// <summary>
         /// The interview CSV file path
@@ -109,11 +110,6 @@ namespace WpfApp
         private static string TitleColumnName = "Title";
 
         /// <summary>
-        /// The subitle column name
-        /// </summary>
-        private static string SubitleColumnName = "Sub Title";
-
-        /// <summary>
         /// The date interview column name
         /// </summary>
         private static string DateInterviewColumnName = "Date Interview";
@@ -132,7 +128,7 @@ namespace WpfApp
         /// The loc subjects column name
         /// </summary>
         private static string LocSubjectsColumnName = "Loc Subjects";
-        
+
         /// <summary>
         /// Gets or sets the interview json models.
         /// </summary>
@@ -184,23 +180,68 @@ namespace WpfApp
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
-        private void CreateFilesButton_Click(object sender, RoutedEventArgs e)
+        private void BrowseButton_Click(object sender, RoutedEventArgs e)
         {
+            OpenFileDialog fileDialog = new OpenFileDialog();
+
+            fileDialog.DefaultExt = ".xlsx";
+            fileDialog.Filter = "Excel Files (*.xls, *.xlsx)|*.xls;*.xlsx|CSV Files (*.csv)|*.csv";
+
+            if (fileDialog.ShowDialog() == true)
+            {
+                fileUploadLabel.Content = fileDialog.FileName;
+
+                UploadButton.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                UploadButton.Visibility = Visibility.Hidden;
+            }
+
             InitializeView();
 
-            // read the excel file
-            DataTable dt = ReadExcelFile();
+        }
 
-            //Read the content for people in excel and write csv file.
-            ReadAndWritePeopleData(dt);
+        /// <summary>
+        /// Handles the Click event of the UploadButton control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
+        private void UploadButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
 
-            //Read the content for repository in excel and write csv file.
-            ReadAndWriteRepositoryData(dt);
+                InitializeView();
 
-            //Read the content for interview in excel and write csv file.
-            ReadAndWriteCollectionData(dt);
+                string filePath = fileUploadLabel.Content.ToString();
 
-            ReadAndWriteInterviewData(dt);
+                if (!string.IsNullOrEmpty(filePath))
+                {
+                    // read the excel file
+                    DataTable dt = dt = ReadExcelFile(filePath);
+
+                    //Read the content for people in excel and write csv file.
+                    ReadAndWritePeopleData(dt);
+
+                    //Read the content for repository in excel and write csv file.
+                    ReadAndWriteRepositoryData(dt);
+
+                    //Read the content for interview in excel and write csv file.
+                    ReadAndWriteCollectionData(dt);
+
+                    // Read the content for interview 
+                    ReadAndWriteInterviewData(dt);
+                }
+                else
+                {
+                    App.ShowMessage(false, "Browse and select the file first.");
+                }
+            }
+            catch (Exception)
+            {
+                App.ShowMessage(false, "Upload the correct formatted excel file.");
+            }
         }
 
         /// <summary>
@@ -233,30 +274,46 @@ namespace WpfApp
             {
                 var csv = new StringBuilder();
 
-                csv.AppendLine("parent,template,published,pagetitle,tv6,tv7,tv8,tv9,tv10,tv11,tv16,tv17");
+                csv.Append("parent,template,published,pagetitle,tv6,tv7,tv8,tv10,tv11,tv16,tv17" + Environment.NewLine);
 
-                foreach (InterviewApiModel interviewModel in newList)
+                for (int i = 0; i < newList.Count(); i++)
                 {
-                    csv.AppendLine(string.Format("5,3,1,{0},{1},{2},{3},{4},{5},{6},{7},{8}",
-                        interviewModel.Title, interviewModel.CallNumber, interviewModel.CollectionID,
-                        interviewModel.Date, interviewModel.RepositoryID,
-                        interviewModel.IntervieweesID.Length > 2 ? interviewModel.IntervieweesID.Substring(interviewModel.IntervieweesID.Length - 2) : interviewModel.IntervieweesID,
-                        interviewModel.InterviewersID.Length > 2 ? interviewModel.InterviewersID.Substring(interviewModel.InterviewersID.Length - 2) : interviewModel.InterviewersID,
-                        interviewModel.Keywords,
-                        interviewModel.LocSubjects));
+                    InterviewApiModel interviewModel = newList.ElementAt(i);
+
+                    if (i == newList.Count() - 1)
+                    {
+                        csv.Append(string.Format("5,3,1,{0},{1},{2},{3},{4},{5},{6},{7}",
+                         interviewModel.Title, interviewModel.CallNumber, interviewModel.CollectionID,
+                         interviewModel.Date,
+                         interviewModel.IntervieweesID.Length > 2 ? interviewModel.IntervieweesID.Substring(interviewModel.IntervieweesID.Length - 2) : interviewModel.IntervieweesID,
+                         interviewModel.InterviewersID.Length > 2 ? interviewModel.InterviewersID.Substring(interviewModel.InterviewersID.Length - 2) : interviewModel.InterviewersID,
+                         interviewModel.Keywords,
+                         interviewModel.LocSubjects));
+                    }
+                    else
+                    {
+                        csv.Append(string.Format("5,3,1,{0},{1},{2},{3},{4},{5},{6},{7},{8}",
+                          interviewModel.Title, interviewModel.CallNumber, interviewModel.CollectionID,
+                          interviewModel.Date,
+                          interviewModel.IntervieweesID.Length > 2 ? interviewModel.IntervieweesID.Substring(interviewModel.IntervieweesID.Length - 2) : interviewModel.IntervieweesID,
+                          interviewModel.InterviewersID.Length > 2 ? interviewModel.InterviewersID.Substring(interviewModel.InterviewersID.Length - 2) : interviewModel.InterviewersID,
+                          interviewModel.Keywords,
+                          interviewModel.LocSubjects,
+                          Environment.NewLine));
+                    }
                 }
 
                 File.WriteAllText(InterviewCSVFilePath, csv.ToString());
 
                 WriteStatDetails(string.Format("{0} file created.", InterviewCSVFilePath));
 
-                InterviewCSVButon.Visibility = Visibility.Visible;
+                ActiveButton(InterviewCSVButon);
             }
             else
             {
                 WriteStatDetails(string.Format("{0} not created.", InterviewCSVFilePath));
 
-                InterviewCSVButon.Visibility = Visibility.Hidden;
+                InActiveButton(InterviewCSVButon);
             }
 
             WriteStatDetails(string.Format(DottedLine));
@@ -270,9 +327,9 @@ namespace WpfApp
         private void ReadAndWriteCollectionData(DataTable dt)
         {
             // reading the json objects from the api
-            List<CollectionApi> collectionJsonObjects = GetJsonFileObjectList<CollectionApi>("interview.json");
+            List<CollectionApi> collectionJsonObjects = GetJsonFileObjectList<CollectionApi>("collection.json");
 
-            WriteStatDetails(string.Format("{0} found interview record(s) in modx system", collectionJsonObjects.Count()));
+            WriteStatDetails(string.Format("{0} found collection record(s) in modx system", collectionJsonObjects.Count()));
 
             // Convert the json object to people model
             CollectionJsonModels = GetCollectionModelList(collectionJsonObjects);
@@ -283,35 +340,48 @@ namespace WpfApp
                                  join objB in collectionJsonObjects on objA.Title equals objB.title
                                  select objA).ToList();
 
-            WriteStatDetails(string.Format("{0} found interview record(s) ", intersectList.Count()));
+            WriteStatDetails(string.Format("{0} found collection record(s) ", intersectList.Count()));
 
             IEnumerable<CollectionApiModel> newList = collectionsModels.Except(intersectList.ToList());
 
-            WriteStatDetails(string.Format("{0} unique interview record(s) found in the uploaded excel document", newList.Count()));
+            WriteStatDetails(string.Format("{0} unique collection record(s) found in the uploaded excel document", newList.Count()));
 
             if (newList.Count() > 0)
             {
                 var csv = new StringBuilder();
 
-                csv.AppendLine("parent,template,published,pagetitle,tv1,tv2,tv3,tv4,tv16,tv17");
+                csv.Append("parent,template,published,pagetitle,tv1,tv2,tv3,tv4,tv16,tv17" + Environment.NewLine);
 
-                foreach (CollectionApiModel repoModel in newList)
+                for (int i = 0; i < newList.Count(); i++)
                 {
-                    csv.AppendLine(string.Format("3,2,1,{0},{1},{2},{3},{4},{5},{6}",
-                        repoModel.Title, repoModel.BeginDate, repoModel.EndDate, repoModel.CallNumber, repoModel.RepositoryID, repoModel.Keywords, repoModel.LocSubjects));
+                    CollectionApiModel repoModel = newList.ElementAt(i);
+
+                    if (i == newList.Count() - 1)
+                    {
+                        csv.Append(string.Format("3,2,1,{0},{1},{2},{3},{4},{5},{6}",
+                       repoModel.Title, repoModel.BeginDate, repoModel.EndDate, repoModel.CallNumber,
+                       repoModel.RepositoryID, repoModel.Keywords, repoModel.LocSubjects));
+                    }
+                    else
+                    {
+                        csv.Append(string.Format("3,2,1,{0},{1},{2},{3},{4},{5},{6},{7}",
+                     repoModel.Title, repoModel.BeginDate, repoModel.EndDate, repoModel.CallNumber,
+                     repoModel.RepositoryID, repoModel.Keywords, repoModel.LocSubjects, Environment.NewLine));
+
+                    }
                 }
 
                 File.WriteAllText(CollectionCSVFilePath, csv.ToString());
 
                 WriteStatDetails(string.Format("{0} file created.", CollectionCSVFilePath));
 
-                CollectionCSVButon.Visibility = Visibility.Visible;
+                ActiveButton(CollectionCSVButon);
             }
             else
             {
                 WriteStatDetails(string.Format("{0} not created.", CollectionCSVFilePath));
 
-                CollectionCSVButon.Visibility = Visibility.Hidden;
+                InActiveButton(CollectionCSVButon);
             }
 
             WriteStatDetails(string.Format(DottedLine));
@@ -359,25 +429,35 @@ namespace WpfApp
             {
                 var csv = new StringBuilder();
 
-                csv.AppendLine("parent,template,published,pagetitle,content,tv12,tv13,tv14");
+                csv.Append("parent,template,published,pagetitle,content,tv12,tv13,tv14" + Environment.NewLine);
 
-                foreach (RepositoryModel repoModel in newList)
+                for (int i = 0; i < newList.Count(); i++)
                 {
-                    csv.AppendLine(string.Format("4,4,1,{0},{1},{2},{3},{4}",
+                    RepositoryModel repoModel = newList.ElementAt(i);
+
+                    if (i == newList.Count() - 1)
+                    {
+                        csv.Append(string.Format("4,4,1,{0},{1},{2},{3},{4}",
                         repoModel.Title, "Content", "email address", "contact name", "repository url"));
+                    }
+                    else
+                    {
+                        csv.Append(string.Format("4,4,1,{0},{1},{2},{3},{4},{5}",
+                       repoModel.Title, "Content", "email address", "contact name", "repository url", Environment.NewLine));
+                    }
                 }
 
                 File.WriteAllText(RepositoryCSVFilePath, csv.ToString());
 
                 WriteStatDetails(string.Format("{0} file created.", RepositoryCSVFilePath));
 
-                RepositoryCSVButon.Visibility = Visibility.Visible;
+                ActiveButton(RepositoryCSVButon);
             }
             else
             {
                 WriteStatDetails(string.Format("{0} not created.", RepositoryCSVFilePath));
 
-                RepositoryCSVButon.Visibility = Visibility.Hidden;
+                InActiveButton(RepositoryCSVButon);
             }
 
             WriteStatDetails(string.Format(DottedLine));
@@ -392,9 +472,8 @@ namespace WpfApp
         {
             if (dt.Columns.Contains(InterviewerColumnName) || dt.Columns.Contains(IntervieweeColumnName))
             {
-
                 // reading the json objects from the api
-                List<People> peopleJsonObjects = GetJsonFileObjectList<People>("person.json");
+                List<People> peopleJsonObjects = GetJsonFileObjectList<People>("people.json");
 
                 WriteStatDetails(string.Format("{0} found people record(s) in modx system", peopleJsonObjects.Count()));
 
@@ -417,25 +496,35 @@ namespace WpfApp
                 {
                     var csv = new StringBuilder();
 
-                    csv.AppendLine("parent,template,published,pagetitle,content,tv18,tv19");
+                    csv.Append("parent,template,published,pagetitle,content,tv18,tv19" + Environment.NewLine);
 
-                    foreach (PeopleModel peopleModel in newList)
+                    for (int i = 0; i < newList.Count(); i++)
                     {
-                        csv.AppendLine(string.Format("2,5,1,{0},content for {0},{1},{2}",
-                            peopleModel.Fullname, peopleModel.FirstName, peopleModel.LastName));
+                        PeopleModel peopleModel = newList.ElementAt(i);
+
+                        if (i == newList.Count() - 1)
+                        {
+                            csv.Append(string.Format("2,5,1,{0},content for {0},{1},{2}",
+                             peopleModel.Fullname, peopleModel.FirstName, peopleModel.LastName));
+                        }
+                        else
+                        {
+                            csv.Append(string.Format("2,5,1,{0},content for {0},{1},{2},{3}",
+                              peopleModel.Fullname, peopleModel.FirstName, peopleModel.LastName, Environment.NewLine));
+                        }
                     }
 
                     File.WriteAllText(PeopleCSVFilePath, csv.ToString());
 
                     WriteStatDetails(string.Format("{0} file created.", PeopleCSVFilePath));
 
-                    PeopleCSVButon.Visibility = Visibility.Visible;
+                    ActiveButton(PeopleCSVButon);
                 }
                 else
                 {
                     WriteStatDetails(string.Format("{0} not created.", PeopleCSVFilePath));
 
-                    PeopleCSVButon.Visibility = Visibility.Hidden;
+                    InActiveButton(PeopleCSVButon);
                 }
             }
             else
@@ -454,10 +543,22 @@ namespace WpfApp
         {
             StatTextBox.Text = string.Empty;
 
-            PeopleCSVButon.Visibility = Visibility.Hidden;
-            RepositoryCSVButon.Visibility = Visibility.Hidden;
-            CollectionCSVButon.Visibility = Visibility.Hidden;
-            InterviewCSVButon.Visibility = Visibility.Hidden;
+            InActiveButton(PeopleCSVButon);
+            InActiveButton(RepositoryCSVButon);
+            InActiveButton(CollectionCSVButon);
+            InActiveButton(InterviewCSVButon);
+        }
+
+        private void ActiveButton(Button btn)
+        {
+            btn.IsHitTestVisible = true;
+            btn.Style = (Style)FindResource("MaterialDesignRaisedAccentButton");
+        }
+
+        private void InActiveButton(Button btn)
+        {
+            btn.IsHitTestVisible = false;
+            btn.Style = (Style)FindResource("MaterialDesignRaisedLightButton");
         }
 
         /// <summary>
@@ -612,7 +713,7 @@ namespace WpfApp
 
                 SetPeopleModel(interviewer, ref peopleModels);
 
-                string Interviewee = GetStringValue(dt, item, InterviewerColumnName);
+                string Interviewee = GetStringValue(dt, item, IntervieweeColumnName);
 
                 SetPeopleModel(Interviewee, ref peopleModels);
             }
@@ -793,13 +894,20 @@ namespace WpfApp
         /// <returns></returns>
         private List<T> GetJsonFileObjectList<T>(string filename)
         {
-            WriteStatDetails(string.Format("Reading external people {0} json file...", filename));
+            try
+            {
+                WriteStatDetails(string.Format("Reading external people {0} json file...", filename));
 
-            string peopleJsonFile = Settings.Default.ExternalApi + filename;
+                string peopleJsonFile = Settings.Default.ExternalApi + filename;
 
-            var json = new WebClient().DownloadString(peopleJsonFile);
+                var json = new WebClient().DownloadString(peopleJsonFile);
 
-            return JSONObjectMapper.GetObject<List<T>>(json);
+                return JSONObjectMapper.GetObject<List<T>>(json);
+            }
+            catch (Exception)
+            {
+                return new List<T>();
+            }
         }
 
         /// <summary>
@@ -819,30 +927,6 @@ namespace WpfApp
             }
 
             return result;
-        }
-
-        /// <summary>
-        /// Reads the excel file.
-        /// </summary>
-        /// <returns></returns>
-        private DataTable ReadExcelFile()
-        {
-            DataTable dt = null;
-
-            OpenFileDialog fileDialog = new OpenFileDialog();
-
-            fileDialog.DefaultExt = ".xlsx";
-            fileDialog.Filter = "Excel Files (*.xls, *.xlsx)|*.xls;*.xlsx|CSV Files (*.csv)|*.csv";
-
-            if (fileDialog.ShowDialog() == true)
-            {
-                string filePath = fileDialog.FileName;
-                fileUploadLabel.Content = filePath;
-
-                dt = ReadExcelFile(filePath);
-            }
-
-            return dt;
         }
 
         /// <summary>

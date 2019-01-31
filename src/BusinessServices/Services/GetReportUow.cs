@@ -119,29 +119,58 @@ namespace BusinessServices.Servcices
 
             var predicate = PredicateBuilder.True<transcription>();
 
-            predicate = predicate.And(p => p.IsConvertToDigital == Request.ReportModel.IsDigitallyMigrated);
-            //predicate = predicate.And(p => p.IsBornDigital == Request.ReportModel.IsDigitallyMigrated);
+            //predicate = predicate.And(p => p.IsConvertToDigital == Request.ReportModel.IsDigitallyMigrated);
+            ////predicate = predicate.And(p => p.IsBornDigital == Request.ReportModel.IsDigitallyMigrated);
 
-            predicate = predicate.And(p => p.IsAudioFormat == Request.ReportModel.IsAudioFormat);
-            predicate = predicate.And(p => p.IsVideoFormat == Request.ReportModel.IsVideoFormat);
+            //predicate = predicate.And(p => p.IsAudioFormat == Request.ReportModel.IsAudioFormat);
+            //predicate = predicate.And(p => p.IsVideoFormat == Request.ReportModel.IsVideoFormat);
 
-            predicate = predicate.And(p => p.IsInContentDm == Request.ReportModel.IsOnline);
+            // Online and offline comparision  
+            if (Request.ReportModel.IsOnline && Request.ReportModel.IsOffline)
+            {
+                predicate = predicate;
+            }
+            else if (Request.ReportModel.IsOnline)
+            {
+                predicate = predicate.And(p => p.IsInContentDm);
+            }
+            else if (Request.ReportModel.IsOffline)
+            {
+                predicate = predicate.And(p => !p.IsInContentDm);
+            }
 
+            // Born digital or converted to digital
+            if (Request.ReportModel.IsConvertedDigital && Request.ReportModel.IsBornDigitally)
+            {
+                predicate = predicate.And(p => p.IsBornDigital && p.IsConvertToDigital);
+            }
+            else if (Request.ReportModel.IsConvertedDigital)
+            {
+                predicate = predicate.And(p => p.IsConvertToDigital);
+            }
+            else if (Request.ReportModel.IsBornDigitally)
+            {
+                predicate = predicate.And(p => p.IsBornDigital);
+            }
+                       
+            // Begin and end date
             if (Request.ReportModel.BeginDate != null && Request.ReportModel.EndDate != null &&
-                Request.ReportModel.BeginDate != DateTime.MinValue && Request.ReportModel.EndDate != DateTime.MinValue)
+            Request.ReportModel.BeginDate != DateTime.MinValue && Request.ReportModel.EndDate != DateTime.MinValue)
             {
                 predicate = predicate.And(p => p.InterviewDate >= Request.ReportModel.BeginDate
                 && p.InterviewDate < Request.ReportModel.EndDate);
             }
 
+            // Interviewer
             if (!string.IsNullOrEmpty(Request.ReportModel.Interviewer))
             {
-                predicate = predicate.And(p => p.Interviewer.ToLower().Equals(Request.ReportModel.Interviewer.ToLower()));
+                predicate = predicate.And(p => p.Interviewer.ToLower().Contains(Request.ReportModel.Interviewer.ToLower()));
             }
 
+            // location
             if (!string.IsNullOrEmpty(Request.ReportModel.Location))
             {
-                predicate = predicate.And(p => p.Place.ToLower().Equals(Request.ReportModel.Location.ToLower()));
+                predicate = predicate.And(p => p.Place.ToLower().Contains(Request.ReportModel.Location.ToLower()));
             }
 
             IEnumerable<transcription> dataset3 = allTranscriptions.Where<transcription>(predicate.Compile());

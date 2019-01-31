@@ -4,26 +4,60 @@
         xmlns:domain="clr-namespace:WpfApp.Domain"
         xmlns:system="clr-namespace:System;assembly=mscorlib"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        xmlns:domain1="clr-namespace:WpfApp.Domain"
-        Height="950" Width="1300"       
+        Height="950" Width="1320"       
         TextElement.FontWeight="Regular"
         TextElement.FontSize="15"
         TextOptions.TextFormattingMode="Ideal" 
         TextOptions.TextRenderingMode="Auto"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{DynamicResource MaterialDesignPaper}"
-        FontFamily="{StaticResource MaterialDesignFont}"
-        >
-
+        FontFamily="{StaticResource MaterialDesignFont}"   
+        xmlns:local1="clr-namespace:WpfApp">
 
     <Window.Resources>
-        <ResourceDictionary>
+        <!--<ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ToggleButton.xaml" />
             </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </Window.Resources>
+        </ResourceDictionary>-->
 
+        <DataTemplate DataType="{x:Type local1:InterviewPageViewModel}">
+            <local1:Interview/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type local1:TranscriptionQueueViewModel}">
+            <local1:TranscriptionQueue/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type local1:BrowsePageViewModel}">
+            <local1:Browse/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type local1:UsersPageViewModel}">
+            <local1:Users/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type local1:FindnReplacePageViewModel}">
+            <local1:FindReplace/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type local1:ReportsPageViewModel}">
+            <local1:Reports/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type local1:SettingsPageViewModel}">
+            <local1:Setting />
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type local1:ImportPageViewModel}">
+            <local1:FileImport />
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type local1:StatewideValidationPageViewModel}">
+            <local1:Statewidevalidation />
+        </DataTemplate>
+
+    </Window.Resources>
 
     <materialDesign:DialogHost Identifier="RootDialog" SnackbarMessageQueue="{Binding ElementName=MainSnackbar, Path=MessageQueue}">
         <materialDesign:DrawerHost IsLeftDrawerOpen="{Binding ElementName=MenuToggleButton, Path=IsChecked}">
@@ -42,39 +76,113 @@
                                 <ColumnDefinition Width="1*" />
                             </Grid.ColumnDefinitions>
 
-                            <!--Hamburger Menu appear Button-->
                             <ToggleButton Name="ToggleButton"   Grid.Column="1" Style="{StaticResource  MaterialDesignHamburgerToggleButton}" 
-                                    DockPanel.Dock="Top"
+                                    DockPanel.Dock="Top" 
                                     HorizontalAlignment="Right" Margin="20"
                                     IsChecked="{Binding ElementName=MenuToggleButton, Path=IsChecked, Mode=TwoWay}" />
                         </Grid>
 
-                        <!--Hamburger item list-->
-                        <ListBox Grid.Row="1" x:Name="DemoItemsListBox"  Margin="0 0 0 0" SelectedIndex="0"  MaxHeight="400"                    
-                             ItemsSource="{Binding DemoItems}"
-                             PreviewMouseLeftButtonUp="UIElement_OnPreviewMouseLeftButtonUp" >
-                            <ListBox.ItemTemplate >
-                                <DataTemplate DataType="domain:DemoItem"  >
-                                    <StackPanel Orientation="Horizontal" Background="{Binding BackColor}" >
-                                        <materialDesign:PackIcon Width="40" Kind="{Binding PackIcon }"
-                                                                     ToolTip="{Binding Name}" />
-                                        <TextBlock Text="{Binding Name}" Margin="0 0 0 0" Foreground="{Binding BackColor}" />
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
+                        <StackPanel  x:Name="VerticalDemoItemsList"   Grid.Row="1" Width="200">
+                            <Button Name="Home1Button" ToolTip="Home"  Margin="5"
+                                                PreviewMouseLeftButtonUp="Button_OnPreviewMouseLeftButtonUp" >
 
-                        <StackPanel Grid.Row="2" Margin="0 100 0 0" >
-                            <Label   HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="12" 
-                                     Style="{StaticResource BoldLabel}">Oral History workflow CMS 2018</Label>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="Home" HorizontalAlignment="Left" />
+                                    <TextBlock Margin="5 0 0 0" Text="Home">
+                                    </TextBlock>
+                                </StackPanel>
+                            </Button>
+                            <Button Name="Interview1Button" ToolTip="Interview" Command="{Binding Path=LoadInterviewPageCommand}" Margin="5"
+                                                PreviewMouseLeftButtonUp="Button_OnPreviewMouseLeftButtonUp">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="CommentQuestion" HorizontalAlignment="Left" />
+                                    <TextBlock Margin="5 0 0 0" Text="Interview">
 
-                            <Label    HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="10" 
-                                     Style="{StaticResource BoldLabel}" Content="{Binding ApplicationVersion}"></Label>
+                                    </TextBlock>
+                                </StackPanel>
+                            </Button>
 
-                            <Label    HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="10" 
-                                     Style="{StaticResource BoldLabel}">Copyright ©  2018 Oklahoma State University</Label>
-                            <Label    HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="10" 
-                                     Style="{StaticResource BoldLabel}">Digital Resources and Discovery Services</Label>
+                            <Button Name="TranscriptionQueue1Button" ToolTip="Transcription Queue" Command="{Binding Path=LoadTranscriptionQueuePageCommand}" Margin="5"
+                                                PreviewMouseLeftButtonUp="Button_OnPreviewMouseLeftButtonUp">
+
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="LibraryPlus" HorizontalAlignment="Left" />
+                                    <TextBlock Margin="5 0 0 0" Text="Transcription Queue">
+
+                                    </TextBlock>
+                                </StackPanel>
+                            </Button>
+
+                            <Button Name="Browse1Button" ToolTip="Browse"  Command="{Binding Path=LoadBrowsePageCommand}"  Margin="5"
+                                                PreviewMouseLeftButtonUp="Button_OnPreviewMouseLeftButtonUp">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="OpenInApp" HorizontalAlignment="Left" />
+                                    <TextBlock Margin="5 0 0 0" Text="Browse">
+
+                                    </TextBlock>
+                                </StackPanel>
+                            </Button>
+
+                            <Button Name="Users1Button" ToolTip="Users"  Command="{Binding Path=LoadUsersPageCommand}" Margin="5"
+                                                PreviewMouseLeftButtonUp="Button_OnPreviewMouseLeftButtonUp">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="NaturePeople" HorizontalAlignment="Left" />
+                                    <TextBlock Margin="5 0 0 0" Text="Users">
+
+                                    </TextBlock>
+                                </StackPanel>
+                            </Button>
+
+                            <Button Name="FindnReplace1Button" ToolTip="Find and Replace" Command="{Binding Path=LoadFindnReplacePageCommand}" Margin="5"
+                                                PreviewMouseLeftButtonUp="Button_OnPreviewMouseLeftButtonUp">
+
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="FindReplace" HorizontalAlignment="Left" />
+                                    <TextBlock Margin="5 0 0 0" Text="Find and Replace">
+
+                                    </TextBlock>
+                                </StackPanel>
+                            </Button>
+
+                            <Button Name="Reports1Button" ToolTip="Reports" Command="{Binding Path=LoadReportsPageCommand}" Margin="5"
+                                                PreviewMouseLeftButtonUp="Button_OnPreviewMouseLeftButtonUp">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="FileDocument" HorizontalAlignment="Left" />
+                                    <TextBlock Margin="5 0 0 0" Text="Reports">
+
+                                    </TextBlock>
+                                </StackPanel>
+                            </Button>
+
+                            <Button  Name="Setting1Button"  ToolTip="Settings"  Command="{Binding Path=LoadSettingsPageCommand}"  Margin="5"
+                                                 PreviewMouseLeftButtonUp="Button_OnPreviewMouseLeftButtonUp">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="Settings" HorizontalAlignment="Left" />
+                                    <TextBlock Margin="5 0 0 0" Text="Settings">
+
+                                    </TextBlock>
+                                </StackPanel>
+                            </Button>
+
+                            <Button Name="Import1Button"  ToolTip="Import" Command="{Binding Path=LoadImportPageCommand}" Margin="5"
+                                                PreviewMouseLeftButtonUp="Button_OnPreviewMouseLeftButtonUp">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="Upload" HorizontalAlignment="Left" />
+                                    <TextBlock Margin="5 0 0 0" Text="Upload">
+
+                                    </TextBlock>
+                                </StackPanel>
+                            </Button>
+
+                            <Button Name="StatewideValidation1Button" ToolTip="Statewide validation" Command="{Binding Path=LoadStatewideValidationPageCommand}" Margin="5"
+                                                PreviewMouseLeftButtonUp="Button_OnPreviewMouseLeftButtonUp">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="CheckAll" HorizontalAlignment="Left" />
+                                    <TextBlock Margin="5 0 0 0" Text="CheckAll">
+
+                                    </TextBlock>
+                                </StackPanel>
+                            </Button>
 
                         </StackPanel>
 
@@ -92,113 +200,289 @@
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="40" />
-                                    <RowDefinition Height="15" />
+                                    <RowDefinition Height="20" />
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="50" />
-                                    <ColumnDefinition Width="500" />
+                                    <ColumnDefinition Width="365" />
+                                    <ColumnDefinition Width="200" />
                                 </Grid.ColumnDefinitions>
 
-                                <ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}" Margin="5" Padding="5"  Grid.Row="0" Grid.Column="0" IsChecked="False"
+                                <ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}" Margin="5" Padding="5"  
+                                              Grid.Row="0" Grid.Column="0" IsChecked="False"
                                         x:Name="MenuToggleButton"/>
 
-                                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Name="ApplicationNameTextBlock" Margin="5 5 5 0"  Grid.Row="0" Grid.Column="1" FontSize="18"></TextBlock>
+                                <TextBlock PreviewMouseLeftButtonUp="Button_OnPreviewMouseLeftButtonUp" ToolTip="Home" 
+                                           HorizontalAlignment="Left" VerticalAlignment="Center" Name="ApplicationNameTextBlock" 
+                                           Margin="0 5 0 0"  Grid.Row="0" Grid.Column="1" FontSize="18" ></TextBlock>
 
-                                <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
-                                    <Label  Style="{StaticResource BoldLabel}" Content="{Binding UserName}" Margin="0 -10 0 0" ></Label>
-                                    <Label Style="{StaticResource BoldLabel}" FontSize="10" Content="{Binding Usertype}" Margin="0 -8 0 0"></Label>
-                                    <Label FontSize="10" Style="{StaticResource BoldLabel}" Content="{Binding Form}" Margin="0 -10 0 0"></Label>
+                                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Name="ApplicationPageTextBlock" 
+                                           Margin="0 5 0 0"  Grid.Row="0" Grid.Column="2" FontSize="18"></TextBlock>
+
+                                <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" Grid.ColumnSpan="2">
+                                    <Label Name="UsernameLabel"  Style="{StaticResource BoldLabel}" Content="{Binding UserName}" Margin="0 -10 0 0" ></Label>
+                                    <Label Name="UsertypeLabel"  Style="{StaticResource BoldLabel}" FontSize="10" Content="{Binding Usertype}" Margin="0 -8 0 0"></Label>
+                                    <TextBlock Margin="10 -2 0 0"> 
+                                        <Hyperlink NavigateUri="http://www.google.com" FontSize="13" RequestNavigate="LogoutButton_Click"
+                                                   Command="{Binding Path=LoadLogoutPageCommand}">Log out</Hyperlink>                                   
+                                    </TextBlock>
                                 </StackPanel>
-                            
+
                             </Grid>
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"
                             materialDesign:RippleAssist.IsCentered="True">
-                            <materialDesign:ColorZone Mode="Standard" Padding="8 4 8 4" CornerRadius="2" Panel.ZIndex="1"
-                                   Margin="10"
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <materialDesign:ColorZone Grid.Column="0" x:Name="HorizontalDemoItemsList" Mode="Standard" Padding="3 4 4 4" CornerRadius="5" Panel.ZIndex="1"
+                                    Margin="0 10 10 10"
                                    materialDesign:ShadowAssist.ShadowDepth="Depth1">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
-                                    <!--<Button Style="{DynamicResource MaterialDesignToolButton}">
-                                        <materialDesign:PackIcon Kind="Magnify" Opacity=".56" />
-                                    </Button>-->
-                                    
-                                  
-                                    
-                                    <ListBox Grid.Row="1" Grid.Column="0" x:Name="DemoItemsListBox2"  Margin="0 0 0 0" SelectedIndex="0"  MaxHeight="400"                    
-                             ItemsSource="{Binding DemoItems}" 
-                             PreviewMouseLeftButtonUp="UIElement_OnPreviewMouseLeftButtonUp" >
-                                        <ListBox.ItemTemplate >
-                                            <DataTemplate DataType="domain:DemoItem"  >
-                                                <StackPanel Orientation="Horizontal" Background="{Binding BackColor}" >
-                                                    <materialDesign:PackIcon Width="20" Kind="{Binding PackIcon }"
-                                                                     ToolTip="{Binding Name}" />
-                                                    <!--<TextBlock Text="{Binding Name}" Margin="0 0 0 0" Foreground="{Binding BackColor}" />-->
-                                                </StackPanel>
-                                            </DataTemplate>
-                                        </ListBox.ItemTemplate>
-                                        <ListBox.ItemsPanel>
-                                            <ItemsPanelTemplate>
-                                                <VirtualizingStackPanel IsItemsHost="True" Orientation="Horizontal"/>
-                                            </ItemsPanelTemplate>
-                                        </ListBox.ItemsPanel>
-                                    </ListBox>
+                                    <StackPanel  Orientation="Horizontal">
+                                        <Button Name="Home2Button"
+                                                    Style="{StaticResource HorizontalMenuButton}"
+                                                    PreviewMouseLeftButtonUp="Button_OnPreviewMouseLeftButtonUp" 
+                                                    ToolTip="Home" >
+                                            <materialDesign:PackIcon Kind="Home" />
+                                        </Button>
 
-                                    <!--<TextBox Grid.Column="1" Margin="8 0 0 0" materialDesign:HintAssist.Hint="Search interviews" 
-                                     materialDesign:TextFieldAssist.DecorationVisibility="Hidden" BorderThickness="0"  
-                                     MinWidth="200" VerticalAlignment="Center" Name="MainSearchTextBox" >
-                                    </TextBox>
-                                    <Button  Grid.Column="2" Style="{StaticResource MaterialDesignRaisedAccentButton}" Click="SearchButton_Click">
-                                        _Search
-                                    </Button>-->
+                                        <Button Name="Interview2Button"  
+                                                Command="{Binding Path=LoadInterviewPageCommand}" 
+                                               Style="{StaticResource HorizontalMenuButton}" 
+                                                PreviewMouseLeftButtonUp="Button_OnPreviewMouseLeftButtonUp" 
+                                                ToolTip="Add Interview" >
+                                            <materialDesign:PackIcon Kind="CommentQuestion" />
+                                        </Button>
 
-                                    <TextBlock Margin="5 5 5 0 " Grid.Row="1" Grid.Column="1"> 
-                                        <Hyperlink NavigateUri="http://www.google.com" RequestNavigate="LogoutButton_Click">Exit</Hyperlink>
-                                    </TextBlock>
+                                        <Button Name="TranscriptionQueue2Button"  
+                                                    Command="{Binding Path=LoadTranscriptionQueuePageCommand}" 
+                                                    Style="{StaticResource HorizontalMenuButton}"
+                                                    PreviewMouseLeftButtonUp="Button_OnPreviewMouseLeftButtonUp" 
+                                                    ToolTip="Transcription Queue" >
+                                            <materialDesign:PackIcon Kind="LibraryPlus" />
+                                        </Button>
 
-                                </Grid>
-                            </materialDesign:ColorZone>
+                                        <Button Name="Browse2Button" 
+                                                    Command="{Binding Path=LoadBrowsePageCommand}" 
+                                                    Style="{StaticResource HorizontalMenuButton}" 
+                                                    PreviewMouseLeftButtonUp="Button_OnPreviewMouseLeftButtonUp" 
+                                                    ToolTip="Browse" >
+                                            <materialDesign:PackIcon Kind="OpenInApp" />
+                                        </Button>
+
+                                        <Button Name="Users2Button"  
+                                                    Command="{Binding Path=LoadUsersPageCommand}" 
+                                                    Style="{StaticResource HorizontalMenuButton}"
+                                                    Visibility="Collapsed"
+                                                    PreviewMouseLeftButtonUp="Button_OnPreviewMouseLeftButtonUp" 
+                                                    ToolTip="Users" >
+                                            <materialDesign:PackIcon Kind="NaturePeople" />
+                                        </Button>
+
+                                        <Button Name="FindnReplace2Button" 
+                                                Command="{Binding Path=LoadFindnReplacePageCommand}" 
+                                               Style="{StaticResource HorizontalMenuButton}"
+                                                Visibility="Collapsed"
+                                                PreviewMouseLeftButtonUp="Button_OnPreviewMouseLeftButtonUp" 
+                                                ToolTip="Find and Replace" >
+                                            <materialDesign:PackIcon Kind="FindReplace" />
+                                        </Button>
+
+                                        <Button Name="Reports2Button"  Command="{Binding Path=LoadReportsPageCommand}" 
+                                                    Style="{StaticResource HorizontalMenuButton}"
+                                                    Visibility="Collapsed"
+                                                    PreviewMouseLeftButtonUp="Button_OnPreviewMouseLeftButtonUp" 
+                                                    ToolTip="Reports" >
+                                            <materialDesign:PackIcon Kind="FileDocument" />
+                                        </Button>
+
+                                        <Button  Name="Setting2Button"  Command="{Binding Path=LoadSettingsPageCommand}" 
+                                                     Style="{StaticResource HorizontalMenuButton}"
+                                                     Visibility="Collapsed"
+                                                     PreviewMouseLeftButtonUp="Button_OnPreviewMouseLeftButtonUp" 
+                                                     ToolTip="Settings" >
+                                            <materialDesign:PackIcon Kind="Settings" />
+                                        </Button>
+
+                                        <Button Name="Import2Button" 
+                                                    Command="{Binding Path=LoadImportPageCommand}" 
+                                                    Style="{StaticResource HorizontalMenuButton}"                                                   
+                                                    Visibility="Collapsed"
+                                                    PreviewMouseLeftButtonUp="Button_OnPreviewMouseLeftButtonUp" 
+                                                    ToolTip="Import records" >
+                                            <materialDesign:PackIcon Kind="Upload" />
+                                        </Button>
+
+                                        <Button Name="StatewideValidation2Button"  
+                                                Command="{Binding Path=LoadStatewideValidationPageCommand}"
+                                                Style="{StaticResource HorizontalMenuButton}" 
+                                                Visibility="Collapsed"
+                                                PreviewMouseLeftButtonUp="Button_OnPreviewMouseLeftButtonUp" 
+                                                ToolTip="Statewide Validation" >
+                                            <materialDesign:PackIcon Kind="CheckAll" />
+                                        </Button>
+
+
+                                    </StackPanel>
+                                </materialDesign:ColorZone>
+
+                                <materialDesign:ColorZone Grid.Column="1" Mode="Standard" Padding="3 4 4 4" Height="42" CornerRadius="2" Panel.ZIndex="1"
+                                   Margin="0 10 10 10"
+                                   materialDesign:ShadowAssist.ShadowDepth="Depth1">
+
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBox Margin="3 0 10 0" Text="{Binding Path=SearchText}" materialDesign:HintAssist.Hint=" Search" 
+                                     
+                                     Width="150" VerticalAlignment="Center" Background="{StaticResource AlternativeColor}" >
+                                        </TextBox>
+
+                                        <Button  ToolTip="Search" Command="{Binding Path=LoadSearchOnBrowsePageCommand}"  PreviewMouseLeftButtonUp="Button_OnPreviewMouseLeftButtonUp" KeyboardNavigation.TabIndex="0"  
+                                                 Style="{StaticResource MaterialDesignRaisedAccentButton}">
+                                            _Search
+                                        </Button>
+
+                                    </StackPanel>
+                                </materialDesign:ColorZone>
+                            </Grid>
+
+
 
                         </StackPanel>
                     </DockPanel>
                 </materialDesign:ColorZone>
-                <Grid>
+                <Grid  Name="ContentControlGrid">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
+                        <RowDefinition Height="auto" />
                     </Grid.RowDefinitions>
 
-                                      
-                    <ScrollViewer Name="MainScrollViewer" Grid.Row="1" Visibility="Visible"
-                                  HorizontalScrollBarVisibility="{Binding ElementName=DemoItemsListBox, Path=SelectedItem.HorizontalScrollBarVisibilityRequirement}"
-                                  VerticalScrollBarVisibility="{Binding ElementName=DemoItemsListBox, Path=SelectedItem.VerticalScrollBarVisibilityRequirement}" 
-                                  Padding="{Binding ElementName=DemoItemsListBox, Path=SelectedItem.MarginRequirement}">
-
-                        <ContentControl Name="MainContentControl" Content="{Binding ElementName=DemoItemsListBox, Path=SelectedItem.Content}" VerticalAlignment="Top" />
+                    <ScrollViewer Grid.Row="0"
+                                  HorizontalScrollBarVisibility="Auto"
+                                  VerticalScrollBarVisibility="Auto"
+                                  Padding="10">
+                        <ContentControl Content="{Binding Path=CurrentViewModel}"></ContentControl>
 
                     </ScrollViewer>
 
-                    <ScrollViewer Name="MainScrollViewer2" Grid.Row="1"  Visibility="Visible"
-                                  HorizontalScrollBarVisibility="{Binding ElementName=DemoItemsListBox2, Path=SelectedItem.HorizontalScrollBarVisibilityRequirement}"
-                                  VerticalScrollBarVisibility="{Binding ElementName=DemoItemsListBox2, Path=SelectedItem.VerticalScrollBarVisibilityRequirement}" 
-                                  Padding="{Binding ElementName=DemoItemsListBox2, Path=SelectedItem.MarginRequirement}">
+                    <Grid Name="MainGrid" Background="#F1EFEF"    >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
 
-                        <ContentControl Name="MainContentControl2" Content="{Binding ElementName=DemoItemsListBox2, Path=SelectedItem.Content}" VerticalAlignment="Top" />
+                        <Grid HorizontalAlignment="Center" VerticalAlignment="Top" Margin="16">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Image Source="Resources/logo.png" Stretch="Uniform" Width="300" Height="100" />
+                        </Grid>
+                        <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Top"
+                      Margin="0 0 0 32">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <materialDesign:Card Width="420" Margin="8 2 4 16" Height="100"  Grid.Row="0" Grid.Column="0">
+                                    <Grid VerticalAlignment="Stretch">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="200" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Grid.Column="0">
 
-                    </ScrollViewer>
-                    
+                                            <TextBlock Name="AllRecordsTextBlock"
+                                       Style="{StaticResource MaterialDesignHeadlineTextBlock}" Margin="16 16 16 8" HorizontalAlignment="Center" FontSize="50"/>
 
-                    <materialDesign:Snackbar MessageQueue="{materialDesign:MessageQueue}" x:Name="MainSnackbar"
-                                            Grid.Row="1" />
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="1" >
+                                            <TextBlock  Margin="16 35 16 8"  HorizontalAlignment="Center" FontSize="20" VerticalAlignment="Center"> All 
+           
+                                Records(s)</TextBlock>
 
+                                        </StackPanel>
+
+                                    </Grid>
+                                </materialDesign:Card>
+                                <materialDesign:Card Width="420" Margin="8 2 4 16" Height="100"  Grid.Row="0" Grid.Column="1">
+                                    <Grid VerticalAlignment="Stretch">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="200" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Grid.Column="0">
+                                            <TextBlock Name="TranscriptionQueueTextBlock"
+                                       Style="{StaticResource MaterialDesignHeadlineTextBlock}"
+                                       Margin="16 16 16 8" HorizontalAlignment="Center" FontSize="50"></TextBlock>
+
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="1" >
+                                            <TextBlock VerticalAlignment="Center"   Margin="16 35 16 8"  HorizontalAlignment="Center" FontSize="18" > Transcription Queue(s)
+                                            </TextBlock>
+
+                                        </StackPanel>
+
+                                    </Grid>
+                                </materialDesign:Card>
+
+                                <materialDesign:Card Width="850" Margin="0"  Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+                                    <ListView Margin="2" Name="LatestTranscriptions" MouseDoubleClick="LatestTranscriptionsListView_MouseDoubleClick">
+                                        <ListView.View>
+                                            <GridView>
+                                                <GridViewColumn Header="ProjectCode" Width="100" DisplayMemberBinding="{Binding ProjectCode}" />
+                                                <GridViewColumn Header="Interviewee" Width="200" DisplayMemberBinding="{Binding Interviewee}" />
+                                                <GridViewColumn  Header="Title" Width="400" DisplayMemberBinding="{Binding Title}" />                                                
+                                            </GridView>
+                                        </ListView.View>
+                                    </ListView>
+                                </materialDesign:Card>
+
+
+                            </Grid>
+                        </ScrollViewer>
+                    </Grid>
+
+
+
+                    <StatusBar DockPanel.Dock="Bottom" Grid.Row="1" VerticalAlignment="Center" >
+
+                        Oral History workflow CMS 2018
+
+                        <Label  Name="VersionLabel" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="10" 
+                                     Style="{StaticResource BoldLabel}" Content="{Binding ApplicationVersion}"></Label>
+
+                        <Separator />
+
+                        Copyright ©  2018 Oklahoma State University
+                        <Separator />
+
+                        Digital Resources and Discovery Services
+
+                    </StatusBar>
 
                 </Grid>
-                
+
             </DockPanel>
         </materialDesign:DrawerHost>
     </materialDesign:DialogHost>

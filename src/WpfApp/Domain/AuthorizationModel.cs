@@ -1,83 +1,75 @@
-﻿using System.Configuration;
-using MaterialDesignDemo;
-using MaterialDesignDemo.Domain;
-using MaterialDesignThemes.Wpf;
-using MaterialDesignThemes.Wpf.Transitions;
-using System.Windows.Controls;
-using System;
-using Model;
+﻿using Core;
 using Core.Enums;
-using Core;
-using System.Drawing;
+using System;
 
 namespace WpfApp.Domain
 {
     /// <summary>
     /// 
     /// </summary>
-    public class MainWindowViewModel
+    public class AuthorizationModel
     {
         #region Private Properties
 
         /// <summary>
         /// The home demo item
         /// </summary>
-        public static DemoItem searchDemoItem = new DemoItem("Search", PackIconKind.DatabaseSearch, new Browse(), ScrollBarVisibility.Auto, ScrollBarVisibility.Auto);
+        public static DemoItem searchDemoItem = new DemoItem("Search" , Model.MainWindowViewModel.LoadTranscriptionQueuePageCommand);
         
         /// <summary>
         /// The home demo item
         /// </summary>
-        public static DemoItem homeDemoItem = new DemoItem("Home", PackIconKind.Home, new Home(), ScrollBarVisibility.Auto, ScrollBarVisibility.Auto);
+        public static DemoItem homeDemoItem = new DemoItem("Home", Model.MainWindowViewModel.LoadTranscriptionQueuePageCommand);
 
         /// <summary>
         /// The interview demo item
         /// </summary>
-        public static DemoItem interviewDemoItem = new DemoItem("Interview", PackIconKind.CommentQuestion, new Interview(), ScrollBarVisibility.Auto, ScrollBarVisibility.Auto);
+        public static DemoItem interviewDemoItem = new DemoItem("Interview", Model.MainWindowViewModel.LoadTranscriptionQueuePageCommand);
 
         /// <summary>
         /// The transaction queue demo item
         /// </summary>
-        public static DemoItem transactionQueueDemoItem = new DemoItem("Transcription Queue", PackIconKind.LibraryPlus, new TranscriptionQueue(), ScrollBarVisibility.Auto, ScrollBarVisibility.Auto);
+        public static DemoItem transactionQueueDemoItem = new DemoItem("Transcription Queue", Model.MainWindowViewModel.LoadTranscriptionQueuePageCommand);
 
         /// <summary>
         /// The browse queue demo item
         /// </summary>
-        public static DemoItem browseQueueDemoItem = new DemoItem("Browse", PackIconKind.OpenInApp, new Browse(), ScrollBarVisibility.Auto, ScrollBarVisibility.Auto);
+        public static DemoItem browseQueueDemoItem = new DemoItem("Browse", Model.MainWindowViewModel.LoadTranscriptionQueuePageCommand);
 
         /// <summary>
         /// The queue demo item
         /// </summary>
-        public static DemoItem usersQueueDemoItem = new DemoItem("Users", PackIconKind.NaturePeople, new Users(), ScrollBarVisibility.Auto, ScrollBarVisibility.Auto);
+        public static DemoItem usersQueueDemoItem = new DemoItem("Users", Model.MainWindowViewModel.LoadTranscriptionQueuePageCommand);
 
         /// <summary>
         /// The find and replace queue demo item
         /// </summary>
-        public static DemoItem findAndReplaceQueueDemoItem = new DemoItem("Find and Replace", PackIconKind.FindReplace, new FindReplace(), ScrollBarVisibility.Auto, ScrollBarVisibility.Auto);
+        public static DemoItem findAndReplaceQueueDemoItem = new DemoItem("Find and Replace", Model.MainWindowViewModel.LoadTranscriptionQueuePageCommand);
 
         /// <summary>
         /// The controlled vocabulary queue demo item
         /// </summary>
-        public static DemoItem controlledVocabularyQueueDemoItem = new DemoItem("Controlled vocabulary", PackIconKind.AppleKeyboardControl, new ControlledVocabulary(), ScrollBarVisibility.Auto, ScrollBarVisibility.Auto);
+        public static DemoItem controlledVocabularyQueueDemoItem = new DemoItem("Controlled vocabulary", Model.MainWindowViewModel.LoadTranscriptionQueuePageCommand);
 
         /// <summary>
         /// The reports queue demo item
         /// </summary>
-        public static DemoItem reportsQueueDemoItem = new DemoItem("Reports", PackIconKind.FileDocument, new Reports(), ScrollBarVisibility.Auto, ScrollBarVisibility.Auto);
+        public static DemoItem reportsQueueDemoItem = new DemoItem("Reports", Model.MainWindowViewModel.LoadTranscriptionQueuePageCommand);
 
         /// <summary>
         /// The settings queue demo item
         /// </summary>
-        public static DemoItem settingsQueueDemoItem = new DemoItem("Setting", PackIconKind.Settings, new Setting(), ScrollBarVisibility.Auto, ScrollBarVisibility.Auto);
+        public static DemoItem settingsQueueDemoItem = new DemoItem("Setting", Model.MainWindowViewModel.LoadTranscriptionQueuePageCommand);
 
         /// <summary>
         /// The import queue demo item
         /// </summary>
-        public static DemoItem importQueueDemoItem = new DemoItem("Import", PackIconKind.Upload, new FileImport(), ScrollBarVisibility.Auto, ScrollBarVisibility.Auto);
+        public static DemoItem importQueueDemoItem = new DemoItem("Import", Model.MainWindowViewModel.LoadTranscriptionQueuePageCommand);
 
         /// <summary>
         /// The state wide validation queue demo item
         /// </summary>
-        public static DemoItem stateWideValidationQueueDemoItem = new DemoItem("Statewide validation", PackIconKind.CheckAll, new Statewidevalidation(), ScrollBarVisibility.Auto, ScrollBarVisibility.Auto, Color.Aqua);
+        public static DemoItem stateWideValidationQueueDemoItem = new DemoItem("Statewide validation", Model.MainWindowViewModel.LoadTranscriptionQueuePageCommand);
 
 
         /// <summary>
@@ -86,7 +78,7 @@ namespace WpfApp.Domain
         /// <value>
         /// The admin demo items.
         /// </value>
-        private static DemoItem[] AdminDemoItems { get; } = new[]
+        public static DemoItem[] AdminDemoItems { get; } = new[]
         {
             searchDemoItem,
             homeDemoItem,
@@ -161,15 +153,12 @@ namespace WpfApp.Domain
         #region Constructor
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MainWindowViewModel" /> class.
+        /// Initializes a new instance of the <see cref="AuthorizationModel" /> class.
         /// </summary>
-        /// <param name="snackbarMessageQueue">The snackbar message queue.</param>
         /// <param name="isValidToProcess">if set to <c>true</c> [is valid to process].</param>
         /// <exception cref="ArgumentNullException">snackbarMessageQueue</exception>
-        public MainWindowViewModel(ISnackbarMessageQueue snackbarMessageQueue, bool isValidToProcess, string form)
+        public AuthorizationModel(bool isValidToProcess)
         {
-            if (snackbarMessageQueue == null) throw new ArgumentNullException(nameof(snackbarMessageQueue));
-
             if (isValidToProcess)
             {
                 if (App.BaseUserControl.UserModel != null)
@@ -209,8 +198,6 @@ namespace WpfApp.Domain
             {
                 DemoItems = HomeDemoItems;
             }
-
-            this.Form = form;
         }
 
         #endregion
@@ -248,8 +235,6 @@ namespace WpfApp.Domain
         /// The application version.
         /// </value>
         public string ApplicationVersion { get; set; } = "Version " + Properties.Settings.Default.Version;
-
-        public string Form { get; set; } = "DemoItemsListBox";
 
         #endregion
     }

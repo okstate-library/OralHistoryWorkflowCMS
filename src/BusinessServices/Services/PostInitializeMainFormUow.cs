@@ -25,7 +25,7 @@ namespace BusinessServices.Servcices
             get;
             set;
         }
-        
+
         /// <summary>
         /// Gets or sets the response.
         /// </summary>
@@ -120,11 +120,24 @@ namespace BusinessServices.Servcices
                 transcriptionModels.Add(Util.ConvertToTranscriptionModel(item));
             }
 
-            MainFormModel mainFormModel = new MainFormModel()
+            MainFormModel mainFormModel = new MainFormModel();
+
+            if (Request.IsAdminUser)
             {
-                BrowseRecordCount = TranscriptionRepository.GetAll().Count(),
-                TranscrptionQueueRecordCount = TranscriptionRepository.FindBy(t => t.TranscriptStatus == false).Count(),
-            };
+                mainFormModel = new MainFormModel()
+                {
+                    BrowseRecordCount = TranscriptionRepository.GetAll().Count(),
+                    TranscrptionQueueRecordCount = TranscriptionRepository.FindBy(t => t.TranscriptStatus == false).Count(),
+                };
+            }
+            else
+            {
+                mainFormModel = new MainFormModel()
+                {
+                    BrowseRecordCount = TranscriptionRepository.FindBy(t => !t.IsRestriction).Count(),
+                    TranscrptionQueueRecordCount = TranscriptionRepository.FindBy(t => t.TranscriptStatus == false && !t.IsRestriction).Count(),
+                };
+            }
 
             Response = new ResponseModel()
             {

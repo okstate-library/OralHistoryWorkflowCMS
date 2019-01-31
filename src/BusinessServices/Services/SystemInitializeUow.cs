@@ -15,6 +15,18 @@ namespace BusinessServices.Servcices
     internal class SystemInitializeUow : UnitOfWork
     {
         /// <summary>
+        /// Gets or sets the request.
+        /// </summary>
+        /// <value>
+        /// The request.
+        /// </value>
+        public RequestModel Request
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Gets or sets the response.
         /// </summary>
         /// <value>
@@ -197,39 +209,46 @@ namespace BusinessServices.Servcices
         /// </summary>
         protected override void Execute()
         {
-
-            MainFormModel mainFormModel = new MainFormModel()
-            {
-                BrowseRecordCount = TranscriptionRepository.GetAll().Count(),
-                TranscrptionQueueRecordCount = TranscriptionRepository.FindBy(t => t.TranscriptStatus == false).Count(),
-            };
+            MainFormModel mainFormModel = null;
 
             List<CollectionModel> newlist = new List<CollectionModel>();
-
-            foreach (collection item in CollectionRepository.GetCollections())
-            {
-                newlist.Add(Util.ConvertToCollectionModel(item));
-            }
-
             List<SubseryModel> newSubseriesList = new List<SubseryModel>();
-
-            foreach (subsery item in SubseryRepository.GetSubseries())
-            {
-                newSubseriesList.Add(Util.ConvertToSubseryModel(item));
-            }
-
             List<SubjectModel> subjectList = new List<SubjectModel>();
-
-            foreach (subject item in SubjectRepository.GetSubjects())
-            {
-                subjectList.Add(Util.ConvertToSubjectModel(item));
-            }
-
             List<KeywordModel> keywordList = new List<KeywordModel>();
+            List<UserTypeModel> userTypes = new List<UserTypeModel>();
 
-            foreach (keyword item in KeywordRepository.GetKeywords())
+            if (Request.IsStartup)
             {
-                keywordList.Add(Util.ConvertToKeywordModel(item));
+                mainFormModel = new MainFormModel()
+                {
+                    BrowseRecordCount = TranscriptionRepository.GetAll().Count(),
+                    TranscrptionQueueRecordCount = TranscriptionRepository.FindBy(t => t.TranscriptStatus == false).Count(),
+                };
+
+                foreach (collection item in CollectionRepository.GetCollections())
+                {
+                    newlist.Add(Util.ConvertToCollectionModel(item));
+                }
+
+                foreach (subsery item in SubseryRepository.GetSubseries())
+                {
+                    newSubseriesList.Add(Util.ConvertToSubseryModel(item));
+                }
+
+                foreach (subject item in SubjectRepository.GetSubjects())
+                {
+                    subjectList.Add(Util.ConvertToSubjectModel(item));
+                }
+
+                foreach (keyword item in KeywordRepository.GetKeywords())
+                {
+                    keywordList.Add(Util.ConvertToKeywordModel(item));
+                }
+
+                foreach (usertype item in UserTypeRepository.GetAll())
+                {
+                    userTypes.Add(Util.ConvertToUsertypeModel(item));
+                }
             }
 
             List<string> interviewerList = InterviewerRepository.List();
@@ -238,19 +257,13 @@ namespace BusinessServices.Servcices
 
             List<string> videoEquipmentsUsed = VideoEquipmentUsedRepository.List();
             
-            List<UserTypeModel> userTypes = new List<UserTypeModel>();
-
-            foreach (usertype item in UserTypeRepository.GetAll())
-            {
-                userTypes.Add(Util.ConvertToUsertypeModel(item));
-            }
-
             Response = new ResponseModel()
             {
                 Subseries = newSubseriesList,
                 Collecions = newlist,
                 Subjects = subjectList,
                 Keywords = keywordList,
+
                 Interviewers = interviewerList,
                 AudioEquipmentsUsed = audioEquipmentsUsed,
                 VideoEquipmentsUsed = videoEquipmentsUsed,

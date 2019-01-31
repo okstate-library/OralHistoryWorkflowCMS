@@ -155,191 +155,57 @@
                         </DatePicker>
 
 
-                        <Border  Grid.Row="5"  Style="{StaticResource EmptyBorder}"   />
-
-                        <Label Style="{StaticResource BoldLabel}" Grid.Row="6" Grid.Column="0">New records</Label>
+                      <Border  Grid.Row="5"  Style="{StaticResource EmptyBorder}"   />
+                        
+                        <Label Style="{StaticResource BoldLabel}" Grid.Row="6" Grid.Column="0">Status</Label>
 
                         <StackPanel   Grid.Row="6" Grid.Column="1" Orientation="Horizontal">
 
-                            <CheckBox Name="NewRecordsCheckBox"
-                                            Style="{StaticResource MaterialDesignCheckBox}">
-                                
+                            <CheckBox Name="OnlineStatusCheckBox">
+                                Online
+                            </CheckBox>
+                            <CheckBox Name="OfflineStatusCheckBox">
+                                Offline
                             </CheckBox>
 
                         </StackPanel>
-                        
 
-                        <Label Style="{StaticResource BoldLabel}" Grid.Row="6" Grid.Column="2" Margin="15 0 0 0" >Digitally migrated</Label>
+                        <Label Style="{StaticResource BoldLabel}" Grid.Row="6" Grid.Column="2" Margin="15 0 0 0" >Media</Label>
 
                         <StackPanel  Grid.Row="6" Grid.Column="3"  Orientation="Horizontal"    >
-                            <CheckBox Name="DigitallyMigratedCheckBox">
-                                
+                            <CheckBox Name="BornDigitalMediaCheckBox">
+                                Born Digital
+                            </CheckBox>
+                            <CheckBox Name="ConvertedMediaCheckBox">
+                                Converted
                             </CheckBox>
                             
                         </StackPanel>
 
                         <Border  Grid.Row="7"  Style="{StaticResource EmptyBorder}"   />
-
-                        <Label Style="{StaticResource BoldLabel}" Grid.Row="8" Grid.Column="0">Online</Label>
-
-                        <StackPanel   Grid.Row="8" Grid.Column="1" Orientation="Horizontal">
-
-                            <CheckBox Name="OnlineCheckBox"
-                                            Style="{StaticResource MaterialDesignCheckBox}">
-                                
-                            </CheckBox>
-
-                        </StackPanel>
-
-
-                        <Label Style="{StaticResource BoldLabel}" Grid.Row="8" Grid.Column="2" Margin="15 0 0 0" >Preservation system</Label>
-
-                        <StackPanel  Grid.Row="8" Grid.Column="3"  Orientation="Horizontal"    >
-                            <CheckBox Name="AudioPreservationSystemCheckBox">
-                                Audio
-                            </CheckBox>
-                            <CheckBox Name="VideoPreservationSystemCheckBox">
-                                Video
-                            </CheckBox>
-                        </StackPanel>
-
-                        <Border  Grid.Row="9"  Style="{StaticResource EmptyBorder}"   />
-
-                        <Button Grid.Row="10"  Grid.ColumnSpan="3"  Margin="50"  
+                                          
+                        <Button Grid.Row="8"  Grid.ColumnSpan="3"  Margin="50"  
                                 Style="{StaticResource MaterialDesignRaisedAccentButton}" Click="ReportSubmitButton_Click" >
                             _Submit
                         </Button>
 
-                        <Button Grid.Row="10" Grid.Column="3"   Margin="0"  
+                        <Button Grid.Row="8" Grid.Column="3"   Margin="0"  
                                 Style="{StaticResource MaterialDesignRaisedLightButton}" Click="ResetButton_Click" >
                             _Reset
                         </Button>
 
-                        <Border  Grid.Row="11"  Style="{StaticResource EmptyBorder}" Grid.ColumnSpan="5"  />
+                        <Border  Grid.Row="9"  Style="{StaticResource EmptyBorder}" Grid.ColumnSpan="5"  />
 
-                        <StackPanel Grid.Row="12" Grid.Column="0" Grid.ColumnSpan="2">
+                        <StackPanel Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="2">
                             <TextBlock Name="TranscriptionQueueTextBlock"
                                        Style="{StaticResource MaterialDesignHeadlineTextBlock}"
                                        Margin="16 16 16 8" HorizontalAlignment="Center" FontSize="50"></TextBlock>
 
                         </StackPanel>
 
-                        <Button Name="ExportButton" Margin="20 10 0 8" Grid.Row="12" Grid.Column="3" MaxWidth="100" ToolTip="Export to excel.."
+                        <Button Name="ExportButton" Margin="20 10 0 8" Grid.Row="10" Grid.Column="3" MaxWidth="100" ToolTip="Export to excel.."
                                     Content="Export" Style="{StaticResource MaterialDesignRaisedAccentButton}" Visibility="Hidden" Click="ExportButton_Click"/>
                         
-                        <!-- <ComboBox Grid.Row="6" Grid.Column="1" ItemsSource="{Binding Collections}" DisplayMemberPath="Name" 
-                                  HorizontalAlignment="Left" Name="CollectionComboBox" VerticalAlignment="Top" Width="300" >
-                            <ComboBox.Text>
-                                <Binding Path="SelectedCollection" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
-                                    <Binding.ValidationRules>
-                                        <domain1:NotEmptyValidationRule ValidatesOnTargetUpdated="True"/>
-                                    </Binding.ValidationRules>
-                                </Binding>
-                            </ComboBox.Text>
-                        </ComboBox>
-
-                        <Label Style="{StaticResource BoldLabel}" Grid.Row="6" Grid.Column="2" Margin="15 0 0 0" >Subseries</Label>
-
-                        <ComboBox Grid.Row="6" Grid.Column="3" ItemsSource="{Binding SelectedItem.Series, ElementName=CollectionComboBox}"   DisplayMemberPath="Value" 
-                                  HorizontalAlignment="Left" Name="SubseriesComboBox" VerticalAlignment="Top"   Width="300" >
-                            <ComboBox.Text>
-                                <Binding Path="SelectedCollection" Mode="OneWay" UpdateSourceTrigger="PropertyChanged">
-                                    <Binding.ValidationRules>
-                                        <domain1:NotEmptyValidationRule ValidatesOnTargetUpdated="True"/>
-                                    </Binding.ValidationRules>
-                                </Binding>
-                            </ComboBox.Text>
-                        </ComboBox>
-
-                        <Border  Grid.Row="7"  Style="{StaticResource EmptyBorder}"   />
-
-                        <Label Style="{StaticResource BoldLabel}" Grid.Row="8" Grid.Column="0">Subject</Label>
-
-                        <TextBox Name="SubjectTextBox" Grid.Row="8"  Grid.Column="1" Grid.ColumnSpan="3"  Height="50" AcceptsReturn="True" 
-                                     TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"   Style="{StaticResource EditableTextBox}" />
-
-                        <Border  Grid.Row="9"  Style="{StaticResource EmptyBorder}"   />
-
-                        <Label Style="{StaticResource BoldLabel}" Grid.Row="10" Grid.Column="0">Keywords</Label>
-
-                        <TextBox Name="KeywordsTextBox"  Grid.Row="10"  Grid.Column="1" Grid.ColumnSpan="3" Height="50" AcceptsReturn="True"
-                                     TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"   Style="{StaticResource EditableTextBox}" />
-
-                        <Border  Grid.Row="11"  Style="{StaticResource EmptyBorder}" />
-
-                        <Label Style="{StaticResource BoldLabel}" Grid.Row="12" Grid.Column="0" >Description</Label>
-
-                        <TextBox Name="DescriptionTextBox"  Grid.Row="12"  Grid.Column="1" Grid.ColumnSpan="3" Height="50" AcceptsReturn="True"
-                                     TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"   Style="{StaticResource EditableTextBox}" />
-
-                        <Border  Grid.Row="13"  Style="{StaticResource EmptyBorder}"   />
-
-                        <Label Style="{StaticResource BoldLabel}" Grid.Row="14" Grid.Column="0">Audio equipment</Label>
-
-                        <StackPanel Orientation="Horizontal"  Grid.Row="14" Grid.Column="1" >
-
-                            <TextBlock                />
-
-                            <domain1:FilteredComboBox x:Name="AudioEquipmentUsedFilteredComboBox" materialDesign:HintAssist.HintOpacity=".26"  ItemsPanel="{DynamicResource ItemsTemplate}" 
-
-                            HorizontalAlignment="Left" VerticalAlignment="Top" Width="300"/>
-
-                        </StackPanel>
-
-                        <Label Style="{StaticResource BoldLabel}" Grid.Row="14" Grid.Column="2" Margin="15 0 0 0">Video equipment</Label>
-
-                        <StackPanel Orientation="Horizontal"  Grid.Row="14" Grid.Column="3" >
-
-                            <TextBlock                />
-
-                            <domain1:FilteredComboBox x:Name="VideoEquipmentUsedFilteredComboBox" materialDesign:HintAssist.HintOpacity=".26"  ItemsPanel="{DynamicResource ItemsTemplate}" 
-
-                            HorizontalAlignment="Left" VerticalAlignment="Top" Width="300"/>
-
-                        </StackPanel>
-
-                        --><!--<ComboBox Name="EquipmentUsedComboBox"  materialDesign:HintAssist.HintOpacity=".26"
-                                   >
-                        </ComboBox>-->
-
-                        <!--<TextBox Name="EquipmentUsedTextBox"  Grid.Row="14" Grid.Column="1"   Style="{StaticResource EditableTextBox}" />--><!--
-
-                        <Border Name="RestrictionsBorder1" Grid.Row="17"  Style="{StaticResource EmptyBorder}"   />
-
-                        <Label Name="RestrictionsLabel" Style="{StaticResource BoldLabel}" Grid.Row="18" Grid.Column="0">Restriction</Label>
-
-                        <StackPanel Name="RestrictionsStackPanel"  Grid.Row="18" Grid.Column="1" Orientation="Horizontal">
-
-                            <CheckBox Name="RestrictionYesCheckBox"
-                                            Style="{StaticResource MaterialDesignCheckBox}" Checked="Restriction_Check">
-                                Yes
-                            </CheckBox>
-
-                            <CheckBox Name="RestrictionNoCheckBox"
-                                            Style="{StaticResource MaterialDesignCheckBox}" Checked="Restriction_Check">
-                                No
-                            </CheckBox>
-
-                        </StackPanel>
-
-                        <Label Style="{StaticResource BoldLabel}" Grid.Row="18" Grid.Column="2" Margin="15 0 0 0" >Transcriber assigned</Label>
-
-                        <TextBox Name="TranscriberAssignedTextBox" Grid.Row="18" Grid.Column="3"   Style="{StaticResource EditableTextBox}" />
-
-                        <Border  Name="RestrictionsBorder2"  Grid.Row="19"  Style="{StaticResource EmptyBorder}"   />
-
-                        <Label  Name="RestrictionNoteLabel" Style="{StaticResource BoldLabel}" Grid.Row="20" Grid.Column="0">Restriction note</Label>
-
-                        <TextBox Name="RestrictionNoteTextBox" Grid.Row="20" Grid.Column="1" Grid.ColumnSpan="3" Height="50" Style="{StaticResource EditableTextBox}" />
-
-                        <Border  Grid.Row="21"  Style="{StaticResource EmptyBorder}"   />
-
-                        <Label Style="{StaticResource BoldLabel}" Grid.Row="22" Grid.Column="0">Notes</Label>
-
-                        <TextBox Name="NoteTextBox"  Grid.Row="22" Grid.Column="1" Grid.ColumnSpan="3"  Height="50" Style="{StaticResource EditableTextBox}" />
-
-                        -->
-
                     </Grid>
 
                 </StackPanel>

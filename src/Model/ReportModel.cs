@@ -17,7 +17,15 @@ namespace Model
         /// <value>
         ///   <c>true</c> if this instance is digitally migrated; otherwise, <c>false</c>.
         /// </value>
-        public bool IsDigitallyMigrated { get; set; }
+        public bool IsBornDigitally { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is converted digitally.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this instance is converted digitally; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsConvertedDigital { get; set; }
 
         /// <summary>
         /// Gets or sets the begin date.
@@ -52,29 +60,13 @@ namespace Model
         public bool IsOnline { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether this instance is audio.
+        /// Gets or sets a value indicating whether this instance is offline.
         /// </summary>
         /// <value>
-        ///   <c>true</c> if this instance is audio; otherwise, <c>false</c>.
+        ///   <c>true</c> if this instance is offline; otherwise, <c>false</c>.
         /// </value>
-        public bool IsAudioFormat { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether this instance is video.
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if this instance is video; otherwise, <c>false</c>.
-        /// </value>
-        public bool IsVideoFormat { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether this instance is new records.
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if this instance is new records; otherwise, <c>false</c>.
-        /// </value>
-        public bool IsNewRecords { get; set; }
-
+        public bool IsOffline { get; set; }
+             
         /// <summary>
         /// Gets or sets the location.
         /// </summary>

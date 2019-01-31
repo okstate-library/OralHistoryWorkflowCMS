@@ -81,6 +81,12 @@
         <Setter Property="FontWeight" Value="Bold"></Setter>
     </Style>
 
+    <Style x:Key="HorizontalMenuButton" TargetType="{x:Type Button }" BasedOn="{StaticResource MaterialDesignFloatingActionMiniLightButton}">
+        <Setter Property="Margin" Value="5 0 0 0" />
+        <Setter Property="Width" Value="34"/>
+        <Setter Property="Height" Value="34"/>        
+    </Style>
+    
     <!--Toggle Button Styling-->
 
     <Style TargetType="ToggleButton" x:Key="OptionToggleButton" BasedOn="{StaticResource MaterialDesignSwitchToggleButton}">

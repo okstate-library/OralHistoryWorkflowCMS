@@ -22,7 +22,9 @@ CREATE TABLE `videoequipmentused` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
 
-ALTER TABLE  oralcmsdb.transcriptions CHANGE COLUMN EquipmentUsed TO AudioEquipmentUsed;
+ALTER TABLE `oralcmsdb`.`transcriptions` 
+CHANGE COLUMN `EquipmentUsed` `AudioEquipmentUsed` VARCHAR(250) NULL DEFAULT NULL ;
+
 
 ALTER table oralcmsdb.transcriptions
 Add column VideoEquipmentUsed varchar(100) DEFAULT NULL AFTER AudioEquipmentUsed
