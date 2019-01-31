@@ -1,5 +1,7 @@
-﻿using MaterialDesignThemes.Wpf;
+﻿using Core.Enums;
+using MaterialDesignThemes.Wpf;
 using Model;
+using Model.Transfer;
 using System;
 using System.Collections.ObjectModel;
 using System.Threading;
@@ -41,24 +43,18 @@ namespace WpfApp
         {
             InitializeComponent();
 
-            Task.Factory.StartNew(() =>
-            {
-                Thread.Sleep(2500);
-            }).ContinueWith(t =>
-            {
-                MainSnackbar.MessageQueue.Enqueue(Settings.Default.WelComeApplicationTitle);
-
-            }, TaskScheduler.FromCurrentSynchronizationContext());
-
             Title = Settings.Default.ApplicationTitle;
 
             ApplicationNameTextBlock.Text = Settings.Default.WelComeApplicationTitle;
 
             Loaded += MainWindow_Loaded;
 
-            DataContext = new MainWindowViewModel(MainSnackbar.MessageQueue, App.IsValidToProcess, "DemoItemsListBox");
+            VersionLabel.Content = "Version " + Properties.Settings.Default.Version;
 
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
+
+            TranscriptionQueueTextBlock.Text = App.BaseUserControl.TranscrptionQueueRecordCount.ToString();
+            AllRecordsTextBlock.Text = App.BaseUserControl.BrowseRecordCount.ToString();
         }
 
         #endregion
@@ -74,6 +70,7 @@ namespace WpfApp
         {
             if (App.IsValidToProcess)
             {
+
                 //TODO: Login window
                 LoginWindow loginWindow = new LoginWindow
                 {
@@ -83,7 +80,7 @@ namespace WpfApp
 
                 loginWindow.ShowDialog();
 
-                //App.BaseUserControl.UserModel = new Model.UserModel()
+                //App.BaseUserControl.UserModel = new UserModel()
                 //{
                 //    UserId = 1,
                 //    Name = "Patrick",
@@ -91,114 +88,248 @@ namespace WpfApp
                 //    Username = "admin"
                 //};
 
+                SetLabels();
 
-                if (Application.Current != null)
-                {
-                    GenerateUI(App.BaseUserControl.UserModel.UserType);
-                }
-
-                DataContext = new MainWindowViewModel(MainSnackbar.MessageQueue, App.IsValidToProcess, "DemoItemsListBox2");
+                InitialControlSetup();
+            }
+            else
+            {
+                App.ShowMessage(false, " No internet access.\n Please check the connection.");
             }
 
         }
 
         /// <summary>
-        /// Generates the UI.
+        /// Sets the labels.
+        /// </summary>
+        private void SetLabels()
+        {
+            if (App.Current != null)
+            {
+                UsernameLabel.Content = App.BaseUserControl.UserModel.Name;
+                UsertypeLabel.Content = App.BaseUserControl.UserModel.UserTypeName;
+
+                SetUserRoleAuthorizations(App.BaseUserControl.UserModel.UserType);
+            }
+        }
+
+        /// <summary>
+        /// Sets the user role authorizations.
         /// </summary>
         /// <param name="userType">Type of the user.</param>
-        /// <exception cref="System.NotImplementedException"></exception>
-        private void GenerateUI(byte userType)
+        private void SetUserRoleAuthorizations(byte userType)
         {
-
             UserTypeModel current = App.BaseUserControl.Usertypes.Find(u => u.Id == userType);
 
             if (current.IsHorizontalMenu)
             {
                 MenuToggleButton.Visibility = Visibility.Collapsed;
 
-                DemoItemsListBox2.Visibility = Visibility.Visible;
-                MainScrollViewer2.Visibility = Visibility.Visible;
-
-                DemoItemsListBox.Visibility = Visibility.Visible;
-                MainScrollViewer.Visibility = Visibility.Hidden;
+                VerticalDemoItemsList.Visibility = Visibility.Hidden;
+                HorizontalDemoItemsList.Visibility = Visibility.Visible;
             }
             else
             {
                 MenuToggleButton.Visibility = Visibility.Visible;
 
-                DemoItemsListBox.Visibility = Visibility.Visible;
-                MainScrollViewer.Visibility = Visibility.Visible;
+                VerticalDemoItemsList.Visibility = Visibility.Visible;
+                HorizontalDemoItemsList.Visibility = Visibility.Hidden;
+            }
 
-                DemoItemsListBox2.Visibility = Visibility.Hidden;
-                MainScrollViewer2.Visibility = Visibility.Hidden;
+            AuthorizationModel model = new Domain.AuthorizationModel(App.IsValidToProcess);
+
+            Home1Button.Visibility = Visibility.Collapsed;
+            Home2Button.Visibility = Visibility.Collapsed;
+            Interview1Button.Visibility = Visibility.Collapsed;
+            Interview2Button.Visibility = Visibility.Collapsed;
+
+            TranscriptionQueue1Button.Visibility = Visibility.Collapsed;
+            TranscriptionQueue2Button.Visibility = Visibility.Collapsed;
+
+            Browse1Button.Visibility = Visibility.Collapsed;
+            Browse2Button.Visibility = Visibility.Collapsed;
+
+            Users1Button.Visibility = Visibility.Collapsed;
+            Users2Button.Visibility = Visibility.Collapsed;
+
+            FindnReplace1Button.Visibility = Visibility.Collapsed;
+            FindnReplace2Button.Visibility = Visibility.Collapsed;
+            Reports1Button.Visibility = Visibility.Collapsed;
+            Reports2Button.Visibility = Visibility.Collapsed;
+
+            Setting1Button.Visibility = Visibility.Collapsed;
+            Setting2Button.Visibility = Visibility.Collapsed;
+
+            Import1Button.Visibility = Visibility.Collapsed;
+            Import2Button.Visibility = Visibility.Collapsed;
+            StatewideValidation1Button.Visibility = Visibility.Collapsed;
+            StatewideValidation2Button.Visibility = Visibility.Collapsed;
+
+            foreach (DemoItem item in model.DemoItems)
+            {
+                switch (item.Name)
+                {
+                    case "Home":
+                        Home1Button.Visibility = Visibility.Visible;
+                        Home2Button.Visibility = Visibility.Visible;
+                        break;
+                    case "Interview":
+                        Interview1Button.Visibility = Visibility.Visible;
+                        Interview2Button.Visibility = Visibility.Visible;
+                        break;
+                    case "Transcription Queue":
+                        TranscriptionQueue1Button.Visibility = Visibility.Visible;
+                        TranscriptionQueue2Button.Visibility = Visibility.Visible;
+                        break;
+                    case "Browse":
+                        Browse1Button.Visibility = Visibility.Visible;
+                        Browse2Button.Visibility = Visibility.Visible;
+                        break;
+                    case "Users":
+                        Users1Button.Visibility = Visibility.Visible;
+                        Users2Button.Visibility = Visibility.Visible;
+                        break;
+                    case "Find and Replace":
+                        FindnReplace1Button.Visibility = Visibility.Visible;
+                        FindnReplace2Button.Visibility = Visibility.Visible;
+                        break;
+                    case "Controlled vocabulary":
+                        break;
+                    case "Reports":
+                        Reports1Button.Visibility = Visibility.Visible;
+                        Reports2Button.Visibility = Visibility.Visible;
+                        break;
+                    case "Setting":
+                        Setting1Button.Visibility = Visibility.Visible;
+                        Setting2Button.Visibility = Visibility.Visible;
+                        break;
+                    case "Import":
+                        Import1Button.Visibility = Visibility.Visible;
+                        Import2Button.Visibility = Visibility.Visible;
+                        break;
+
+                    case "Statewide validation":
+                        StatewideValidation1Button.Visibility = Visibility.Visible;
+                        StatewideValidation2Button.Visibility = Visibility.Visible;
+                        break;
+
+                    default:
+                        break;
+                }
 
             }
+
         }
 
         /// <summary>
-        /// Handles the OnPreviewMouseLeftButtonUp event of the UIElement control.
+        /// Handles the OnPreviewMouseLeftButtonUp event of the Button control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="MouseButtonEventArgs" /> instance containing the event data.</param>
-        private void UIElement_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void Button_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            //MainContentControl.Visibility = Visibility.Visible;
-            //SubContentControl.Visibility = Visibility.Hidden;
+            string toolTip = "";
 
-            DemoItem selectedItem = (DemoItem)((Selector)sender).SelectedItem;
-
-            string title = Settings.Default.ApplicationTitle + " - " + selectedItem.Name;
-
-            Title = title;
-            ApplicationNameTextBlock.Text = title;
-
-            //until we had a StaysOpen glag to Drawer, this will help with scroll bars
-
-            var dependencyObject = Mouse.Captured as DependencyObject;
-            while (dependencyObject != null)
+            if (sender.GetType().Equals(typeof(Button)))
             {
-                if (dependencyObject is ScrollBar) return;
-                dependencyObject = VisualTreeHelper.GetParent(dependencyObject);
+                toolTip = ((Button)sender).ToolTip.ToString();
             }
+            else
+            {
+                toolTip = ((TextBlock)sender).ToolTip.ToString();
+            }          
+
+            ApplicationPageTextBlock.Text = "- " + toolTip;
 
             MenuToggleButton.IsChecked = false;
-        }
+            
+            if (toolTip.Equals("Home"))
+            {
+                InitialControlSetup();
 
-        /// <summary>
-        /// Handles the Click event of the SearchButton control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
-        private void SearchButton_Click(object sender, RoutedEventArgs e)
-        {
-            //MainContentControl.Visibility = Visibility.Hidden;
-            ////SubContentControl.Visibility = Visibility.Visible;
-
-            //MainContentControl.Content = null;
-            //MainContentControl.Content = new Browse(MainSearchTextBox.Text.Trim());
-
-            //MainSearchTextBox.Text = string.Empty;
+                MainGrid.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                MainGrid.Visibility = Visibility.Collapsed;
+            }
         }
 
         /// <summary>
         /// Handles the Click event of the LogoutButton control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="RequestNavigateEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="RequestNavigateEventArgs" /> instance containing the event data.</param>
         private void LogoutButton_Click(object sender, RequestNavigateEventArgs e)
         {
-            //Application.Current.Shutdown();
-
-            MainScrollViewer.Visibility = Visibility.Visible;
-            MainScrollViewer2.Visibility = Visibility.Visible;
+            MainGrid.Visibility = Visibility.Visible;
 
             App.BaseUserControl.UserModel = null;
 
             MenuToggleButton.IsChecked = false;
 
             MainWindow_Loaded(null, null);
+        }
 
 
+        /// <summary>
+        /// Handles the MouseDoubleClick event of the LatestTranscriptionsListView control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="MouseButtonEventArgs"/> instance containing the event data.</param>
+        void LatestTranscriptionsListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            UIElement clicked = e.OriginalSource as UIElement;
+
+            TranscriptionModel itemTranscriptionModel = ((FrameworkElement)e.OriginalSource).DataContext as TranscriptionModel;
+
+            MainGrid.Visibility = Visibility.Hidden;
+
+            if (itemTranscriptionModel != null)
+            {
+                object parameter = itemTranscriptionModel.Id;
+
+                Browse2Button.Command?.Execute(parameter);
+            }
+        }
+
+
+        /// <summary>
+        /// Initials the control setup.
+        /// </summary>
+        private void InitialControlSetup()
+        {
+            if (App.BaseUserControl.UserModel != null && (WellKnownUserType)App.BaseUserControl.UserModel.UserType != WellKnownUserType.GuestUser)
+            {
+                RequestModel request = new RequestModel()
+                {
+                    IsAdminUser = App.BaseUserControl.UserModel.CurrentUserType == WellKnownUserType.AdminUser ? true : false,
+                    UserModel = App.BaseUserControl.UserModel,
+                };
+
+                ResponseModel response = App.BaseUserControl.InternalService.GetPostInitializeMainForm(request);
+
+                if (response.IsOperationSuccess)
+                {
+                    if (response.Transcriptions.Count > 0)
+                    {
+                        LatestTranscriptions.ItemsSource = response.Transcriptions;
+                        LatestTranscriptions.Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        LatestTranscriptions.Visibility = Visibility.Collapsed;
+                    }
+
+                    TranscriptionQueueTextBlock.Text = response.MainFormModel.TranscrptionQueueRecordCount.ToString();
+                    AllRecordsTextBlock.Text = response.MainFormModel.BrowseRecordCount.ToString();
+                }
+            }
+            else
+            {
+                LatestTranscriptions.ItemsSource = "No data found";
+                LatestTranscriptions.Visibility = Visibility.Collapsed;
+            }
         }
 
         #endregion

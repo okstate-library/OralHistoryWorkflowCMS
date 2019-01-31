@@ -82,17 +82,33 @@
     </Compile>
     <Compile Include="Domain\FindandReplaceModel.cs" />
     <Compile Include="Domain\GridViewSort.cs" />
-    <Compile Include="Domain\ReportModel.cs" />
+    <Compile Include="Model\BasePage.cs" />
+    <Compile Include="Model\StatewideValidationPage.cs" />
+    <Compile Include="Model\StatewideValidationPageViewModel.cs" />
+    <Compile Include="Model\ImportPage.cs" />
+    <Compile Include="Model\ImportPageViewModel.cs" />
+    <Compile Include="Model\ReportsPageViewModel.cs" />
+    <Compile Include="Model\FindnReplacePage.cs" />
+    <Compile Include="Model\FindnReplacePageViewModel.cs" />
+    <Compile Include="Model\UsersPage.cs" />
+    <Compile Include="Model\UsersPageViewModel.cs" />
+    <Compile Include="Model\TranscriptionQueuePage.cs" />
+    <Compile Include="Model\TranscriptionQueueViewModel.cs" />
+    <Compile Include="Model\InterviewPage.cs" />
+    <Compile Include="Model\InterviewPageViewModel.cs" />
+    <Compile Include="Model\MainWindowViewModel.cs" />
+    <Compile Include="Model\ReportModel.cs" />
     <Compile Include="Domain\InterviewModel.cs" />
     <Compile Include="Domain\PastDateValidationRule.cs" />
-    <Compile Include="FileUpload.xaml.cs">
-      <DependentUpon>FileUpload.xaml</DependentUpon>
+    <Compile Include="FileImport.xaml.cs">
+      <DependentUpon>FileImport.xaml</DependentUpon>
     </Compile>
     <Compile Include="FindReplace.xaml.cs">
       <DependentUpon>FindReplace.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helper\BaseUserControl.cs" />
     <Compile Include="Helper\Collection.cs" />
+    <Compile Include="Helper\DelegateCommand.cs" />
     <Compile Include="Helper\ExportHelper.cs" />
     <Compile Include="Helper\FileHelper.cs" />
     <Compile Include="Domain\FilteredComboBox.cs" />
@@ -102,6 +118,11 @@
     <Compile Include="Helper\ShortTextConverter.cs" />
     <Compile Include="Helper\UIHelper.cs" />
     <Compile Include="Helper\WellKnownExpander.cs" />
+    <Compile Include="Model\BrowsePage.cs" />
+    <Compile Include="Model\SettingsPage.cs" />
+    <Compile Include="Model\BrowsePageViewModel.cs" />
+    <Compile Include="Model\SettingsPageViewModel.cs" />
+    <Compile Include="Model\ViewModelBase.cs" />
     <Compile Include="Reports.xaml.cs">
       <DependentUpon>Reports.xaml</DependentUpon>
     </Compile>
@@ -157,15 +178,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="FileUpload.xaml">
+    <Page Include="FileImport.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="FindReplace.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Home.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -184,7 +201,7 @@
     <Compile Include="Domain\DemoItem.cs" />
     <Compile Include="Domain\FutureDateValidationRule.cs" />
     <Compile Include="Domain\IsCheckedValidationRule.cs" />
-    <Compile Include="Domain\MainWindowViewModel.cs" />
+    <Compile Include="Domain\AuthorizationModel.cs" />
     <Compile Include="Domain\NotEmptyValidationRule.cs" />
     <Compile Include="Domain\NotifyPropertyChangedExtension.cs" />
     <Compile Include="Domain\Sample4Dialog.xaml.cs">
@@ -202,9 +219,6 @@
     </Compile>
     <Compile Include="Domain\SimpleDataTemplateSelector.cs" />
     <Compile Include="Domain\SimpleDateValidationRule.cs" />
-    <Compile Include="Home.xaml.cs">
-      <DependentUpon>Home.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Interview.xaml.cs">
       <DependentUpon>Interview.xaml</DependentUpon>
     </Compile>

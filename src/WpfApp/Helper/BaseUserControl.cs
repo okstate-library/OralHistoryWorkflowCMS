@@ -110,7 +110,7 @@ namespace WpfApp.Helper
         /// <value>
         /// The collecions.
         /// </value>
-        public List<Model.CollectionModel> Collecions { get; set; }
+        public List<CollectionModel> Collecions { get; set; }
 
         /// <summary>
         /// The default collection identifier
@@ -147,14 +147,19 @@ namespace WpfApp.Helper
         /// <summary>
         /// Initializes the component.
         /// </summary>
-        public void InitializeComponent()
+        public void InitializeComponent(bool isStartup)
         {
-            ResponseModel response = InternalService.GetSystemInitialize();
-
-            if (response.IsOperationSuccess)
+            RequestModel request = new RequestModel()
             {
-                TranscrptionQueueRecordCount = response.MainFormModel.TranscrptionQueueRecordCount;
-                BrowseRecordCount = response.MainFormModel.BrowseRecordCount;
+                IsStartup = isStartup,
+            };
+
+            ResponseModel response = InternalService.GetSystemInitialize(request);
+
+            if (response.IsOperationSuccess && isStartup)
+            {
+                TranscrptionQueueRecordCount = response.MainFormModel?.TranscrptionQueueRecordCount ?? 0;
+                BrowseRecordCount = response.MainFormModel?.BrowseRecordCount ?? 0;
 
                 Subseries = response.Subseries;
                 Collecions = response.Collecions;
@@ -166,7 +171,12 @@ namespace WpfApp.Helper
                 VideoEquipments = response.VideoEquipmentsUsed;
                 Usertypes = response.UserTypes;
             }
-
+            else if (response.IsOperationSuccess)
+            {
+                Interviewers = response.Interviewers;
+                AudioEquipments = response.AudioEquipmentsUsed;
+                VideoEquipments = response.VideoEquipmentsUsed;
+            }
         }
 
     }

@@ -80,9 +80,11 @@ namespace BusinessServices
         /// Initializes the browse form.
         /// </summary>
         /// <returns></returns>
-        public ResponseModel InitializeBrowseForm()
+        public ResponseModel InitializeBrowseForm(RequestModel requestModel)
         {
             InitializeBrowseFormUow uow = new InitializeBrowseFormUow();
+
+            uow.Request = requestModel;
 
             uow.DoWork();
 
@@ -110,10 +112,11 @@ namespace BusinessServices
         /// Gets the main form initialize.
         /// </summary>
         /// <returns></returns>
-        public ResponseModel GetSystemInitialize()
+        public ResponseModel GetSystemInitialize(RequestModel requestModel)
         {
             SystemInitializeUow uow = new SystemInitializeUow();
 
+            uow.Request = requestModel;
             uow.DoWork();
 
             return uow.Response;

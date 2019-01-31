@@ -88,7 +88,7 @@ namespace BusinessServices.Servcices
         /// <seealso cref="BusinessServices.WellKnownServiceErrors" />
         private class WellKnownErrors : WellKnownServiceErrors
         {
- 
+
         }
 
         /// <summary>
@@ -107,15 +107,9 @@ namespace BusinessServices.Servcices
         /// The actual Work to be done.
         /// </summary>
         protected override void Execute()
-        {
-            List<transcription> transcriptions = TranscriptionRepository.GetAll().ToList();
+        {          
+            TranscriptionRepository.ExecuteSqlCommand("TRUNCATE TABLE transcriptions", new string[0]);
 
-            foreach (var item in transcriptions)
-            {
-                TranscriptionRepository.Delete(item);
-                TranscriptionRepository.Save();
-            }
-            
             Response = new ResponseModel()
             {
                 IsOperationSuccess = true

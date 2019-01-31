@@ -75,16 +75,19 @@ namespace WpfApp
             RequestModel requestModel = new RequestModel()
             {
 
-                ReportModel = new Model.ReportModel()
+                ReportModel = new ReportModel()
                 {
                     BeginDate = BeginDateDatePicker.SelectedDate != null ? (DateTime)BeginDateDatePicker.SelectedDate : DateTime.MinValue,
                     EndDate = EndDateDatePicker.SelectedDate != null ? (DateTime)EndDateDatePicker.SelectedDate : DateTime.MinValue,
-                    IsDigitallyMigrated = (bool)DigitallyMigratedCheckBox.IsChecked,
+
+                    IsBornDigitally = (bool)BornDigitalMediaCheckBox.IsChecked,
+                    IsConvertedDigital = (bool)ConvertedMediaCheckBox.IsChecked,
+
                     Interviewer = InterviewerFilteredComboBox.Text,
-                    IsOnline = (bool)OnlineCheckBox.IsChecked,
-                    IsAudioFormat = (bool)AudioPreservationSystemCheckBox.IsChecked,
-                    IsVideoFormat = (bool)VideoPreservationSystemCheckBox.IsChecked,
-                    IsNewRecords = (bool)NewRecordsCheckBox.IsChecked,
+
+                    IsOnline = (bool)OnlineStatusCheckBox.IsChecked,
+                    IsOffline = (bool)OfflineStatusCheckBox.IsChecked,
+
                     Location = PlaceTextBox.Text,
                 }
 
@@ -118,12 +121,14 @@ namespace WpfApp
         {
             BeginDateDatePicker.SelectedDate = null;
             EndDateDatePicker.SelectedDate = null;
-            DigitallyMigratedCheckBox.IsChecked = false;
+
+            BornDigitalMediaCheckBox.IsChecked = false;
+            ConvertedMediaCheckBox.IsChecked = false;
+                       
+            OnlineStatusCheckBox.IsChecked = false;
+            OfflineStatusCheckBox.IsChecked = false;
+
             InterviewerFilteredComboBox.Text = string.Empty;
-            OnlineCheckBox.IsChecked = false;
-            AudioPreservationSystemCheckBox.IsChecked = false;
-            VideoPreservationSystemCheckBox.IsChecked = false;
-            NewRecordsCheckBox.IsChecked = false;
             PlaceTextBox.Text = string.Empty;
         }
 

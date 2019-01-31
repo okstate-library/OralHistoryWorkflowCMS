@@ -7,15 +7,16 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using WpfApp.Domain;
 using WpfApp.Helper;
 
-namespace WpfApp.Domain
+namespace WpfApp.Model
 {
     /// <summary>
     /// Defiens the interview model.
     /// </summary>
     /// <seealso cref="System.ComponentModel.INotifyPropertyChanged" />
-    class ReportModel : INotifyPropertyChanged
+    public class ReportModel : BasePage, INotifyPropertyChanged
     {
         /// <summary>
         /// Gets or sets the collections.
@@ -189,7 +190,7 @@ namespace WpfApp.Domain
         {
             Collections = new ObservableCollection<Collection>();
 
-            foreach (Model.CollectionModel collectionItem in App.BaseUserControl.Collecions)
+            foreach (CollectionModel collectionItem in App.BaseUserControl.Collecions)
             {
                 List<KeyValuePair<int, string>> series = new List<KeyValuePair<int, string>>();
 

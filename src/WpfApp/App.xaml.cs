@@ -57,6 +57,11 @@ namespace WpfApp
             base.OnStartup(e);
 
             Application.Current.DispatcherUnhandledException += new DispatcherUnhandledExceptionEventHandler(AppDispatcherUnhandledException);
+
+            var window = new MainWindow() { DataContext = new Model.MainWindowViewModel() };
+
+            window.Show();
+
         }
 
         /// <summary>
@@ -68,7 +73,7 @@ namespace WpfApp
 
             if (CheckForInternetConnection())
             {
-                BaseUserControl.InitializeComponent();
+                BaseUserControl.InitializeComponent(true);
 
                 IsValidToProcess = true;
             }
@@ -77,7 +82,7 @@ namespace WpfApp
                 IsValidToProcess = false;
             }
         }
-        
+
         /// <summary>
         /// Checks for internet connection.
         /// </summary>

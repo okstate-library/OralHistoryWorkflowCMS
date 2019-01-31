@@ -292,7 +292,7 @@ namespace WpfApp
         /// </summary>
         private void PopulateFilterTextBox()
         {
-            App.BaseUserControl.InitializeComponent();
+            App.BaseUserControl.InitializeComponent(false);
 
             PopulateIntializeView();
         }

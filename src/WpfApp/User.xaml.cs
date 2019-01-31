@@ -149,7 +149,7 @@ namespace WpfApp
         {
             RequestModel requestModel = new RequestModel()
             {
-                UserModel = new Model.UserModel()
+                UserModel = new UserModel()
                 {
                     UserId = UserId
                 },

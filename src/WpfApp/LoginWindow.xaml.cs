@@ -1,4 +1,5 @@
-﻿using Model.Transfer;
+﻿using Model;
+using Model.Transfer;
 using System.Windows;
 
 namespace WpfApp
@@ -33,7 +34,7 @@ namespace WpfApp
         {
             RequestModel requestModel = new RequestModel()
             {
-                UserModel = new Model.UserModel
+                UserModel = new UserModel
                 {
                     Username = UsernameTextBox.Text.Trim(),
                     Password = PasswordTextBox.SecurePassword,
@@ -61,7 +62,7 @@ namespace WpfApp
         /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void GuestUserButton_Click(object sender, RoutedEventArgs e)
         {
-            App.BaseUserControl.UserModel = new Model.UserModel()
+            App.BaseUserControl.UserModel = new UserModel()
             {
                 UserId = 5,
                 Name = "Guest user",

@@ -1,17 +1,15 @@
-﻿using Model;
+﻿using Core.Enums;
+using Model;
 using Model.Transfer;
 using Model.Transfer.Search;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using WpfApp.Helper;
-using Excel = Microsoft.Office.Interop.Excel;
+using WpfApp.Model;
 
 namespace WpfApp
 {
@@ -97,6 +95,20 @@ namespace WpfApp
         /// </value>
         public int CurrentPageList { get; set; }
 
+        /// <summary>
+        /// Gets the type of the current user.
+        /// </summary>
+        /// <value>
+        /// The type of the current user.
+        /// </value>
+        public WellKnownUserType CurrentUserType
+        {
+            get
+            {
+                return (WellKnownUserType)App.BaseUserControl.UserModel.UserType;
+            }
+        }
+
         #endregion
 
         #region Constructor
@@ -119,22 +131,8 @@ namespace WpfApp
                 PageComboBox.SelectionChanged +=
                         new SelectionChangedEventHandler(PageLengthComboBox_SelectionChanged);
             };
-        }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Browse"/> class.
-        /// </summary>
-        /// <param name="searchWord">The search word.</param>
-        public Browse(string searchWord)
-        {
-            InitializeComponent();
-
-            InitializeSearchOption();
-
-            SearchWordTextBox.Text = searchWord;
-            
-            Loaded += BrowseUserControl_Loaded;
-
+            ControlsVisibility();
         }
 
         #endregion
@@ -160,6 +158,7 @@ namespace WpfApp
             PopulateList();
 
             BackToListButton.Visibility = Visibility.Hidden;
+
         }
 
         /// <summary>
@@ -230,6 +229,8 @@ namespace WpfApp
             cc.Content = null;
 
             MainGrid.Visibility = Visibility.Visible;
+
+            PopulateList();
 
             BackToListButton.Visibility = Visibility.Hidden;
         }
@@ -313,6 +314,17 @@ namespace WpfApp
                     TranscriptionSearchModel.Contentdms.Remove(key);
                 }
             }
+            else if (chkBox.Name.Equals("CheckedBoxRestriction"))
+            {
+                if ((bool)chkBox.IsChecked)
+                {
+                    TranscriptionSearchModel.IsRestrictionRecords = true;
+                }
+                else
+                {
+                    TranscriptionSearchModel.IsRestrictionRecords = false;
+                }
+            }
 
             SearchRequest = new SearchRequest(SearchHelper.InitialCurrentPage, CurrentPageList);
 
@@ -394,6 +406,24 @@ namespace WpfApp
 
         #region Private methods
 
+        private void ControlsVisibility()
+        {
+            switch (CurrentUserType)
+            {
+                case WellKnownUserType.GuestUser:
+                case WellKnownUserType.Student:
+                case WellKnownUserType.Staff:
+                    RestrictionExpander.Visibility = Visibility.Collapsed;
+                    break;
+                case WellKnownUserType.AdminUser:
+                    RestrictionExpander.Visibility = Visibility.Visible;
+                    break;
+                default:
+                    break;
+            }
+
+        }
+
         /// <summary>
         /// Initializes the search option.
         /// </summary>
@@ -415,7 +445,12 @@ namespace WpfApp
         /// </summary>
         private void PopulateIntializeView()
         {
-            ResponseModel response = App.BaseUserControl.InternalService.InitializeBrowseForm();
+            RequestModel requestModel = new RequestModel()
+            {
+                IsAdminUser = (CurrentUserType == WellKnownUserType.AdminUser ? true : false),
+            };
+
+            ResponseModel response = App.BaseUserControl.InternalService.InitializeBrowseForm(requestModel);
 
             CollectionListBox.ItemsSource = response.BrowseFormModel.CollectionList;
 
@@ -424,6 +459,13 @@ namespace WpfApp
             SubjectListBox.ItemsSource = response.BrowseFormModel.SubjectList;
 
             ContentDMListBox.ItemsSource = response.BrowseFormModel.ContentDmList;
+
+            List<KeyValuePair<string, string>> restrictionList = new List<KeyValuePair<string, string>>()
+            {
+                new KeyValuePair<string, string>("Restriction", "Restriction"),
+            };
+
+            RestrictionListBox.ItemsSource = restrictionList;
         }
 
         /// <summary>
@@ -435,6 +477,7 @@ namespace WpfApp
 
             RequestModel requestModel = new RequestModel()
             {
+                IsAdminUser = (CurrentUserType == WellKnownUserType.AdminUser ? true : false),
                 SearchRequest = SearchRequest,
                 TranscriptionSearchModel = TranscriptionSearchModel,
                 SearchWord = SearchWordTextBox.Text.Trim()

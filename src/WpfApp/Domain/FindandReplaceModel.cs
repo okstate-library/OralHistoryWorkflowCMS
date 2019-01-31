@@ -19,20 +19,32 @@ namespace WpfApp.Domain
         /// </value>
         public List<string> Fields { get; set; }
 
-        private string _title;
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FindandReplaceModel"/> class.
+        /// </summary>
         public FindandReplaceModel()
         {
             SetFields();
         }
 
+        /// <summary>
+        /// Occurs when a property value changes.
+        /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /// <summary>
+        /// Raises the property changed.
+        /// </summary>
+        /// <returns></returns>
         private Action<PropertyChangedEventArgs> RaisePropertyChanged()
         {
             return args => PropertyChanged?.Invoke(this, args);
         }
 
+        /// <summary>
+        /// Called when [property changed].
+        /// </summary>
+        /// <param name="propertyName">Name of the property.</param>
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

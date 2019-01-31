@@ -25,6 +25,14 @@ namespace Model.Transfer
         /// The transcription identifier.
         /// </value>
         public int TranscriptionId { get; set; }
+        
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is admin user.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this instance is admin user; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsAdminUser { get; set; }
 
         /// <summary>
         /// Gets or sets the type of the well known modification.
@@ -125,5 +133,13 @@ namespace Model.Transfer
         /// The report model.
         /// </value>
         public ReportModel ReportModel { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is startup.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this instance is startup; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsStartup { get; set; }
     }
 }

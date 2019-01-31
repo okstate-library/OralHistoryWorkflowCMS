@@ -31,21 +31,27 @@ namespace EntityData
         /// Returns the first entity that matches the predicate
         /// </summary>
         /// <param name="predicate">The filter clause</param>
-        /// <returns>An entity matching the predicate</returns>
+        /// <returns>
+        /// An entity matching the predicate
+        /// </returns>
         T First(Expression<Func<T, bool>> predicate);
 
         /// <summary>
         /// Returns the first entity that matches the predicate else null
         /// </summary>
         /// <param name="predicate">The filter clause</param>
-        /// <returns>An entity matching the predicate else null</returns>
+        /// <returns>
+        /// An entity matching the predicate else null
+        /// </returns>
         T FirstToDelete(Expression<Func<T, bool>> predicate);
 
         /// <summary>
         /// Returns the first entity that matches the predicate else null
         /// </summary>
         /// <param name="predicate">The filter clause</param>
-        /// <returns>An entity matching the predicate else null</returns>
+        /// <returns>
+        /// An entity matching the predicate else null
+        /// </returns>
         T FirstOrDefault(Expression<Func<T, bool>> predicate);
 
         /// <summary>
@@ -78,6 +84,7 @@ namespace EntityData
         /// <summary>
         /// Saves this instance.
         /// </summary>
+        /// <returns></returns>
         int Save();
 
         /// <summary>
@@ -92,5 +99,12 @@ namespace EntityData
         /// <param name="predicate">The predicate.</param>
         /// <returns></returns>
         int Count(Expression<Func<T, bool>> predicate);
+
+        /// <summary>
+        /// Executes the SQL command.
+        /// </summary>
+        /// <param name="sql">The SQL.</param>
+        /// <param name="parameters">The parameters.</param>
+        void ExecuteSqlCommand(string sql, object[] parameters);
     }
 }

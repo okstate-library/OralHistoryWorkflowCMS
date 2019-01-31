@@ -116,8 +116,16 @@ namespace BusinessServices.Servcices
             IPagedList<transcription> pagedList = null;
 
             List<TranscriptionModel> newlist = new List<TranscriptionModel>();
+            List<transcription> allTranscriptions = null;
 
-            List<transcription> allTranscriptions = TranscriptionRepository.GetAll().ToList();
+            if (Request.IsAdminUser)
+            {
+                allTranscriptions = TranscriptionRepository.FindBy(p => p.IsRestriction == Request.TranscriptionSearchModel.IsRestrictionRecords).ToList();
+            }
+            else
+            {
+                allTranscriptions = TranscriptionRepository.FindBy(p => !p.IsRestriction).ToList();
+            }
 
             pagedList = allTranscriptions.ToPagedList(Request.SearchRequest.CurrentPage, Request.SearchRequest.ListLength);
 
@@ -137,7 +145,7 @@ namespace BusinessServices.Servcices
 
                 foreach (string item in Request.TranscriptionSearchModel.Interviewers)
                 {
-                    predicate = predicate.Or(p => p.Interviewer.Equals(item));
+                    predicate = predicate.Or(p => p.Interviewer.Contains(item));
                 }
 
                 foreach (string item in Request.TranscriptionSearchModel.Contentdms)
@@ -145,19 +153,21 @@ namespace BusinessServices.Servcices
                     predicate = predicate.Or(p => p.IsInContentDm == bool.Parse(item));
                 }
 
+
+
                 IEnumerable<transcription> dataset3 = allTranscriptions.Where<transcription>(predicate.Compile());
 
                 if (!string.IsNullOrEmpty(Request.SearchWord))
                 {
-                    predicate = (p => p.Interviewer.Contains(Request.SearchWord) ||                                             
+                    predicate = (p => p.Interviewer.Contains(Request.SearchWord) ||
                                                p.Interviewee.Contains(Request.SearchWord) ||
                                                p.InterviewerNote.Contains(Request.SearchWord) ||
                                                p.Keywords.Contains(Request.SearchWord) ||
                                                p.LegalNote.Contains(Request.SearchWord) ||
                                                p.Place.Contains(Request.SearchWord) ||
-                                               p.ProjectCode.Contains(Request.SearchWord) ||                                              
+                                               p.ProjectCode.Contains(Request.SearchWord) ||
                                                p.Title.Contains(Request.SearchWord) ||
-                                               p.Subject.Contains(Request.SearchWord) ||                                            
+                                               p.Subject.Contains(Request.SearchWord) ||
                                                p.Transcript.Contains(Request.SearchWord)
                                              );
 
@@ -165,6 +175,7 @@ namespace BusinessServices.Servcices
 
                     dataset3 = dataset3.Union(pagedTransactionList);
                 }
+
 
                 pagedList = dataset3.ToPagedList(Request.SearchRequest.CurrentPage, Request.SearchRequest.ListLength);
             }

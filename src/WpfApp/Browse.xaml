@@ -58,7 +58,8 @@
                         <StackPanel Grid.Row="1" Margin="20 10 0 8" Orientation="Horizontal"  Grid.Column="1">
                             <!--Text="{Binding SearchWord}"-->
 
-                            <TextBox  Width="300" Margin="20 10 0 8" Name="SearchWordTextBox" Background="{StaticResource AlternativeColor}"  />
+                            <TextBox  Width="300" Margin="20 10 0 8" Text="{Binding Path=SearchText}"
+                                      Name="SearchWordTextBox" Background="{StaticResource AlternativeColor}"  />
                             <Button Margin="20 10 0 8"  MaxWidth="100" KeyboardNavigation.TabIndex="0" Content="Search" 
                                     Style="{StaticResource MaterialDesignRaisedAccentButton}" Click="SearchButton_Click"/>
                             <Button Margin="20 10 0 8" MaxWidth="100" Content="Reset" Style="{StaticResource MaterialDesignRaisedLightButton}" Click="ResetButton_Click"/>
@@ -192,6 +193,30 @@
                                
                             </StackPanel>
                         </Expander>
+
+                        <Border Background="{DynamicResource MaterialDesignDivider}" Height="1" HorizontalAlignment="Stretch" SnapsToDevicePixels="True" />
+                        <Expander Name="RestrictionExpander" HorizontalAlignment="Stretch" Background="{DynamicResource AlternativeColor}"
+                      Header="Restriction" FontWeight="Bold">
+                            <StackPanel Orientation="Vertical" TextBlock.Foreground="{DynamicResource MaterialDesignBody}" >
+
+                                <ListBox Name="RestrictionListBox" ItemsSource="{Binding TheList}" Margin="0 0 0 10">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <CheckBox Name="CheckedBoxRestriction"
+                                                      Tag="{Binding Value}" 
+                                                      ToolTip="{Binding Key}" 
+                                                      Content="{Binding Key , Converter={StaticResource ShortTextConverter}}" 
+                                                      Checked="CheckBoxSelection_Process" 
+                                                      Unchecked="CheckBoxSelection_Process"
+                                                      Style="{StaticResource listCheckBox}" />
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+
+
+                            </StackPanel>
+                        </Expander>
+
                     </StackPanel>
                 </materialDesign:Card>
 

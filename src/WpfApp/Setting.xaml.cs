@@ -11,6 +11,8 @@ namespace WpfApp
     /// <seealso cref="System.Windows.Markup.IComponentConnector" />
     public partial class Setting : UserControl
     {
+        public string PageTitle { get; set; }
+
         #region Constructor
 
         /// <summary>
