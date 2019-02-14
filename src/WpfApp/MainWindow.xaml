@@ -337,12 +337,13 @@
                                    materialDesign:ShadowAssist.ShadowDepth="Depth1">
 
                                     <StackPanel Orientation="Horizontal">
-                                        <TextBox Margin="3 0 10 0" Text="{Binding Path=SearchText}" materialDesign:HintAssist.Hint=" Search" 
+                                        <TextBox Name="SearchTextBox" Margin="3 0 10 0" Text="{Binding Path=SearchText}" materialDesign:HintAssist.Hint=" Search" 
                                      
                                      Width="150" VerticalAlignment="Center" Background="{StaticResource AlternativeColor}" >
                                         </TextBox>
 
-                                        <Button  ToolTip="Search" Command="{Binding Path=LoadSearchOnBrowsePageCommand}"  PreviewMouseLeftButtonUp="Button_OnPreviewMouseLeftButtonUp" KeyboardNavigation.TabIndex="0"  
+                                        <Button  ToolTip="Search" Command="{Binding Path=LoadSearchOnBrowsePageCommand}"  
+                                                 PreviewMouseLeftButtonUp="Button_OnPreviewMouseLeftButtonUp" KeyboardNavigation.TabIndex="0"  
                                                  Style="{StaticResource MaterialDesignRaisedAccentButton}">
                                             _Search
                                         </Button>
@@ -446,13 +447,15 @@
                                     </Grid>
                                 </materialDesign:Card>
 
+
+                                <!--MouseDoubleClick="LatestTranscriptionsListView_MouseDoubleClick"-->
                                 <materialDesign:Card Width="850" Margin="0"  Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
-                                    <ListView Margin="2" Name="LatestTranscriptions" MouseDoubleClick="LatestTranscriptionsListView_MouseDoubleClick">
+                                    <ListView Margin="2" Name="LatestTranscriptions">
                                         <ListView.View>
-                                            <GridView>
-                                                <GridViewColumn Header="ProjectCode" Width="100" DisplayMemberBinding="{Binding ProjectCode}" />
+                                            <GridView>                                         
+                                                <GridViewColumn Header="ProjectCode" Width="100"  DisplayMemberBinding="{Binding ProjectCode }" />
                                                 <GridViewColumn Header="Interviewee" Width="200" DisplayMemberBinding="{Binding Interviewee}" />
-                                                <GridViewColumn  Header="Title" Width="400" DisplayMemberBinding="{Binding Title}" />                                                
+                                                <GridViewColumn  Header="Title" Width="400" DisplayMemberBinding="{Binding Title}" />                                               
                                             </GridView>
                                         </ListView.View>
                                     </ListView>

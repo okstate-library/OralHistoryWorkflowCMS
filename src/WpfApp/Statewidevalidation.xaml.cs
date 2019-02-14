@@ -13,6 +13,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using WpfApp.Helper;
 using WpfApp.Properties;
 
 namespace WpfApp
@@ -52,7 +53,7 @@ namespace WpfApp
         /// <summary>
         /// The empty string
         /// </summary>
-        private static string EmptyString = " ";
+        private static string EmptyString = "";
 
         /// <summary>
         /// The repository column name
@@ -129,6 +130,11 @@ namespace WpfApp
         /// </summary>
         private static string LocSubjectsColumnName = "Loc Subjects";
 
+        /// <summary>
+        /// The extra comma
+        /// </summary>
+        private static string ExtraComma = " ,";
+               
         /// <summary>
         /// Gets or sets the interview json models.
         /// </summary>
@@ -221,6 +227,8 @@ namespace WpfApp
                     // read the excel file
                     DataTable dt = dt = ReadExcelFile(filePath);
 
+                    DeleteAllFiles();
+
                     //Read the content for people in excel and write csv file.
                     ReadAndWritePeopleData(dt);
 
@@ -251,9 +259,9 @@ namespace WpfApp
         private void ReadAndWriteInterviewData(DataTable dt)
         {
             // reading the json objects from the api
-            List<InterviewApi> iterviewJsonObjects = GetJsonFileObjectList<InterviewApi>("interview.json");
+            List<InterviewApi> iterviewJsonObjects = GetJsonFileObjectList<InterviewApi>("interview", "interview.json");
 
-            WriteStatDetails(string.Format("{0} found interview record(s) in modx system", iterviewJsonObjects.Count()));
+            WriteStatDetails(string.Format("{0} interview record(s) found in the modx system", iterviewJsonObjects.Count()));
 
             // Convert the json object to people model
             HashSet<InterviewApiModel> interviewJsonModels = GetInterviewModelList(iterviewJsonObjects);
@@ -264,7 +272,7 @@ namespace WpfApp
                                  join objB in interviewJsonModels on objA.Title equals objB.Title
                                  select objA).ToList();
 
-            WriteStatDetails(string.Format("{0} found interview record(s) ", intersectList.Count()));
+            WriteStatDetails(string.Format("{0} interview record(s) found.", intersectList.Count()));
 
             IEnumerable<InterviewApiModel> newList = collectionsModels.Except(intersectList.ToList());
 
@@ -276,42 +284,67 @@ namespace WpfApp
 
                 csv.Append("parent,template,published,pagetitle,tv6,tv7,tv8,tv10,tv11,tv16,tv17" + Environment.NewLine);
 
+                int correctRecordCount = 0;
+
                 for (int i = 0; i < newList.Count(); i++)
                 {
                     InterviewApiModel interviewModel = newList.ElementAt(i);
 
-                    if (i == newList.Count() - 1)
+                    if (!string.IsNullOrEmpty(interviewModel.CollectionID)
+                        && !string.IsNullOrEmpty(interviewModel.IntervieweesID)
+                        && !string.IsNullOrEmpty(interviewModel.InterviewersID))
                     {
-                        csv.Append(string.Format("5,3,1,{0},{1},{2},{3},{4},{5},{6},{7}",
-                         interviewModel.Title, interviewModel.CallNumber, interviewModel.CollectionID,
-                         interviewModel.Date,
-                         interviewModel.IntervieweesID.Length > 2 ? interviewModel.IntervieweesID.Substring(interviewModel.IntervieweesID.Length - 2) : interviewModel.IntervieweesID,
-                         interviewModel.InterviewersID.Length > 2 ? interviewModel.InterviewersID.Substring(interviewModel.InterviewersID.Length - 2) : interviewModel.InterviewersID,
-                         interviewModel.Keywords,
-                         interviewModel.LocSubjects));
-                    }
-                    else
-                    {
-                        csv.Append(string.Format("5,3,1,{0},{1},{2},{3},{4},{5},{6},{7},{8}",
-                          interviewModel.Title, interviewModel.CallNumber, interviewModel.CollectionID,
-                          interviewModel.Date,
-                          interviewModel.IntervieweesID.Length > 2 ? interviewModel.IntervieweesID.Substring(interviewModel.IntervieweesID.Length - 2) : interviewModel.IntervieweesID,
-                          interviewModel.InterviewersID.Length > 2 ? interviewModel.InterviewersID.Substring(interviewModel.InterviewersID.Length - 2) : interviewModel.InterviewersID,
-                          interviewModel.Keywords,
-                          interviewModel.LocSubjects,
-                          Environment.NewLine));
+
+                        correctRecordCount++;
+
+                        string locSubject = string.IsNullOrEmpty(interviewModel.LocSubjects) ? ExtraComma : interviewModel.LocSubjects;
+
+                        if (i == newList.Count() - 1)
+                        {
+                            csv.Append(string.Format("5,3,1,{0},{1},{2},{3},{4},{5},{6},{7}",
+                             interviewModel.Title, interviewModel.CallNumber, interviewModel.CollectionID,
+                             interviewModel.Date,
+                             interviewModel.IntervieweesID,
+                             interviewModel.InterviewersID,
+                             interviewModel.Keywords,
+                             locSubject));
+                        }
+                        else
+                        {
+                            csv.Append(string.Format("5,3,1,{0},{1},{2},{3},{4},{5},{6},{7}{8}",
+                              interviewModel.Title, interviewModel.CallNumber, interviewModel.CollectionID,
+                              interviewModel.Date,
+                              interviewModel.IntervieweesID,
+                              interviewModel.InterviewersID,
+                              interviewModel.Keywords,
+                              locSubject,
+                              Environment.NewLine));
+                        }
                     }
                 }
 
-                File.WriteAllText(InterviewCSVFilePath, csv.ToString());
 
-                WriteStatDetails(string.Format("{0} file created.", InterviewCSVFilePath));
+                if (correctRecordCount > 0)
+                {
+                    File.WriteAllText(InterviewCSVFilePath, csv.ToString());
 
-                ActiveButton(InterviewCSVButon);
+                    WriteStatDetails(string.Format("{0} file created.", InterviewCSVFilePath));
+
+                    ActiveButton(InterviewCSVButon);
+                }
+                else
+                {
+                    WriteStatDetails("Upload collection, interviewer's or interviewee's data first to create collection details.");
+
+                    WriteStatDetails(string.Format("{0} not created.", "0"));
+
+                    InActiveButton(InterviewCSVButon);
+                }
+
             }
             else
             {
-                WriteStatDetails(string.Format("{0} not created.", InterviewCSVFilePath));
+                WriteStatDetails(string.Format("{0} not created.", "0"));
 
                 InActiveButton(InterviewCSVButon);
             }
@@ -327,9 +360,9 @@ namespace WpfApp
         private void ReadAndWriteCollectionData(DataTable dt)
         {
             // reading the json objects from the api
-            List<CollectionApi> collectionJsonObjects = GetJsonFileObjectList<CollectionApi>("collection.json");
+            List<CollectionApi> collectionJsonObjects = GetJsonFileObjectList<CollectionApi>("collection", "collection.json");
 
-            WriteStatDetails(string.Format("{0} found collection record(s) in modx system", collectionJsonObjects.Count()));
+            WriteStatDetails(string.Format("{0} collection record(s) found in the modx system", collectionJsonObjects.Count()));
 
             // Convert the json object to people model
             CollectionJsonModels = GetCollectionModelList(collectionJsonObjects);
@@ -340,11 +373,13 @@ namespace WpfApp
                                  join objB in collectionJsonObjects on objA.Title equals objB.title
                                  select objA).ToList();
 
-            WriteStatDetails(string.Format("{0} found collection record(s) ", intersectList.Count()));
+            WriteStatDetails(string.Format("{0} collection record(s) found.", intersectList.Count()));
 
             IEnumerable<CollectionApiModel> newList = collectionsModels.Except(intersectList.ToList());
 
             WriteStatDetails(string.Format("{0} unique collection record(s) found in the uploaded excel document", newList.Count()));
+
+            int correctRecordCount = 0;
 
             if (newList.Count() > 0)
             {
@@ -356,26 +391,45 @@ namespace WpfApp
                 {
                     CollectionApiModel repoModel = newList.ElementAt(i);
 
-                    if (i == newList.Count() - 1)
+                    if (!string.IsNullOrEmpty(repoModel.RepositoryID))
                     {
-                        csv.Append(string.Format("3,2,1,{0},{1},{2},{3},{4},{5},{6}",
-                       repoModel.Title, repoModel.BeginDate, repoModel.EndDate, repoModel.CallNumber,
-                       repoModel.RepositoryID, repoModel.Keywords, repoModel.LocSubjects));
-                    }
-                    else
-                    {
-                        csv.Append(string.Format("3,2,1,{0},{1},{2},{3},{4},{5},{6},{7}",
-                     repoModel.Title, repoModel.BeginDate, repoModel.EndDate, repoModel.CallNumber,
-                     repoModel.RepositoryID, repoModel.Keywords, repoModel.LocSubjects, Environment.NewLine));
+                        correctRecordCount++;
 
+                        string locSubject = string.IsNullOrEmpty(repoModel.LocSubjects) ? ExtraComma : repoModel.LocSubjects;
+
+                        if (i == newList.Count() - 1)
+                        {
+                            csv.Append(string.Format("3,2,1,{0},{1},{2},{3},{4},{5},{6}",
+                           repoModel.Title, repoModel.BeginDate, repoModel.EndDate, repoModel.CallNumber,
+                           repoModel.RepositoryID, repoModel.Keywords, locSubject));
+                        }
+                        else
+                        {
+                            csv.Append(string.Format("3,2,1,{0},{1},{2},{3},{4},{5},{6}{7}",
+                         repoModel.Title, repoModel.BeginDate, repoModel.EndDate, repoModel.CallNumber,
+                         repoModel.RepositoryID, repoModel.Keywords, locSubject, Environment.NewLine));
+
+                        }
                     }
                 }
 
-                File.WriteAllText(CollectionCSVFilePath, csv.ToString());
+                if (correctRecordCount > 0)
+                {
+                    File.WriteAllText(CollectionCSVFilePath, csv.ToString());
 
-                WriteStatDetails(string.Format("{0} file created.", CollectionCSVFilePath));
+                    WriteStatDetails(string.Format("{0} file not created.", CollectionCSVFilePath));
 
-                ActiveButton(CollectionCSVButon);
+                    ActiveButton(CollectionCSVButon);
+                }
+                else
+                {
+                    WriteStatDetails("Upload repository data first to create interview details.");
+
+                    WriteStatDetails(string.Format("{0} not created.", CollectionCSVFilePath));
+
+                    InActiveButton(CollectionCSVButon);
+                }
+
             }
             else
             {
@@ -406,9 +460,9 @@ namespace WpfApp
             }
 
             // reading the json objects from the api
-            List<Repository> repoJsonObjects = GetJsonFileObjectList<Repository>("repository.json");
+            List<Repository> repoJsonObjects = GetJsonFileObjectList<Repository>("repository", "repository.json");
 
-            WriteStatDetails(string.Format("{0} found repository record(s) in modx system", repoJsonObjects.Count()));
+            WriteStatDetails(string.Format("{0} repository record(s) found in the modx system", repoJsonObjects.Count()));
 
             // Convert the json object to people model
             RepositoryJsonModels = GetRepoModelList(repoJsonObjects);
@@ -419,7 +473,7 @@ namespace WpfApp
                                  join objB in RepositoryJsonModels on objA.Title equals objB.Title
                                  select objA).ToList();
 
-            WriteStatDetails(string.Format("{0} found duplicate record(s) ", intersectList.Count()));
+            WriteStatDetails(string.Format("{0} duplicate record(s) found.", intersectList.Count()));
 
             IEnumerable<RepositoryModel> newList = repoModels.Except(intersectList.ToList());
 
@@ -473,9 +527,9 @@ namespace WpfApp
             if (dt.Columns.Contains(InterviewerColumnName) || dt.Columns.Contains(IntervieweeColumnName))
             {
                 // reading the json objects from the api
-                List<People> peopleJsonObjects = GetJsonFileObjectList<People>("people.json");
+                List<People> peopleJsonObjects = GetJsonFileObjectList<People>("people", "people.json");
 
-                WriteStatDetails(string.Format("{0} found people record(s) in modx system", peopleJsonObjects.Count()));
+                WriteStatDetails(string.Format("{0} people record(s) found in the modx system", peopleJsonObjects.Count()));
 
                 // Convert the json object to people model
                 PeopleJsonModels = GetPeopleModelList(peopleJsonObjects);
@@ -486,7 +540,7 @@ namespace WpfApp
                                      join objB in PeopleJsonModels on objA.Fullname equals objB.Fullname
                                      select objA).ToList();
 
-                WriteStatDetails(string.Format("{0} found duplicate record(s) ", intersectList.Count()));
+                WriteStatDetails(string.Format("{0} duplicate record(s) found.", intersectList.Count()));
 
                 IEnumerable<PeopleModel> newList = peopleModels.Except(intersectList.ToList());
 
@@ -509,7 +563,7 @@ namespace WpfApp
                         }
                         else
                         {
-                            csv.Append(string.Format("2,5,1,{0},content for {0},{1},{2},{3}",
+                            csv.Append(string.Format("2,5,1,{0},content for {0},{1},{2}{3}",
                               peopleModel.Fullname, peopleModel.FirstName, peopleModel.LastName, Environment.NewLine));
                         }
                     }
@@ -728,34 +782,35 @@ namespace WpfApp
             {
                 if (text.Split(';').Length > 1)
                 {
-                    int count = text.Split(';').Length;
-
                     foreach (string splitName in text.Split(';'))
                     {
                         SetPeopleModel(splitName, ref peopleModels);
                     }
                 }
-
-                string[] names = text.Split(',');
-
-                if (names.Length > 1)
-                {
-                    PeopleModel peopleModel = new PeopleModel()
-                    {
-                        FirstName = names[1].Trim(),
-                        LastName = names[0].Trim()
-                    };
-
-                    peopleModels.Add(peopleModel);
-                }
                 else
                 {
-                    PeopleModel peopleModel = new PeopleModel()
-                    {
-                        FirstName = names[0].Trim(),
-                    };
 
-                    peopleModels.Add(peopleModel);
+                    string[] names = text.Split(',');
+
+                    if (names.Length > 1)
+                    {
+                        PeopleModel peopleModel = new PeopleModel()
+                        {
+                            FirstName = names[1].Trim(),
+                            LastName = names[0].Trim() + (names.Length == 3 ? " " + names[2].Trim() : string.Empty),
+                        };
+
+                        peopleModels.Add(peopleModel);
+                    }
+                    else
+                    {
+                        PeopleModel peopleModel = new PeopleModel()
+                        {
+                            FirstName = names[0].Trim(),
+                        };
+
+                        peopleModels.Add(peopleModel);
+                    }
                 }
             }
         }
@@ -792,9 +847,11 @@ namespace WpfApp
                         CallNumber = !string.IsNullOrEmpty(callNumber) ? callNumber : EmptyString,
                         ContactName = EmptyString,
                         EndDate = !string.IsNullOrEmpty(endDate) ? endDate : EmptyString,
+
                         Keywords = !string.IsNullOrEmpty(keyWords) ? SetDelimeterTest(keyWords) : EmptyString,
                         LocSubjects = !string.IsNullOrEmpty(locSubjects) ? SetDelimeterTest(locSubjects) : EmptyString,
-                        RepositoryID = (currentRepo != null ? currentRepo.Id : EmptyString),
+
+                        RepositoryID = (currentRepo != null ? currentRepo.Id : null),
                         SubTitle = !string.IsNullOrEmpty(subTitle) ? subTitle : EmptyString
                     };
 
@@ -838,44 +895,45 @@ namespace WpfApp
                     RepositoryModel currentRepo = RepositoryJsonModels.FirstOrDefault(r => r.Title == repositoryTitle);
                     CollectionApiModel currentCollection = CollectionJsonModels.FirstOrDefault(r => r.Title == collectionTitle);
 
-                    string intervieweeIds = string.Empty;
-                    string intervieweerIds = string.Empty;
+                    List<string> intervieweeIds = new List<string>();
 
                     foreach (string item in intervieweeNames.Split(';'))
                     {
-                        PeopleModel intervieweeModel = PeopleJsonModels.FirstOrDefault(r => (r.LastName + ", " + r.FirstName) == item);
+                        PeopleModel intervieweeModel = PeopleJsonModels.FirstOrDefault(r => (r.LastName.Trim() + ", " + r.FirstName.Trim()) == item.Trim());
 
                         if (intervieweeModel != null)
                         {
-                            intervieweeIds += intervieweeModel.Id + ";";
+                            intervieweeIds.Add(intervieweeModel.Id);
                         }
 
                     }
 
+                    List<string> intervieweerIds = new List<string>();
+
                     foreach (string item in intervieweerNames.Split(';'))
                     {
-                        PeopleModel intervieweeModel = PeopleJsonModels.FirstOrDefault(r => (r.LastName + ", " + r.FirstName) == item);
+                        PeopleModel intervieweer = PeopleJsonModels.FirstOrDefault(r => (r.LastName.Trim() + ", " + r.FirstName.Trim()) == item.Trim());
 
-                        if (intervieweeModel != null)
+                        if (intervieweer != null)
                         {
-                            intervieweerIds += intervieweeModel.Id + ";";
+                            intervieweerIds.Add(intervieweer.Id);
                         }
                     }
 
                     InterviewApiModel peopleModel = new InterviewApiModel()
                     {
                         Title = title,
-                        CollectionID = (currentCollection != null ? currentCollection.Id : EmptyString),
+                        CollectionID = (currentCollection != null ? currentCollection.Id : null),
                         Date = !string.IsNullOrEmpty(date) ? date : EmptyString,
-                        IntervieweesID = !string.IsNullOrEmpty(intervieweeIds) ? SetDelimeterTest(intervieweeIds) : EmptyString,
-                        InterviewersID = !string.IsNullOrEmpty(intervieweerIds) ? SetDelimeterTest(intervieweerIds) : EmptyString,
+                        IntervieweesID = (intervieweeIds != null && intervieweeIds.Count > 0 ? string.Join("||", intervieweeIds) : null),
+                        InterviewersID = (intervieweerIds != null && intervieweerIds.Count > 0 ? string.Join("||", intervieweerIds) : null),
                         CallNumber = !string.IsNullOrEmpty(callNumber) ? callNumber : EmptyString,
                         Keywords = !string.IsNullOrEmpty(keyWords) ? SetDelimeterTest(keyWords) : EmptyString,
+
                         LocSubjects = !string.IsNullOrEmpty(locSubjects) ? SetDelimeterTest(locSubjects) : EmptyString,
-                        RepositoryID = (currentRepo != null ? currentRepo.Id : EmptyString),
+
+                        RepositoryID = (currentRepo != null ? currentRepo.Id : null),
                         SubTitle = !string.IsNullOrEmpty(subTitle) ? subTitle : EmptyString,
-
-
                     };
 
                     interviewModels.Add(peopleModel);
@@ -892,11 +950,11 @@ namespace WpfApp
         /// <typeparam name="T"></typeparam>
         /// <param name="filename">The filename.</param>
         /// <returns></returns>
-        private List<T> GetJsonFileObjectList<T>(string filename)
+        private List<T> GetJsonFileObjectList<T>(string entity, string filename)
         {
             try
             {
-                WriteStatDetails(string.Format("Reading external people {0} json file...", filename));
+                WriteStatDetails(string.Format("Reading {0} external records in {1} json file...", entity, filename));
 
                 string peopleJsonFile = Settings.Default.ExternalApi + filename;
 
@@ -1077,7 +1135,19 @@ namespace WpfApp
         /// <returns></returns>
         private string SetDelimeterTest(string text)
         {
-            return text.Replace(";", "|| ");
+            return text.Replace(";", "||").Replace(",", " ");
+        }
+
+        /// <summary>
+        /// Deletes all files.
+        /// </summary>
+        /// <exception cref="NotImplementedException"></exception>
+        private void DeleteAllFiles()
+        {
+            FileHelper.DeleteFile(PeopleCSVFilePath);
+            FileHelper.DeleteFile(RepositoryCSVFilePath);
+            FileHelper.DeleteFile(CollectionCSVFilePath);
+            FileHelper.DeleteFile(InterviewCSVFilePath);
         }
     }
 
