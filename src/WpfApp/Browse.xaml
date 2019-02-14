@@ -58,8 +58,11 @@
                         <StackPanel Grid.Row="1" Margin="20 10 0 8" Orientation="Horizontal"  Grid.Column="1">
                             <!--Text="{Binding SearchWord}"-->
 
-                            <TextBox  Width="300" Margin="20 10 0 8" Text="{Binding Path=SearchText}"
+                            <TextBox  Width="300" Margin="20 10 0 8" Text="{Binding Path=SearchText}"                                      
                                       Name="SearchWordTextBox" Background="{StaticResource AlternativeColor}"  />
+
+                            <TextBox  Name="InterviewIdTextBox" Text="{Binding Path=TranscriptionId}" Visibility="Hidden" />
+                            
                             <Button Margin="20 10 0 8"  MaxWidth="100" KeyboardNavigation.TabIndex="0" Content="Search" 
                                     Style="{StaticResource MaterialDesignRaisedAccentButton}" Click="SearchButton_Click"/>
                             <Button Margin="20 10 0 8" MaxWidth="100" Content="Reset" Style="{StaticResource MaterialDesignRaisedLightButton}" Click="ResetButton_Click"/>

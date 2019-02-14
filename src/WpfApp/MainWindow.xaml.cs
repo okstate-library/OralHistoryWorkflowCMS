@@ -253,6 +253,11 @@ namespace WpfApp
             {
                 MainGrid.Visibility = Visibility.Collapsed;
             }
+
+            if (toolTip.Equals("Search"))
+            {
+                this.SearchTextBox.Text = string.Empty;
+            }
         }
 
         /// <summary>
@@ -288,7 +293,7 @@ namespace WpfApp
             if (itemTranscriptionModel != null)
             {
                 object parameter = itemTranscriptionModel.Id;
-
+                
                 Browse2Button.Command?.Execute(parameter);
             }
         }

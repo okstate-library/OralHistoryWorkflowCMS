@@ -71,6 +71,7 @@ namespace WpfApp.Helper
             {
                 throw new InvalidOperationException("The command is not valid for execution, check the CanExecute method before attempting to execute.");
             }
+
             this.executionAction(parameter);
         }
     }

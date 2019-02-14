@@ -159,6 +159,18 @@ namespace WpfApp
 
             BackToListButton.Visibility = Visibility.Hidden;
 
+            if (!string.IsNullOrEmpty(InterviewIdTextBox.Text))
+            {
+                int id = int.Parse(InterviewIdTextBox.Text);
+
+                if (id > 0)
+                {
+                    LoadBrowseData(id, WellKnownExpander.Supplimental);
+                }
+
+                InterviewIdTextBox.Text = string.Empty;
+            }
+
         }
 
         /// <summary>
@@ -178,18 +190,22 @@ namespace WpfApp
 
                 if (words.Length > 1)
                 {
-                    BackToListButton.Visibility = Visibility.Visible;
-
                     WellKnownExpander expader = (WellKnownExpander)Enum.Parse(typeof(WellKnownExpander), words[1]);
 
                     TranscriptionModel itemTranscriptionModel = ((FrameworkElement)e.OriginalSource).DataContext as TranscriptionModel;
 
-                    MainGrid.Visibility = Visibility.Hidden;
-
-                    cc.Content = new Transcription(itemTranscriptionModel.Id, expader);
-
+                    LoadBrowseData(itemTranscriptionModel.Id, expader);
                 }
             }
+        }
+
+        private void LoadBrowseData(int id, WellKnownExpander expader)
+        {
+            BackToListButton.Visibility = Visibility.Visible;
+
+            MainGrid.Visibility = Visibility.Hidden;
+
+            cc.Content = new Transcription(id, expader);
         }
 
         /// <summary>

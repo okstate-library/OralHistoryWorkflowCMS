@@ -22,7 +22,7 @@ namespace WpfApp.Model
 
             //this.LoadBrowsePageCommand = new DelegateCommand(o => this.LoadBrowsePage());
 
-            this.LoadBrowsePageCommand = new DelegateCommand(o => this.LoadBrowsePage(TranscriptionId));
+            this.LoadBrowsePageCommand = new DelegateCommand(o => this.LoadBrowsePage(parameter));
 
             this.LoadUsersPageCommand = new DelegateCommand(o => this.LoadUsersPage());
 
@@ -73,6 +73,8 @@ namespace WpfApp.Model
         // ViewModel that is currently bound to the ContentControl
         private ViewModelBase _currentViewModel;
 
+        private object parameter;
+
         public ViewModelBase CurrentViewModel
         {
             get { return _currentViewModel; }
@@ -104,7 +106,7 @@ namespace WpfApp.Model
         private void LoadBrowsePage(object parameter)
         {
             CurrentViewModel = new BrowsePageViewModel(
-                new BrowsePage() { PageTitle = "Browse",  });
+                new BrowsePage() { PageTitle = "Browse", TranscriptionId = TranscriptionId });
 
             //TranscriptionId = transcriptionI
         }
