@@ -275,21 +275,23 @@ namespace BusinessServices.Services
                 InterviewDate = transcriptionModel.InterviewDate,
                 InterviewerNote = transcriptionModel.InterviewerNote,
                 IsAudioFormat = transcriptionModel.IsAudioFormat,
+                IsVideoFormat = transcriptionModel.IsVideoFormat,
                 IsRestriction = transcriptionModel.IsRestriction,
                 Keywords = transcriptionModel.Keywords,
                 LegalNote = transcriptionModel.LegalNote,
                 ReleaseForm = transcriptionModel.ReleaseForm,
                 Subject = transcriptionModel.Subject,
                 Title = transcriptionModel.Title,
+                IsAccessMediaStatus = transcriptionModel.IsAccessMediaStatus,
 
                 MetadataDraft = transcriptionModel.MetadataDraft,
                 SentOut = transcriptionModel.SentOut,
                 EquipmentNumber = transcriptionModel.EquipmentNumber,
-
+                
                 InterviewerDescription = GetSubString(transcriptionModel.InterviewerDescription),
                 InterviewerKeywords = GetSubString(transcriptionModel.InterviewerKeywords),
                 InterviewerSubjects = GetSubString(transcriptionModel.InterviewerSubjects),
-
+                
                 //AuditCheckCompletedDate = DateTime.MinValue,//DBNull.Value, //transcriptionModel.CreatedDate,
                 //EditWithCorrectionDate = DateTime.MinValue,
                 //ConvertToDigitalDate = DateTime.MinValue,
@@ -302,14 +304,14 @@ namespace BusinessServices.Services
 
                 //AccessFileLocation = "AccessFileLocation",
                 //AuditCheckCompleted = "AuditCheckCompleted",
-                //CoverageSpatial = "CoverageSpatial",
-                //CoverageTemporal= "CoverageTemporal",
+                CoverageSpatial = transcriptionModel.CoverageSpatial,
+                CoverageTemporal= transcriptionModel.CoverageTemporal,
                 //EditWithCorrectionCompleted = "EditWithCorrectionCompleted",
                 //FileName= "FileName",
                 //FinalEditCompleted= "FinalEditCompleted",
                 //FirstEditCompleted = "FirstEditCompleted",
-                //Format = "Format",
-
+                Format = transcriptionModel.Format,
+              
                 //InitialNote = "Initial Note",
                 //IsAccessMediaStatus = true,
                 //IsBornDigital = true,
@@ -317,21 +319,20 @@ namespace BusinessServices.Services
                 //IsInContentDm = true,
                 //IsRosetta = true,
                 //IsRosettaForm = true,
-                //Language = "Language",
+                Language = transcriptionModel.Language,
                 //MasterFileLocation= "MasterFileLocation",
                 //OriginalMedium ="original mediunm",
                 //OriginalMediumType = 1,
-                //Publisher = "Publisher",
+                Publisher = transcriptionModel.Publisher,
                 //RelationIsPartOf = "RelationIsPartOf",
-                //Rights = "roghts",
-                //ScopeAndContents = "scope and contents",
+                Rights = transcriptionModel.Rights,
+                ScopeAndContents = transcriptionModel.ScopeAndContents,
                 //SecondEditCompleted = "SecondEditCompleted",
 
                 //Transcript = "Transcript",
                 //TranscriptLocation = 1,
                 //TranscriptStatus = 1,
-                //Type = "Type",
-
+                Type = transcriptionModel.Type,
 
                 ProjectCode = transcriptionModel.ProjectCode,
                 IsPriority = transcriptionModel.IsPriority,

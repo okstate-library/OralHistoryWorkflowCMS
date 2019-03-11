@@ -1,5 +1,6 @@
 ﻿using MaterialDesignThemes.Wpf;
 using Model.Transfer;
+using System.Threading;
 using System.Windows.Controls;
 
 namespace WpfApp
@@ -50,7 +51,7 @@ namespace WpfApp
         /// </summary>
         private void ClearDatabase()
         {
-            ResponseModel response = App.BaseUserControl.InternalService.ResetDatabase(null);
+            ResponseModel response = App.BaseUserControl.InternalService.ResetDatabase(null);                      
 
             if (response.IsOperationSuccess)
             {

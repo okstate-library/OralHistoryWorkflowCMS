@@ -89,7 +89,7 @@
           <Property Name="InterviewerDescription" Type="varchar" MaxLength="1000" />
           <Property Name="InterviewerKeywords" Type="varchar" MaxLength="1000" />
           <Property Name="InterviewerSubjects" Type="varchar" MaxLength="1000" />
-          <Property Name="ScopeAndContents" Type="varchar" MaxLength="500" />
+          <Property Name="ScopeAndContents" Type="varchar" MaxLength="1000" />
           <Property Name="Format" Type="varchar" MaxLength="250" />
           <Property Name="Type" Type="varchar" MaxLength="250" />
           <Property Name="Publisher" Type="varchar" MaxLength="250" />
@@ -138,9 +138,9 @@
           <Property Name="IsConvertToDigital" Type="bool" Nullable="false" />
           <Property Name="ConvertToDigitalDate" Type="datetime" Precision="6" />
           <Property Name="IsAccessMediaStatus" Type="bool" Nullable="false" />
-          <Property Name="MasterFileLocation" Type="varchar" MaxLength="500" />
-          <Property Name="AccessFileLocation" Type="varchar" MaxLength="500" />
-          <Property Name="TranscriberLocation" Type="varchar" MaxLength="500" />
+          <Property Name="MasterFileLocation" Type="varchar" MaxLength="250" />
+          <Property Name="AccessFileLocation" Type="varchar" MaxLength="250" />
+          <Property Name="TranscriberLocation" Type="varchar" MaxLength="250" />
           <Property Name="SentOut" Type="bool" Nullable="false" />
           <Property Name="CreatedBy" Type="int" Nullable="false" />
           <Property Name="CreatedDate" Type="datetime" Precision="6" Nullable="false" />
@@ -249,7 +249,7 @@
           <Property Name="Description" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
           <Property Name="Keywords" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="Subject" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="ScopeAndContents" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ScopeAndContents" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
           <Property Name="Format" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="Type" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="Publisher" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
@@ -296,9 +296,9 @@
           <Property Name="IsConvertToDigital" Type="Boolean" Nullable="false" />
           <Property Name="ConvertToDigitalDate" Type="DateTime" />
           <Property Name="IsAccessMediaStatus" Type="Boolean" Nullable="false" />
-          <Property Name="MasterFileLocation" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="AccessFileLocation" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="TranscriberLocation" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="MasterFileLocation" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="AccessFileLocation" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="TranscriberLocation" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="CreatedBy" Type="Int32" Nullable="false" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" />
           <Property Name="UpdatedBy" Type="Int32" Nullable="false" />

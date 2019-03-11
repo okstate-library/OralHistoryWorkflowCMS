@@ -99,6 +99,7 @@
                         Rights<LineBreak/>	
                         Language<LineBreak/>
                         Project Code<LineBreak/>
+                        Transcriber Assigned<LineBreak/>      
                         Transcription Notes<LineBreak/>                                
                         Equipment #<LineBreak/>
                         Metadata Draft<LineBreak/>	
@@ -109,14 +110,13 @@
                         Release Form<LineBreak/>
                         Restrictions<LineBreak/>	
                         Restriction Notes<LineBreak/>	
-                        Recording Format<LineBreak/>	
-                        Equipment Used<LineBreak/>	
+                        Audio Equipment Used<LineBreak/>	
+                        Video Equipment Used<LineBreak/>	
                         Interviewer Notes<LineBreak/>	
                         Sent Out<LineBreak/>	
-                        Transcription Status<LineBreak/>	
                         Access Media Status<LineBreak/>	
                         Born digital<LineBreak/>	
-                        On CONTENTdm<LineBreak/>
+                        Online<LineBreak/>
 
                             </TextBlock>
                         </StackPanel>

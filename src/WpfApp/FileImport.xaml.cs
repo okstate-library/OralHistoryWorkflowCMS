@@ -72,9 +72,10 @@ namespace WpfApp
         /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
         private void UploadButton_Click(object sender, RoutedEventArgs e)
         {
+
             try
             {
-                
+
                 string filePath = fileUploadLabel.Content.ToString();
 
                 if (!string.IsNullOrEmpty(filePath))
@@ -87,6 +88,7 @@ namespace WpfApp
 
                     foreach (DataRow item in dt.Rows)
                     {
+    
                         CollectionModel collection = App.BaseUserControl.Collecions.FirstOrDefault(c => c.CollectionName.Contains(GetStringValue(item, "Collection Name")));
                         short collectionId = collection != null ? (short)collection.Id : (short)1;
 
@@ -94,11 +96,7 @@ namespace WpfApp
                         short subseriesId = subseries != null ? (short)subseries.Id : (short)1;
 
                         TranscriptionModel transcriptionModel = new TranscriptionModel()
-                        {
-
-                            //AccessFileLocation = GetStringValue(item, "Access File Location"),
-                            //AuditCheckCompleted = GetStringValue(item, "Audit Check Completed"),
-                            //AuditCheckCompletedDate = getDateValue(item, "Audit Check Completed Date"),
+                        {                          
                             CollectionId = 1,//collectionId,
                             ConvertToDigitalDate = GetDateValue(item, "Date Digital"),
                             CoverageSpatial = GetStringValue(item, "Coverage-Spatial"),
@@ -109,19 +107,9 @@ namespace WpfApp
                             TranscriptNote = GetStringValue(item, "Transcription Notes"),
                             EquipmentNumber = GetStringValue(item, "Equipment #"),
                             MetadataDraft = GetStringValue(item, "Metadata Draft"),
-                            //DraftSentDate = getDateValue(item, "Draft Sent Date"),
-                            //EditWithCorrectionCompleted = GetStringValue(item, "Edit With Correction Completed"),
-                            //EditWithCorrectionDate = getDateValue(item, "Edit With Correction Date"),
-                            //EquipmentUsed = GetStringValue(item, "Equipment Used"),
-                            //FileName = GetStringValue(item, "File Name"),
-                            //FinalEditCompleted = GetStringValue(item, "Final Edit Completed"),
-                            //FinalEditDate = getDateValue(item, "Final Edit Date"),
-                            //FinalSentDate = getDateValue(item, "Final Sent Date"),
-                            //FirstEditCompleted = GetStringValue(item, "First Edit Completed"),
-                            //FirstEditCompletedDate = getDateValue(item, "First Edit Completed Date"),
+                            
                             Format = GetStringValue(item, "Format"),
-                            //Identifier = GetStringValue(item, "Identifier"),
-                            //InitialNote = GetStringValue(item, "Initial Note"),
+                     
                             InterviewDate = (DateTime)GetDateValue(item, "Date Original"),
                             Interviewee = GetStringValue(item, "Interviewee"),
                             Interviewer = GetStringValue(item, "Interviewer"),
@@ -129,45 +117,35 @@ namespace WpfApp
                             IsAccessMediaStatus = CheckStringContains(GetStringValue(item, "Access Media Status"), "complete"),
 
                             IsBornDigital = GetBoolValue(item, "Born digital"),
-                            IsConvertToDigital = false, //getBoolValue(item, "Convert To Digital"),
-                            IsInContentDm = GetBoolValue(item, "On CONTENTdm"),
-                            IsPriority = false, //getBoolValue(item, "Priority"),
+                            IsConvertToDigital = false, 
+                            IsInContentDm = GetBoolValue(item, "Online"),
+                            IsPriority = false,
                             IsRestriction = GetBoolValue(item, "Restrictions"),
                             LegalNote = GetStringValue(item, "Restriction Notes"),
 
                             AudioEquipmentUsed = GetStringValue(item, "Audio Equipment Used"),
                             VideoEquipmentUsed = GetStringValue(item, "Video Equipment Used"),
 
-                            IsVideoFormat = CheckStringContains(GetStringValue(item, "Recording Format"), "video"),
-                            IsAudioFormat = CheckStringContains(GetStringValue(item, "Recording Format"), "audio"),
+                            IsVideoFormat = !string.IsNullOrEmpty(GetStringValue(item, "Video Equipment Used")) ? true : false,
+                            IsAudioFormat = !string.IsNullOrEmpty(GetStringValue(item, "Audio Equipment Used")) ? true : false,
 
-                            IsRosetta = false, // getBoolValue(item, "Rosetta"),
-                            IsRosettaForm = false, //getBoolValue(item, "Rosetta Form"),
+                            IsRosetta = false, 
+                            IsRosettaForm = false,
                             Keywords = GetStringValue(item, "Keyword"),
                             Language = GetStringValue(item, "Language"),
-                            //LegalNote = GetStringValue(item, "Legal Note"),
-                            //MasterFileLocation = GetStringValue(item, "Master File"),
-                            //OriginalMedium = GetStringValue(item, "Original Medium"),
-                            OriginalMediumType = 1,// GetStringValue(item, "Original Medium"),
-                                                   //Place = GetStringValue(item, "Place"),
+                         
+                            OriginalMediumType = 1,
                             ProjectCode = GetStringValue(item, "Project Code"),
                             Publisher = GetStringValue(item, "Publisher"),
-                            //ReasonForPriority = GetStringValue(item, "Reason For Priority"),
-                            //RelationIsPartOf = GetStringValue(item, "RelationIsPartOf"),
-                            ReleaseForm = GetBoolValue(item, "Release Form"), // getBoolValue(item, "Release Form"),
+                         
+                            ReleaseForm = GetBoolValue(item, "Release Form"), 
                             Rights = GetStringValue(item, "Rights"),
-                            ScopeAndContents = GetStringValue(item, "Scope And Contents"),
-                            //SecondEditCompleted = GetStringValue(item, "Second Edit Completed"),
-                            //SecondEditCompletedDate =getDateValue(item, "Second Edit Completed Date"),
+                            ScopeAndContents = GetStringValue(item, "Scope And Contents"),                        
                             Subject = GetStringValue(item, "Subject"),
                             SubseriesId = 1,//subseriesId,
-                                            //TranscriberAssigned = GetStringValue(item, "Transcriber Assigned"),
-                                            //TranscriberCompleted = getDateValue(item, "Transcriber Completed"),
-                                            //TranscriberLocation = GetStringValue(item, "Transcriber Location"),
-                                            //Transcript = GetStringValue(item, "Transcript"),
+                            TranscriberAssigned = GetStringValue(item, "Transcriber Assigned"),                         
                             TranscriptLocation = 1, //GetStringValue(item, "TranscriptLocation"),
-                                                    //TranscriptNote = GetStringValue(item, "Transcript Note"),
-                            TranscriptStatus = CheckStringContains(GetStringValue(item, "Transcription Status"), "complete"),
+                            TranscriptStatus = true,
                             Place = GetStringValue(item, "Location of Interview"),
                             Title = GetStringValue(item, "Title"),
                             Type = GetStringValue(item, "Type"),
@@ -207,10 +185,11 @@ namespace WpfApp
                 }
                 else
                 {
+
                     App.ShowMessage(false, "Browse and select the file first.");
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 App.ShowMessage(false, "Upload the correct formatted excel file.");
             }
@@ -269,7 +248,7 @@ namespace WpfApp
 
                 if (fileExtension == ".xls")
                 {
-                    conn.ConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + path + ";" + "Extended Properties='Excel 8.0;HDR=YES;'";
+                    conn.ConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + path + ";" + "Extended Properties='Excel 8.0;HDR=YES;IMEX=1'";
                 }
                 else if (fileExtension == ".xlsx")
                 {
