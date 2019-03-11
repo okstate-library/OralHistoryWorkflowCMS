@@ -645,7 +645,7 @@
 
                             <Label Style="{StaticResource BoldLabel}" Grid.Row="8" Grid.Column="0">Subject</Label>
 
-                            <TextBox Name="Subject2TextBox" Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="5"  Height="50" AcceptsReturn="True" 
+                            <TextBox Name="Subject2TextBox" Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="5"  Height="100" AcceptsReturn="True" 
                                      TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"   Style="{StaticResource EditableTextBox}" />
 
                             <Border  Grid.Row="9"  Style="{StaticResource EmptyBorder}"   />
@@ -659,70 +659,74 @@
 
                             <Label Style="{StaticResource BoldLabel}" Grid.Row="12" Grid.Column="0" >Description</Label>
 
-                            <TextBox Name="Description2TextBox"  Grid.Row="12" Grid.Column="1" Grid.ColumnSpan="5"  Height="50" AcceptsReturn="True"
+                            <TextBox Name="Description2TextBox"  Grid.Row="12" Grid.Column="1" Grid.ColumnSpan="5"  Height="100" AcceptsReturn="True"
                                      TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"   Style="{StaticResource EditableTextBox}" />
 
                             <Border  Grid.Row="13"  Style="{StaticResource EmptyBorder}"   />
 
                             <Label Style="{StaticResource BoldLabel}" Grid.Row="14" Grid.Column="0">Scope and Contents</Label>
 
-                            <TextBox Name="ScopeAndContentTextBox"  Grid.Row="14" Grid.Column="1"   Style="{StaticResource EditableTextBox}" />
-
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="14" Grid.Column="3">Rights</Label>
-
-                            <TextBox Name="RightsTextBox" Grid.Row="14" Grid.Column="4"   Style="{StaticResource EditableTextBox}" />
-
+                            <TextBox Name="ScopeAndContentTextBox"  Grid.Row="14" Grid.Column="1" TextWrapping="Wrap"  Grid.ColumnSpan="5" Height="50" Style="{StaticResource EditableTextBox}" />
+                            
                             <Border  Grid.Row="15"  Style="{StaticResource EmptyBorder}"   />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="16" Grid.Column="0">Format</Label>
+                            <Label Style="{StaticResource BoldLabel}" Grid.Row="16" Grid.Column="0">Rights</Label>
 
-                            <TextBox Name="Format2TextBox"  Grid.Row="16" Grid.Column="1"   Style="{StaticResource EditableTextBox}" />
-
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="16" Grid.Column="3">Language</Label>
-
-                            <TextBox Name="LabguageTextBox" Grid.Row="16" Grid.Column="4"   Style="{StaticResource EditableTextBox}" />
+                            <TextBox Name="RightsTextBox" Grid.Row="16" Grid.Column="1"  Grid.ColumnSpan="5" TextWrapping="Wrap"  Height="100" Style="{StaticResource EditableTextBox}" />
 
                             <Border  Grid.Row="17"  Style="{StaticResource EmptyBorder}"   />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="18" Grid.Column="0">Type</Label>
+                            <Label Style="{StaticResource BoldLabel}" Grid.Row="18" Grid.Column="0">Publisher</Label>
 
-                            <TextBox Name="TypeTextBox"  Grid.Row="18" Grid.Column="1"   Style="{StaticResource EditableTextBox}" />
-
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="18" Grid.Column="3">Identifier</Label>
-
-                            <TextBox Name="IdentifierTextBox" Grid.Row="18" Grid.Column="4"   Style="{StaticResource EditableTextBox}" />
+                            <TextBox Name="PublisherTextBox"  Grid.Row="18" Grid.Column="1"  Grid.ColumnSpan="5" Height="50" Style="{StaticResource EditableTextBox}" />
 
                             <Border  Grid.Row="19"  Style="{StaticResource EmptyBorder}"   />
+                            
+                            <Label Style="{StaticResource BoldLabel}" Grid.Row="20" Grid.Column="0">Coverage-spatial</Label>
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="20" Grid.Column="0">Publisher</Label>
-
-                            <TextBox Name="PublisherTextBox"  Grid.Row="20" Grid.Column="1"   Style="{StaticResource EditableTextBox}" />
-
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="20" Grid.Column="3">Transcript</Label>
-
-                            <TextBox Name="TranscriptTextBox" Grid.Row="20" Grid.Column="4"   Style="{StaticResource EditableTextBox}" />
+                            <TextBox Name="CoverageSpatialTextBox"  Grid.Row="20" Grid.Column="1"   Height="50" Grid.ColumnSpan="5" Style="{StaticResource EditableTextBox}" />
 
                             <Border  Grid.Row="21"  Style="{StaticResource EmptyBorder}"   />
+                            
+                            <Label Style="{StaticResource BoldLabel}" Grid.Row="22" Grid.Column="0">Project code</Label>
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="22" Grid.Column="0">Relation-is part of</Label>
+                            <TextBox Name="ProjectCodeTextBox2" Grid.Row="22" Grid.Column="1"   Style="{StaticResource EditableTextBox}" />
 
-                            <TextBox Name="RelationIsPartofTextBox"  Grid.Row="22" Grid.Column="1"   Style="{StaticResource EditableTextBox}" />
+                            <Label Style="{StaticResource BoldLabel}" Grid.Row="22" Grid.Column="3">Coverage-temporal</Label>
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="22" Grid.Column="3">File name</Label>
-
-                            <TextBox Name="FileNameTextBox" Grid.Row="22" Grid.Column="4"   Style="{StaticResource EditableTextBox}" />
-
+                            <TextBox Name="CoverageTemporalTextBox" Grid.Row="22" Grid.Column="4"   Style="{StaticResource EditableTextBox}" />
+                            
                             <Border  Grid.Row="23"  Style="{StaticResource EmptyBorder}"   />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="24" Grid.Column="0">Coverage-spatial</Label>
+                            <Label Style="{StaticResource BoldLabel}" Grid.Row="24" Grid.Column="0">Format</Label>
 
-                            <TextBox Name="CoverageSpatialTextBox"  Grid.Row="24" Grid.Column="1"   Style="{StaticResource EditableTextBox}" />
+                            <TextBox Name="Format2TextBox"  Grid.Row="24" Grid.Column="1"   Style="{StaticResource EditableTextBox}" />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="24" Grid.Column="3">Coverage-temporal</Label>
+                            <Label Style="{StaticResource BoldLabel}" Grid.Row="24" Grid.Column="3">Language</Label>
 
-                            <TextBox Name="CoverageTemporalTextBox" Grid.Row="24" Grid.Column="4"   Style="{StaticResource EditableTextBox}" />
+                            <TextBox Name="LabguageTextBox" Grid.Row="24" Grid.Column="4"   Style="{StaticResource EditableTextBox}" />
+                            
+                            <Border  Grid.Row="25"  Style="{StaticResource EmptyBorder}"   />
 
-                            <Button Name="MetadataButton" Grid.Row="25"  Grid.ColumnSpan="5"  Margin="0,20,0,0"  Style="{StaticResource MaterialDesignRaisedAccentButton}" Click="MetadataButton_Click" 
+                            <Label Style="{StaticResource BoldLabel}" Grid.Row="26" Grid.Column="0">Type</Label>
+
+                            <TextBox Name="TypeTextBox"  Grid.Row="26" Grid.Column="1"   Style="{StaticResource EditableTextBox}" />
+
+                            <Label Style="{StaticResource BoldLabel}" Grid.Row="26" Grid.Column="3">Transcript</Label>
+
+                            <TextBox Name="TranscriptTextBox" Grid.Row="26" Grid.Column="4"   Style="{StaticResource EditableTextBox}" />
+                            
+                            <Border  Grid.Row="27"  Style="{StaticResource EmptyBorder}"   />
+
+                            <Label Style="{StaticResource BoldLabel}" Grid.Row="28" Grid.Column="0">Relation-is part of</Label>
+
+                            <TextBox Name="RelationIsPartofTextBox"  Grid.Row="28" Grid.Column="1"   Style="{StaticResource EditableTextBox}" />
+
+                            <Label Style="{StaticResource BoldLabel}" Grid.Row="28" Grid.Column="3">File name</Label>
+
+                            <TextBox Name="FileNameTextBox" Grid.Row="28" Grid.Column="4"   Style="{StaticResource EditableTextBox}" />
+
+                            <Button Name="MetadataButton" Grid.Row="30"  Grid.ColumnSpan="5"  Margin="0,20,0,0"  Style="{StaticResource MaterialDesignRaisedAccentButton}" Click="MetadataButton_Click" 
                         ToolTip="Submit metadata details">
                                 _Submit
                             </Button>

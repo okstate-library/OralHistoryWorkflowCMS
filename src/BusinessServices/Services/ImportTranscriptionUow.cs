@@ -138,6 +138,8 @@ namespace BusinessServices.Servcices
                 {
                     transcription transcription = Util.ConvertToTranscription(item);
 
+                    transcription.TranscriptStatus = true;
+
                     TranscriptionRepository.Add(transcription);
                     TranscriptionRepository.Save();
 

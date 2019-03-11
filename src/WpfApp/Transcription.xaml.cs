@@ -216,7 +216,7 @@ namespace WpfApp
                 Language = LabguageTextBox.Text,
 
                 Type = TypeTextBox.Text,
-                Identifier = IdentifierTextBox.Text,
+                Identifier = "",
 
                 Publisher = PublisherTextBox.Text,
                 Transcript = TranscriptTextBox.Text,
@@ -488,6 +488,7 @@ namespace WpfApp
                 IntervieweeTextBox.Text = transcriptionModel.Interviewee;
                 InterviewerTextBox.Text = transcriptionModel.Interviewer;
                 ProjectCodeTextBox.Text = transcriptionModel.ProjectCode;
+                ProjectCodeTextBox2.Text = transcriptionModel.ProjectCode;
                 InterviewDateTextBox.Text = transcriptionModel.InterviewDate.ToShortDateString();
 
                 if (transcriptionModel.IsAudioFormat && transcriptionModel.IsVideoFormat)
@@ -617,12 +618,13 @@ namespace WpfApp
                 PublisherTextBox.Text = transcriptionModel.Publisher;
                 //textBoxCollectionName.Text = transcriptionModel.CollectionName;
                 RelationIsPartofTextBox.Text = transcriptionModel.RelationIsPartOf;
-                RelationIsPartofTextBox.Text = transcriptionModel.CoverageSpatial;
+                CoverageSpatialTextBox.Text = transcriptionModel.CoverageSpatial;
                 CoverageTemporalTextBox.Text = transcriptionModel.CoverageTemporal;
                 RightsTextBox.Text = transcriptionModel.Rights;
                 LabguageTextBox.Text = transcriptionModel.Language;
-                LabguageTextBox.Text = transcriptionModel.Identifier;
-                LabguageTextBox.Text = transcriptionModel.Transcript;
+                
+                TranscriptTextBox.Text = transcriptionModel.Transcript;
+
                 FileNameTextBox.Text = transcriptionModel.FileName;
 
                 //// Tab 5 
