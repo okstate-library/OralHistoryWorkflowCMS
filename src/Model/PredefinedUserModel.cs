@@ -3,7 +3,8 @@
     /// <summary>
     /// Defines the interviewer model
     /// </summary>
-    public class InterviewerModel : BaseModel
+    public class PredefinedUserModel : BaseModel
     {
+        public byte UserType { get; set; }
     }
 }

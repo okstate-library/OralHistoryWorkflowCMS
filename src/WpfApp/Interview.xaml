@@ -22,7 +22,7 @@
 
     </UserControl.Resources>
 
-    <ScrollViewer HorizontalScrollBarVisibility="Hidden"  VerticalScrollBarVisibility="Hidden"                     
+    <ScrollViewer HorizontalScrollBarVisibility="Auto"  VerticalScrollBarVisibility="Auto"  CanContentScroll="True"                     
                       Margin="0 0 0 0">
         <Grid>
             <Grid.RowDefinitions>
@@ -63,9 +63,9 @@
                             <TextBlock Text=" Required fields:" FontWeight="Bold" FontSize="13" />
                             <TextBlock Margin="10 0 0 0" FontSize="12">
                         Project code<LineBreak/>	
-                        Interviewee	<LineBreak/>
-                        Interviewer<LineBreak/>	
-                        Interview Date <LineBreak/>
+                        Interviewee(s)	<LineBreak/>
+                        Interviewer(s)<LineBreak/>	
+                        Interview Date(s) <LineBreak/>
                         Collection	<LineBreak/>
                         Subseries <LineBreak/>
                             </TextBlock>
@@ -114,6 +114,10 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="200" />
@@ -122,8 +126,8 @@
                             <ColumnDefinition Width="300" />
                         </Grid.ColumnDefinitions>
 
-                        <Label Style="{StaticResource BoldLabel}" Grid.Row="0" Grid.Column="0">Project Code</Label>
-
+                        <TextBlock Style="{StaticResource BoldTextBlock}" Grid.Row="0" Grid.Column="0" Margin="5">Project Code <TextBlock Foreground="Red"> *</TextBlock> </TextBlock>  
+                 
                         <TextBox Name="ProjectCodeTextBox" Grid.Row="0"  Grid.Column="1" Grid.ColumnSpan="1"  LostFocus="ProjectCodeTextBox_LostFocus"   Style="{StaticResource EditableTextBox}" >
                             <TextBox.Text>
                                 <Binding Path="ProjectCode" UpdateSourceTrigger="PropertyChanged">
@@ -134,11 +138,15 @@
                             </TextBox.Text>
                         </TextBox>
 
+                        <Label Style="{StaticResource BoldLabel}" Grid.Row="0" Grid.Column="2" Margin="15 0 0 0" >Location of interview</Label>
+
+                        <TextBox Name="PlaceTextBox" Grid.Row="0" Grid.Column="3"   Style="{StaticResource EditableTextBox}" />
+                        
                         <Border  Grid.Row="1"  Style="{StaticResource EmptyBorder}"   />
 
-                        <Label Style="{StaticResource BoldLabel}" Grid.Row="2" Grid.Column="0">Interviewee</Label>
-
-                        <TextBox Name="IntervieweeTextBox"  Grid.Row="2" Grid.Column="1"   Style="{StaticResource EditableTextBox}">
+                        <TextBlock Style="{StaticResource BoldTextBlock}" Grid.Row="2" Grid.Column="0" Margin="5">Interviewee(s) <TextBlock Foreground="Red"> *</TextBlock> </TextBlock>
+                       
+                        <TextBox Name="IntervieweeTextBox"  Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3"   Style="{StaticResource EditableTextBox}">
                             <TextBox.Text>
                                 <Binding Path="Interviewee" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
@@ -148,47 +156,104 @@
                             </TextBox.Text>
                         </TextBox>
 
-                        <Label Style="{StaticResource BoldLabel}" Margin="15 0 0 0" Grid.Row="2" Grid.Column="2">Interviewer</Label>
-                      
+                        <Label Grid.Row="3" Grid.ColumnSpan="3" Margin="-2 0 0 0" Style="{StaticResource TextBoxInputFormatLabel}" Grid.Column="1">
+                            Last name, first name; Last name, first name ; Last name, first name</Label>
 
-                        <StackPanel Orientation="Horizontal"  Grid.Row="2" Grid.Column="3" >
+                        <Border  Grid.Row="4"  Style="{StaticResource EmptyBorder}"   />
 
-                            <TextBlock/>
+                        <TextBlock Style="{StaticResource BoldTextBlock}" Grid.Row="5" Grid.Column="0" Margin="5">Interviewer(s) <TextBlock Foreground="Red"> *</TextBlock> </TextBlock>
 
-                            <domain1:FilteredComboBox x:Name="InterviewerFilteredComboBox"  materialDesign:HintAssist.HintOpacity=".26"  
-                            HorizontalAlignment="Left" VerticalAlignment="Top" Width="300"/>
+                        <Grid  VerticalAlignment="Top" Grid.Row="5" Grid.ColumnSpan="4"   Grid.Column="1"   >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="260" />
+                                <ColumnDefinition Width="260" />
+                                <ColumnDefinition Width="300" />
+                            </Grid.ColumnDefinitions>
 
-                        </StackPanel>
+                                <domain1:FilteredComboBox x:Name="InterviewerFilteredComboBox"  materialDesign:HintAssist.HintOpacity=".26"   Grid.Row="0" Grid.Column="0"
+                            HorizontalAlignment="Left" VerticalAlignment="Top" Width="250"/>
+                            
+                            <domain1:FilteredComboBox x:Name="InterviewerFilteredComboBox1"  materialDesign:HintAssist.HintOpacity=".26"   Grid.Row="0" Grid.Column="1"
+                            HorizontalAlignment="Left" VerticalAlignment="Top" Width="250"/>
+                            
+                            <domain1:FilteredComboBox x:Name="InterviewerFilteredComboBox2"  materialDesign:HintAssist.HintOpacity=".26"   Grid.Row="0" Grid.Column="2"
+                            HorizontalAlignment="Left" VerticalAlignment="Top" Width="250"/>
+                        </Grid>
 
+                        <Border  Grid.Row="6"  Style="{StaticResource EmptyBorder}"   />
 
-                        <Label Grid.Row="3" Margin="-2 0 0 0" Style="{StaticResource TextBoxInputFormatLabel}" Grid.Column="1">Last name, first name</Label>
+                        <TextBlock Style="{StaticResource BoldTextBlock}" Grid.Row="7" Grid.Column="0" Margin="5">Interview date(s) <TextBlock Foreground="Red"> *</TextBlock> </TextBlock>
 
+                        <Grid  VerticalAlignment="Top" Grid.Row="7" Grid.ColumnSpan="3"   Grid.Column="1"   >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="200" />
+                                <ColumnDefinition Width="200" />
+                                <ColumnDefinition Width="200" />
+                            </Grid.ColumnDefinitions>
 
-                        <Border  Grid.Row="3"  Style="{StaticResource EmptyBorder}"   />
-
-                        <Label Style="{StaticResource BoldLabel}" Grid.Row="4" Grid.Column="0">Interview date</Label>
-
-                        <DatePicker Name="InterviewDateDateDatePicker"  Grid.Row="4" Grid.ColumnSpan="1"   Grid.Column="1"
-                                    Style="{StaticResource MaterialDesignFloatingHintDatePicker}"  >
-                            <DatePicker.SelectedDate>
-                                <Binding      Path="InterviewDate"      UpdateSourceTrigger="PropertyChanged">
-                                    <Binding.ValidationRules>
-                                        <domain1:PastDateValidationRule
+                            <DatePicker Name="InterviewDateDateDatePicker"  Grid.Row="0" Grid.Column="0"  
+                                    Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Height="37" VerticalAlignment="Bottom" Margin="0,0,10,0"  >
+                                <DatePicker.SelectedDate >
+                                    <Binding  Path="InterviewDate"    UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <domain1:PastDateValidationRule
                                             ValidatesOnTargetUpdated="True" xmlns:domain="clr-namespace:MaterialDesignDemo.Domain" />
-                                    </Binding.ValidationRules>
-                                </Binding>
-                            </DatePicker.SelectedDate>
-                        </DatePicker>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </DatePicker.SelectedDate>
+                                <DatePicker.Resources>
+                                    <Style TargetType="DatePickerTextBox">
+                                        <Setter Property="IsReadOnly" Value="True"/>
+                                    </Style>
+                                </DatePicker.Resources>
+                            </DatePicker>
 
-                        <Label Style="{StaticResource BoldLabel}" Grid.Row="4" Grid.Column="2" Margin="15 0 0 0" >Location of interview</Label>
+                            <DatePicker Name="InterviewDateDateDatePicker1" Grid.Row="0" Grid.Column="1"  Height="37" VerticalAlignment="Bottom" Margin="0,0,10,0"
+                                    Style="{StaticResource MaterialDesignFloatingHintDatePicker}"  >
+                                <DatePicker.SelectedDate >
+                                    <Binding      Path="InterviewDate1"    UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <domain1:PastDateValidationRule
+                                            ValidatesOnTargetUpdated="True" xmlns:domain="clr-namespace:MaterialDesignDemo.Domain" />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </DatePicker.SelectedDate>
+                                <DatePicker.Resources>
+                                    <Style TargetType="DatePickerTextBox">
+                                        <Setter Property="IsReadOnly" Value="True"/>
+                                    </Style>
+                                </DatePicker.Resources>
+                            </DatePicker>
 
-                        <TextBox Name="PlaceTextBox" Grid.Row="4" Grid.Column="3"   Style="{StaticResource EditableTextBox}" />
+                            <DatePicker Name="InterviewDateDateDatePicker2"  Grid.Row="0" Grid.Column="2"  Height="37" VerticalAlignment="Bottom" Margin="0,0,10,0"
+                                    Style="{StaticResource MaterialDesignFloatingHintDatePicker}"  >
+                                <DatePicker.SelectedDate >
+                                    <Binding      Path="InterviewDate2"    UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <domain1:PastDateValidationRule
+                                            ValidatesOnTargetUpdated="True" xmlns:domain="clr-namespace:MaterialDesignDemo.Domain" />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </DatePicker.SelectedDate>
+                                <DatePicker.Resources>
+                                    <Style TargetType="DatePickerTextBox">
+                                        <Setter Property="IsReadOnly" Value="True"/>
+                                    </Style>
+                                </DatePicker.Resources>
+                            </DatePicker>
+                        </Grid>
+                      
+                        <Border  Grid.Row="8"  Style="{StaticResource EmptyBorder}"   />
 
-                        <Border  Grid.Row="5"  Style="{StaticResource EmptyBorder}"   />
-
-                        <Label Style="{StaticResource BoldLabel}" Grid.Row="6" Grid.Column="0">Collection</Label>
-
-                        <ComboBox Grid.Row="6" Grid.Column="1" ItemsSource="{Binding Collections}" DisplayMemberPath="Name" 
+                        <TextBlock Style="{StaticResource BoldTextBlock}" Grid.Row="9" Grid.Column="0" Margin="5">Collection <TextBlock Foreground="Red"> *</TextBlock> </TextBlock>
+                        
+                        <ComboBox Grid.Row="9" Grid.Column="1" ItemsSource="{Binding Collections}" DisplayMemberPath="Name" 
                                   HorizontalAlignment="Left" Name="CollectionComboBox" VerticalAlignment="Top" Width="300" >
                             <ComboBox.Text>
                                 <Binding Path="SelectedCollection" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
@@ -199,9 +264,10 @@
                             </ComboBox.Text>
                         </ComboBox>
 
-                        <Label Style="{StaticResource BoldLabel}" Grid.Row="6" Grid.Column="2" Margin="15 0 0 0" >Subseries</Label>
+                        <TextBlock Style="{StaticResource BoldTextBlock}" Grid.Row="9" Grid.Column="2" Margin="15">Subseries <TextBlock Foreground="Red"> *</TextBlock> </TextBlock>
+                        
 
-                        <ComboBox Grid.Row="6" Grid.Column="3" ItemsSource="{Binding SelectedItem.Series, ElementName=CollectionComboBox}"   DisplayMemberPath="Value" 
+                        <ComboBox Grid.Row="9" Grid.Column="3" ItemsSource="{Binding SelectedItem.Series, ElementName=CollectionComboBox}"   DisplayMemberPath="Value" 
                                   HorizontalAlignment="Left" Name="SubseriesComboBox" VerticalAlignment="Top"   Width="300" >
                             <ComboBox.Text>
                                 <Binding Path="SelectedCollection" Mode="OneWay" UpdateSourceTrigger="PropertyChanged">
@@ -212,32 +278,32 @@
                             </ComboBox.Text>
                         </ComboBox>
 
-                        <Border  Grid.Row="7"  Style="{StaticResource EmptyBorder}"   />
+                        <Border  Grid.Row="10"  Style="{StaticResource EmptyBorder}"   />
 
-                        <Label Style="{StaticResource BoldLabel}" Grid.Row="8" Grid.Column="0">Subject</Label>
+                        <Label Style="{StaticResource BoldLabel}" Grid.Row="11" Grid.Column="0">Subject</Label>
 
-                        <TextBox Name="SubjectTextBox" Grid.Row="8"  Grid.Column="1" Grid.ColumnSpan="3"  Height="50" AcceptsReturn="True" 
+                        <TextBox Name="SubjectTextBox" Grid.Row="11"  Grid.Column="1" Grid.ColumnSpan="3"  Height="50" AcceptsReturn="True" 
                                      TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"   Style="{StaticResource EditableTextBox}" />
 
-                        <Border  Grid.Row="9"  Style="{StaticResource EmptyBorder}"   />
+                        <Border  Grid.Row="12"  Style="{StaticResource EmptyBorder}"   />
 
-                        <Label Style="{StaticResource BoldLabel}" Grid.Row="10" Grid.Column="0">Keywords</Label>
+                        <Label Style="{StaticResource BoldLabel}" Grid.Row="13" Grid.Column="0">Keywords</Label>
 
-                        <TextBox Name="KeywordsTextBox"  Grid.Row="10"  Grid.Column="1" Grid.ColumnSpan="3" Height="50" AcceptsReturn="True"
+                        <TextBox Name="KeywordsTextBox"  Grid.Row="13"  Grid.Column="1" Grid.ColumnSpan="3" Height="50" AcceptsReturn="True"
                                      TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"   Style="{StaticResource EditableTextBox}" />
 
-                        <Border  Grid.Row="11"  Style="{StaticResource EmptyBorder}" />
+                        <Border  Grid.Row="14"  Style="{StaticResource EmptyBorder}" />
 
-                        <Label Style="{StaticResource BoldLabel}" Grid.Row="12" Grid.Column="0" >Description</Label>
+                        <Label Style="{StaticResource BoldLabel}" Grid.Row="15" Grid.Column="0" >Description</Label>
 
-                        <TextBox Name="DescriptionTextBox"  Grid.Row="12"  Grid.Column="1" Grid.ColumnSpan="3" Height="50" AcceptsReturn="True"
+                        <TextBox Name="DescriptionTextBox"  Grid.Row="15"  Grid.Column="1" Grid.ColumnSpan="3" Height="50" AcceptsReturn="True"
                                      TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"   Style="{StaticResource EditableTextBox}" />
 
-                        <Border  Grid.Row="13"  Style="{StaticResource EmptyBorder}"   />
+                        <Border  Grid.Row="16"  Style="{StaticResource EmptyBorder}"   />
 
-                        <Label Style="{StaticResource BoldLabel}" Grid.Row="14" Grid.Column="0">Audio equipment</Label>
+                        <Label Style="{StaticResource BoldLabel}" Grid.Row="17" Grid.Column="0">Audio equipment</Label>
 
-                        <StackPanel Orientation="Horizontal"  Grid.Row="14" Grid.Column="1" >
+                        <StackPanel Orientation="Horizontal"  Grid.Row="17" Grid.Column="1" >
 
                             <TextBlock                />
 
@@ -247,9 +313,9 @@
 
                         </StackPanel>
 
-                        <Label Style="{StaticResource BoldLabel}" Grid.Row="14" Grid.Column="2" Margin="15 0 0 0">Video equipment</Label>
+                        <Label Style="{StaticResource BoldLabel}" Grid.Row="17" Grid.Column="2" Margin="15 0 0 0">Video equipment</Label>
 
-                        <StackPanel Orientation="Horizontal"  Grid.Row="14" Grid.Column="3" >
+                        <StackPanel Orientation="Horizontal"  Grid.Row="17" Grid.Column="3" >
 
                             <TextBlock                />
 
@@ -259,17 +325,11 @@
 
                         </StackPanel>
 
-                        <!--<ComboBox Name="EquipmentUsedComboBox"  materialDesign:HintAssist.HintOpacity=".26"
-                                   >
-                        </ComboBox>-->
+                        <Border  Grid.Row="18"  Style="{StaticResource EmptyBorder}"   />
 
-                        <!--<TextBox Name="EquipmentUsedTextBox"  Grid.Row="14" Grid.Column="1"   Style="{StaticResource EditableTextBox}" />-->
-                       
-                        <Border  Grid.Row="15"  Style="{StaticResource EmptyBorder}"   />
+                        <Label Style="{StaticResource BoldLabel}" Grid.Row="19" Grid.Column="0">Release form</Label>
 
-                        <Label Style="{StaticResource BoldLabel}" Grid.Row="16" Grid.Column="0">Release form</Label>
-
-                        <StackPanel   Grid.Row="16" Grid.Column="1" Orientation="Horizontal">
+                        <StackPanel   Grid.Row="19" Grid.Column="1" Orientation="Horizontal">
 
                             <CheckBox Name="ReleaseFromYesCheckBox"
                                             Style="{StaticResource MaterialDesignCheckBox}" Checked="ReleaseFrom_Check">
@@ -283,9 +343,9 @@
 
                         </StackPanel>
 
-                        <Label Style="{StaticResource BoldLabel}" Grid.Row="16" Grid.Column="2" Margin="15 0 0 0" >Record format</Label>
+                        <Label Style="{StaticResource BoldLabel}" Grid.Row="19" Grid.Column="2" Margin="15 0 0 0" >Record format</Label>
 
-                        <StackPanel  Grid.Row="16" Grid.Column="3"  Orientation="Horizontal"    >
+                        <StackPanel  Grid.Row="19" Grid.Column="3"  Orientation="Horizontal"    >
                             <CheckBox Name="MediaAudioCheckBox">
                                 Audio
                             </CheckBox>
@@ -294,11 +354,11 @@
                             </CheckBox>
                         </StackPanel>
 
-                        <Border Name="RestrictionsBorder1" Grid.Row="17"  Style="{StaticResource EmptyBorder}"   />
+                        <Border Name="RestrictionsBorder1" Grid.Row="20"  Style="{StaticResource EmptyBorder}"   />
 
-                        <Label Name="RestrictionsLabel" Style="{StaticResource BoldLabel}" Grid.Row="18" Grid.Column="0">Restriction</Label>
+                        <Label Name="RestrictionsLabel" Style="{StaticResource BoldLabel}" Grid.Row="21" Grid.Column="0">Restriction</Label>
 
-                        <StackPanel Name="RestrictionsStackPanel"  Grid.Row="18" Grid.Column="1" Orientation="Horizontal">
+                        <StackPanel Name="RestrictionsStackPanel"  Grid.Row="21" Grid.Column="1" Orientation="Horizontal">
 
                             <CheckBox Name="RestrictionYesCheckBox"
                                             Style="{StaticResource MaterialDesignCheckBox}" Checked="Restriction_Check">
@@ -312,23 +372,23 @@
 
                         </StackPanel>
 
-                        <Label Style="{StaticResource BoldLabel}" Grid.Row="18" Grid.Column="2" Margin="15 0 0 0" >Transcriber assigned</Label>
+                        <Label Style="{StaticResource BoldLabel}" Grid.Row="21" Grid.Column="2" Margin="15 0 0 0" >Transcriber assigned</Label>
 
-                        <TextBox Name="TranscriberAssignedTextBox" Grid.Row="18" Grid.Column="3"   Style="{StaticResource EditableTextBox}" />
+                        <TextBox Name="TranscriberAssignedTextBox" Grid.Row="21" Grid.Column="3"   Style="{StaticResource EditableTextBox}" />
 
-                        <Border  Name="RestrictionsBorder2"  Grid.Row="19"  Style="{StaticResource EmptyBorder}"   />
+                        <Border  Name="RestrictionsBorder2"  Grid.Row="22"  Style="{StaticResource EmptyBorder}"   />
 
-                        <Label  Name="RestrictionNoteLabel" Style="{StaticResource BoldLabel}" Grid.Row="20" Grid.Column="0">Restriction note</Label>
+                        <Label  Name="RestrictionNoteLabel" Style="{StaticResource BoldLabel}" Grid.Row="23" Grid.Column="0">Restriction note</Label>
 
-                        <TextBox Name="RestrictionNoteTextBox" Grid.Row="20" Grid.Column="1" Grid.ColumnSpan="3" Height="50" Style="{StaticResource EditableTextBox}" />
+                        <TextBox Name="RestrictionNoteTextBox" Grid.Row="23" Grid.Column="1" Grid.ColumnSpan="3" Height="50" Style="{StaticResource EditableTextBox}" />
 
-                        <Border  Grid.Row="21"  Style="{StaticResource EmptyBorder}"   />
+                        <Border  Grid.Row="24"  Style="{StaticResource EmptyBorder}"   />
 
-                        <Label Style="{StaticResource BoldLabel}" Grid.Row="22" Grid.Column="0">Notes</Label>
+                        <Label Style="{StaticResource BoldLabel}" Grid.Row="25" Grid.Column="0">Notes</Label>
 
-                        <TextBox Name="NoteTextBox"  Grid.Row="22" Grid.Column="1" Grid.ColumnSpan="3"  Height="50" Style="{StaticResource EditableTextBox}" />
+                        <TextBox Name="NoteTextBox"  Grid.Row="25" Grid.Column="1" Grid.ColumnSpan="3"  Height="50" Style="{StaticResource EditableTextBox}" />
 
-                        <Button Grid.Row="23"  Grid.ColumnSpan="5"  Margin="0,20,0,0"  Style="{StaticResource MaterialDesignRaisedAccentButton}" Click="InterviewSubmitButton_Click" 
+                        <Button Grid.Row="26"  Grid.ColumnSpan="5"  Margin="0,20,0,0"  Style="{StaticResource MaterialDesignRaisedAccentButton}" Click="InterviewSubmitButton_Click" 
                         ToolTip="Submit metadata details">
                             _Submit
                         </Button>

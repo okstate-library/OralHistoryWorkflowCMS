@@ -58,7 +58,7 @@ namespace BusinessServices.Servcices
         /// <value>
         /// The interviewer repository.
         /// </value>
-        public InterviewerRepository InterviewerRepository
+        public PredefineUserRepository PredefineUserRepository
         {
             get;
             set;
@@ -112,7 +112,7 @@ namespace BusinessServices.Servcices
             WellKnownError = new WellKnownErrors();
 
             TranscriptionRepository = new TranscriptionRepository();
-            InterviewerRepository = new InterviewerRepository();
+            PredefineUserRepository = new PredefineUserRepository();
 
             WellKnownError.Value = WellKnownError.NoError;
         }
@@ -126,7 +126,7 @@ namespace BusinessServices.Servcices
 
             List<string> codes = transcriptions.Select(s => s.ProjectCode.ToLower()).ToList();
 
-            List<string> interviewerList = InterviewerRepository.List();
+            List<predefineduser> predefinedInterviewers = PredefineUserRepository.GetPredefinedUsers(1);
 
             List<string> importInterviewerList = new List<string>();
 
@@ -164,15 +164,16 @@ namespace BusinessServices.Servcices
                 }
             }
 
-            foreach (string item in importInterviewerList.Except(interviewerList))
+            List<string> list = predefinedInterviewers.Select(item => item.Name).ToList();
+            
+            foreach (string item in importInterviewerList.Except(list))
             {
-                interviewer interviewer = new interviewer() { InterviewerName = item };
+                predefineduser interviewer = new predefineduser() { UserType = 1, Name = item };
 
-                InterviewerRepository.Add(interviewer);
-                InterviewerRepository.Save();
+                PredefineUserRepository.Add(interviewer);
+                PredefineUserRepository.Save();
             }
-
-
+            
             Response = new ResponseModel()
             {
                 ErrorMessage = string.Format(" {0} record(s) were \n successfully imported and \n found" +

@@ -11,7 +11,7 @@ namespace EntityData
 {
     using System;
     using System.Collections.Generic;
-    
+
     public partial class transcription
     {
         public int Id { get; set; }
@@ -23,7 +23,12 @@ namespace EntityData
         public int SubseriesId { get; set; }
         public string Interviewee { get; set; }
         public string Interviewer { get; set; }
-        public System.DateTime InterviewDate { get; set; }
+        public string InterviewDate { get; set; }
+
+        public string InterviewDate1 { get; set; }
+
+        public string InterviewDate2 { get; set; }
+
         public string Title { get; set; }
         public string Description { get; set; }
         public string Keywords { get; set; }
@@ -40,11 +45,15 @@ namespace EntityData
         public string Identifier { get; set; }
         public string Transcript { get; set; }
         public string FileName { get; set; }
-        public bool IsInContentDm { get; set; }
+        public bool IsOnline { get; set; }
         public bool IsRosetta { get; set; }
         public bool IsRosettaForm { get; set; }
         public bool IsRestriction { get; set; }
-        public string LegalNote { get; set; }
+        public bool IsDarkArchive { get; set; }
+
+        public string RestrictionNote { get; set; }
+        public string DarkArchiveNote { get; set; }
+
         public string AudioEquipmentUsed { get; set; }
         public string VideoEquipmentUsed { get; set; }
         public string InterviewerNote { get; set; }
@@ -53,16 +62,12 @@ namespace EntityData
         public string TranscriberAssigned { get; set; }
         public Nullable<System.DateTime> TranscriberCompleted { get; set; }
         public string AuditCheckCompleted { get; set; }
-        public Nullable<System.DateTime> AuditCheckCompletedDate { get; set; }
         public string FirstEditCompleted { get; set; }
-        public Nullable<System.DateTime> FirstEditCompletedDate { get; set; }
         public string SecondEditCompleted { get; set; }
-        public Nullable<System.DateTime> SecondEditCompletedDate { get; set; }
+        public string ThirdEditCompleted { get; set; }
         public Nullable<System.DateTime> DraftSentDate { get; set; }
         public string EditWithCorrectionCompleted { get; set; }
-        public Nullable<System.DateTime> EditWithCorrectionDate { get; set; }
         public string FinalEditCompleted { get; set; }
-        public Nullable<System.DateTime> FinalEditDate { get; set; }
         public Nullable<System.DateTime> FinalSentDate { get; set; }
         public bool TranscriptStatus { get; set; }
         public byte TranscriptLocation { get; set; }

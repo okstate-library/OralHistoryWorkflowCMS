@@ -4,7 +4,7 @@
         xmlns:domain="clr-namespace:WpfApp.Domain"
         xmlns:system="clr-namespace:System;assembly=mscorlib"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        Height="950" Width="1320"       
+        Height="950" Width="1420"       
         TextElement.FontWeight="Regular"
         TextElement.FontSize="15"
         TextOptions.TextFormattingMode="Ideal" 
@@ -52,11 +52,7 @@
         <DataTemplate DataType="{x:Type local1:ImportPageViewModel}">
             <local1:FileImport />
         </DataTemplate>
-
-        <DataTemplate DataType="{x:Type local1:StatewideValidationPageViewModel}">
-            <local1:Statewidevalidation />
-        </DataTemplate>
-
+    
     </Window.Resources>
 
     <materialDesign:DialogHost Identifier="RootDialog" SnackbarMessageQueue="{Binding ElementName=MainSnackbar, Path=MessageQueue}">
@@ -173,17 +169,7 @@
                                     </TextBlock>
                                 </StackPanel>
                             </Button>
-
-                            <Button Name="StatewideValidation1Button" ToolTip="Statewide validation" Command="{Binding Path=LoadStatewideValidationPageCommand}" Margin="5"
-                                                PreviewMouseLeftButtonUp="Button_OnPreviewMouseLeftButtonUp">
-                                <StackPanel Orientation="Horizontal">
-                                    <materialDesign:PackIcon Kind="CheckAll" HorizontalAlignment="Left" />
-                                    <TextBlock Margin="5 0 0 0" Text="CheckAll">
-
-                                    </TextBlock>
-                                </StackPanel>
-                            </Button>
-
+                          
                         </StackPanel>
 
                     </Grid>
@@ -318,16 +304,7 @@
                                                     ToolTip="Import records" >
                                             <materialDesign:PackIcon Kind="Upload" />
                                         </Button>
-
-                                        <Button Name="StatewideValidation2Button"  
-                                                Command="{Binding Path=LoadStatewideValidationPageCommand}"
-                                                Style="{StaticResource HorizontalMenuButton}" 
-                                                Visibility="Collapsed"
-                                                PreviewMouseLeftButtonUp="Button_OnPreviewMouseLeftButtonUp" 
-                                                ToolTip="Statewide Validation" >
-                                            <materialDesign:PackIcon Kind="CheckAll" />
-                                        </Button>
-
+                                   
 
                                     </StackPanel>
                                 </materialDesign:ColorZone>
@@ -366,7 +343,7 @@
                     <ScrollViewer Grid.Row="0"
                                   HorizontalScrollBarVisibility="Auto"
                                   VerticalScrollBarVisibility="Auto"
-                                  Padding="10">
+                                  Padding="10" CanContentScroll="True">
                         <ContentControl Content="{Binding Path=CurrentViewModel}"></ContentControl>
 
                     </ScrollViewer>
@@ -384,7 +361,7 @@
                             </Grid.ColumnDefinitions>
                             <Image Source="Resources/logo.png" Stretch="Uniform" Width="300" Height="100" />
                         </Grid>
-                        <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled"
+                        <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" CanContentScroll="True"
                       HorizontalAlignment="Center"
                       VerticalAlignment="Top"
                       Margin="0 0 0 32">
@@ -450,10 +427,11 @@
 
                                 <!--MouseDoubleClick="LatestTranscriptionsListView_MouseDoubleClick"-->
                                 <materialDesign:Card Width="850" Margin="0"  Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
-                                    <ListView Margin="2" Name="LatestTranscriptions">
+                                    <ListView Margin="2" Name="LatestTranscriptions"
+                                                ItemContainerStyle="{StaticResource ListViewAlternatingRowStyle}" AlternationCount="2">
                                         <ListView.View>
                                             <GridView>                                         
-                                                <GridViewColumn Header="ProjectCode" Width="100"  DisplayMemberBinding="{Binding ProjectCode }" />
+                                                <GridViewColumn Header="Code" Width="100"  DisplayMemberBinding="{Binding ProjectCode }" />
                                                 <GridViewColumn Header="Interviewee" Width="200" DisplayMemberBinding="{Binding Interviewee}" />
                                                 <GridViewColumn  Header="Title" Width="400" DisplayMemberBinding="{Binding Title}" />                                               
                                             </GridView>

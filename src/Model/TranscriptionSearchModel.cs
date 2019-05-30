@@ -49,7 +49,7 @@ namespace Model
         /// <value>
         ///   <c>true</c> if this instance is restriction records; otherwise, <c>false</c>.
         /// </value>
-        public bool IsRestrictionRecords { get; set; }
+        public bool IsDarkArchived { get; set; }
 
         /// <summary>
         /// Determines whether [is search records exists].

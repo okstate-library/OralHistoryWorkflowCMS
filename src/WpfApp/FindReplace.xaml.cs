@@ -66,9 +66,13 @@ namespace WpfApp
 
                 ClearData();
             }
+            else
+            {
+                App.ShowMessage(false, "Fill find and replace words.");
+            }
 
         }
-        
+
         /// <summary>
         /// Handles the Click event of the FindAndReplaceFieldButton control.
         /// </summary>
@@ -77,7 +81,7 @@ namespace WpfApp
         private void FindAndReplaceFieldButton_Click(object sender, RoutedEventArgs e)
         {
             if (FormFindAndReplaceFieldValidation())
-            {                
+            {
                 WellKnownFindAndReplaceType field = WellKnownFindAndReplaceType.None;
 
                 if (!string.IsNullOrEmpty(FieldsComboBox.SelectedValue.ToString()))
@@ -107,6 +111,10 @@ namespace WpfApp
                 }
 
                 ClearData();
+            }
+            else
+            {
+                App.ShowMessage(false, "Fill find, field and replace words.");
             }
         }
 
@@ -149,6 +157,8 @@ namespace WpfApp
         {
             if (!string.IsNullOrEmpty(FindFieldWordTextBox.Text) &&
                       !string.IsNullOrEmpty(ReplaceFieldWordTextBox.Text) &&
+                      FieldsComboBox != null &&
+                      FieldsComboBox.SelectedValue != null &&
                       !string.IsNullOrEmpty(FieldsComboBox.SelectedValue.ToString()))
             {
                 return true;

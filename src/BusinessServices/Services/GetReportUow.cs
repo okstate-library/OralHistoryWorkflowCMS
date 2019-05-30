@@ -132,11 +132,11 @@ namespace BusinessServices.Servcices
             }
             else if (Request.ReportModel.IsOnline)
             {
-                predicate = predicate.And(p => p.IsInContentDm);
+                predicate = predicate.And(p => p.IsOnline);
             }
             else if (Request.ReportModel.IsOffline)
             {
-                predicate = predicate.And(p => !p.IsInContentDm);
+                predicate = predicate.And(p => !p.IsOnline);
             }
 
             // Born digital or converted to digital
@@ -152,13 +152,28 @@ namespace BusinessServices.Servcices
             {
                 predicate = predicate.And(p => p.IsBornDigital);
             }
-                       
+
             // Begin and end date
-            if (Request.ReportModel.BeginDate != null && Request.ReportModel.EndDate != null &&
-            Request.ReportModel.BeginDate != DateTime.MinValue && Request.ReportModel.EndDate != DateTime.MinValue)
+            if (Request.ReportModel.BeginDate != null && Request.ReportModel.EndDate == null)
             {
-                predicate = predicate.And(p => p.InterviewDate >= Request.ReportModel.BeginDate
-                && p.InterviewDate < Request.ReportModel.EndDate);
+                predicate = predicate.And(p => Convert.ToDateTime(p.InterviewDate) >= Request.ReportModel.BeginDate
+                || (!string.IsNullOrEmpty(p.InterviewDate1) && Convert.ToDateTime(p.InterviewDate1) >= Request.ReportModel.BeginDate)
+                || (!string.IsNullOrEmpty(p.InterviewDate2) && Convert.ToDateTime(p.InterviewDate2) >= Request.ReportModel.BeginDate));
+            }
+            else if (Request.ReportModel.BeginDate == null && Request.ReportModel.EndDate != null)
+            {
+                predicate = predicate.And(p => Convert.ToDateTime(p.InterviewDate) < Request.ReportModel.EndDate
+                || (!string.IsNullOrEmpty(p.InterviewDate1) && Convert.ToDateTime(p.InterviewDate1) < Request.ReportModel.EndDate)
+                || (!string.IsNullOrEmpty(p.InterviewDate2) && Convert.ToDateTime(p.InterviewDate2) < Request.ReportModel.EndDate));
+            }
+            else if (Request.ReportModel.BeginDate != null && Request.ReportModel.EndDate != null)
+            {
+                predicate = predicate.And(p => (Convert.ToDateTime(p.InterviewDate) >= Request.ReportModel.BeginDate
+                || (!string.IsNullOrEmpty(p.InterviewDate1) && Convert.ToDateTime(p.InterviewDate1) >= Request.ReportModel.BeginDate)
+                || (!string.IsNullOrEmpty(p.InterviewDate2) && Convert.ToDateTime(p.InterviewDate2) >= Request.ReportModel.BeginDate))
+                && (Convert.ToDateTime(p.InterviewDate) < Request.ReportModel.EndDate
+                || (!string.IsNullOrEmpty(p.InterviewDate1) && Convert.ToDateTime(p.InterviewDate1) < Request.ReportModel.EndDate)
+                || (!string.IsNullOrEmpty(p.InterviewDate2) && Convert.ToDateTime(p.InterviewDate2) < Request.ReportModel.EndDate)));
             }
 
             // Interviewer

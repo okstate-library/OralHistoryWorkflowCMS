@@ -46,6 +46,16 @@ namespace WpfApp.Domain
         private DateTime? _interviewDate;
 
         /// <summary>
+        /// The interview date
+        /// </summary>
+        private DateTime? _interviewDate1;
+
+        /// <summary>
+        /// The interview date
+        /// </summary>
+        private DateTime? _interviewDate2;
+
+        /// <summary>
         /// The selected collection
         /// </summary>
         private string _selectedCollection;
@@ -123,6 +133,38 @@ namespace WpfApp.Domain
             set
             {
                 _interviewDate = value;
+                OnPropertyChanged();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the interview date1.
+        /// </summary>
+        /// <value>
+        /// The interview date1.
+        /// </value>
+        public DateTime? InterviewDate1
+        {
+            get { return _interviewDate1; }
+            set
+            {
+                _interviewDate1 = value;
+                OnPropertyChanged();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the interview date2.
+        /// </summary>
+        /// <value>
+        /// The interview date2.
+        /// </value>
+        public DateTime? InterviewDate2
+        {
+            get { return _interviewDate2; }
+            set
+            {
+                _interviewDate2 = value;
                 OnPropertyChanged();
             }
         }

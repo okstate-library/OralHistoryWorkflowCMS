@@ -2,9 +2,13 @@
 using Model;
 using Model.Transfer;
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
+using WpfApp.Domain;
 using WpfApp.Helper;
 
 namespace WpfApp
@@ -56,19 +60,19 @@ namespace WpfApp
                 switch (expander)
                 {
                     case WellKnownExpander.General:
-                        Expander_Expanded(GeneralExpander, null);
+                        //Expander_Expanded(GeneralExpander, null);
                         break;
                     case WellKnownExpander.Transcript:
-                        Expander_Expanded(TranscriptExpander, null);
+                        //Expander_Expanded(TranscriptExpander, null);
                         break;
                     case WellKnownExpander.Media:
-                        Expander_Expanded(MediaExpander, null);
+                        // Expander_Expanded(MediaExpander, null);
                         break;
                     case WellKnownExpander.Metadata:
-                        Expander_Expanded(MetadataExpander, null);
+                        //Expander_Expanded(MetadataExpander, null);
                         break;
-                    case WellKnownExpander.Supplimental:
-                        Expander_Expanded(SupplementalExpander, null);
+                    case WellKnownExpander.Supplemental:
+                        //Expander_Expanded(SupplementalExpander, null);
                         break;
                     default:
                         break;
@@ -99,36 +103,21 @@ namespace WpfApp
 
             TranscriptionModel transcriptionModel = new TranscriptionModel
             {
-                TranscriberAssigned = TranscriberAssignedTextBox.Text,
-                TranscriberCompleted = TranscriptCompletedDateDatePicker.SelectedDate != null ?
-                TranscriptCompletedDateDatePicker.SelectedDate.Value.Date
-                : (DateTime?)null,
+                TranscriberAssigned = TranscriberAssignedFilteredComboBox.Text,
+                AuditCheckCompleted = AuditCheckCompletedFilteredComboBox.Text,
 
-                AuditCheckCompleted = AuditCheckCompletedTextBox.Text,
-                AuditCheckCompletedDate = AuditCheckCompletedTDateDatePicker.SelectedDate != null ?
-                AuditCheckCompletedTDateDatePicker.SelectedDate.Value.Date
-                : (DateTime?)null,
-
-                FirstEditCompleted = FirstEditCompletedTextBox.Text,
-                FirstEditCompletedDate = FirstEditCompletedTDateDatePicker.SelectedDate != null ?
-                FirstEditCompletedTDateDatePicker.SelectedDate.Value.Date
-                : (DateTime?)null,
-
-                SecondEditCompleted = SecondEditCompletedTextBox.Text,
-                SecondEditCompletedDate = SecondEditCompletedTDateDatePicker.SelectedDate != null ?
-                SecondEditCompletedTDateDatePicker.SelectedDate.Value.Date
-                : (DateTime?)null,
+                FirstEditCompleted = FirstEditCompletedFilteredComboBox.Text,
+                SecondEditCompleted = SecondEditCompletedFilteredComboBox.Text,
+                ThirdEditCompleted = ThirdEditCompletedFilteredComboBox.Text,
 
                 DraftSentDate = DraftSentDatePicker.SelectedDate != null ?
                 DraftSentDatePicker.SelectedDate.Value.Date
                 : (DateTime?)null,
 
-                EditWithCorrectionCompleted = EditCorrectionCompletedTextBox.Text,
-                EditWithCorrectionDate = EditCorrectionCompletedTDateDatePicker.SelectedDate != null ?
-                EditCorrectionCompletedTDateDatePicker.SelectedDate.Value.Date
-                : (DateTime?)null,
+                EditWithCorrectionCompleted = EditCorrectionCompletedFilteredComboBox.Text,
+                FinalEditCompleted = FinalEditCompletedFilteredComboBox.Text,
 
-                TranscriptStatus = TranscriptStatusCompleteCheckBox.IsChecked.Value,// TranscriptStatusToggleButton.IsChecked.Value,
+                TranscriptStatus = TranscriptStatusCompleteCheckBox.IsChecked.Value,
 
                 SentOut = SentOutYesCheckBox.IsChecked.Value,
 
@@ -190,16 +179,21 @@ namespace WpfApp
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
         private void MetadataButton_Click(object sender, EventArgs e)
         {
-            bool isANewInterviewer = !BaseUserControl.Interviewers.Contains(InterviewerFilteredComboBox.Text);
+            string interviewerName = InterviewerFilteredComboBox.Text +
+                    (!string.IsNullOrEmpty(InterviewerFilteredComboBox1.Text) ? "; " + InterviewerFilteredComboBox1.Text : string.Empty) +
+                   (!string.IsNullOrEmpty(InterviewerFilteredComboBox2.Text) ? "; " + InterviewerFilteredComboBox2.Text : string.Empty);
 
             TranscriptionModel transcriptionModel = new TranscriptionModel
             {
 
                 Title = TitleTextBox.Text,
                 Interviewee = Interviewee2TextBox.Text,
-                Interviewer = InterviewerFilteredComboBox.Text,
+                Interviewer = interviewerName,
 
-                InterviewDate = (DateTime)InterviewDate2DateDatePicker.SelectedDate,
+                InterviewDate = InterviewDate2DateDatePicker.SelectedDate != null ? ((DateTime)InterviewDate2DateDatePicker.SelectedDate).ToShortDateString() : string.Empty,
+                InterviewDate1 = InterviewDate2DateDatePicker1.SelectedDate != null ? ((DateTime)InterviewDate2DateDatePicker1.SelectedDate).ToShortDateString() : string.Empty,
+                InterviewDate2 = InterviewDate2DateDatePicker2.SelectedDate != null ? ((DateTime)InterviewDate2DateDatePicker2.SelectedDate).ToShortDateString() : string.Empty,
+
                 //ConvertToDigitalDate = (DateTime)DateDigitalConverted2DateDatePicker.SelectedDate,
                 ConvertToDigitalDate = DateDigitalConverted2DateDatePicker.SelectedDate != null ?
                 DateDigitalConverted2DateDatePicker.SelectedDate.Value.Date
@@ -227,15 +221,13 @@ namespace WpfApp
                 CoverageSpatial = CoverageSpatialTextBox.Text,
                 CoverageTemporal = CoverageTemporalTextBox.Text,
 
-                IsANewInterviewer = isANewInterviewer,
             };
 
             UpdateTranscription(transcriptionModel, WellKnownTranscriptionModificationType.Metadata);
 
-            if (isANewInterviewer)
-            {
-                PopulateFilterTextBox();
-            }
+
+            PopulateFilterTextBox();
+
         }
 
         /// <summary>
@@ -253,12 +245,15 @@ namespace WpfApp
 
             TranscriptionModel transcriptionModel = new TranscriptionModel
             {
-                IsInContentDm = OnContentDmYesCheckBox.IsChecked.Value,
+                IsOnline = OnContentDmYesCheckBox.IsChecked.Value,
                 IsRosetta = InRosettaYesCheckBox.IsChecked.Value,
                 ReleaseForm = ReleaseFormYesCheckBox.IsChecked.Value,
-                IsRestriction = RestrictionsYesCheckBox.IsChecked.Value,
 
-                LegalNote = RestrictionNoteTextBox.Text,
+                IsRestriction = RestrictionsYesCheckBox.IsChecked.Value,
+                IsDarkArchive = DarkArchiveYesCheckBox.IsChecked.Value,
+
+                RestrictionNote = RestrictionNoteTextBox.Text,
+                DarkArchiveNote = DarkArchiveNoteTextBox.Text,
 
                 IsAudioFormat = RecordingFormatAudioCheckBox.IsChecked.Value ? true : false,
                 IsVideoFormat = RecordingFormatVideoCheckBox.IsChecked.Value ? true : false,
@@ -283,37 +278,6 @@ namespace WpfApp
             if (isANewAudioEquipment || isANewVideoEquipment)
             {
                 PopulateFilterTextBox();
-            }
-        }
-
-        /// <summary>
-        /// Handles the Expanded event of the Expander control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
-        private void Expander_Expanded(object sender, RoutedEventArgs e)
-        {
-            Expander expander = (Expander)sender;
-
-            if (expander.Name == "GeneralExpander")
-            {
-                ExpanderVisibility(true, false, false, false, false);
-            }
-            else if (expander.Name == "TranscriptExpander")
-            {
-                ExpanderVisibility(false, true, false, false, false);
-            }
-            else if (expander.Name == "MetadataExpander")
-            {
-                ExpanderVisibility(false, false, true, false, false);
-            }
-            else if (expander.Name == "MediaExpander")
-            {
-                ExpanderVisibility(false, false, false, true, false);
-            }
-            else if (expander.Name == "SupplementalExpander")
-            {
-                ExpanderVisibility(false, false, false, false, true);
             }
         }
 
@@ -442,28 +406,15 @@ namespace WpfApp
             UIHelper.SetMutualExclusivity((CheckBox)sender,
                 RestrictionsYesCheckBox,
                 RestrictionsNoCheckBox);
+
+            UIHelper.SetMutualExclusivity((CheckBox)sender,
+             DarkArchiveYesCheckBox,
+             DarkArchiveNoCheckBox);
         }
 
         #endregion
 
         #region Private methods
-
-        /// <summary>
-        /// Expanders the visibility.
-        /// </summary>
-        /// <param name="general">if set to <c>true</c> [general].</param>
-        /// <param name="transcript">if set to <c>true</c> [transcript].</param>
-        /// <param name="media">if set to <c>true</c> [media].</param>
-        /// <param name="metadata">if set to <c>true</c> [metadata].</param>
-        /// <param name="supplimental">if set to <c>true</c> [supplimental].</param>
-        private void ExpanderVisibility(bool general, bool transcript, bool media, bool metadata, bool supplimental)
-        {
-            GeneralExpander.IsExpanded = general;
-            TranscriptExpander.IsExpanded = transcript;
-            MetadataExpander.IsExpanded = media;
-            MediaExpander.IsExpanded = metadata;
-            SupplementalExpander.IsExpanded = supplimental;
-        }
 
         /// <summary>
         /// Views the transcription.
@@ -481,7 +432,7 @@ namespace WpfApp
             {
                 TranscriptionModel transcriptionModel = response.Transcription;
 
-                TitleLabel.Content = transcriptionModel.Title;
+                TitleLabel.Content = !string.IsNullOrEmpty(transcriptionModel.Title) && transcriptionModel.Title.Trim() != "" ? transcriptionModel.Title : "Title - n/a";
 
                 // Tab 1 Details
                 Title2Label.Text = transcriptionModel.Title;
@@ -489,7 +440,10 @@ namespace WpfApp
                 InterviewerTextBox.Text = transcriptionModel.Interviewer;
                 ProjectCodeTextBox.Text = transcriptionModel.ProjectCode;
                 ProjectCodeTextBox2.Text = transcriptionModel.ProjectCode;
-                InterviewDateTextBox.Text = transcriptionModel.InterviewDate.ToShortDateString();
+
+                InterviewDateTextBox.Text = transcriptionModel.InterviewDate;
+                InterviewDateTextBox1.Text = transcriptionModel.InterviewDate1;
+                InterviewDateTextBox2.Text = transcriptionModel.InterviewDate2;
 
                 if (transcriptionModel.IsAudioFormat && transcriptionModel.IsVideoFormat)
                 {
@@ -513,7 +467,7 @@ namespace WpfApp
 
                 AccessMediaStatusTextBox.Text = transcriptionModel.IsAccessMediaStatus ? "Yes" : "No";
 
-                OnContentDmTextBox.Text = transcriptionModel.IsInContentDm ? "Yes" : "No";
+                OnContentDmTextBox.Text = transcriptionModel.IsOnline ? "Yes" : "No";
 
                 InRosettaTextBox.Text = transcriptionModel.IsRosetta ? "Yes" : "No";
 
@@ -530,32 +484,17 @@ namespace WpfApp
 
                 // Tab 2 details
 
-                TranscriberAssignedTextBox.Text = transcriptionModel.TranscriberAssigned;
-                TranscriptCompletedDateDatePicker.Text = transcriptionModel.TranscriberCompleted != null ?
-                ((DateTime)transcriptionModel.TranscriberCompleted).ToShortDateString() : string.Empty;
-
-                AuditCheckCompletedTextBox.Text = transcriptionModel.AuditCheckCompleted;
-                AuditCheckCompletedTDateDatePicker.Text = transcriptionModel.AuditCheckCompletedDate != null ?
-                    ((DateTime)transcriptionModel.AuditCheckCompletedDate).ToShortDateString() : string.Empty;
-
-                FirstEditCompletedTextBox.Text = transcriptionModel.FirstEditCompleted;
-                FirstEditCompletedTDateDatePicker.Text = transcriptionModel.FirstEditCompletedDate != null ?
-                    ((DateTime)transcriptionModel.FirstEditCompletedDate).ToShortDateString() : string.Empty;
-
-                SecondEditCompletedTextBox.Text = transcriptionModel.SecondEditCompleted;
-                SecondEditCompletedTDateDatePicker.Text = transcriptionModel.SecondEditCompletedDate != null ?
-                   ((DateTime)transcriptionModel.SecondEditCompletedDate).ToShortDateString() : string.Empty;
+                TranscriberAssignedFilteredComboBox.Text = transcriptionModel.TranscriberAssigned == null ? "" : transcriptionModel.TranscriberAssigned;
+                AuditCheckCompletedFilteredComboBox.Text = transcriptionModel.AuditCheckCompleted == null ? "" : transcriptionModel.AuditCheckCompleted;
+                FirstEditCompletedFilteredComboBox.Text = transcriptionModel.FirstEditCompleted == null ? "" : transcriptionModel.FirstEditCompleted;
+                SecondEditCompletedFilteredComboBox.Text = transcriptionModel.SecondEditCompleted == null ? "" : transcriptionModel.SecondEditCompleted;
+                ThirdEditCompletedFilteredComboBox.Text = transcriptionModel.ThirdEditCompleted == null ? "" : transcriptionModel.ThirdEditCompleted;
 
                 DraftSentDatePicker.Text = transcriptionModel.DraftSentDate != null ?
                     ((DateTime)transcriptionModel.DraftSentDate).ToShortDateString() : string.Empty;
 
-                EditCorrectionCompletedTextBox.Text = transcriptionModel.EditWithCorrectionCompleted;
-                EditCorrectionCompletedTDateDatePicker.Text = transcriptionModel.EditWithCorrectionDate != null ?
-                    ((DateTime)transcriptionModel.EditWithCorrectionDate).ToShortDateString() : string.Empty;
-
-                FinalEditCompletedTextBox.Text = transcriptionModel.FirstEditCompleted;
-                FinalEditCompletedTDateDatePicker.Text = transcriptionModel.FirstEditCompletedDate != null ?
-                    ((DateTime)transcriptionModel.FirstEditCompletedDate).ToShortDateString() : string.Empty;
+                EditCorrectionCompletedFilteredComboBox.Text = transcriptionModel.EditWithCorrectionCompleted == null ? "" : transcriptionModel.EditWithCorrectionCompleted;
+                FinalEditCompletedFilteredComboBox.Text = transcriptionModel.FinalEditCompleted == null ? "" : transcriptionModel.FinalEditCompleted;
 
                 MetadataDraftTextBox.Text = transcriptionModel.MetadataDraft;
 
@@ -600,10 +539,22 @@ namespace WpfApp
                 //// Tab 4 
                 TitleTextBox.Text = transcriptionModel.Title;
                 Interviewee2TextBox.Text = transcriptionModel.Interviewee;
-                InterviewerFilteredComboBox.Text = transcriptionModel.Interviewer;
+
+                string[] interviews = transcriptionModel.Interviewer.Split(';');
+
+                InterviewerFilteredComboBox.Text = interviews[0];
+
+                InterviewerFilteredComboBox1.Text = interviews.Length > 1 ? interviews[1].Trim() : string.Empty;
+                InterviewerFilteredComboBox2.Text = interviews.Length > 2 ? interviews[2].Trim() : string.Empty;
 
                 InterviewDate2DateDatePicker.Text = transcriptionModel.InterviewDate != null ?
-                    transcriptionModel.InterviewDate.ToShortDateString() : string.Empty;
+                    transcriptionModel.InterviewDate : string.Empty;
+
+                InterviewDate2DateDatePicker1.Text = transcriptionModel.InterviewDate1 != null ?
+                 transcriptionModel.InterviewDate1 : string.Empty;
+
+                InterviewDate2DateDatePicker2.Text = transcriptionModel.InterviewDate2 != null ?
+                 transcriptionModel.InterviewDate2 : string.Empty;
 
                 DateDigitalConverted2DateDatePicker.Text = transcriptionModel.ConvertToDigitalDate != null ?
                     ((DateTime)transcriptionModel.ConvertToDigitalDate).ToShortDateString() : string.Empty;
@@ -622,15 +573,15 @@ namespace WpfApp
                 CoverageTemporalTextBox.Text = transcriptionModel.CoverageTemporal;
                 RightsTextBox.Text = transcriptionModel.Rights;
                 LabguageTextBox.Text = transcriptionModel.Language;
-                
+
                 TranscriptTextBox.Text = transcriptionModel.Transcript;
 
                 FileNameTextBox.Text = transcriptionModel.FileName;
 
                 //// Tab 5 
 
-                OnContentDmYesCheckBox.IsChecked = transcriptionModel.IsInContentDm;
-                OnContentDmNoCheckBox.IsChecked = !transcriptionModel.IsInContentDm;
+                OnContentDmYesCheckBox.IsChecked = transcriptionModel.IsOnline;
+                OnContentDmNoCheckBox.IsChecked = !transcriptionModel.IsOnline;
 
                 InRosettaYesCheckBox.IsChecked = transcriptionModel.IsRosetta;
                 InRosettaNoCheckBox.IsChecked = !transcriptionModel.IsRosetta;
@@ -641,7 +592,12 @@ namespace WpfApp
                 RestrictionsYesCheckBox.IsChecked = transcriptionModel.IsRestriction;
                 RestrictionsNoCheckBox.IsChecked = !transcriptionModel.IsRestriction;
 
-                RestrictionNoteTextBox.Text = transcriptionModel.LegalNote;
+                RestrictionNoteTextBox.Text = transcriptionModel.RestrictionNote;
+
+                DarkArchiveYesCheckBox.IsChecked = transcriptionModel.IsDarkArchive;
+                DarkArchiveNoCheckBox.IsChecked = !transcriptionModel.IsDarkArchive;
+
+                DarkArchiveNoteTextBox.Text = transcriptionModel.DarkArchiveNote;
 
                 RecordingFormatAudioCheckBox.IsChecked = transcriptionModel.IsAudioFormat;
                 RecordingFormatVideoCheckBox.IsChecked = transcriptionModel.IsVideoFormat;
@@ -729,15 +685,15 @@ namespace WpfApp
             {
                 case WellKnownUserType.GuestUser:
                 case WellKnownUserType.Student:
-                    RestrictionsAndButtonVisibility(Visibility.Collapsed,
+                    DarkArchieveAndButtonVisibility(Visibility.Collapsed,
                         Visibility.Collapsed);
                     break;
                 case WellKnownUserType.Staff:
-                    RestrictionsAndButtonVisibility(Visibility.Collapsed,
+                    DarkArchieveAndButtonVisibility(Visibility.Collapsed,
                         Visibility.Visible);
                     break;
                 case WellKnownUserType.AdminUser:
-                    RestrictionsAndButtonVisibility(Visibility.Visible,
+                    DarkArchieveAndButtonVisibility(Visibility.Visible,
                         Visibility.Visible);
                     break;
                 default:
@@ -750,14 +706,15 @@ namespace WpfApp
         /// Restrictionses the and button visibility.
         /// </summary>
         /// <param name="isButtonDisplay">if set to <c>true</c> [is button display].</param>
-        /// <param name="isRestrictionsDisplay">if set to <c>true</c> [is restrictions display].</param>
-        private void RestrictionsAndButtonVisibility(Visibility isRestrictionsDisplay, Visibility isButtonDisplay)
+        /// <param name="isDarkArcieveDisplay">if set to <c>true</c> [is restrictions display].</param>
+        private void DarkArchieveAndButtonVisibility(Visibility isDarkArcieveDisplay, Visibility isButtonDisplay)
         {
-            RestrictionsLabel.Visibility = isRestrictionsDisplay;
-            RestrictionsStackPanel.Visibility = isRestrictionsDisplay;
-            RestrictionsBorder2.Visibility = isRestrictionsDisplay;
-            RestrictionNoteTextBox.Visibility = isRestrictionsDisplay;
-            RestrictionNoteLabel.Visibility = isRestrictionsDisplay;
+            DarkArchiveLabel.Visibility = isDarkArcieveDisplay;
+            DarkArchiveStackPanel.Visibility = isDarkArcieveDisplay;
+            DarkArchiveBorder1.Visibility = isDarkArcieveDisplay;
+            DarkArchiveBorder2.Visibility = isDarkArcieveDisplay;
+            DarkArchiveNoteLabel.Visibility = isDarkArcieveDisplay;
+            DarkArchiveNoteTextBox.Visibility = isDarkArcieveDisplay;
 
             TranscriptionDetailsButton.Visibility = isButtonDisplay;
             MediaDetailsButto.Visibility = isButtonDisplay;
@@ -770,17 +727,39 @@ namespace WpfApp
         /// </summary>
         private void PopulateIntializeView()
         {
-            InterviewerFilteredComboBox.IsEditable = true;
-            InterviewerFilteredComboBox.IsTextSearchEnabled = false;
-            InterviewerFilteredComboBox.ItemsSource = BaseUserControl.Interviewers;
+            // interviews
+            IEnumerable interviews = ListHelper.GetPredefinedUser(WellKnownPredefinedUserType.Interviewer);
 
-            AudioEquipmentUsedFilteredComboBox.IsEditable = true;
-            AudioEquipmentUsedFilteredComboBox.IsTextSearchEnabled = false;
-            AudioEquipmentUsedFilteredComboBox.ItemsSource = BaseUserControl.AudioEquipments;
+            PopulateFilterListBox(InterviewerFilteredComboBox, interviews);
+            PopulateFilterListBox(InterviewerFilteredComboBox1, interviews);
+            PopulateFilterListBox(InterviewerFilteredComboBox2, interviews);
 
-            VideoEquipmentUsedFilteredComboBox.IsEditable = true;
-            VideoEquipmentUsedFilteredComboBox.IsTextSearchEnabled = false;
-            VideoEquipmentUsedFilteredComboBox.ItemsSource = BaseUserControl.VideoEquipments;
+            // Student list filter list box 
+
+            IEnumerable students = ListHelper.GetPredefinedUser(WellKnownPredefinedUserType.Student);
+
+            PopulateFilterListBox(TranscriberAssignedFilteredComboBox, students);
+            PopulateFilterListBox(AuditCheckCompletedFilteredComboBox, students);
+            PopulateFilterListBox(FirstEditCompletedFilteredComboBox, students);
+            PopulateFilterListBox(SecondEditCompletedFilteredComboBox, students);
+            PopulateFilterListBox(ThirdEditCompletedFilteredComboBox, students);
+            PopulateFilterListBox(EditCorrectionCompletedFilteredComboBox, students);
+            PopulateFilterListBox(FinalEditCompletedFilteredComboBox, students);
+
+            // Audio and Video list
+            PopulateFilterListBox(AudioEquipmentUsedFilteredComboBox, BaseUserControl.AudioEquipments);
+            PopulateFilterListBox(VideoEquipmentUsedFilteredComboBox, BaseUserControl.VideoEquipments);
+        }
+
+        /// <summary>
+        /// Populates the filter ListBox.
+        /// </summary>
+        /// <param name="filteredComboBox">The filtered ComboBox.</param>
+        private void PopulateFilterListBox(FilteredComboBox filteredComboBox, IEnumerable collection)
+        {
+            filteredComboBox.IsEditable = true;
+            filteredComboBox.IsTextSearchEnabled = false;
+            filteredComboBox.ItemsSource = collection;
         }
 
         /// <summary>

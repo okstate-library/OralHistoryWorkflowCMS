@@ -78,65 +78,71 @@ namespace WpfApp
         /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void SaveUserDetails_Click(object sender, RoutedEventArgs e)
         {
-
-            ComboBoxItem ComboItem = (ComboBoxItem)UserTypeComboBox.SelectedItem;
-
-            WellKnownUserType userType = (WellKnownUserType)Enum.Parse(typeof(WellKnownUserType), ComboItem.Name);
-
-            if (IsAddNewRecord)
+            if (FormValidation())
             {
-                RequestModel requestModel = new RequestModel()
+                ComboBoxItem ComboItem = (ComboBoxItem)UserTypeComboBox.SelectedItem;
+
+                WellKnownUserType userType = (WellKnownUserType)Enum.Parse(typeof(WellKnownUserType), ComboItem.Name);
+
+                if (IsAddNewRecord)
                 {
-                    UserModel = new UserModel()
+                    RequestModel requestModel = new RequestModel()
                     {
-                        UserId = UserId,
-                        Name = NameTextBox.Text,
-                        Username = UsernameTextBox.Text,
-                        UserType = (byte)userType,
-                        Password = PasswordTextBox.SecurePassword,
-                    },
+                        UserModel = new UserModel()
+                        {
+                            UserId = UserId,
+                            Name = NameTextBox.Text,
+                            Username = UsernameTextBox.Text,
+                            UserType = (byte)userType,
+                            Password = PasswordTextBox.SecurePassword,
+                        },
 
-                    WellKnownModificationType = Core.Enums.WellKnownModificationType.Add,
+                        WellKnownModificationType = Core.Enums.WellKnownModificationType.Add,
 
-                };
+                    };
 
-                ResponseModel response = App.BaseUserControl.InternalService.ModifyUser(requestModel);
+                    ResponseModel response = App.BaseUserControl.InternalService.ModifyUser(requestModel);
 
-                if (response.IsOperationSuccess)
-                {
-                    App.ShowMessage(true, string.Empty);
+                    if (response.IsOperationSuccess)
+                    {
+                        App.ShowMessage(true, string.Empty);
+                    }
+                    else
+                    {
+                        App.ShowMessage(false, response.ErrorMessage);
+                    }
                 }
                 else
                 {
-                    App.ShowMessage(false, response.ErrorMessage);
+                    RequestModel requestModel = new RequestModel()
+                    {
+                        UserModel = new UserModel()
+                        {
+                            UserId = UserId,
+                            Name = NameTextBox.Text,
+                            Username = UsernameTextBox.Text,
+                            UserType = (byte)userType,
+                        },
+
+                        WellKnownModificationType = Core.Enums.WellKnownModificationType.Edit,
+
+                    };
+
+                    ResponseModel response = App.BaseUserControl.InternalService.ModifyUser(requestModel);
+
+                    if (response.IsOperationSuccess)
+                    {
+                        App.ShowMessage(true, string.Empty);
+                    }
+                    else
+                    {
+                        App.ShowMessage(false, response.ErrorMessage);
+                    }
                 }
             }
             else
             {
-                RequestModel requestModel = new RequestModel()
-                {
-                    UserModel = new UserModel()
-                    {
-                        UserId = UserId,
-                        Name = NameTextBox.Text,
-                        Username = UsernameTextBox.Text,
-                        UserType = (byte)userType,
-                    },
-
-                    WellKnownModificationType = Core.Enums.WellKnownModificationType.Edit,
-
-                };
-
-                ResponseModel response = App.BaseUserControl.InternalService.ModifyUser(requestModel);
-
-                if (response.IsOperationSuccess)
-                {
-                    App.ShowMessage(true, string.Empty);
-                }
-                else
-                {
-                    App.ShowMessage(false, response.ErrorMessage);
-                }
+                App.ShowMessage(false, "Fill all the fields.");
             }
         }
 
@@ -172,6 +178,19 @@ namespace WpfApp
         #endregion
 
         #region Private Methods
+
+        private bool FormValidation()
+        {
+
+            if (!string.IsNullOrEmpty(NameTextBox.Text) &&
+                      !string.IsNullOrEmpty(UsernameTextBox.Text) &&
+                       PasswordTextBox.SecurePassword.Length > 0)
+            {
+                return true;
+            }
+
+            return false;
+        }
 
         /// <summary>
         /// Views the user.

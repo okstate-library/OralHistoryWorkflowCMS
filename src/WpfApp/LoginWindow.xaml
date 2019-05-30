@@ -49,8 +49,8 @@
                 _Submit
             </Button>
             <Button  Grid.Row="3"  Grid.Column="1" Margin="10" Style="{StaticResource MaterialDesignRaisedLightButton}" Width="100"
-                        ToolTip="Cancle and exit from the app" Click="CancleButton_Click">
-                _Cancle
+                        ToolTip="Cancel and exit from the app" Click="CancelButton_Click">
+                _Cancel
             </Button>
             <TextBlock Grid.Row="4" Name="ErrorMessageTextBlock" Margin="10,10,20,10" VerticalAlignment="Center" Foreground="#FFFF0101" Grid.ColumnSpan="2"  />
 

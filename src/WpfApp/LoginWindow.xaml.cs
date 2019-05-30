@@ -32,6 +32,16 @@ namespace WpfApp
         /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
+            //App.BaseUserControl.UserModel = new UserModel()
+            //{
+            //    UserId = 1,
+            //    Name = "Admin",
+            //    UserType = 4,
+            //    Username = "admin"
+            //};
+
+            //Close();
+
             RequestModel requestModel = new RequestModel()
             {
                 UserModel = new UserModel
@@ -74,11 +84,11 @@ namespace WpfApp
         }
 
         /// <summary>
-        /// Handles the Click event of the CancleButton control.
+        /// Handles the Click event of the CancelButton control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
-        private void CancleButton_Click(object sender, RoutedEventArgs e)
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
         }

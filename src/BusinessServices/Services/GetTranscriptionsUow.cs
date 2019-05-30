@@ -187,7 +187,7 @@ namespace BusinessServices.Servcices
                                                 p.Interviewee.Contains(Request.SearchWord) ||
                                                 p.InterviewerNote.Contains(Request.SearchWord) ||
                                                 p.Keywords.Contains(Request.SearchWord) ||
-                                                p.LegalNote.Contains(Request.SearchWord) ||
+                                                p.RestrictionNote.Contains(Request.SearchWord) ||
                                                 p.Place.Contains(Request.SearchWord) ||
                                                 p.ProjectCode.Contains(Request.SearchWord) ||
                                                 p.Publisher.Contains(Request.SearchWord) ||

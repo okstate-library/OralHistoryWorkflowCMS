@@ -11,3 +11,4 @@ namespace WpfApp.Model
         public string PageTitle { get; set; }
     }
 }
+    

@@ -65,13 +65,7 @@ namespace WpfApp.Domain
         /// The import queue demo item
         /// </summary>
         public static DemoItem importQueueDemoItem = new DemoItem("Import", Model.MainWindowViewModel.LoadTranscriptionQueuePageCommand);
-
-        /// <summary>
-        /// The state wide validation queue demo item
-        /// </summary>
-        public static DemoItem stateWideValidationQueueDemoItem = new DemoItem("Statewide validation", Model.MainWindowViewModel.LoadTranscriptionQueuePageCommand);
-
-
+             
         /// <summary>
         /// Gets the admin demo items.
         /// </summary>
@@ -91,7 +85,6 @@ namespace WpfApp.Domain
             usersQueueDemoItem,
             settingsQueueDemoItem,
             importQueueDemoItem,
-            stateWideValidationQueueDemoItem,
         };
 
         /// <summary>

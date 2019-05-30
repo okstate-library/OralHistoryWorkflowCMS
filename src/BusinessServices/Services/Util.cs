@@ -4,6 +4,7 @@ using EntityData;
 using Model;
 using Repository.Implementations;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace BusinessServices.Services
@@ -84,7 +85,6 @@ namespace BusinessServices.Services
         {
             collectionRepository = new CollectionRepository();
             subseryRepository = new SubseryRepository();
-
         }
 
         #endregion
@@ -164,20 +164,25 @@ namespace BusinessServices.Services
                 SubseriesId = transcription.SubseriesId,
                 AudioEquipmentUsed = transcription.AudioEquipmentUsed,
                 VideoEquipmentUsed = transcription.VideoEquipmentUsed,
-                InterviewDate = transcription.InterviewDate.Date,
+
+                InterviewDate = transcription.InterviewDate,
+                InterviewDate1 = transcription.InterviewDate1,
+                InterviewDate2 = transcription.InterviewDate2,
+
                 InterviewerNote = transcription.InterviewerNote,
                 IsAudioFormat = transcription.IsAudioFormat,
                 IsVideoFormat = transcription.IsVideoFormat,
                 IsRestriction = transcription.IsRestriction,
+                IsDarkArchive = transcription.IsDarkArchive,
                 Keywords = transcription.Keywords,
-                LegalNote = transcription.LegalNote,
+                RestrictionNote = transcription.RestrictionNote,
+                DarkArchiveNote = transcription.DarkArchiveNote,
                 ReleaseForm = transcription.ReleaseForm,
                 Subject = transcription.Subject,
                 Title = transcription.Title,
                 ProjectCode = transcription.ProjectCode,
                 AccessFileLocation = transcription.AccessFileLocation,
                 AuditCheckCompleted = transcription.AuditCheckCompleted,
-                AuditCheckCompletedDate = transcription.AuditCheckCompletedDate != null ? transcription.AuditCheckCompletedDate : null,
                 ConvertToDigitalDate = transcription.ConvertToDigitalDate != null ? transcription.ConvertToDigitalDate : null,
                 CoverageSpatial = transcription.CoverageSpatial,
                 CoverageTemporal = transcription.CoverageTemporal,
@@ -185,19 +190,17 @@ namespace BusinessServices.Services
                 CreatedDate = transcription.CreatedDate.Date,
                 DraftSentDate = transcription.DraftSentDate != null ? transcription.DraftSentDate : null,
                 EditWithCorrectionCompleted = transcription.EditWithCorrectionCompleted,
-                EditWithCorrectionDate = transcription.EditWithCorrectionDate != null ? transcription.EditWithCorrectionDate : null,
                 FileName = transcription.FileName,
                 FinalEditCompleted = transcription.FinalEditCompleted,
-                FinalEditDate = transcription.FinalEditDate != null ? transcription.FinalEditDate : null,
                 FinalSentDate = transcription.FinalSentDate != null ? transcription.FinalSentDate : null,
                 FirstEditCompleted = transcription.FirstEditCompleted,
-                FirstEditCompletedDate = transcription.FirstEditCompletedDate != null ? transcription.FirstEditCompletedDate : null,
+                ThirdEditCompleted = transcription.ThirdEditCompleted,
                 Format = transcription.Format,
                 InitialNote = transcription.InitialNote,
                 IsAccessMediaStatus = transcription.IsAccessMediaStatus,
                 IsBornDigital = transcription.IsBornDigital,
                 IsConvertToDigital = transcription.IsConvertToDigital,
-                IsInContentDm = transcription.IsInContentDm,
+                IsOnline = transcription.IsOnline,
                 IsPriority = transcription.IsPriority,
                 IsRosetta = transcription.IsRosetta,
                 IsRosettaForm = transcription.IsRosettaForm,
@@ -211,9 +214,7 @@ namespace BusinessServices.Services
                 Rights = transcription.Rights,
                 ScopeAndContents = transcription.ScopeAndContents,
                 SecondEditCompleted = transcription.SecondEditCompleted,
-                SecondEditCompletedDate = transcription.SecondEditCompletedDate != null ? transcription.SecondEditCompletedDate : null,
                 TranscriberAssigned = transcription.TranscriberAssigned,
-                TranscriberCompleted = transcription.TranscriberCompleted,
                 Transcript = transcription.Transcript,
                 TranscriptLocation = transcription.TranscriptLocation,
                 TranscriptNote = transcription.TranscriptNote,
@@ -246,12 +247,13 @@ namespace BusinessServices.Services
             };
         }
 
-        internal static InterviewerModel ConvertToInterviewerModel(interviewer item)
+        internal static PredefinedUserModel ConvertToInterviewerModel(predefineduser item)
         {
-            return new InterviewerModel()
+            return new PredefinedUserModel()
             {
                 Id = item.Id,
-                Name = item.InterviewerName
+                UserType = item.UserType,
+                Name = item.Name
             };
         }
 
@@ -272,13 +274,19 @@ namespace BusinessServices.Services
                 SubseriesId = transcriptionModel.SubseriesId,
                 AudioEquipmentUsed = transcriptionModel.AudioEquipmentUsed,
                 VideoEquipmentUsed = transcriptionModel.VideoEquipmentUsed,
+
                 InterviewDate = transcriptionModel.InterviewDate,
+                InterviewDate1 = transcriptionModel.InterviewDate1,
+                InterviewDate2 = transcriptionModel.InterviewDate2,
+
                 InterviewerNote = transcriptionModel.InterviewerNote,
                 IsAudioFormat = transcriptionModel.IsAudioFormat,
                 IsVideoFormat = transcriptionModel.IsVideoFormat,
                 IsRestriction = transcriptionModel.IsRestriction,
+                IsDarkArchive = transcriptionModel.IsDarkArchive,
                 Keywords = transcriptionModel.Keywords,
-                LegalNote = transcriptionModel.LegalNote,
+                RestrictionNote = transcriptionModel.RestrictionNote,
+                DarkArchiveNote = transcriptionModel.DarkArchiveNote,
                 ReleaseForm = transcriptionModel.ReleaseForm,
                 Subject = transcriptionModel.Subject,
                 Title = transcriptionModel.Title,
@@ -311,12 +319,11 @@ namespace BusinessServices.Services
                 //FinalEditCompleted= "FinalEditCompleted",
                 //FirstEditCompleted = "FirstEditCompleted",
                 Format = transcriptionModel.Format,
-              
+
                 //InitialNote = "Initial Note",
                 //IsAccessMediaStatus = true,
                 //IsBornDigital = true,
-                //IsConvertToDigital = true,
-                //IsInContentDm = true,
+                IsConvertToDigital = transcriptionModel.IsConvertToDigital,
                 //IsRosetta = true,
                 //IsRosettaForm = true,
                 Language = transcriptionModel.Language,
@@ -324,7 +331,7 @@ namespace BusinessServices.Services
                 //OriginalMedium ="original mediunm",
                 //OriginalMediumType = 1,
                 Publisher = transcriptionModel.Publisher,
-                //RelationIsPartOf = "RelationIsPartOf",
+                RelationIsPartOf = transcriptionModel.RelationIsPartOf,
                 Rights = transcriptionModel.Rights,
                 ScopeAndContents = transcriptionModel.ScopeAndContents,
                 //SecondEditCompleted = "SecondEditCompleted",
@@ -383,12 +390,17 @@ namespace BusinessServices.Services
                 SubseriesId = interview.SubseriesId,
                 AudioEquipmentUsed = interview.AudioEquipmentUsed,
                 VideoEquipmentUsed = interview.VideoEquipmentUsed,
+
                 InterviewDate = interview.InterviewDate,
+                InterviewDate1 = interview.InterviewDate1,
+                InterviewDate2 = interview.InterviewDate2,
+
                 InterviewerNote = interview.InterviewerNote,
                 IsAudioFormat = interview.IsAudioFormat,
                 IsRestriction = interview.IsRestriction,
+                IsDarkArchive = interview.IsDarkArchive,
                 Keywords = interview.Keywords,
-                LegalNote = interview.LegalNote,
+                RestrictionNote = interview.RestrictionNote,
                 ReleaseForm = interview.ReleaseForm,
                 Subject = interview.Subject,
                 Title = interview.Title,
@@ -419,7 +431,6 @@ namespace BusinessServices.Services
                 //IsAccessMediaStatus = true,
                 //IsBornDigital = true,
                 //IsConvertToDigital = true,
-                //IsInContentDm = true,
                 //IsRosetta = true,
                 //IsRosettaForm = true,
                 //Language = "Language",
@@ -469,12 +480,18 @@ namespace BusinessServices.Services
                 SubseriesId = transcriptionModel.SubseriesId,
                 AudioEquipmentUsed = transcriptionModel.AudioEquipmentUsed,
                 VideoEquipmentUsed = transcriptionModel.VideoEquipmentUsed,
+
                 InterviewDate = transcriptionModel.InterviewDate,
+                InterviewDate1 = transcriptionModel.InterviewDate1,
+                InterviewDate2 = transcriptionModel.InterviewDate2,
+
                 InterviewerNote = transcriptionModel.InterviewerNote,
                 IsAudioFormat = transcriptionModel.IsAudioFormat,
                 IsRestriction = transcriptionModel.IsRestriction,
+                IsDarkArchive = transcriptionModel.IsDarkArchive,
                 Keywords = transcriptionModel.Keywords,
-                LegalNote = transcriptionModel.LegalNote,
+                RestrictionNote = transcriptionModel.RestrictionNote,
+                DarkArchiveNote = transcriptionModel.DarkArchiveNote,
                 ReleaseForm = transcriptionModel.ReleaseForm,
                 Subject = transcriptionModel.Subject,
                 Title = transcriptionModel.Title,
@@ -532,6 +549,19 @@ namespace BusinessServices.Services
             //daUser.Email = userModel.Email;
 
             return daUser;
+        }
+        
+        internal static List<PredefinedUserModel> ConvertToPredefinedUserModel(List<predefineduser> predefinedUsers)
+        {
+            List<PredefinedUserModel> list = new List<PredefinedUserModel>();
+
+            foreach (predefineduser item in predefinedUsers)
+            {
+                list.Add(new PredefinedUserModel() { UserType = item.UserType, Name = item.Name });
+            }
+
+            return list;
+
         }
     }
 }

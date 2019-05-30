@@ -12,12 +12,13 @@
           <Property Name="Id" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CollectionName" Type="varchar" MaxLength="250" Nullable="false" />
         </EntityType>
-        <EntityType Name="interviewers">
+        <EntityType Name="predefineduser">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="InterviewerName" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="UserType" Type="utinyint" />
+          <Property Name="Name" Type="varchar" MaxLength="250" Nullable="false" />
         </EntityType>
 
         <EntityType Name="audioequipmentused">
@@ -81,7 +82,9 @@
           <Property Name="SubseriesId" Type="int" Nullable="false" />
           <Property Name="Interviewee" Type="varchar" MaxLength="250" Nullable="false" />
           <Property Name="Interviewer" Type="varchar" MaxLength="250" Nullable="false" />
-          <Property Name="InterviewDate" Type="date" Nullable="false" />
+          <Property Name="InterviewDate" Type="varchar" Nullable="false" />
+          <Property Name="InterviewDate1" Type="varchar" Nullable="true" />
+          <Property Name="InterviewDate2" Type="varchar" Nullable="true" />
           <Property Name="Title" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="Description" Type="varchar" MaxLength="2000" />
           <Property Name="Keywords" Type="varchar" MaxLength="500" />
@@ -101,30 +104,27 @@
           <Property Name="Identifier" Type="varchar" MaxLength="250" />
           <Property Name="Transcript" Type="varchar" MaxLength="250" />
           <Property Name="FileName" Type="varchar" MaxLength="250" />
-          <Property Name="IsInContentDm" Type="bool" Nullable="false" />
+          <Property Name="IsOnline" Type="bool" Nullable="false" />
           <Property Name="IsRosetta" Type="bool" Nullable="false" />
           <Property Name="IsRosettaForm" Type="bool" Nullable="false" />
           <Property Name="IsRestriction" Type="bool" Nullable="false" />
-          <Property Name="LegalNote" Type="varchar" MaxLength="500" />
+          <Property Name="IsDarkArchive" Type="bool" Nullable="false" />          
+          <Property Name="RestrictionNote" Type="varchar" MaxLength="500" />
+          <Property Name="DarkArchiveNote" Type="varchar" MaxLength="200" />          
           <Property Name="AudioEquipmentUsed" Type="varchar" MaxLength="100" />
           <Property Name="VideoEquipmentUsed" Type="varchar" MaxLength="100" />
           <Property Name="EquipmentNumber" Type="varchar" MaxLength="50" />
           <Property Name="InterviewerNote" Type="varchar" MaxLength="250" />
           <Property Name="ReleaseForm" Type="bool" Nullable="false" />
           <Property Name="Place" Type="varchar" MaxLength="250" />
-          <Property Name="TranscriberAssigned" Type="varchar" MaxLength="250" />
-          <Property Name="TranscriberCompleted" Type="datetime" Precision="6" />
-          <Property Name="AuditCheckCompleted" Type="varchar" MaxLength="250" />
-          <Property Name="AuditCheckCompletedDate" Type="datetime" Precision="6" />
-          <Property Name="FirstEditCompleted" Type="varchar" MaxLength="250" />
-          <Property Name="FirstEditCompletedDate" Type="datetime" Precision="6" />
-          <Property Name="SecondEditCompleted" Type="varchar" MaxLength="250" />
-          <Property Name="SecondEditCompletedDate" Type="datetime" Precision="6" />
+          <Property Name="TranscriberAssigned" Type="varchar" MaxLength="150" />
+          <Property Name="AuditCheckCompleted" Type="varchar" MaxLength="150" />
+          <Property Name="FirstEditCompleted" Type="varchar" MaxLength="150" />
+          <Property Name="SecondEditCompleted" Type="varchar" MaxLength="150" />
+          <Property Name="ThirdEditCompleted" Type="varchar" MaxLength="150" />
           <Property Name="DraftSentDate" Type="datetime" Precision="6" />
-          <Property Name="EditWithCorrectionCompleted" Type="varchar" MaxLength="250" />
-          <Property Name="EditWithCorrectionDate" Type="datetime" Precision="6" />
-          <Property Name="FinalEditCompleted" Type="varchar" MaxLength="250" />
-          <Property Name="FinalEditDate" Type="datetime" Precision="6" />
+          <Property Name="EditWithCorrectionCompleted" Type="varchar" MaxLength="150" />
+          <Property Name="FinalEditCompleted" Type="varchar" MaxLength="150" />
           <Property Name="FinalSentDate" Type="datetime" Precision="6" />
           <Property Name="TranscriptStatus" Type="bool" Nullable="false" />
           <Property Name="MetadataDraft" Type="varchar" MaxLength="50" />
@@ -162,7 +162,7 @@
         </EntityType>
         <EntityContainer Name="oralcmsdbModelStoreContainer">
           <EntitySet Name="collections" EntityType="Self.collections" Schema="oralcmsdb" store:Type="Tables" />
-          <EntitySet Name="interviewers" EntityType="Self.interviewers" Schema="oralcmsdb" store:Type="Tables" />
+          <EntitySet Name="predefineduser" EntityType="Self.predefineduser" Schema="oralcmsdb" store:Type="Tables" />
           <EntitySet Name="keywords" EntityType="Self.keywords" Schema="oralcmsdb" store:Type="Tables" />
           <EntitySet Name="subjects" EntityType="Self.subjects" Schema="oralcmsdb" store:Type="Tables" />
           <EntitySet Name="subseries" EntityType="Self.subseries" Schema="oralcmsdb" store:Type="Tables" />
@@ -184,7 +184,7 @@
           <EntitySet Name="subseries" EntityType="oralcmsdbModel.subsery" />
           <EntitySet Name="users" EntityType="oralcmsdbModel.user" />
           <EntitySet Name="transcriptions" EntityType="oralcmsdbModel.transcription" />
-          <EntitySet Name="interviewers" EntityType="oralcmsdbModel.interviewer" />
+          <EntitySet Name="predefineduser" EntityType="oralcmsdbModel.predefineduser" />
           <EntitySet Name="audioequipmentused" EntityType="oralcmsdbModel.audioequipmentused" />
           <EntitySet Name="videoequipmentused" EntityType="oralcmsdbModel.videoequipmentused" />
           <EntitySet Name="usertype" EntityType="oralcmsdbModel.usertype" />
@@ -210,6 +210,7 @@
           <Property Name="Id" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="SubjectName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
         </EntityType>
+        
         <EntityType Name="subsery">
           <Key>
             <PropertyRef Name="Id" />
@@ -244,7 +245,9 @@
           <Property Name="SubseriesId" Type="Int32" Nullable="false" />
           <Property Name="Interviewee" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="Interviewer" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="InterviewDate" Type="DateTime" Nullable="false" />
+          <Property Name="InterviewDate" Type="String" Nullable="false" />
+          <Property Name="InterviewDate1" Type="String" Nullable="true" />
+          <Property Name="InterviewDate2" Type="String" Nullable="true" />
           <Property Name="Title" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="Description" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
           <Property Name="Keywords" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
@@ -261,29 +264,26 @@
           <Property Name="Identifier" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="Transcript" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="FileName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="IsInContentDm" Type="Boolean" Nullable="false" />
+          <Property Name="IsOnline" Type="Boolean" Nullable="false" />
           <Property Name="IsRosetta" Type="Boolean" Nullable="false" />
           <Property Name="IsRosettaForm" Type="Boolean" Nullable="false" />
           <Property Name="IsRestriction" Type="Boolean" Nullable="false" />
-          <Property Name="LegalNote" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="IsDarkArchive" Type="Boolean" Nullable="false" />          
+          <Property Name="RestrictionNote" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="DarkArchiveNote" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />          
           <Property Name="AudioEquipmentUsed" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="VideoEquipmentUsed" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="InterviewerNote" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="ReleaseForm" Type="Boolean" Nullable="false" />
           <Property Name="Place" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="TranscriberAssigned" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="TranscriberCompleted" Type="DateTime" />
-          <Property Name="AuditCheckCompleted" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="AuditCheckCompletedDate" Type="DateTime" />
-          <Property Name="FirstEditCompleted" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="FirstEditCompletedDate" Type="DateTime" />
-          <Property Name="SecondEditCompleted" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="SecondEditCompletedDate" Type="DateTime" />
+          <Property Name="TranscriberAssigned" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="AuditCheckCompleted" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="FirstEditCompleted" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="SecondEditCompleted" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="ThirdEditCompleted" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />          
           <Property Name="DraftSentDate" Type="DateTime" />
-          <Property Name="EditWithCorrectionCompleted" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="EditWithCorrectionDate" Type="DateTime" />
-          <Property Name="FinalEditCompleted" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="FinalEditDate" Type="DateTime" />
+          <Property Name="EditWithCorrectionCompleted" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="FinalEditCompleted" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="FinalSentDate" Type="DateTime" />
           <Property Name="TranscriptStatus" Type="Boolean" Nullable="false" />
           <Property Name="TranscriptLocation" Type="Byte" Nullable="false" />
@@ -310,13 +310,16 @@
           <Property Name="SentOut" Type="Boolean" Nullable="false" />
           <Property Name="MetadataDraft" Type="String" />
         </EntityType>
-        <EntityType Name="interviewer">
+        
+        <EntityType Name="predefineduser">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="InterviewerName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="UserType" Type="Byte" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
         </EntityType>
+        
         <EntityType Name="audioequipmentused">
           <Key>
             <PropertyRef Name="Id" />
@@ -356,11 +359,12 @@
             </EntityTypeMapping>
           </EntitySetMapping>
 
-          <EntitySetMapping Name="interviewers">
-            <EntityTypeMapping TypeName="oralcmsdbModel.interviewer">
-              <MappingFragment StoreEntitySet="interviewers">
-                <ScalarProperty Name="InterviewerName" ColumnName="InterviewerName" />
+          <EntitySetMapping Name="predefineduser">
+            <EntityTypeMapping TypeName="oralcmsdbModel.predefineduser">
+              <MappingFragment StoreEntitySet="predefineduser">
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserType" ColumnName="UserType" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -461,29 +465,26 @@
                 <ScalarProperty Name="TranscriptLocation" ColumnName="TranscriptLocation" />
                 <ScalarProperty Name="TranscriptStatus" ColumnName="TranscriptStatus" />
                 <ScalarProperty Name="FinalSentDate" ColumnName="FinalSentDate" />
-                <ScalarProperty Name="FinalEditDate" ColumnName="FinalEditDate" />
                 <ScalarProperty Name="FinalEditCompleted" ColumnName="FinalEditCompleted" />
-                <ScalarProperty Name="EditWithCorrectionDate" ColumnName="EditWithCorrectionDate" />
                 <ScalarProperty Name="EditWithCorrectionCompleted" ColumnName="EditWithCorrectionCompleted" />
                 <ScalarProperty Name="DraftSentDate" ColumnName="DraftSentDate" />
-                <ScalarProperty Name="SecondEditCompletedDate" ColumnName="SecondEditCompletedDate" />
                 <ScalarProperty Name="SecondEditCompleted" ColumnName="SecondEditCompleted" />
-                <ScalarProperty Name="FirstEditCompletedDate" ColumnName="FirstEditCompletedDate" />
+                <ScalarProperty Name="ThirdEditCompleted" ColumnName="ThirdEditCompleted" />                
                 <ScalarProperty Name="FirstEditCompleted" ColumnName="FirstEditCompleted" />
-                <ScalarProperty Name="AuditCheckCompletedDate" ColumnName="AuditCheckCompletedDate" />
                 <ScalarProperty Name="AuditCheckCompleted" ColumnName="AuditCheckCompleted" />
-                <ScalarProperty Name="TranscriberCompleted" ColumnName="TranscriberCompleted" />
                 <ScalarProperty Name="TranscriberAssigned" ColumnName="TranscriberAssigned" />
                 <ScalarProperty Name="Place" ColumnName="Place" />
                 <ScalarProperty Name="ReleaseForm" ColumnName="ReleaseForm" />
                 <ScalarProperty Name="InterviewerNote" ColumnName="InterviewerNote" />
                 <ScalarProperty Name="AudioEquipmentUsed" ColumnName="AudioEquipmentUsed" />
                 <ScalarProperty Name="VideoEquipmentUsed" ColumnName="VideoEquipmentUsed" />
-                <ScalarProperty Name="LegalNote" ColumnName="LegalNote" />
+                <ScalarProperty Name="RestrictionNote" ColumnName="RestrictionNote" />
+                <ScalarProperty Name="DarkArchiveNote" ColumnName="DarkArchiveNote" />                
                 <ScalarProperty Name="IsRestriction" ColumnName="IsRestriction" />
+                <ScalarProperty Name="IsDarkArchive" ColumnName="IsDarkArchive" />                
                 <ScalarProperty Name="IsRosettaForm" ColumnName="IsRosettaForm" />
                 <ScalarProperty Name="IsRosetta" ColumnName="IsRosetta" />
-                <ScalarProperty Name="IsInContentDm" ColumnName="IsInContentDm" />
+                <ScalarProperty Name="IsOnline" ColumnName="IsOnline" />
                 <ScalarProperty Name="FileName" ColumnName="FileName" />
                 <ScalarProperty Name="Transcript" ColumnName="Transcript" />
                 <ScalarProperty Name="Identifier" ColumnName="Identifier" />
@@ -501,6 +502,8 @@
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="InterviewDate" ColumnName="InterviewDate" />
+                <ScalarProperty Name="InterviewDate1" ColumnName="InterviewDate1" />
+                <ScalarProperty Name="InterviewDate2" ColumnName="InterviewDate2" />
                 <ScalarProperty Name="Interviewer" ColumnName="Interviewer" />
                 <ScalarProperty Name="Interviewee" ColumnName="Interviewee" />
                 <ScalarProperty Name="SubseriesId" ColumnName="SubseriesId" />

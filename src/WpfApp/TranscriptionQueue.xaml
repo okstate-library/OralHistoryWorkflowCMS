@@ -174,7 +174,7 @@
                     </Grid>
                 </materialDesign:Card>
                 
-                <ListView Margin="0 10 0 0" Name="TranscriptionQueueListView" Grid.Row="1" Grid.Column="1"  
+                <ListView Margin="0 10 0 100" Name="TranscriptionQueueListView" Grid.Row="1" Grid.Column="1"  
                           Grid.RowSpan="7"  VerticalAlignment="Top" HorizontalAlignment="Left"                     
                           MouseDoubleClick="TranscriptionQueueListView_MouseDoubleClick" 
                           ItemContainerStyle="{StaticResource ListViewAlternatingRowStyle}" AlternationCount="2"
@@ -183,7 +183,7 @@
                         <GridView>
 
                             <!--Interviewee-->
-                            <GridViewColumn Header="Interviewee" Width="150"  
+                            <GridViewColumn Header="Interviewee(s)" Width="150"  
                                             HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}"                                            
                                             domain:GridViewSort.PropertyName="Interviewee">
                                 <GridViewColumn.CellTemplate>
@@ -197,7 +197,7 @@
                             </GridViewColumn>
 
                             <!--Interviewer-->
-                            <GridViewColumn Header="Interviewer" Width="150"
+                            <GridViewColumn Header="Interviewer(s)" Width="150"
                                             HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}"
                                             domain:GridViewSort.PropertyName="Interviewer">
                                 <GridViewColumn.CellTemplate>
@@ -228,7 +228,7 @@
                             </GridViewColumn>
 
                             <!--Transcriber -->
-                            <GridViewColumn Header="Transcriber" Width="100"
+                            <GridViewColumn Header="Transcriber Assigned" Width="150"
                                             HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}" 
                                             domain:GridViewSort.PropertyName="TranscriberAssigned">
                                 <GridViewColumn.CellTemplate>
@@ -255,21 +255,7 @@
                                         </StackPanel>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-
-                            <!--Transcriber completed date-->
-                            <GridViewColumn Header="Transcriber&#x0a;completed" Width="100" 
-                                            HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}" 
-                                            domain:GridViewSort.PropertyName="TranscriberCompleted">
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <StackPanel>
-                                            <TextBlock Name="TranscriberCompletedTextBlock_Transcript"  ToolTip="{Binding TranscriberCompleted , StringFormat='{}{0:MM/dd/yyyy}'}" 
-                                                       Text="{Binding TranscriberCompleted , StringFormat='{}{0:MM/dd/yyyy}'}" />
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
+                            </GridViewColumn>                           
 
                             <!--Audit Check Completed-->
                             <GridViewColumn Header="Audit check" Width="150" 

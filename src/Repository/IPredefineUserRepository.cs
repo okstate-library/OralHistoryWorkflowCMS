@@ -6,14 +6,14 @@ namespace Repository
     /// <summary>
     ///  Methods needs to implement in Collection Repository
     /// </summary>
-    /// <seealso cref="EntityData.IGenericRepository{EntityData.interviewer}" />
-    public interface IInterviewerRepository : IGenericRepository<interviewer>
+    /// <seealso cref="EntityData.IGenericRepository{EntityData.predefineduser}" />
+    public interface IPredefineUserRepository : IGenericRepository<predefineduser>
     {
         /// <summary>
-        /// Gets the interviewer.
+        /// Gets the predefined users .
         /// </summary>
         /// <returns></returns>
-        List<interviewer> GetInterviewer();
+        List<predefineduser> GetPredefinedUsers(int usertype);
 
         /// <summary>
         /// Lists this instance.

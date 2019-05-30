@@ -12,7 +12,13 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Blue.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
                 <ResourceDictionary Source="Assets/FormDictionary.xaml" />
-            </ResourceDictionary.MergedDictionaries>            
+                
+                <!-- Include the Dragablz Material Design style -->
+                <ResourceDictionary Source="pack://application:,,,/Dragablz;component/Themes/materialdesign.xaml"/>
+
+
+            </ResourceDictionary.MergedDictionaries>
+        
         </ResourceDictionary>        
     </Application.Resources>
 </Application>

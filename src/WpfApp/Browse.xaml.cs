@@ -131,8 +131,6 @@ namespace WpfApp
                 PageComboBox.SelectionChanged +=
                         new SelectionChangedEventHandler(PageLengthComboBox_SelectionChanged);
             };
-
-            ControlsVisibility();
         }
 
         #endregion
@@ -165,11 +163,13 @@ namespace WpfApp
 
                 if (id > 0)
                 {
-                    LoadBrowseData(id, WellKnownExpander.Supplimental);
+                    LoadBrowseData(id, WellKnownExpander.Supplemental);
                 }
 
                 InterviewIdTextBox.Text = string.Empty;
             }
+
+            ControlsVisibility();
 
         }
 
@@ -330,15 +330,15 @@ namespace WpfApp
                     TranscriptionSearchModel.Contentdms.Remove(key);
                 }
             }
-            else if (chkBox.Name.Equals("CheckedBoxRestriction"))
+            else if (chkBox.Name.Equals("CheckedBoxDarkArchive"))
             {
                 if ((bool)chkBox.IsChecked)
                 {
-                    TranscriptionSearchModel.IsRestrictionRecords = true;
+                    TranscriptionSearchModel.IsDarkArchived = true;
                 }
                 else
                 {
-                    TranscriptionSearchModel.IsRestrictionRecords = false;
+                    TranscriptionSearchModel.IsDarkArchived = false;
                 }
             }
 
@@ -429,10 +429,10 @@ namespace WpfApp
                 case WellKnownUserType.GuestUser:
                 case WellKnownUserType.Student:
                 case WellKnownUserType.Staff:
-                    RestrictionExpander.Visibility = Visibility.Collapsed;
+                    DarkArchieveExpander.Visibility = Visibility.Collapsed;
                     break;
                 case WellKnownUserType.AdminUser:
-                    RestrictionExpander.Visibility = Visibility.Visible;
+                    DarkArchieveExpander.Visibility = Visibility.Visible;
                     break;
                 default:
                     break;
@@ -478,10 +478,10 @@ namespace WpfApp
 
             List<KeyValuePair<string, string>> restrictionList = new List<KeyValuePair<string, string>>()
             {
-                new KeyValuePair<string, string>("Restriction", "Restriction"),
+                new KeyValuePair<string, string>("Dark Archive", "Dark Archive"),
             };
 
-            RestrictionListBox.ItemsSource = restrictionList;
+            DarkArchiveListBox.ItemsSource = restrictionList;
         }
 
         /// <summary>

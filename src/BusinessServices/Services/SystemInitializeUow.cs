@@ -104,7 +104,7 @@ namespace BusinessServices.Servcices
         /// <value>
         /// The interviewer repository.
         /// </value>
-        public InterviewerRepository InterviewerRepository
+        public PredefineUserRepository PredefineUserRepository
         {
             get;
             set;
@@ -196,7 +196,7 @@ namespace BusinessServices.Servcices
             SubseryRepository = new SubseryRepository();
             SubjectRepository = new SubjectRepository();
             KeywordRepository = new KeywordRepository();
-            InterviewerRepository = new InterviewerRepository();
+            PredefineUserRepository = new PredefineUserRepository();
             AudioEquipmentUsedRepository = new AudioEquipmentUsedRepository();
             VideoEquipmentUsedRepository = new VideoEquipmentUsedRepository();
             UserTypeRepository = new UserTypeRepository();
@@ -251,7 +251,7 @@ namespace BusinessServices.Servcices
                 }
             }
 
-            List<string> interviewerList = InterviewerRepository.List();
+            List<PredefinedUserModel> predefineUserList = Util.ConvertToPredefinedUserModel(PredefineUserRepository.GetPredefinedUsers());
 
             List<string> audioEquipmentsUsed = AudioEquipmentUsedRepository.List();
 
@@ -264,7 +264,7 @@ namespace BusinessServices.Servcices
                 Subjects = subjectList,
                 Keywords = keywordList,
 
-                Interviewers = interviewerList,
+                PredefinedUsers = predefineUserList,
                 AudioEquipmentsUsed = audioEquipmentsUsed,
                 VideoEquipmentsUsed = videoEquipmentsUsed,
                 UserTypes = userTypes,

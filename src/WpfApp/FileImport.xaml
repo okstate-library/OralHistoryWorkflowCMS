@@ -32,21 +32,59 @@
             </Grid.ColumnDefinitions>
 
             <Border Margin="0 0 0 10" Grid.Row="0" Grid.Column="1" VerticalAlignment="Top">
-                <Grid  Background="{DynamicResource PrimaryHueMidBrush}"  MaxHeight="75">
+                <Grid  Background="{DynamicResource PrimaryHueMidBrush}"  MaxHeight="600">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*" />
-                    </Grid.ColumnDefinitions>
 
-                    <StackPanel Grid.Row="1" Margin="20 10 0 8" Orientation="Horizontal"  Grid.Column="1">
-                        <Label  Style="{StaticResource BoldLabel}" Content="Upload the file"  />
-                        <Label  Width="500" Margin="20 10 0 8" Name="fileUploadLabel" Background="{StaticResource AlternativeColor}"   />
+                    <StackPanel Grid.Row="0" Margin="20 10 0 8"  Orientation="Horizontal"  >
 
-                        <Button Margin="20 10 0 8" Content="Browse" Style="{StaticResource MaterialDesignRaisedAccentButton}"  Click="BrowseButton_Click"/>
-                        
-                        <Button Name="UploadButton" Margin="20 10 0 8" Content="Upload" Style="{StaticResource MaterialDesignRaisedAccentButton}" Visibility="Hidden"  Click="UploadButton_Click"/>
+                        <Grid  Background="{DynamicResource PrimaryHueMidBrush}"  MaxHeight="75">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Row="0" Margin="20 10 0 8" Orientation="Horizontal">
+                                <Label  Style="{StaticResource BoldLabel}" Content="Upload the file"  />
+                                <Label  Width="500" Margin="20 10 0 8" Name="fileUploadLabel" Background="{StaticResource AlternativeColor}"   />
+
+                                <Button Margin="20 10 0 8" Content="Browse" Style="{StaticResource MaterialDesignRaisedAccentButton}"  Click="BrowseButton_Click"/>
+
+                                <Button Name="UploadButton" Margin="20 10 0 8" Content="Upload" Style="{StaticResource MaterialDesignRaisedAccentButton}" Visibility="Hidden"  Click="UploadButton_Click"/>
+
+                            </StackPanel>
+                        </Grid>
+
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Margin="20 10 0 8"  Orientation="Horizontal"  >
+
+                        <Grid Margin="0 10 10 20"  >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Row="0"  Style="{StaticResource BoldLabel}" Content="Stats"  />
+
+                            <ScrollViewer Grid.Row="1" Height="700">
+                                <TextBlock Margin="20 10 0 8" Name="StatTextBox" Grid.RowSpan="4" FontSize="12"
+                                     VerticalAlignment="Top" Width="700"  TextWrapping="Wrap"   
+                                    />
+                            </ScrollViewer>
+
+
+
+                        </Grid>
                     </StackPanel>
 
                 </Grid>
@@ -80,10 +118,9 @@
                             <TextBlock Text=" Excel columns:" FontWeight="Bold" FontSize="13" />
                             <TextBlock Margin="10 0 0 0" FontSize="12">
                         Title<LineBreak/>	
-                        Interviewee	<LineBreak/>
-                        Interviewer<LineBreak/>	
-                        Date <LineBreak/>
-                        Original	<LineBreak/>
+                        Interviewee(s)	<LineBreak/>
+                        Interviewer(s)<LineBreak/>	
+                        Date Original(s)<LineBreak/>
                         Date Digital <LineBreak/>
                         Subject	<LineBreak/>
                         Keyword	<LineBreak/>
@@ -117,6 +154,8 @@
                         Access Media Status<LineBreak/>	
                         Born digital<LineBreak/>	
                         Online<LineBreak/>
+                        Converted<LineBreak/>
+                        Relation-is part of<LineBreak/>
 
                             </TextBlock>
                         </StackPanel>
@@ -154,8 +193,7 @@
                 </StackPanel>
             </materialDesign:Card>
 
-            <ListView Margin="10"  Grid.Row="1" Grid.Column="1">
-            </ListView>
+
         </Grid>
     </Grid>
 </UserControl>

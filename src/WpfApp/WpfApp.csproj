@@ -38,6 +38,9 @@
     <ApplicationIcon>favicon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Dragablz, Version=0.0.3.203, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Dragablz.0.0.3.203\lib\net45\Dragablz.dll</HintPath>
+    </Reference>
     <Reference Include="log4net">
       <HintPath>..\..\resources\In\log4net.dll</HintPath>
     </Reference>
@@ -82,6 +85,7 @@
     </Compile>
     <Compile Include="Domain\FindandReplaceModel.cs" />
     <Compile Include="Domain\GridViewSort.cs" />
+    <Compile Include="Helper\WellKnownPredefinedUserType.cs" />
     <Compile Include="Model\BasePage.cs" />
     <Compile Include="Model\StatewideValidationPage.cs" />
     <Compile Include="Model\StatewideValidationPageViewModel.cs" />
@@ -112,7 +116,7 @@
     <Compile Include="Helper\ExportHelper.cs" />
     <Compile Include="Helper\FileHelper.cs" />
     <Compile Include="Domain\FilteredComboBox.cs" />
-    <Compile Include="Helper\InterviewHelper.cs" />
+    <Compile Include="Helper\ListHelper.cs" />
     <Compile Include="Helper\PackIconConverter.cs" />
     <Compile Include="Helper\SearchHelper.cs" />
     <Compile Include="Helper\ShortTextConverter.cs" />
@@ -128,12 +132,6 @@
     </Compile>
     <Compile Include="Setting.xaml.cs">
       <DependentUpon>Setting.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="SignIn.xaml.cs">
-      <DependentUpon>SignIn.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Statewidevalidation.xaml.cs">
-      <DependentUpon>Statewidevalidation.xaml</DependentUpon>
     </Compile>
     <Compile Include="TranscriptionQueue.xaml.cs">
       <DependentUpon>TranscriptionQueue.xaml</DependentUpon>
@@ -234,14 +232,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SignIn.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Statewidevalidation.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="TranscriptionQueue.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -282,9 +272,6 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="Assets\cms_sample.xlsx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Assets\modx_sample.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />

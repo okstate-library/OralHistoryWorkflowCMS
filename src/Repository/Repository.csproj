@@ -53,10 +53,10 @@
     <Compile Include="Implementations\VideoEquipmentUsedRepository.cs" />
     <Compile Include="IVideoEquipmentUsedRepository.cs" />
     <Compile Include="IAudioEquipmentUsedRepository.cs" />
-    <Compile Include="IInterviewerRepository.cs" />
+    <Compile Include="IPredefineUserRepository.cs" />
     <Compile Include="ICollectionRepository.cs" />
     <Compile Include="Implementations\AudioEquipmentUsedRepository.cs" />
-    <Compile Include="Implementations\InterviewerRepository.cs" />
+    <Compile Include="Implementations\PredefineUserRepository.cs" />
     <Compile Include="Implementations\CollectionRepository.cs" />
     <Compile Include="Implementations\KeywordRepository.cs" />
     <Compile Include="Implementations\SubjectRepository.cs" />

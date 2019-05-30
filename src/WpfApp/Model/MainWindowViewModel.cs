@@ -33,9 +33,7 @@ namespace WpfApp.Model
             this.LoadSettingsPageCommand = new DelegateCommand(o => this.LoadSettingsPage());
 
             this.LoadImportPageCommand = new DelegateCommand(o => this.LoadImportPage());
-
-            this.LoadStatewideValidationPageCommand = new DelegateCommand(o => this.LoadStatewideValidatioPage());
-
+            
             this.LoadSearchOnBrowsePageCommand = new DelegateCommand(o => this.LoadBrowsePageWithSearch());
 
             //this.LoadLogoutPageCommand = new DelegateCommand(o => this.LoadLogoutHomePage());
@@ -63,8 +61,6 @@ namespace WpfApp.Model
         public ICommand LoadSettingsPageCommand { get; private set; }
 
         public ICommand LoadImportPageCommand { get; private set; }
-
-        public ICommand LoadStatewideValidationPageCommand { get; private set; }
 
         public ICommand LoadSearchOnBrowsePageCommand { get; private set; }
 
@@ -140,13 +136,7 @@ namespace WpfApp.Model
             CurrentViewModel = new ImportPageViewModel(
                 new ImportPage() { PageTitle = "Imort" });
         }
-
-        private void LoadStatewideValidatioPage()
-        {
-            CurrentViewModel = new StatewideValidationPageViewModel(
-                new StatewideValidationPage() { PageTitle = "Statewide Validation" });
-        }
-
+              
         private void LoadBrowsePageWithSearch()
         {
             CurrentViewModel = new BrowsePageViewModel(
