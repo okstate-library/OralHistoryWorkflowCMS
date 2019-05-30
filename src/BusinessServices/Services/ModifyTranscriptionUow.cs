@@ -57,7 +57,7 @@ namespace BusinessServices.Servcices
         /// <value>
         /// The interviewer repository.
         /// </value>
-        public InterviewerRepository InterviewerRepository
+        public PredefineUserRepository PredefineUserRepository
         {
             get;
             set;
@@ -138,7 +138,7 @@ namespace BusinessServices.Servcices
             WellKnownError = new WellKnownErrors();
 
             TranscriptionRepository = new TranscriptionRepository();
-            InterviewerRepository = new InterviewerRepository();
+            PredefineUserRepository = new PredefineUserRepository();
             AudioEquipmentUsedRepository = new AudioEquipmentUsedRepository();
             VideoEquipmentUsedRepository = new VideoEquipmentUsedRepository();
 
@@ -158,12 +158,8 @@ namespace BusinessServices.Servcices
             }
             else
             {
-                if (Request.TranscriptionModel.IsANewInterviewer)
-                {
-                    InterviewerRepository.Add(new interviewer() { InterviewerName = Request.TranscriptionModel.Interviewer });
-                    InterviewerRepository.Save();
-                }
-
+                AddPredefineUser();
+                
                 if (Request.TranscriptionModel.IsANewAudioEquipment)
                 {
                     AudioEquipmentUsedRepository.Add(
@@ -207,25 +203,25 @@ namespace BusinessServices.Servcices
                         case Core.Enums.WellKnownTranscriptionModificationType.Transcript:
 
                             daTranscription.TranscriberAssigned = transcriptionModel.TranscriberAssigned;
-                            daTranscription.TranscriberCompleted = transcriptionModel.TranscriberCompleted;
-
                             daTranscription.AuditCheckCompleted = transcriptionModel.AuditCheckCompleted;
-                            daTranscription.AuditCheckCompletedDate = transcriptionModel.AuditCheckCompletedDate;
-
                             daTranscription.FirstEditCompleted = transcriptionModel.FirstEditCompleted;
-                            daTranscription.FirstEditCompletedDate = transcriptionModel.FirstEditCompletedDate;
-
                             daTranscription.SecondEditCompleted = transcriptionModel.SecondEditCompleted;
-                            daTranscription.SecondEditCompletedDate = transcriptionModel.SecondEditCompletedDate;
+                            daTranscription.ThirdEditCompleted = transcriptionModel.ThirdEditCompleted;
+
+                            CheckPredefineUserAndInsert(2, transcriptionModel.TranscriberAssigned);
+                            CheckPredefineUserAndInsert(2, transcriptionModel.AuditCheckCompleted);
+                            CheckPredefineUserAndInsert(2, transcriptionModel.FirstEditCompleted);
+                            CheckPredefineUserAndInsert(2, transcriptionModel.SecondEditCompleted);
+                            CheckPredefineUserAndInsert(2, transcriptionModel.ThirdEditCompleted);
 
                             daTranscription.DraftSentDate = transcriptionModel.DraftSentDate;
                             daTranscription.SentOut = transcriptionModel.SentOut;
 
                             daTranscription.EditWithCorrectionCompleted = transcriptionModel.EditWithCorrectionCompleted;
-                            daTranscription.EditWithCorrectionDate = transcriptionModel.EditWithCorrectionDate;
+                            daTranscription.FinalEditCompleted = transcriptionModel.FinalEditCompleted;
 
-                            daTranscription.FirstEditCompleted = transcriptionModel.FirstEditCompleted;
-                            daTranscription.FirstEditCompletedDate = transcriptionModel.FirstEditCompletedDate;
+                            CheckPredefineUserAndInsert(2, transcriptionModel.EditWithCorrectionCompleted);
+                            CheckPredefineUserAndInsert(2, transcriptionModel.FinalEditCompleted);
 
                             daTranscription.FinalSentDate = transcriptionModel.FinalSentDate;
                             daTranscription.MetadataDraft = transcriptionModel.MetadataDraft;
@@ -259,6 +255,9 @@ namespace BusinessServices.Servcices
                             daTranscription.Interviewer = transcriptionModel.Interviewer;
 
                             daTranscription.InterviewDate = transcriptionModel.InterviewDate;
+                            daTranscription.InterviewDate1 = transcriptionModel.InterviewDate1;
+                            daTranscription.InterviewDate2 = transcriptionModel.InterviewDate2;
+
                             daTranscription.ConvertToDigitalDate = transcriptionModel.ConvertToDigitalDate;
 
                             daTranscription.Subject = transcriptionModel.Subject;
@@ -281,15 +280,17 @@ namespace BusinessServices.Servcices
                             break;
                         case Core.Enums.WellKnownTranscriptionModificationType.Supplement:
 
-                            daTranscription.IsInContentDm = transcriptionModel.IsInContentDm;
+                            daTranscription.IsOnline = transcriptionModel.IsOnline;
                             daTranscription.IsRosetta = transcriptionModel.IsRosetta;
                             daTranscription.ReleaseForm = transcriptionModel.ReleaseForm;
                             daTranscription.IsRestriction = transcriptionModel.IsRestriction;
+                            daTranscription.IsDarkArchive = transcriptionModel.IsDarkArchive;
 
                             daTranscription.MetadataDraft = transcriptionModel.MetadataDraft;
-                            daTranscription.TranscriptStatus = transcriptionModel.TranscriptStatus;
 
-                            daTranscription.LegalNote = transcriptionModel.LegalNote;
+                            daTranscription.RestrictionNote = transcriptionModel.RestrictionNote;
+                            daTranscription.DarkArchiveNote = transcriptionModel.DarkArchiveNote;
+
                             daTranscription.IsAudioFormat = transcriptionModel.IsAudioFormat;
                             daTranscription.IsVideoFormat = transcriptionModel.IsVideoFormat;
                             daTranscription.AudioEquipmentUsed = transcriptionModel.AudioEquipmentUsed;
@@ -320,6 +321,38 @@ namespace BusinessServices.Servcices
                 IsOperationSuccess = true,
             };
 
+        }
+
+        /// <summary>
+        /// Adds the predefine user.
+        /// </summary>
+        private void AddPredefineUser()
+        {
+            if (!string.IsNullOrEmpty(Request.TranscriptionModel.Interviewer))
+            {
+                string[] interviewers = Request.TranscriptionModel.Interviewer.Split(';');
+
+                foreach (string interviewer in interviewers)
+                {
+                    CheckPredefineUserAndInsert(1, interviewer.Trim());
+                }
+            }
+        }
+
+        /// <summary>
+        /// Checks the predefine user and insert.
+        /// </summary>
+        /// <param name="userType">Type of the user.</param>
+        /// <param name="user">The user.</param>
+        private void CheckPredefineUserAndInsert(byte userType, string user)
+        {
+            predefineduser predefineUser = PredefineUserRepository.FirstOrDefault(p => p.Name.ToLower().Contains(user));
+
+            if (predefineUser == null)
+            {
+                PredefineUserRepository.Add(new predefineduser() { UserType = userType, Name = user });
+                PredefineUserRepository.Save();
+            }
         }
 
         /// <summary>

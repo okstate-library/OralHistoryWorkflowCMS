@@ -22,8 +22,8 @@
                 <Setter Property="Margin" Value="0 0 0 0" />
                 <Setter Property="FontSize" Value="13"></Setter>
                 <Setter Property="FontWeight" Value="Normal"></Setter>
-            </Style>
-            
+            </Style>        
+
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -198,14 +198,14 @@
                         </Expander>
 
                         <Border Background="{DynamicResource MaterialDesignDivider}" Height="1" HorizontalAlignment="Stretch" SnapsToDevicePixels="True" />
-                        <Expander Name="RestrictionExpander" HorizontalAlignment="Stretch" Background="{DynamicResource AlternativeColor}"
-                      Header="Restriction" FontWeight="Bold">
+                        <Expander Name="DarkArchieveExpander" HorizontalAlignment="Stretch" Background="{DynamicResource AlternativeColor}"
+                      Header="Dark Archive" FontWeight="Bold">
                             <StackPanel Orientation="Vertical" TextBlock.Foreground="{DynamicResource MaterialDesignBody}" >
 
-                                <ListBox Name="RestrictionListBox" ItemsSource="{Binding TheList}" Margin="0 0 0 10">
+                                <ListBox Name="DarkArchiveListBox" ItemsSource="{Binding TheList}" Margin="0 0 0 10">
                                     <ListBox.ItemTemplate>
                                         <DataTemplate>
-                                            <CheckBox Name="CheckedBoxRestriction"
+                                            <CheckBox Name="CheckedBoxDarkArchive"
                                                       Tag="{Binding Value}" 
                                                       ToolTip="{Binding Key}" 
                                                       Content="{Binding Key , Converter={StaticResource ShortTextConverter}}" 
@@ -231,8 +231,8 @@
                     <ListView.View>
                         <GridView>                           
                             <!--Interviewee-->
-                
-                            <GridViewColumn Header="Interviewee" Width="250"  
+
+                            <GridViewColumn Header="Interviewee(s)" Width="250"  
                                             HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}"                                            
                                             domain:GridViewSort.PropertyName="Interviewee">
                                 <GridViewColumn.CellTemplate>
@@ -247,8 +247,8 @@
 
                             
                 <!--Interviewer-->
-                
-                            <GridViewColumn Header="Interviewer" Width="250"
+
+                            <GridViewColumn Header="Interviewer(s)" Width="250"
                                             HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}"                                            
                                             domain:GridViewSort.PropertyName="Interviewer">
                    
@@ -266,7 +266,7 @@
                             
                 <!--Interview on-->
 
-                            <GridViewColumn Header="Interview date" Width="100"   
+                            <GridViewColumn Header="Date(s)" Width="100"   
                                             HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}"                                           
                                             domain:GridViewSort.PropertyName="InterviewDate">
                                 <GridViewColumn.CellTemplate>
@@ -313,17 +313,17 @@
                            </GridViewColumn>
 
                             
-                <!--IsInContentDm-->
+                <!--InOnline-->
                 
                             <GridViewColumn Width="100"  Header="Online" 
                                             HeaderContainerStyle="{StaticResource GridViewColumnHeaderMediumFontStyle}"                                             
-                                            domain:GridViewSort.PropertyName="IsInContentDm">
+                                            domain:GridViewSort.PropertyName="IsOnline">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel>
                                             <materialDesign:PackIcon Name="OnCOntentDmPackIcon_Supplemental" Width="80" 
-                                                                     ToolTip="{Binding IsInContentDm}" 
-                                                                     Kind="{Binding IsInContentDm , Converter={StaticResource PackIconConverter}}"  />
+                                                                     ToolTip="{Binding IsOnline}" 
+                                                                     Kind="{Binding IsOnline , Converter={StaticResource PackIconConverter}}"  />
                                         </StackPanel>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
@@ -350,8 +350,6 @@
                     </ListView.View>
 
                 </ListView>
-
-
 
             </Grid>
             <StackPanel>

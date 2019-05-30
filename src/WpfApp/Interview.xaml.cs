@@ -2,6 +2,7 @@
 using Model;
 using Model.Transfer;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -43,7 +44,7 @@ namespace WpfApp
         private void ProjectCodeTextBox_LostFocus(object sender, RoutedEventArgs e)
         {
             TextBox textBox = ((TextBox)sender);
-            
+
             if (textBox != null && !string.IsNullOrEmpty(textBox.Text))
             {
                 RequestModel requestModel = new RequestModel()
@@ -62,10 +63,10 @@ namespace WpfApp
 
                     ProjectCodeTextBox.Focusable = true;
                     Keyboard.Focus(ProjectCodeTextBox);
-          
+
                 }
             }
-          
+
         }
 
         /// <summary>
@@ -92,17 +93,19 @@ namespace WpfApp
         {
             if (FormValidation())
             {
-                bool isANewInterviewer = !BaseUserControl.Interviewers.Contains(InterviewerFilteredComboBox.Text);
-
                 bool isANewAudioEquipment = !string.IsNullOrEmpty(AudioEquipmentUsedFilteredComboBox.Text) &&
                     !BaseUserControl.AudioEquipments.Contains(AudioEquipmentUsedFilteredComboBox.Text);
 
-                bool isANewVideoEquipment = !string.IsNullOrEmpty(VideoEquipmentUsedFilteredComboBox.Text) && 
+                bool isANewVideoEquipment = !string.IsNullOrEmpty(VideoEquipmentUsedFilteredComboBox.Text) &&
                     !BaseUserControl.VideoEquipments.Contains(VideoEquipmentUsedFilteredComboBox.Text);
 
                 Collection collectionModel = (Collection)CollectionComboBox.SelectedValue;
 
                 KeyValuePair<int, string> subseryModel = (KeyValuePair<int, string>)SubseriesComboBox.SelectedValue;
+
+                string interviewerName = InterviewerFilteredComboBox.Text +
+                     (!string.IsNullOrEmpty(InterviewerFilteredComboBox1.Text) ? "; " + InterviewerFilteredComboBox1.Text : string.Empty) +
+                    (!string.IsNullOrEmpty(InterviewerFilteredComboBox2.Text) ? "; " + InterviewerFilteredComboBox2.Text : string.Empty);
 
                 RequestModel requestModel = new RequestModel()
                 {
@@ -115,16 +118,17 @@ namespace WpfApp
                         Description = DescriptionTextBox.Text,
                         AudioEquipmentUsed = AudioEquipmentUsedFilteredComboBox.Text,
                         VideoEquipmentUsed = VideoEquipmentUsedFilteredComboBox.Text,
-                        //EquipmentUsed = EquipmentUsedComboBox.Text, //TODO 
-                        InterviewDate = (DateTime)InterviewDateDateDatePicker.SelectedDate,
+                        InterviewDate = ((DateTime)InterviewDateDateDatePicker.SelectedDate).ToShortDateString(),
+                        InterviewDate1 = (InterviewDateDateDatePicker1.SelectedDate != null) ? ((DateTime)InterviewDateDateDatePicker1.SelectedDate).ToShortDateString() : string.Empty,
+                        InterviewDate2 = (InterviewDateDateDatePicker2.SelectedDate != null) ? ((DateTime)InterviewDateDateDatePicker2.SelectedDate).ToShortDateString() : string.Empty,
                         Interviewee = IntervieweeTextBox.Text,
-                        Interviewer = InterviewerFilteredComboBox.Text,
+                        Interviewer = interviewerName,
                         InterviewerNote = NoteTextBox.Text,
                         IsAudioFormat = (bool)MediaAudioCheckBox.IsChecked,
                         IsRestriction = (bool)RestrictionYesCheckBox.IsChecked,
                         IsVideoFormat = (bool)MediaVideoCheckBox.IsChecked,
                         Keywords = KeywordsTextBox.Text,
-                        LegalNote = RestrictionNoteTextBox.Text,
+                        RestrictionNote = RestrictionNoteTextBox.Text,
                         Place = PlaceTextBox.Text,
                         ReleaseForm = (bool)ReleaseFromYesCheckBox.IsChecked,
                         Subject = SubjectTextBox.Text,
@@ -136,7 +140,6 @@ namespace WpfApp
                         UpdatedBy = App.BaseUserControl.UserModel.UserId,
                         UpdatedDate = DateTime.Today,
 
-                        IsANewInterviewer = isANewInterviewer,
                         IsANewAudioEquipment = isANewAudioEquipment,
                         IsANewVideoEquipment = isANewVideoEquipment,
                     },
@@ -153,16 +156,19 @@ namespace WpfApp
 
                     ClearAll();
 
-                    if (isANewInterviewer || isANewAudioEquipment || isANewVideoEquipment)
-                    {
-                        PopulateFilterTextBox();
-                    }
+
+                    PopulateFilterTextBox();
+
 
                 }
                 else
                 {
                     App.ShowMessage(false, response.ErrorMessage);
                 }
+            }
+            else
+            {
+                App.ShowMessage(false, "Fill all required fields.");
             }
 
         }
@@ -194,7 +200,7 @@ namespace WpfApp
                 RestrictionYesCheckBox,
                 RestrictionNoCheckBox);
         }
-             
+
         #endregion
 
         #region Methods
@@ -206,8 +212,12 @@ namespace WpfApp
         {
             DescriptionTextBox.Text = string.Empty;
             InterviewDateDateDatePicker.SelectedDate = null;
+            InterviewDateDateDatePicker1.SelectedDate = null;
+            InterviewDateDateDatePicker2.SelectedDate = null;
             IntervieweeTextBox.Text = string.Empty;
             InterviewerFilteredComboBox.Text = string.Empty;
+            InterviewerFilteredComboBox1.Text = string.Empty;
+            InterviewerFilteredComboBox2.Text = string.Empty;
             NoteTextBox.Text = string.Empty;
             MediaAudioCheckBox.IsChecked = false;
             RestrictionYesCheckBox.IsChecked = false;
@@ -261,7 +271,9 @@ namespace WpfApp
         private bool FormValidation()
         {
             if (CollectionComboBox.SelectedValue != null &&
-                SubseriesComboBox.SelectedValue != null)
+                SubseriesComboBox.SelectedValue != null &&
+                InterviewDateDateDatePicker.SelectedDate != null &&
+                !string.IsNullOrEmpty(InterviewerFilteredComboBox.Text))
             {
                 return true;
             }
@@ -274,17 +286,22 @@ namespace WpfApp
         /// </summary>
         private void PopulateIntializeView()
         {
-            InterviewerFilteredComboBox.IsEditable = true;
-            InterviewerFilteredComboBox.IsTextSearchEnabled = false;
-            InterviewerFilteredComboBox.ItemsSource = BaseUserControl.Interviewers;
-            
-            AudioEquipmentUsedFilteredComboBox.IsEditable = true;
-            AudioEquipmentUsedFilteredComboBox.IsTextSearchEnabled = false;
-            AudioEquipmentUsedFilteredComboBox.ItemsSource = BaseUserControl.AudioEquipments;
-            
-            VideoEquipmentUsedFilteredComboBox.IsEditable = true;
-            VideoEquipmentUsedFilteredComboBox.IsTextSearchEnabled = false;
-            VideoEquipmentUsedFilteredComboBox.ItemsSource = BaseUserControl.VideoEquipments;
+            IEnumerable interviewers = ListHelper.GetPredefinedUser(WellKnownPredefinedUserType.Interviewer);
+
+            SetupComboBox(InterviewerFilteredComboBox, interviewers);
+            SetupComboBox(InterviewerFilteredComboBox1, interviewers);
+            SetupComboBox(InterviewerFilteredComboBox2, interviewers);
+
+            SetupComboBox(AudioEquipmentUsedFilteredComboBox, BaseUserControl.AudioEquipments);
+
+            SetupComboBox(VideoEquipmentUsedFilteredComboBox, BaseUserControl.VideoEquipments);
+        }
+
+        private void SetupComboBox(FilteredComboBox filteredComboBox, IEnumerable iEnumerable)
+        {
+            filteredComboBox.IsEditable = true;
+            filteredComboBox.IsTextSearchEnabled = false;
+            filteredComboBox.ItemsSource = iEnumerable;
         }
 
         /// <summary>

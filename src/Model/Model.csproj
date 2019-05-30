@@ -50,7 +50,7 @@
     <Compile Include="MainFormModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="KeywordModel.cs" />
-    <Compile Include="InterviewerModel.cs" />
+    <Compile Include="PredefinedUserModel.cs" />
     <Compile Include="SubjectModel.cs" />
     <Compile Include="SubseryModel.cs" />
     <Compile Include="TranscriptionModel.cs" />

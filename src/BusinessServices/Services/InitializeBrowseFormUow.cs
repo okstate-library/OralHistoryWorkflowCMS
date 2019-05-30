@@ -197,10 +197,10 @@ namespace BusinessServices.Servcices
             //Content DM list 
 
             var contentDMs = transcriptions
-                              .GroupBy(n => n.IsInContentDm)
+                              .GroupBy(n => n.IsOnline)
                               .Select(n => new
                               {
-                                  IsInContentDm = n.Key,
+                                  IsOnline = n.Key,
                                   Count = n.Count()
                               });
 
@@ -210,7 +210,7 @@ namespace BusinessServices.Servcices
             {
                 browseFormModel.ContentDmList.Add(
                     new KeyValuePair<string, string>(
-                    item.IsInContentDm.ToString() + " (" + item.Count + ")", item.IsInContentDm.ToString()));
+                    item.IsOnline.ToString() + " (" + item.Count + ")", item.IsOnline.ToString()));
 
             }
 

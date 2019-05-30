@@ -12,9 +12,10 @@ namespace EntityData
     using System;
     using System.Collections.Generic;
     
-    public partial class interviewer
+    public partial class predefineduser
     {
         public short Id { get; set; }
-        public string InterviewerName { get; set; }
+        public byte UserType { get; set; }
+        public string Name { get; set; }
     }
 }

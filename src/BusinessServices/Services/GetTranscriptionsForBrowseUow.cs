@@ -120,7 +120,7 @@ namespace BusinessServices.Servcices
 
             if (Request.IsAdminUser)
             {
-                allTranscriptions = TranscriptionRepository.FindBy(p => p.IsRestriction == Request.TranscriptionSearchModel.IsRestrictionRecords).ToList();
+                allTranscriptions = TranscriptionRepository.FindBy(p => p.IsDarkArchive == Request.TranscriptionSearchModel.IsDarkArchived).ToList();
             }
             else
             {
@@ -150,10 +150,9 @@ namespace BusinessServices.Servcices
 
                 foreach (string item in Request.TranscriptionSearchModel.Contentdms)
                 {
-                    predicate = predicate.Or(p => p.IsInContentDm == bool.Parse(item));
+                    predicate = predicate.Or(p => p.IsOnline == bool.Parse(item));
                 }
-
-
+                
 
                 IEnumerable<transcription> dataset3 = allTranscriptions.Where<transcription>(predicate.Compile());
 
@@ -163,7 +162,7 @@ namespace BusinessServices.Servcices
                                                p.Interviewee.Contains(Request.SearchWord) ||
                                                p.InterviewerNote.Contains(Request.SearchWord) ||
                                                p.Keywords.Contains(Request.SearchWord) ||
-                                               p.LegalNote.Contains(Request.SearchWord) ||
+                                               p.RestrictionNote.Contains(Request.SearchWord) ||
                                                p.Place.Contains(Request.SearchWord) ||
                                                p.ProjectCode.Contains(Request.SearchWord) ||
                                                p.Title.Contains(Request.SearchWord) ||

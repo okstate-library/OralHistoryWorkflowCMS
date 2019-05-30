@@ -28,6 +28,13 @@
         <Setter Property="VerticalAlignment" Value="Center"></Setter>
     </Style>
 
+    <Style x:Key="BoldTextBlock"  TargetType="{x:Type TextBlock }">
+        <Setter Property="Margin" Value="0 0 0 0" />
+        <Setter Property="FontSize" Value="14"></Setter>
+        <Setter Property="FontWeight" Value="Bold"></Setter>
+        <Setter Property="VerticalAlignment" Value="Center"></Setter>
+    </Style>
+
     <Style x:Key="PageTitleLabel"  TargetType="{x:Type Label }" BasedOn="{StaticResource MaterialDesignLabel}">
         <Setter Property="Margin" Value="0 0 0 0" />
         <Setter Property="FontSize" Value="20"></Setter>

@@ -1,4 +1,5 @@
-﻿using Model;
+﻿using Core.Enums;
+using Model;
 using Model.Transfer;
 using System;
 using System.Collections.Generic;
@@ -77,8 +78,8 @@ namespace WpfApp
 
                 ReportModel = new ReportModel()
                 {
-                    BeginDate = BeginDateDatePicker.SelectedDate != null ? (DateTime)BeginDateDatePicker.SelectedDate : DateTime.MinValue,
-                    EndDate = EndDateDatePicker.SelectedDate != null ? (DateTime)EndDateDatePicker.SelectedDate : DateTime.MinValue,
+                    BeginDate = BeginDateDatePicker.SelectedDate != null ? (DateTime)BeginDateDatePicker.SelectedDate : (DateTime?)null,
+                    EndDate = EndDateDatePicker.SelectedDate != null ? (DateTime)EndDateDatePicker.SelectedDate : (DateTime?)null,
 
                     IsBornDigitally = (bool)BornDigitalMediaCheckBox.IsChecked,
                     IsConvertedDigital = (bool)ConvertedMediaCheckBox.IsChecked,
@@ -139,7 +140,7 @@ namespace WpfApp
         {
             InterviewerFilteredComboBox.IsEditable = true;
             InterviewerFilteredComboBox.IsTextSearchEnabled = true;
-            InterviewerFilteredComboBox.ItemsSource = BaseUserControl.Interviewers;
+            InterviewerFilteredComboBox.ItemsSource = ListHelper.GetPredefinedUser(WellKnownPredefinedUserType.Interviewer);
         }
 
         /// <summary>

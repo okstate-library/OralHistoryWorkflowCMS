@@ -110,10 +110,15 @@ namespace WpfApp.Domain
 
         private bool FilterItem(object value)
         {
-            if (value == null) return false;
+            if (value == null || Text == null) return false;
             if (Text.Length == 0) return true;
 
             return value.ToString().ToLower().Contains(Text.ToLower());
         }
+
+         //if (value == null || Text == null) return false;
+         //   if (Text.Length == 0) return true;
+
+         //   return value.ToString().ToLower().Contains(Text.ToLower());
     }
 }

@@ -33,7 +33,7 @@ namespace Model
         /// <value>
         /// The begin date.
         /// </value>
-        public DateTime BeginDate { get; set; }
+        public DateTime? BeginDate { get; set; }
 
         /// <summary>
         /// Gets or sets the end date.
@@ -41,7 +41,7 @@ namespace Model
         /// <value>
         /// The end date.
         /// </value>
-        public DateTime EndDate { get; set; }
+        public DateTime? EndDate { get; set; }
 
         /// <summary>
         /// Gets or sets the interviewer.

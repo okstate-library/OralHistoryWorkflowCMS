@@ -79,7 +79,7 @@ namespace Model.Transfer
         /// <value>
         /// The interviewers.
         /// </value>
-        public List<string> Interviewers { get; set; }
+        public List<PredefinedUserModel> PredefinedUsers { get; set; }
 
         /// <summary>
         /// Gets or sets the audio equipments used.

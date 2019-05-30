@@ -121,20 +121,25 @@ namespace WpfApp
         {
             UserTypeModel current = App.BaseUserControl.Usertypes.Find(u => u.Id == userType);
 
-            if (current.IsHorizontalMenu)
-            {
-                MenuToggleButton.Visibility = Visibility.Collapsed;
+            //if (current.IsHorizontalMenu)
+            //{
+            //    MenuToggleButton.Visibility = Visibility.Collapsed;
 
-                VerticalDemoItemsList.Visibility = Visibility.Hidden;
-                HorizontalDemoItemsList.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                MenuToggleButton.Visibility = Visibility.Visible;
+            //    VerticalDemoItemsList.Visibility = Visibility.Hidden;
+            //    HorizontalDemoItemsList.Visibility = Visibility.Visible;
+            //}
+            //else
+            //{
+            //    MenuToggleButton.Visibility = Visibility.Visible;
 
-                VerticalDemoItemsList.Visibility = Visibility.Visible;
-                HorizontalDemoItemsList.Visibility = Visibility.Hidden;
-            }
+            //    VerticalDemoItemsList.Visibility = Visibility.Visible;
+            //    HorizontalDemoItemsList.Visibility = Visibility.Hidden;
+            //}
+
+            MenuToggleButton.Visibility = Visibility.Visible;
+
+            HorizontalDemoItemsList.Visibility = Visibility.Visible;
+            VerticalDemoItemsList.Visibility = Visibility.Visible;
 
             AuthorizationModel model = new Domain.AuthorizationModel(App.IsValidToProcess);
 
@@ -162,8 +167,6 @@ namespace WpfApp
 
             Import1Button.Visibility = Visibility.Collapsed;
             Import2Button.Visibility = Visibility.Collapsed;
-            StatewideValidation1Button.Visibility = Visibility.Collapsed;
-            StatewideValidation2Button.Visibility = Visibility.Collapsed;
 
             foreach (DemoItem item in model.DemoItems)
             {
@@ -207,12 +210,7 @@ namespace WpfApp
                         Import1Button.Visibility = Visibility.Visible;
                         Import2Button.Visibility = Visibility.Visible;
                         break;
-
-                    case "Statewide validation":
-                        StatewideValidation1Button.Visibility = Visibility.Visible;
-                        StatewideValidation2Button.Visibility = Visibility.Visible;
-                        break;
-
+                                           
                     default:
                         break;
                 }

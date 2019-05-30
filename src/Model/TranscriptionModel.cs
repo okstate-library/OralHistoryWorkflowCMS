@@ -84,7 +84,11 @@ namespace Model
         /// <value>
         /// The interview date.
         /// </value>
-        public System.DateTime InterviewDate { get; set; }
+        public string InterviewDate { get; set; }
+
+        public string InterviewDate1 { get; set; }
+
+        public string InterviewDate2 { get; set; }
         /// <summary>
         /// Gets or sets the title.
         /// </summary>
@@ -203,7 +207,7 @@ namespace Model
         /// <value>
         ///   <c>true</c> if this instance is in content dm; otherwise, <c>false</c>.
         /// </value>
-        public bool IsInContentDm { get; set; }
+        public bool IsOnline { get; set; }
         /// <summary>
         /// Gets or sets a value indicating whether this instance is rosetta.
         /// </summary>
@@ -225,13 +229,19 @@ namespace Model
         ///   <c>true</c> if this instance is restriction; otherwise, <c>false</c>.
         /// </value>
         public bool IsRestriction { get; set; }
+
+        public bool IsDarkArchive { get; set; }
+        
         /// <summary>
         /// Gets or sets the legal note.
         /// </summary>
         /// <value>
         /// The legal note.
         /// </value>
-        public string LegalNote { get; set; }
+        public string RestrictionNote { get; set; }
+        
+        public string DarkArchiveNote { get; set; }
+        
         /// <summary>
         /// Gets or sets the equipment used.
         /// </summary>
@@ -278,6 +288,7 @@ namespace Model
         /// The place.
         /// </value>
         public string Place { get; set; }
+
         /// <summary>
         /// Gets or sets the transcriber assigned.
         /// </summary>
@@ -285,13 +296,7 @@ namespace Model
         /// The transcriber assigned.
         /// </value>
         public string TranscriberAssigned { get; set; }
-        /// <summary>
-        /// Gets or sets the transcriber completed.
-        /// </summary>
-        /// <value>
-        /// The transcriber completed.
-        /// </value>
-        public Nullable<System.DateTime> TranscriberCompleted { get; set; }
+
         /// <summary>
         /// Gets or sets the audit check completed.
         /// </summary>
@@ -299,13 +304,7 @@ namespace Model
         /// The audit check completed.
         /// </value>
         public string AuditCheckCompleted { get; set; }
-        /// <summary>
-        /// Gets or sets the audit check completed date.
-        /// </summary>
-        /// <value>
-        /// The audit check completed date.
-        /// </value>
-        public Nullable<System.DateTime> AuditCheckCompletedDate { get; set; }
+
         /// <summary>
         /// Gets or sets the first edit completed.
         /// </summary>
@@ -313,13 +312,7 @@ namespace Model
         /// The first edit completed.
         /// </value>
         public string FirstEditCompleted { get; set; }
-        /// <summary>
-        /// Gets or sets the first edit completed date.
-        /// </summary>
-        /// <value>
-        /// The first edit completed date.
-        /// </value>
-        public Nullable<System.DateTime> FirstEditCompletedDate { get; set; }
+
         /// <summary>
         /// Gets or sets the second edit completed.
         /// </summary>
@@ -327,13 +320,15 @@ namespace Model
         /// The second edit completed.
         /// </value>
         public string SecondEditCompleted { get; set; }
+
         /// <summary>
-        /// Gets or sets the second edit completed date.
+        /// Gets or sets the third edit completed.
         /// </summary>
         /// <value>
-        /// The second edit completed date.
+        /// The third edit completed.
         /// </value>
-        public Nullable<System.DateTime> SecondEditCompletedDate { get; set; }
+        public string ThirdEditCompleted { get; set; }
+        
         /// <summary>
         /// Gets or sets the draft sent date.
         /// </summary>
@@ -348,13 +343,7 @@ namespace Model
         /// The edit with correction completed.
         /// </value>
         public string EditWithCorrectionCompleted { get; set; }
-        /// <summary>
-        /// Gets or sets the edit with correction date.
-        /// </summary>
-        /// <value>
-        /// The edit with correction date.
-        /// </value>
-        public Nullable<System.DateTime> EditWithCorrectionDate { get; set; }
+
         /// <summary>
         /// Gets or sets the final edit completed.
         /// </summary>
@@ -362,13 +351,7 @@ namespace Model
         /// The final edit completed.
         /// </value>
         public string FinalEditCompleted { get; set; }
-        /// <summary>
-        /// Gets or sets the final edit date.
-        /// </summary>
-        /// <value>
-        /// The final edit date.
-        /// </value>
-        public Nullable<System.DateTime> FinalEditDate { get; set; }
+
         /// <summary>
         /// Gets or sets the final sent date.
         /// </summary>
@@ -587,15 +570,7 @@ namespace Model
         /// The metadata draft.
         /// </value>
         public string MetadataDraft { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether this instance is a new interviewer.
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if this instance is a new interviewer; otherwise, <c>false</c>.
-        /// </value>
-        public bool IsANewInterviewer { get; set; }
-
+        
         /// <summary>
         /// Gets or sets a value indicating whether this instance is a new audio equipment.
         /// </summary>

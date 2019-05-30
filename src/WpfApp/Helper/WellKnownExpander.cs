@@ -32,9 +32,9 @@ namespace WpfApp.Helper
         Metadata = 4,
 
         /// <summary>
-        /// The supplimental
+        /// The supplemental
         /// </summary>
-        Supplimental = 5
+        Supplemental = 5 
 
     }
 }

@@ -9,10 +9,15 @@ namespace Repository.Implementations
     /// </summary>
     /// <seealso cref="EntityData.GenericRepository{EntityData.OralCMSDBEntities, EntityData.collection}" />
     /// <seealso cref="Repository.ICollectionRepository" />
-    public class InterviewerRepository :
-        GenericRepository<OralCMSDBEntities, interviewer>, IInterviewerRepository
+    public class PredefineUserRepository :
+        GenericRepository<OralCMSDBEntities, predefineduser>, IPredefineUserRepository
     {
-        public List<interviewer> GetInterviewer()
+        public List<predefineduser> GetPredefinedUsers(int usertype)
+        {
+            return FindBy(p => p.UserType == usertype).ToList();
+        }
+
+        public List<predefineduser> GetPredefinedUsers()
         {
             return GetAll().ToList();
         }
@@ -23,7 +28,7 @@ namespace Repository.Implementations
         /// <returns></returns>
         public List<string> List()
         {
-            return GetAll().ToList().Select(o => o.InterviewerName).ToList();
+            return GetAll().ToList().Select(o => o.Name).ToList();
         }
     }
 }

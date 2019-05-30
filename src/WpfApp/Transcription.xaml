@@ -4,7 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-              xmlns:domain1="clr-namespace:WpfApp.Domain"
+             xmlns:domain1="clr-namespace:WpfApp.Domain"
+             xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
@@ -13,10 +14,15 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBox.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Card.xaml" />
             </ResourceDictionary.MergedDictionaries>
-
-            <Style TargetType="{x:Type TextBlock}"  x:Key="expanderHeaderTextBlock">
+            
+            <Style TargetType="{x:Type CheckBox}"  x:Key="listCheckBox" >
                 <Setter Property="Margin" Value="0 0 0 0" />
-                <Setter Property="FontSize" Value="15"></Setter>
+                <Setter Property="FontSize" Value="13"></Setter>
+                <Setter Property="FontWeight" Value="Normal"></Setter>
+            </Style>
+
+            <Style x:Key="EmptyBorder2" TargetType="{x:Type Border}" BasedOn="{StaticResource EmptyBorder}" >
+                <Setter Property="Margin" Value="7" />
             </Style>
 
         </ResourceDictionary>
@@ -73,881 +79,948 @@
 
             <StackPanel Orientation="Vertical" HorizontalAlignment="Left"   Grid.Row="1" Grid.Column="1">
 
-                <!--General Details-->
-                <Expander  Name="GeneralExpander" Background="{DynamicResource AlternativeColor}" 
-                          Expander.Expanded="Expander_Expanded">
-
-                    <Expander.Header>
-                        <Border BorderThickness="0,0,0,2" BorderBrush="{DynamicResource PrimaryHueMidBrush}">
-                                <TextBlock Margin="5" Style="{StaticResource MaterialDesignTitleTextBlock}"># General</TextBlock>
-                            </Border>
-                    </Expander.Header>
-                    <StackPanel Orientation="Vertical"
+                <dragablz:TabablzControl>
+    
+                    <TabItem Header="General" Height="200">
+                        <StackPanel Orientation="Vertical"
                             TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
                                 Margin="20,00,50,24"  >
 
-                        <Grid  VerticalAlignment="Top" >
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="200" />
-                                <ColumnDefinition Width="300" />
-                                <ColumnDefinition Width="50" />
-                                <ColumnDefinition Width="200" />
-                                <ColumnDefinition Width="300" />
-                            </Grid.ColumnDefinitions>
+                            <Grid  VerticalAlignment="Top" >
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="200" />
+                                    <ColumnDefinition Width="300" />
+                                    <ColumnDefinition Width="50" />
+                                    <ColumnDefinition Width="200" />
+                                    <ColumnDefinition Width="300" />
+                                </Grid.ColumnDefinitions>
 
-                            <Border  Grid.Row="1"  Style="{StaticResource EmptyBorder}"   />
+                                <Border  Grid.Row="1"  Style="{StaticResource EmptyBorder2}"   />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="2" Grid.Column="0">Title</Label>
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="2" Grid.Column="0">Title</Label>
 
-                            <TextBox Name="Title2Label"  Grid.Row="2"  Grid.Column="1" Style="{StaticResource readOnlyTextBox}" />
+                                <TextBox Name="Title2Label"  Grid.Row="2"  Grid.Column="1" Style="{StaticResource readOnlyTextBox}" />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="2" Grid.Column="3" >Transcribed</Label>
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="2" Grid.Column="3" >Transcribed</Label>
 
-                            <TextBox Name="TranscriptionStatusTextBox"  Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="3" Style="{StaticResource readOnlyTextBox}" />
+                                <TextBox Name="TranscriptionStatusTextBox"  Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="3" Style="{StaticResource readOnlyTextBox}" />
 
-                            <Border  Grid.Row="3"  Style="{StaticResource EmptyBorder}"   />
+                                <Border  Grid.Row="3"  Style="{StaticResource EmptyBorder2}"   />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="4" Grid.Column="0" >Interviewee</Label>
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="4" Grid.Column="0" >Interviewee(s)</Label>
 
-                            <TextBox Name="IntervieweeTextBox"  Grid.Row="4" Grid.Column="1"  Style="{StaticResource readOnlyTextBox}" />
+                                <TextBox Name="IntervieweeTextBox"  Grid.Row="4" Grid.Column="1"  Grid.ColumnSpan="4" Style="{StaticResource readOnlyTextBox}" />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="4" Grid.Column="3" >Interviewer</Label>
+                                <Border  Grid.Row="5"  Style="{StaticResource EmptyBorder2}"   />
 
-                            <TextBox Name="InterviewerTextBox"  Grid.Row="4" Grid.Column="4" Style="{StaticResource readOnlyTextBox}"/>
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="6" Grid.Column="0" >Interviewer(s)</Label>
+                                
+                                <TextBox Name="InterviewerTextBox"  Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="4" Style="{StaticResource readOnlyTextBox}"/>
 
-                            <Border  Grid.Row="5"  Style="{StaticResource EmptyBorder}"   />
+                                <Border  Grid.Row="8"  Style="{StaticResource EmptyBorder2}"   />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="6" Grid.Column="0" >Project code</Label>
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="9" Grid.Column="0" >Interview date(s)</Label>
 
-                            <TextBox Name="ProjectCodeTextBox"  Grid.Row="6" Grid.Column="1" Style="{StaticResource readOnlyTextBox}"/>
+                                <Grid  VerticalAlignment="Top" Grid.Row="9"  Grid.Column="1"      >
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="85" />
+                                        <ColumnDefinition Width="10" />
+                                        <ColumnDefinition Width="85" />
+                                        <ColumnDefinition Width="10" />
+                                        <ColumnDefinition Width="85" />
+                                    </Grid.ColumnDefinitions>
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="6" Grid.Column="3" >Format(s)</Label>
+                                    <TextBox Name="InterviewDateTextBox"   Grid.Column="0"  Style="{StaticResource readOnlyTextBox}"/>
+                                    <TextBox Name="InterviewDateTextBox1"  Grid.Column="2"  Style="{StaticResource readOnlyTextBox}"/>
+                                    <TextBox Name="InterviewDateTextBox2"  Grid.Column="4"  Style="{StaticResource readOnlyTextBox}"/>
+                                </Grid>
 
-                            <TextBox Name="FormatTextBox"  Grid.Row="6" Grid.Column="4" Style="{StaticResource readOnlyTextBox}"/>
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="9" Grid.Column="3" >Project code</Label>
 
-                            <Border  Grid.Row="7"  Style="{StaticResource EmptyBorder}"   />
+                                <TextBox Name="ProjectCodeTextBox"  Grid.Row="9" Grid.Column="4" Style="{StaticResource readOnlyTextBox}"/>
+                                
+                                <Border  Grid.Row="10"  Style="{StaticResource EmptyBorder2}"   />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="8" Grid.Column="0" >Interview date</Label>
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="11" Grid.Column="0" >Format(s)</Label>
 
-                            <TextBox Name="InterviewDateTextBox"  Grid.Row="8" Grid.Column="1"  Style="{StaticResource readOnlyTextBox}"/>
+                                <TextBox Name="FormatTextBox"  Grid.Row="11" Grid.Column="1" Style="{StaticResource readOnlyTextBox}"/>
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="8" Grid.Column="3" >Access media status</Label>
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="11" Grid.Column="3" >Access media status</Label>
 
-                            <TextBox Name="AccessMediaStatusTextBox"  Grid.Row="8" Grid.Column="4" Style="{StaticResource readOnlyTextBox}"/>
+                                <TextBox Name="AccessMediaStatusTextBox"  Grid.Row="11" Grid.Column="4" Style="{StaticResource readOnlyTextBox}"/>
 
-                            <Border  Grid.Row="9"  Style="{StaticResource EmptyBorder}"   />
+                                <Border  Grid.Row="12"  Style="{StaticResource EmptyBorder2}"   />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="10" Grid.Column="0" >Online</Label>
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="13" Grid.Column="0" >Online</Label>
 
-                            <TextBox Name="OnContentDmTextBox"  Grid.Row="10" Grid.Column="1" Style="{StaticResource readOnlyTextBox}"/>
+                                <TextBox Name="OnContentDmTextBox"  Grid.Row="13" Grid.Column="1" Style="{StaticResource readOnlyTextBox}"/>
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="10" Grid.Column="3" >In Rosetta</Label>
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="13" Grid.Column="3" >In Rosetta</Label>
 
-                            <TextBox Name="InRosettaTextBox"  Grid.Row="10" Grid.Column="4" Style="{StaticResource readOnlyTextBox}"/>
+                                <TextBox Name="InRosettaTextBox"  Grid.Row="13" Grid.Column="4" Style="{StaticResource readOnlyTextBox}"/>
 
-                            <Border  Grid.Row="11"  Style="{StaticResource EmptyBorder}"   />
+                                <Border  Grid.Row="14"  Style="{StaticResource EmptyBorder2}"   />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="12" Grid.Column="0" >Release form</Label>
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="15" Grid.Column="0" >Release form</Label>
 
-                            <TextBox Name="ReleaseFormTextBox"  Grid.Row="12" Grid.Column="1" Style="{StaticResource readOnlyTextBox}"/>
+                                <TextBox Name="ReleaseFormTextBox"  Grid.Row="15" Grid.Column="1" Style="{StaticResource readOnlyTextBox}"/>
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="12" Grid.Column="3" >Restrictions</Label>
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="15" Grid.Column="3" >Restrictions</Label>
 
-                            <TextBox Name="RestrictionsTextBox"  Grid.Row="12" Grid.Column="4" Style="{StaticResource readOnlyTextBox}"/>
+                                <TextBox Name="RestrictionsTextBox"  Grid.Row="15" Grid.Column="4" Style="{StaticResource readOnlyTextBox}"/>
 
-                            <Border  Grid.Row="13"  Style="{StaticResource EmptyBorder}"   />
+                                <Border  Grid.Row="16"  Style="{StaticResource EmptyBorder2}"   />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="14" Grid.Column="0" >Collection</Label>
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="17" Grid.Column="0" >Collection</Label>
 
-                            <TextBox Name="CollectionNameTextBox"  Grid.Row="14" Grid.Column="1" Grid.ColumnSpan="5" Style="{StaticResource readOnlyTextBox}"/>
+                                <TextBox Name="CollectionNameTextBox"  Grid.Row="17" Grid.Column="1" Grid.ColumnSpan="5" Style="{StaticResource readOnlyTextBox}"/>
 
-                            <Border  Grid.Row="15"  Style="{StaticResource EmptyBorder}"   />
+                                <Border  Grid.Row="18"  Style="{StaticResource EmptyBorder2}"   />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="16" Grid.Column="0" >Subseries</Label>
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="19" Grid.Column="0" >Subseries</Label>
 
-                            <TextBox Name="SubseriesTextBox"  Grid.Row="16"   Grid.Column="1" Grid.ColumnSpan="5" Style="{StaticResource readOnlyTextBox}"/>
+                                <TextBox Name="SubseriesTextBox"  Grid.Row="19"   Grid.Column="1" Grid.ColumnSpan="5" Style="{StaticResource readOnlyTextBox}"/>
 
-                            <Border  Grid.Row="17"  Style="{StaticResource EmptyBorder}"   />
+                                <Border  Grid.Row="20"  Style="{StaticResource EmptyBorder2}"   />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="18" Grid.Column="0" >Subject</Label>
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="21" Grid.Column="0" >Subject</Label>
 
-                            <TextBox Name="SubjectTextBox"  Grid.Row="18"  Grid.Column="1" Grid.ColumnSpan="5"  Height="50" AcceptsReturn="True" 
+                                <TextBox Name="SubjectTextBox"  Grid.Row="21"  Grid.Column="1" Grid.ColumnSpan="5"  Height="50" AcceptsReturn="True" 
                                      TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Style="{StaticResource readOnlyTextBox}"/>
 
-                            <Border  Grid.Row="19"  Style="{StaticResource EmptyBorder}"   />
+                                <Border  Grid.Row="22"  Style="{StaticResource EmptyBorder2}"   />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="20" Grid.Column="0" >Keywords</Label>
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="23" Grid.Column="0" >Keywords</Label>
 
-                            <TextBox Name="KeywordsTextBox"  Grid.Row="20"  Grid.Column="1" Grid.ColumnSpan="5"  Height="50" AcceptsReturn="True"
+                                <TextBox Name="KeywordsTextBox"  Grid.Row="23"  Grid.Column="1" Grid.ColumnSpan="5"  Height="50" AcceptsReturn="True"
                                      TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Style="{StaticResource readOnlyTextBox}"/>
 
-                            <Border  Grid.Row="21"  Style="{StaticResource EmptyBorder}"   />
+                                <Border  Grid.Row="24"  Style="{StaticResource EmptyBorder2}"   />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="22" Grid.Column="0" >Description</Label>
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="25" Grid.Column="0" >Description</Label>
 
-                            <TextBox Name="DescriptionTextBox"  Grid.Row="22"  Grid.Column="1" Grid.ColumnSpan="5"  Height="50" AcceptsReturn="True"
+                                <TextBox Name="DescriptionTextBox"  Grid.Row="25"  Grid.Column="1" Grid.ColumnSpan="5"  Height="100" AcceptsReturn="True"
                                      TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Style="{StaticResource readOnlyTextBox}"/>
 
-                        </Grid>
+                            </Grid>
 
-                    </StackPanel>
-                </Expander>
-                <Border Background="{DynamicResource MaterialDesignDivider}" Width="1" VerticalAlignment="Stretch" SnapsToDevicePixels="True" />
-
-                <!--Transcript Details-->
-
-                <Expander Name="TranscriptExpander" Background="{DynamicResource PrimaryHueLightBrush}" Expander.Expanded="Expander_Expanded">
+                        </StackPanel>
+                    </TabItem>
                     
-                    <Expander.Header>
-                        <Border BorderThickness="0,0,0,2" BorderBrush="{DynamicResource PrimaryHueMidBrush}">
-                            <TextBlock Margin="5" Style="{StaticResource MaterialDesignTitleTextBlock}"># Transcript</TextBlock>
-                        </Border>
-                    </Expander.Header>
-                    <StackPanel Orientation="Vertical"
+                    <TabItem Header="Transcript"  Height="200">
+                        <StackPanel Orientation="Vertical"
                             TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
                                 Margin="20,00,50,24"  >
 
 
-                        <Grid  VerticalAlignment="Top" >
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="250" />
-                                <ColumnDefinition Width="75" />
-                                <ColumnDefinition Width="300" />
-                                <ColumnDefinition Width="75" />
-                                <ColumnDefinition Width="300" />
+                            <Grid  VerticalAlignment="Top" >
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="250" />
+                                    <ColumnDefinition Width="75" />
+                                    <ColumnDefinition Width="300" />
+                                    <ColumnDefinition Width="75" />
+                                    <ColumnDefinition Width="300" />
+
+                                </Grid.ColumnDefinitions>
+
+                                <Border  Grid.Row="1"  Style="{StaticResource EmptyBorder2}"   />
+
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="2" Grid.Column="0" >Transcriber assigned</Label>
+
+                                <domain1:FilteredComboBox x:Name="TranscriberAssignedFilteredComboBox" Grid.Row="2" Grid.Column="2" materialDesign:HintAssist.HintOpacity=".26"  
+                            HorizontalAlignment="Left" VerticalAlignment="Top" Width="300"/>
                                 
-                            </Grid.ColumnDefinitions>
-
-                            <Border  Grid.Row="1"  Style="{StaticResource EmptyBorder}"   />
-
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="2" Grid.Column="0" >Transcriber assigned</Label>
-                            <TextBox Name="TranscriberAssignedTextBox"  Grid.Row="2" Grid.Column="2"  Grid.ColumnSpan="3" Style="{StaticResource EditableTextBox}"/>
-
-                            <Border  Grid.Row="3"  Style="{StaticResource EmptyBorder}"   />
-
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="4" Grid.Column="0" >Transcript completed</Label>
-                            <DatePicker Name="TranscriptCompletedDateDatePicker" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Grid.Row="4" Grid.Column="2"   />
-
-                            <Border  Grid.Row="5"  Style="{StaticResource EmptyBorder}"   />
-
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="6" Grid.Column="0" >Audit check completed</Label>
-                            <TextBox Name="AuditCheckCompletedTextBox"  Grid.Row="6" Grid.Column="2" Style="{StaticResource EditableTextBox}" />
-                            <DatePicker Name="AuditCheckCompletedTDateDatePicker" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Grid.Row="6" Grid.Column="4"   />
-
-                            <Border  Grid.Row="7"  Style="{StaticResource EmptyBorder}"   />
-
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="8" Grid.Column="0" >First edit completed</Label>
-                            <TextBox Name="FirstEditCompletedTextBox"  Grid.Row="8" Grid.Column="2" Style="{StaticResource EditableTextBox}" />
-                            <DatePicker Name="FirstEditCompletedTDateDatePicker" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Grid.Row="8" Grid.Column="4"   />
-
-                            <Border  Grid.Row="9"  Style="{StaticResource EmptyBorder}"   />
-
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="10" Grid.Column="0" >Second edit completed</Label>
-                            <TextBox Name="SecondEditCompletedTextBox"  Grid.Row="10" Grid.Column="2" Style="{StaticResource EditableTextBox}" />
-                            <DatePicker Name="SecondEditCompletedTDateDatePicker" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Grid.Row="10" Grid.Column="4"   />
-
-                            <Border  Grid.Row="11"  Style="{StaticResource EmptyBorder}"   />
-
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="12" Grid.Column="0" >Draft sent</Label>
-                            <DatePicker Name="DraftSentDatePicker" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Grid.Row="12" Grid.Column="2"   />
-
-                            <Border  Grid.Row="13"  Style="{StaticResource EmptyBorder}"   />
-
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="14" Grid.Column="0" >Edit with corrections completed</Label>
-                            <TextBox Name="EditCorrectionCompletedTextBox"  Grid.Row="14" Grid.Column="2" Style="{StaticResource EditableTextBox}" />
-                            <DatePicker Name="EditCorrectionCompletedTDateDatePicker" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Grid.Row="14" Grid.Column="4"   />
-
-                            <Border  Grid.Row="15"  Style="{StaticResource EmptyBorder}"   />
-
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="16" Grid.Column="0" >Final edit completed</Label>
-                            <TextBox Name="FinalEditCompletedTextBox"  Grid.Row="16" Grid.Column="2" Style="{StaticResource EditableTextBox}" />
-                            <DatePicker Name="FinalEditCompletedTDateDatePicker" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Grid.Row="16" Grid.Column="4"   />
-
-                            <Border  Grid.Row="17"  Style="{StaticResource EmptyBorder}"   />
-
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="18" Grid.Column="0">Sent out</Label>
-
-                            <StackPanel  Grid.Row="18" Grid.Column="2"  Orientation="Horizontal">
-
-                                <CheckBox Name="SentOutYesCheckBox"  Style="{StaticResource MaterialDesignCheckBox}" Checked="SentOut_Check">
-                                    Yes
-                                </CheckBox>
-
-                                <CheckBox Name="SentOutNoCheckBox" Style="{StaticResource MaterialDesignCheckBox}" Checked="SentOut_Check">
-                                    No
-                                </CheckBox>
-
-                            </StackPanel>
-                            
-                            <Border  Grid.Row="19"  Style="{StaticResource EmptyBorder}"   />
-
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="20" Grid.Column="0" >Final sent</Label>
-                            <DatePicker Name="FinalSentDatePicker" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Grid.Row="20" Grid.Column="2"   />
-
-
-                            <Border  Grid.Row="21"  Style="{StaticResource EmptyBorder}"   />
-
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="22" Grid.Column="0" >Metadata draft</Label>
-                            <TextBox Name="MetadataDraftTextBox"  Grid.Row="22" Grid.Column="2"  Grid.ColumnSpan="3" Style="{StaticResource EditableTextBox}" />
-                            
-                            <Border  Grid.Row="23"  Style="{StaticResource EmptyBorder}"   />
-
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="24" Grid.Column="0" >Transcribed</Label>
-                            <StackPanel  Grid.Row="24" Grid.Column="2"  Orientation="Horizontal" >
-
-                                <CheckBox Name="TranscriptStatusCompleteCheckBox"
-                                            Style="{StaticResource MaterialDesignCheckBox}" Checked="TranscriptStatus_Check">
-                                    Complete
-                                </CheckBox>
-
-                                <CheckBox Name="TranscriptStatusInProgressCheckBox"
-                                            Style="{StaticResource MaterialDesignCheckBox}" Checked="TranscriptStatus_Check">
-                                    In progress
-                                </CheckBox>
+                                <Border  Grid.Row="3"  Style="{StaticResource EmptyBorder2}"   />
+                               
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="6" Grid.Column="0" >Audit check completed</Label>
+                                <domain1:FilteredComboBox x:Name="AuditCheckCompletedFilteredComboBox" Grid.Row="6" Grid.Column="2" 
+                                                          materialDesign:HintAssist.HintOpacity=".26"  
+                            HorizontalAlignment="Left" VerticalAlignment="Top" Width="300"/>
                                 
-                            </StackPanel>
+                                <Border  Grid.Row="7"  Style="{StaticResource EmptyBorder2}"   />
 
-                            <Border  Grid.Row="25"  Style="{StaticResource EmptyBorder}"   />
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="8" Grid.Column="0" >First edit completed</Label>
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="26" Grid.Column="0" >Transcriber location</Label>
-                            <TextBox Name="TranscriberLocationTextBox"  Grid.Row="26" Grid.Column="2"  Grid.ColumnSpan="3" Style="{StaticResource EditableTextBox}" />
+                                <domain1:FilteredComboBox x:Name="FirstEditCompletedFilteredComboBox" Grid.Row="8" Grid.Column="2" 
+                                                          materialDesign:HintAssist.HintOpacity=".26"  
+                            HorizontalAlignment="Left" VerticalAlignment="Top" Width="300"/>
+                                
+                                <Border  Grid.Row="9"  Style="{StaticResource EmptyBorder2}"   />
 
-                            <Border  Grid.Row="27"  Style="{StaticResource EmptyBorder}"   />
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="10" Grid.Column="0" >Second edit completed</Label>
+                                <domain1:FilteredComboBox x:Name="SecondEditCompletedFilteredComboBox"  Grid.Row="10" Grid.Column="2"
+                                                          materialDesign:HintAssist.HintOpacity=".26"  
+                            HorizontalAlignment="Left" VerticalAlignment="Top" Width="300"/>
+                                
+                                <Border  Grid.Row="11"  Style="{StaticResource EmptyBorder2}"   />
+                                
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="12" Grid.Column="0" >Third edit completed</Label>                               
+                                <domain1:FilteredComboBox x:Name="ThirdEditCompletedFilteredComboBox"  Grid.Row="12" Grid.Column="2"
+                                                          materialDesign:HintAssist.HintOpacity=".26" HorizontalAlignment="Left" 
+                                                          VerticalAlignment="Top" Width="300"/>
+                                
+                                <Border  Grid.Row="13"  Style="{StaticResource EmptyBorder2}"   />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="28" Grid.Column="0" >Transcription note</Label>
-                            <TextBox Name="TranscriberNoteTextBox"  Grid.Row="28" Grid.Column="2" Grid.ColumnSpan="3" 
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="14" Grid.Column="0" >Draft sent</Label>
+                                <DatePicker Name="DraftSentDatePicker" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Grid.Row="14" Grid.Column="2"   />
+
+                                <Border  Grid.Row="15"  Style="{StaticResource EmptyBorder2}"   />
+
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="16" Grid.Column="0" >Edit with corrections completed</Label>
+                                <domain1:FilteredComboBox x:Name="EditCorrectionCompletedFilteredComboBox"  Grid.Row="16" Grid.Column="2"
+                                                          materialDesign:HintAssist.HintOpacity=".26" HorizontalAlignment="Left" 
+                                                          VerticalAlignment="Top" Width="300"/>
+                                
+                                <Border  Grid.Row="17"  Style="{StaticResource EmptyBorder2}"   />
+
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="18" Grid.Column="0" >Final edit completed</Label>
+                                <domain1:FilteredComboBox x:Name="FinalEditCompletedFilteredComboBox"  Grid.Row="18" Grid.Column="2"
+                                                          materialDesign:HintAssist.HintOpacity=".26" HorizontalAlignment="Left" 
+                                                          VerticalAlignment="Top" Width="300"/>
+                                
+                                <Border  Grid.Row="19"  Style="{StaticResource EmptyBorder2}"   />
+
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="20" Grid.Column="0">Sent out</Label>
+
+                                <StackPanel  Grid.Row="20" Grid.Column="2"  Orientation="Horizontal">
+
+                                    <CheckBox Name="SentOutYesCheckBox"  Style="{StaticResource MaterialDesignCheckBox}" Checked="SentOut_Check">
+                                        Yes
+                                    </CheckBox>
+
+                                    <CheckBox Name="SentOutNoCheckBox" Style="{StaticResource MaterialDesignCheckBox}" Checked="SentOut_Check">
+                                        No
+                                    </CheckBox>
+
+                                </StackPanel>
+
+                                <Border  Grid.Row="21"  Style="{StaticResource EmptyBorder2}"   />
+
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="22" Grid.Column="0" >Final sent</Label>
+                                <DatePicker Name="FinalSentDatePicker" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Grid.Row="22" Grid.Column="2"   />
+
+
+                                <Border  Grid.Row="23"  Style="{StaticResource EmptyBorder2}"   />
+
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="24" Grid.Column="0" >Metadata draft</Label>
+                                <TextBox Name="MetadataDraftTextBox"  Grid.Row="24" Grid.Column="2"  Grid.ColumnSpan="3" Style="{StaticResource EditableTextBox}" />
+
+                                <Border  Grid.Row="25"  Style="{StaticResource EmptyBorder2}"   />
+
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="26" Grid.Column="0" >Transcribed</Label>
+                                <StackPanel  Grid.Row="26" Grid.Column="2"  Orientation="Horizontal" >
+
+                                    <CheckBox Name="TranscriptStatusCompleteCheckBox"
+                                            Style="{StaticResource MaterialDesignCheckBox}" Checked="TranscriptStatus_Check">
+                                        Complete
+                                    </CheckBox>
+
+                                    <CheckBox Name="TranscriptStatusInProgressCheckBox"
+                                            Style="{StaticResource MaterialDesignCheckBox}" Checked="TranscriptStatus_Check">
+                                        In progress
+                                    </CheckBox>
+
+                                </StackPanel>
+
+                                <Border  Grid.Row="27"  Style="{StaticResource EmptyBorder2}"   />
+
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="28" Grid.Column="0" >Transcriber location</Label>
+                                <TextBox Name="TranscriberLocationTextBox"  Grid.Row="28" Grid.Column="2"  Grid.ColumnSpan="3" Style="{StaticResource EditableTextBox}" />
+
+                                <Border  Grid.Row="29"  Style="{StaticResource EmptyBorder2}"   />
+
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="30" Grid.Column="0" >Transcription note</Label>
+                                <TextBox Name="TranscriberNoteTextBox"  Grid.Row="30" Grid.Column="2" Grid.ColumnSpan="3" 
                                      VerticalAlignment="Top" Height="100" AcceptsReturn="True" TextWrapping="Wrap"   VerticalScrollBarVisibility="Auto"  
                                      Style="{StaticResource EditableTextBox}" />
 
-                            <Button Name="TranscriptionDetailsButton" Grid.Row="35"  Grid.ColumnSpan="5"  Margin="0,20,0,0" Style="{StaticResource MaterialDesignRaisedAccentButton}" Click="TranscriptionDetailsButton_Click" 
+                                <Button Name="TranscriptionDetailsButton" Grid.Row="31"  Grid.ColumnSpan="5"  Margin="0,20,0,0" Style="{StaticResource MaterialDesignRaisedAccentButton}" Click="TranscriptionDetailsButton_Click" 
                         ToolTip="Submit transcript details">
-                                _Submit
-                            </Button>
+                                    _Submit
+                                </Button>
 
-                        </Grid>
+                            </Grid>
 
-                    </StackPanel>
-                </Expander>
-                <Border Background="{DynamicResource MaterialDesignDivider}" Width="1" VerticalAlignment="Stretch" SnapsToDevicePixels="True" />
-
-                <!--Media Details-->
-                <Expander Name="MediaExpander" Background="{DynamicResource AlternativeColor}" Expander.Expanded="Expander_Expanded">
-                    <Expander.Header>
-                        <Border BorderThickness="0,0,0,2" BorderBrush="{DynamicResource PrimaryHueMidBrush}">
-                            <TextBlock Margin="5" Style="{StaticResource MaterialDesignTitleTextBlock}"># Media</TextBlock>
-                        </Border>
-                    </Expander.Header>
-                    <StackPanel Orientation="Vertical"
+                        </StackPanel>
+                    </TabItem>
+                    
+                    <TabItem Header="Media"  Height="200">
+                        <StackPanel Orientation="Vertical"
                             TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
                                 Margin="20,00,50,24"  >
 
-                        <Grid  VerticalAlignment="Top" >
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="27*" />
-                                <RowDefinition Height="22*" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="200" />
-                                <ColumnDefinition Width="50" />
-                                <ColumnDefinition Width="200" />
-                                <ColumnDefinition Width="50" />
-                                <ColumnDefinition Width="200" />
-                            </Grid.ColumnDefinitions>
-                            <Border  Grid.Row="1"  Style="{StaticResource EmptyBorder}"   />
+                            <Grid  VerticalAlignment="Top" >
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="27*" />
+                                    <RowDefinition Height="22*" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="200" />
+                                    <ColumnDefinition Width="50" />
+                                    <ColumnDefinition Width="200" />
+                                    <ColumnDefinition Width="50" />
+                                    <ColumnDefinition Width="200" />
+                                </Grid.ColumnDefinitions>
+                                <Border  Grid.Row="1"  Style="{StaticResource EmptyBorder2}"   />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="2" Grid.Column="0">Media</Label>
-                            <StackPanel  Grid.Row="2" Grid.Column="2"  Orientation="Horizontal"    >
-                                <CheckBox Name="MediaAudioCheckBox">
-                                    Audio
-                                </CheckBox>
-                                <CheckBox Name="MediaVideoCheckBox">
-                                    Video
-                                </CheckBox>
-                            </StackPanel>
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="2" Grid.Column="0">Media</Label>
+                                <StackPanel  Grid.Row="2" Grid.Column="2"  Orientation="Horizontal"    >
+                                    <CheckBox Name="MediaAudioCheckBox">
+                                        Audio
+                                    </CheckBox>
+                                    <CheckBox Name="MediaVideoCheckBox">
+                                        Video
+                                    </CheckBox>
+                                </StackPanel>
 
-                            <Border  Grid.Row="3"  Style="{StaticResource EmptyBorder}"   />
+                                <Border  Grid.Row="3"  Style="{StaticResource EmptyBorder2}"   />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="4" Grid.Column="0" >Born digital</Label>
-                            <StackPanel  Grid.Row="4" Grid.Column="2"  Orientation="Horizontal">
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="4" Grid.Column="0" >Born digital</Label>
+                                <StackPanel  Grid.Row="4" Grid.Column="2"  Orientation="Horizontal">
 
-                                <CheckBox Name="BornDigitalYesCheckBox"
+                                    <CheckBox Name="BornDigitalYesCheckBox"
                                             Style="{StaticResource MaterialDesignCheckBox}" Checked="BornDigital_Check">
-                                    Yes
-                                </CheckBox>
+                                        Yes
+                                    </CheckBox>
 
-                                <CheckBox Name="BornDigitalNoCheckBox"
+                                    <CheckBox Name="BornDigitalNoCheckBox"
                                             Style="{StaticResource MaterialDesignCheckBox}" Checked="BornDigital_Check">
-                                   No
+                                        No
+                                    </CheckBox>
+
+                                </StackPanel>
+
+                                <Border  Grid.Row="5"  Style="{StaticResource EmptyBorder2}"   />
+
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="6" Grid.Column="0" VerticalAlignment="Top" Margin="50 0 0 0">(if no)</Label>
+
+                                <CheckBox Name="AudiocassetteCheckBox" Grid.Row="6" Grid.Column="2">
+                                    Audiocassette
                                 </CheckBox>
-                               
-                            </StackPanel>
-
-                            <Border  Grid.Row="5"  Style="{StaticResource EmptyBorder}"   />
-
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="6" Grid.Column="0" VerticalAlignment="Top" Margin="50 0 0 0">(if no)</Label>
-
-                            <CheckBox Name="AudiocassetteCheckBox" Grid.Row="6" Grid.Column="2">
-                                Audiocassette
-                            </CheckBox>
-                            <CheckBox Name="MiniDVCheckBox" Grid.Row="7" Grid.Column="2">
-                                MiniDV
-                            </CheckBox>
-                            <CheckBox Grid.Row="8" Grid.Column="2" x:Name="OtherCheckBox"
+                                <CheckBox Name="MiniDVCheckBox" Grid.Row="7" Grid.Column="2">
+                                    MiniDV
+                                </CheckBox>
+                                <CheckBox Grid.Row="8" Grid.Column="2" x:Name="OtherCheckBox"
                       IsChecked="False" >Other</CheckBox>
 
-                            <TextBox Name="OtherDigitalFormatTextBox"  Grid.Row="8" Grid.Column="3"  Grid.ColumnSpan="3" Style="{StaticResource EditableTextBox}"
+                                <TextBox Name="OtherDigitalFormatTextBox"  Grid.Row="8" Grid.Column="3"  Grid.ColumnSpan="3" Style="{StaticResource EditableTextBox}"
                                      IsEnabled="{Binding Path=IsChecked, ElementName=OtherCheckBox}"/>
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="9" Grid.Column="0" Margin="50 0 0 0">Converted</Label>
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="9" Grid.Column="0" Margin="50 0 0 0">Converted</Label>
 
-                            <StackPanel  Grid.Row="9" Grid.Column="2"  Orientation="Horizontal">
-                                <CheckBox Name="ConvertedYesCheckBox"
+                                <StackPanel  Grid.Row="9" Grid.Column="2"  Orientation="Horizontal">
+                                    <CheckBox Name="ConvertedYesCheckBox"
                                             Style="{StaticResource MaterialDesignCheckBox}" Checked="Converted_Check">
-                                    Yes
-                                </CheckBox>
+                                        Yes
+                                    </CheckBox>
 
-                                <CheckBox Name="ConvertedNoCheckBox"
+                                    <CheckBox Name="ConvertedNoCheckBox"
                                             Style="{StaticResource MaterialDesignCheckBox}" Checked="Converted_Check">
-                                    No
-                                </CheckBox>
-                            </StackPanel>
+                                        No
+                                    </CheckBox>
+                                </StackPanel>
 
-                            <DatePicker Name="DateDigitalConvertedDateDatePicker"  Grid.Row="9" Grid.ColumnSpan="2"   Grid.Column="3" Style="{StaticResource MaterialDesignFloatingHintDatePicker}"  />
+                                <DatePicker Name="DateDigitalConvertedDateDatePicker"  Grid.Row="9" Grid.ColumnSpan="2"   Grid.Column="3" Style="{StaticResource MaterialDesignFloatingHintDatePicker}"  />
 
-                            <Border  Grid.Row="10"  Style="{StaticResource EmptyBorder}"   />
+                                <Border  Grid.Row="10"  Style="{StaticResource EmptyBorder2}"   />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="11" Grid.Column="0" >Access media status</Label>
-                            <StackPanel  Grid.Row="11" Grid.Column="2" Grid.ColumnSpan="3"  Orientation="Horizontal">
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="11" Grid.Column="0" >Access media status</Label>
+                                <StackPanel  Grid.Row="11" Grid.Column="2" Grid.ColumnSpan="3"  Orientation="Horizontal">
 
-                                <CheckBox Name="AccessMediaStatusCompleteCheckBox"
+                                    <CheckBox Name="AccessMediaStatusCompleteCheckBox"
                                             Style="{StaticResource MaterialDesignCheckBox}" Checked="AccessMediaStatus_Check">
-                                    Complete
-                                </CheckBox>
+                                        Complete
+                                    </CheckBox>
 
-                                <CheckBox Name="AccessMediaStatusInProgressCheckBox"
+                                    <CheckBox Name="AccessMediaStatusInProgressCheckBox"
                                             Style="{StaticResource MaterialDesignCheckBox}" Checked="AccessMediaStatus_Check">
-                                    In progress
-                                </CheckBox>
-                                
-                                <!--<ToggleButton Style="{StaticResource ProgressToggleButtonStyle}"
+                                        In progress
+                                    </CheckBox>
+
+                                    <!--<ToggleButton Style="{StaticResource ProgressToggleButtonStyle}"
                                   IsChecked="True" Name="AccessMediaToggleButton">
                                 </ToggleButton>-->
-                            </StackPanel>
+                                </StackPanel>
 
-                            <Border  Grid.Row="12"  Style="{StaticResource EmptyBorder}"   />
+                                <Border  Grid.Row="12"  Style="{StaticResource EmptyBorder2}"   />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="13" Grid.Column="0" >Master file location</Label>
-                            <TextBox Name="MasterFileLocationTextBox"  Grid.Row="13" Grid.Column="2"  Grid.ColumnSpan="3" Style="{StaticResource EditableTextBox}" />
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="13" Grid.Column="0" >Master file location</Label>
+                                <TextBox Name="MasterFileLocationTextBox"  Grid.Row="13" Grid.Column="2"  Grid.ColumnSpan="3" Style="{StaticResource EditableTextBox}" />
 
-                            <Border  Grid.Row="14"  Style="{StaticResource EmptyBorder}"   />
+                                <Border  Grid.Row="14"  Style="{StaticResource EmptyBorder2}"   />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="15" Grid.Column="0" >Access file location</Label>
-                            <TextBox Name="AccessFileLocationTextBox"  Grid.Row="15" Grid.Column="2"  Grid.ColumnSpan="3" Style="{StaticResource EditableTextBox}" />
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="15" Grid.Column="0" >Access file location</Label>
+                                <TextBox Name="AccessFileLocationTextBox"  Grid.Row="15" Grid.Column="2"  Grid.ColumnSpan="3" Style="{StaticResource EditableTextBox}" />
 
 
-                            <Button Name="MediaDetailsButto" Grid.Row="16"  Grid.ColumnSpan="5"  Margin="0,20,0,0"  
+                                <Button Name="MediaDetailsButto" Grid.Row="16"  Grid.ColumnSpan="5"  Margin="0,20,0,0"  
                                     Style="{StaticResource MaterialDesignRaisedAccentButton}" Click="MediaDetailsButton_Click" 
                         ToolTip="Submit transcript details">
-                                _Submit
-                            </Button>
+                                    _Submit
+                                </Button>
 
-                        </Grid>
+                            </Grid>
 
-                    </StackPanel>
-                </Expander >
-
-                <Border Background="{DynamicResource MaterialDesignDivider}" Width="1" VerticalAlignment="Stretch" SnapsToDevicePixels="True" />
-
-                <!--Metadata Details-->
-                <Expander Name="MetadataExpander" Background="{DynamicResource PrimaryHueLightBrush}" Expander.Expanded="Expander_Expanded">
-
-                    <Expander.Header>
-                        <Border BorderThickness="0,0,0,2" BorderBrush="{DynamicResource PrimaryHueMidBrush}">
-                            <TextBlock Margin="5" Style="{StaticResource MaterialDesignTitleTextBlock}"># Metadata</TextBlock>
-                        </Border>
-                    </Expander.Header>
-                    <StackPanel Orientation="Vertical"
+                        </StackPanel>
+                    </TabItem>
+                    
+                    <TabItem Header="Metadata"  Height="200">
+                        <StackPanel Orientation="Vertical"
                             TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
                                 Margin="20,00,50,24"  >
 
 
-                        <Grid  VerticalAlignment="Top" >
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="200" />
-                                <ColumnDefinition Width="300" />
-                                <ColumnDefinition Width="50" />
-                                <ColumnDefinition Width="200" />
-                                <ColumnDefinition Width="300" />
-                            </Grid.ColumnDefinitions>
+                            <Grid  VerticalAlignment="Top" >
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="200" />
+                                    <ColumnDefinition Width="300" />
+                                    <ColumnDefinition Width="50" />
+                                    <ColumnDefinition Width="200" />
+                                    <ColumnDefinition Width="300" />
+                                </Grid.ColumnDefinitions>
 
-                            <Border  Grid.Row="1"  Style="{StaticResource EmptyBorder}"   />
+                                <Border  Grid.Row="1"  Style="{StaticResource EmptyBorder2}"   />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="2" Grid.Column="0">Title</Label>
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="2" Grid.Column="0">Title</Label>
 
-                            <TextBox Name="TitleTextBox" Grid.Row="2"  Grid.Column="1" Grid.ColumnSpan="4"   Style="{StaticResource EditableTextBox}" />
+                                <TextBox Name="TitleTextBox" Grid.Row="2"  Grid.Column="1" Grid.ColumnSpan="4"   Style="{StaticResource EditableTextBox}" />
 
-                            <Border  Grid.Row="3"  Style="{StaticResource EmptyBorder}"   />
+                                <Border  Grid.Row="3"  Style="{StaticResource EmptyBorder2}"   />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="4" Grid.Column="0">Interviewee</Label>
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="4" Grid.Column="0">Interviewee(s)</Label>
 
-                            <TextBox Name="Interviewee2TextBox"  Grid.Row="4" Grid.Column="1"   Style="{StaticResource EditableTextBox}" />
+                                <TextBox Name="Interviewee2TextBox"  Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="4"  Style="{StaticResource EditableTextBox}" />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="4" Grid.Column="3">Interviewer</Label>
+                                <Border  Grid.Row="5"  Style="{StaticResource EmptyBorder2}"   />                                                            
 
-                            <!--<TextBox Name="Interviewer2TextBox"   Style="{StaticResource EditableTextBox}" />-->
+                                <Label Grid.Row="5" Margin="-2 0 0 0" Style="{StaticResource TextBoxInputFormatLabel}" Grid.Column="1">Last name, first name</Label>
 
-                            <StackPanel Orientation="Horizontal"  Grid.Row="4" Grid.Column="4"  >
+                                <Border  Grid.Row="6"  Style="{StaticResource EmptyBorder2}"   />
+                                
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="7" Grid.Column="0">Interviewer(s)</Label>
 
-                                <TextBlock/>
+                                <!--<TextBox Name="Interviewer2TextBox"   Style="{StaticResource EditableTextBox}" />-->
 
-                                <domain1:FilteredComboBox x:Name="InterviewerFilteredComboBox"  materialDesign:HintAssist.HintOpacity=".26"  
+                                <!--<StackPanel Orientation="Horizontal"  Grid.Row="6" Grid.Column="1"  >
+
+                                    <domain1:FilteredComboBox x:Name="InterviewerFilteredComboBox"  materialDesign:HintAssist.HintOpacity=".26"  
                             HorizontalAlignment="Left" VerticalAlignment="Top" Width="300"/>
 
-                            </StackPanel>
+                                </StackPanel>-->
 
-                            <Label Grid.Row="5" Margin="-2 0 0 0" Style="{StaticResource TextBoxInputFormatLabel}" Grid.Column="1">Last name, first name</Label>
+                                <Grid  VerticalAlignment="Top" Grid.Row="7" Grid.ColumnSpan="4"   Grid.Column="1"   >
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="260" />
+                                        <ColumnDefinition Width="260" />
+                                        <ColumnDefinition Width="300" />
+                                    </Grid.ColumnDefinitions>
 
-                            <Border  Grid.Row="5"  Style="{StaticResource EmptyBorder}"   />
+                                    <domain1:FilteredComboBox x:Name="InterviewerFilteredComboBox"  materialDesign:HintAssist.HintOpacity=".26"   Grid.Row="0" Grid.Column="0"
+                            HorizontalAlignment="Left" VerticalAlignment="Top" Width="250"/>
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="6" Grid.Column="0">Interview date</Label>
+                                    <domain1:FilteredComboBox x:Name="InterviewerFilteredComboBox1"  materialDesign:HintAssist.HintOpacity=".26"   Grid.Row="0" Grid.Column="1"
+                            HorizontalAlignment="Left" VerticalAlignment="Top" Width="250"/>
 
-                            <DatePicker Name="InterviewDate2DateDatePicker"  Grid.Row="6" Grid.ColumnSpan="1"   Grid.Column="1" Style="{StaticResource MaterialDesignFloatingHintDatePicker}"  />
+                                    <domain1:FilteredComboBox x:Name="InterviewerFilteredComboBox2"  materialDesign:HintAssist.HintOpacity=".26"   Grid.Row="0" Grid.Column="2"
+                            HorizontalAlignment="Left" VerticalAlignment="Top" Width="250"/>
+                                </Grid>
+                                
+                                <Border  Grid.Row="9"  Style="{StaticResource EmptyBorder2}"   />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="6" Grid.Column="3">Date Digital</Label>
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="10" Grid.Column="0">Interview date(s)</Label>
 
-                            <DatePicker Name="DateDigitalConverted2DateDatePicker"  Grid.Row="6"   Grid.Column="4" Style="{StaticResource MaterialDesignFloatingHintDatePicker}"  />
+                                <!--Style="{StaticResource MaterialDesignFloatingHintDatePicker}"-->
+                                <Grid  VerticalAlignment="Top" Grid.Row="10" Grid.ColumnSpan="2"   Grid.Column="1"      >
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="110" />
+                                        <ColumnDefinition Width="110" />
+                                        <ColumnDefinition Width="110" />
+                                    </Grid.ColumnDefinitions>
 
-                            <Border  Grid.Row="7"  Style="{StaticResource EmptyBorder}"   />
+                                    <DatePicker Name="InterviewDate2DateDatePicker"  Grid.Row="0" Grid.Column="0"  
+                                    Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Height="37" VerticalAlignment="Bottom" Margin="0,0,10,0"  >
+                                        
+                                    </DatePicker>
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="8" Grid.Column="0">Subject</Label>
+                                    <DatePicker Name="InterviewDate2DateDatePicker1" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left"  
+                                    Style="{StaticResource MaterialDesignFloatingHintDatePicker}"  >
+                                       
+                                    </DatePicker>
 
-                            <TextBox Name="Subject2TextBox" Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="5"  Height="100" AcceptsReturn="True" 
+                                    <DatePicker Name="InterviewDate2DateDatePicker2"  Grid.Row="0" Grid.Column="2"   HorizontalAlignment="Left"  
+                                    Style="{StaticResource MaterialDesignFloatingHintDatePicker}"  >
+                                       
+                                    </DatePicker>
+                                </Grid>
+                                                            
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="10" Grid.Column="3">Date Digital</Label>
+
+                                <DatePicker Name="DateDigitalConverted2DateDatePicker"  Grid.Row="10"   Grid.Column="4" Style="{StaticResource MaterialDesignFloatingHintDatePicker}"  />
+
+                                <Border  Grid.Row="11"  Style="{StaticResource EmptyBorder2}"   />
+
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="12" Grid.Column="0">Subject</Label>
+
+                                <TextBox Name="Subject2TextBox" Grid.Row="12" Grid.Column="1" Grid.ColumnSpan="5"  Height="50" AcceptsReturn="True" 
                                      TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"   Style="{StaticResource EditableTextBox}" />
 
-                            <Border  Grid.Row="9"  Style="{StaticResource EmptyBorder}"   />
+                                <Border  Grid.Row="13"  Style="{StaticResource EmptyBorder2}"   />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="10" Grid.Column="0">Keywords</Label>
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="14" Grid.Column="0">Keywords</Label>
 
-                            <TextBox Name="Keywords2TextBox"  Grid.Row="10" Grid.Column="1" Grid.ColumnSpan="5"  Height="50" AcceptsReturn="True"
+                                <TextBox Name="Keywords2TextBox"  Grid.Row="14" Grid.Column="1" Grid.ColumnSpan="5"  Height="50" AcceptsReturn="True"
                                      TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"   Style="{StaticResource EditableTextBox}" />
 
-                            <Border  Grid.Row="11"  Style="{StaticResource EmptyBorder}" />
+                                <Border  Grid.Row="15"  Style="{StaticResource EmptyBorder2}" />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="12" Grid.Column="0" >Description</Label>
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="16" Grid.Column="0" >Description</Label>
 
-                            <TextBox Name="Description2TextBox"  Grid.Row="12" Grid.Column="1" Grid.ColumnSpan="5"  Height="100" AcceptsReturn="True"
+                                <TextBox Name="Description2TextBox"  Grid.Row="16" Grid.Column="1" Grid.ColumnSpan="5"  Height="100" AcceptsReturn="True"
                                      TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"   Style="{StaticResource EditableTextBox}" />
 
-                            <Border  Grid.Row="13"  Style="{StaticResource EmptyBorder}"   />
+                                <Border  Grid.Row="17"  Style="{StaticResource EmptyBorder2}"   />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="14" Grid.Column="0">Scope and Contents</Label>
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="18" Grid.Column="0">Scope and Contents</Label>
 
-                            <TextBox Name="ScopeAndContentTextBox"  Grid.Row="14" Grid.Column="1" TextWrapping="Wrap"  Grid.ColumnSpan="5" Height="50" Style="{StaticResource EditableTextBox}" />
-                            
-                            <Border  Grid.Row="15"  Style="{StaticResource EmptyBorder}"   />
+                                <TextBox Name="ScopeAndContentTextBox"  Grid.Row="18" Grid.Column="1" TextWrapping="Wrap"  Grid.ColumnSpan="5" Height="50" Style="{StaticResource EditableTextBox}" />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="16" Grid.Column="0">Rights</Label>
+                                <Border  Grid.Row="19"  Style="{StaticResource EmptyBorder2}"   />
 
-                            <TextBox Name="RightsTextBox" Grid.Row="16" Grid.Column="1"  Grid.ColumnSpan="5" TextWrapping="Wrap"  Height="100" Style="{StaticResource EditableTextBox}" />
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="20" Grid.Column="0">Rights</Label>
 
-                            <Border  Grid.Row="17"  Style="{StaticResource EmptyBorder}"   />
+                                <TextBox Name="RightsTextBox" Grid.Row="20" Grid.Column="1"  Grid.ColumnSpan="5" TextWrapping="Wrap"  Height="100" Style="{StaticResource EditableTextBox}" />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="18" Grid.Column="0">Publisher</Label>
+                                <Border  Grid.Row="21"  Style="{StaticResource EmptyBorder2}"   />
 
-                            <TextBox Name="PublisherTextBox"  Grid.Row="18" Grid.Column="1"  Grid.ColumnSpan="5" Height="50" Style="{StaticResource EditableTextBox}" />
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="22" Grid.Column="0">Publisher</Label>
 
-                            <Border  Grid.Row="19"  Style="{StaticResource EmptyBorder}"   />
-                            
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="20" Grid.Column="0">Coverage-spatial</Label>
+                                <TextBox Name="PublisherTextBox"  Grid.Row="22" Grid.Column="1"  Grid.ColumnSpan="5" Height="50" Style="{StaticResource EditableTextBox}" />
 
-                            <TextBox Name="CoverageSpatialTextBox"  Grid.Row="20" Grid.Column="1"   Height="50" Grid.ColumnSpan="5" Style="{StaticResource EditableTextBox}" />
+                                <Border  Grid.Row="23"  Style="{StaticResource EmptyBorder2}"   />
 
-                            <Border  Grid.Row="21"  Style="{StaticResource EmptyBorder}"   />
-                            
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="22" Grid.Column="0">Project code</Label>
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="24" Grid.Column="0">Coverage-spatial</Label>
 
-                            <TextBox Name="ProjectCodeTextBox2" Grid.Row="22" Grid.Column="1"   Style="{StaticResource EditableTextBox}" />
+                                <TextBox Name="CoverageSpatialTextBox"  Grid.Row="24" Grid.Column="1"   Height="50" Grid.ColumnSpan="5" Style="{StaticResource EditableTextBox}" />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="22" Grid.Column="3">Coverage-temporal</Label>
+                                <Border  Grid.Row="25"  Style="{StaticResource EmptyBorder2}"   />
 
-                            <TextBox Name="CoverageTemporalTextBox" Grid.Row="22" Grid.Column="4"   Style="{StaticResource EditableTextBox}" />
-                            
-                            <Border  Grid.Row="23"  Style="{StaticResource EmptyBorder}"   />
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="26" Grid.Column="0">Project code</Label>
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="24" Grid.Column="0">Format</Label>
+                                <TextBox Name="ProjectCodeTextBox2" Grid.Row="26" Grid.Column="1"   Style="{StaticResource EditableTextBox}" />
 
-                            <TextBox Name="Format2TextBox"  Grid.Row="24" Grid.Column="1"   Style="{StaticResource EditableTextBox}" />
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="26" Grid.Column="3">Coverage-temporal</Label>
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="24" Grid.Column="3">Language</Label>
+                                <TextBox Name="CoverageTemporalTextBox" Grid.Row="26" Grid.Column="4"   Style="{StaticResource EditableTextBox}" />
 
-                            <TextBox Name="LabguageTextBox" Grid.Row="24" Grid.Column="4"   Style="{StaticResource EditableTextBox}" />
-                            
-                            <Border  Grid.Row="25"  Style="{StaticResource EmptyBorder}"   />
+                                <Border  Grid.Row="27"  Style="{StaticResource EmptyBorder2}"   />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="26" Grid.Column="0">Type</Label>
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="28" Grid.Column="0">Format</Label>
 
-                            <TextBox Name="TypeTextBox"  Grid.Row="26" Grid.Column="1"   Style="{StaticResource EditableTextBox}" />
+                                <TextBox Name="Format2TextBox"  Grid.Row="28" Grid.Column="1"   Style="{StaticResource EditableTextBox}" />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="26" Grid.Column="3">Transcript</Label>
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="28" Grid.Column="3">Language</Label>
 
-                            <TextBox Name="TranscriptTextBox" Grid.Row="26" Grid.Column="4"   Style="{StaticResource EditableTextBox}" />
-                            
-                            <Border  Grid.Row="27"  Style="{StaticResource EmptyBorder}"   />
+                                <TextBox Name="LabguageTextBox" Grid.Row="28" Grid.Column="4"   Style="{StaticResource EditableTextBox}" />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="28" Grid.Column="0">Relation-is part of</Label>
+                                <Border  Grid.Row="29"  Style="{StaticResource EmptyBorder2}"   />
 
-                            <TextBox Name="RelationIsPartofTextBox"  Grid.Row="28" Grid.Column="1"   Style="{StaticResource EditableTextBox}" />
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="30" Grid.Column="0">Type</Label>
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="28" Grid.Column="3">File name</Label>
+                                <TextBox Name="TypeTextBox"  Grid.Row="30" Grid.Column="1"   Style="{StaticResource EditableTextBox}" />
 
-                            <TextBox Name="FileNameTextBox" Grid.Row="28" Grid.Column="4"   Style="{StaticResource EditableTextBox}" />
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="30" Grid.Column="3">Transcript</Label>
 
-                            <Button Name="MetadataButton" Grid.Row="30"  Grid.ColumnSpan="5"  Margin="0,20,0,0"  Style="{StaticResource MaterialDesignRaisedAccentButton}" Click="MetadataButton_Click" 
+                                <TextBox Name="TranscriptTextBox" Grid.Row="30" Grid.Column="4"   Style="{StaticResource EditableTextBox}" />
+
+                                <Border  Grid.Row="31"  Style="{StaticResource EmptyBorder2}"   />
+
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="32" Grid.Column="0">Relation-is part of</Label>
+
+                                <TextBox Name="RelationIsPartofTextBox"  Grid.Row="32" Grid.Column="1"   Style="{StaticResource EditableTextBox}" />
+
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="32" Grid.Column="3">File name</Label>
+
+                                <TextBox Name="FileNameTextBox" Grid.Row="32" Grid.Column="4"   Style="{StaticResource EditableTextBox}" />
+
+                                <Button Name="MetadataButton" Grid.Row="33"  Grid.ColumnSpan="5"  Margin="0,20,0,0"  Style="{StaticResource MaterialDesignRaisedAccentButton}" Click="MetadataButton_Click" 
                         ToolTip="Submit metadata details">
-                                _Submit
-                            </Button>
+                                    _Submit
+                                </Button>
 
-                        </Grid>
+                            </Grid>
 
-                    </StackPanel>
-                </Expander>
-                <Border Background="{DynamicResource MaterialDesignDivider}" Width="1" VerticalAlignment="Stretch" SnapsToDevicePixels="True" />
-
-                <!--Supplimental Details-->
-                <Expander  Name="SupplementalExpander"  Background="{DynamicResource AlternativeColor}" Expander.Expanded="Expander_Expanded">
-                    <Expander.Header>
-                        <Border BorderThickness="0,0,0,2" BorderBrush="{DynamicResource PrimaryHueMidBrush}">
-                            <TextBlock Margin="5" Style="{StaticResource MaterialDesignTitleTextBlock}"># Supplement</TextBlock>
-                        </Border>
-                    </Expander.Header>
-                    <StackPanel Orientation="Vertical"
+                        </StackPanel>
+                    </TabItem>
+                    
+                    <TabItem Header="Supplemental"  Height="200">
+                        <StackPanel Orientation="Vertical"
                             TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
                                 Margin="20,00,50,24"  >
 
-                        <Grid  VerticalAlignment="Top" >
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="200" />
-                                <ColumnDefinition Width="300" />
-                                <ColumnDefinition Width="50" />
-                                <ColumnDefinition Width="200" />
-                                <ColumnDefinition Width="300" />                                
-                            </Grid.ColumnDefinitions>
+                            <Grid  VerticalAlignment="Top" >
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="200" />
+                                    <ColumnDefinition Width="300" />
+                                    <ColumnDefinition Width="50" />
+                                    <ColumnDefinition Width="200" />
+                                    <ColumnDefinition Width="300" />
+                                </Grid.ColumnDefinitions>
 
-                            <Border  Grid.Row="0"  Style="{StaticResource EmptyBorder}"   />
+                                <Border  Grid.Row="0"  Style="{StaticResource EmptyBorder2}"   />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="2" Grid.Column="0">Online</Label>
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="2" Grid.Column="0">Online</Label>
 
-                            <StackPanel  Grid.Row="2" Grid.Column="1"  Orientation="Horizontal">
+                                <StackPanel  Grid.Row="2" Grid.Column="1"  Orientation="Horizontal">
 
-                                <CheckBox Name="OnContentDmYesCheckBox"  Style="{StaticResource MaterialDesignCheckBox}" Checked="OnContentDm_Check">
-                                    Yes
-                                </CheckBox>
+                                    <CheckBox Name="OnContentDmYesCheckBox"  Style="{StaticResource MaterialDesignCheckBox}" Checked="OnContentDm_Check">
+                                        Yes
+                                    </CheckBox>
 
-                                <CheckBox Name="OnContentDmNoCheckBox" Style="{StaticResource MaterialDesignCheckBox}" Checked="OnContentDm_Check">
-                                    No
-                                </CheckBox>
-                            
-                            </StackPanel>
+                                    <CheckBox Name="OnContentDmNoCheckBox" Style="{StaticResource MaterialDesignCheckBox}" Checked="OnContentDm_Check">
+                                        No
+                                    </CheckBox>
 
-                            <!--<Border  Grid.Row="3"  Style="{StaticResource EmptyBorder}"   />-->
+                                </StackPanel>
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="2" Grid.Column="3">In Rosetta</Label>
-                            <StackPanel  Grid.Row="2" Grid.Column="4"  Orientation="Horizontal">
+                                <!--<Border  Grid.Row="3"  Style="{StaticResource EmptyBorder2}"   />-->
 
-                                <CheckBox Name="InRosettaYesCheckBox"  Style="{StaticResource MaterialDesignCheckBox}" Checked="InRosetta_Check">
-                                    Yes
-                                </CheckBox>
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="2" Grid.Column="3">In Rosetta</Label>
+                                <StackPanel  Grid.Row="2" Grid.Column="4"  Orientation="Horizontal">
 
-                                <CheckBox Name="InRosettaNoCheckBox" Style="{StaticResource MaterialDesignCheckBox}" Checked="InRosetta_Check">
-                                    No
-                                </CheckBox>
-                              
-                            </StackPanel>
+                                    <CheckBox Name="InRosettaYesCheckBox"  Style="{StaticResource MaterialDesignCheckBox}" Checked="InRosetta_Check">
+                                        Yes
+                                    </CheckBox>
 
-                            <Border  Grid.Row="3"  Style="{StaticResource EmptyBorder}"   />
+                                    <CheckBox Name="InRosettaNoCheckBox" Style="{StaticResource MaterialDesignCheckBox}" Checked="InRosetta_Check">
+                                        No
+                                    </CheckBox>
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="4" Grid.Column="0">Release form</Label>
-                            <StackPanel  Grid.Row="4" Grid.Column="1"  Orientation="Horizontal">
-                                <CheckBox Name="ReleaseFormYesCheckBox"  Style="{StaticResource MaterialDesignCheckBox}" Checked="ReleaseForm_Check">
-                                    Yes
-                                </CheckBox>
+                                </StackPanel>
 
-                                <CheckBox Name="ReleaseFormNoCheckBox" Style="{StaticResource MaterialDesignCheckBox}" Checked="ReleaseForm_Check">
-                                    No
-                                </CheckBox>
-                            </StackPanel>
+                                <Border  Grid.Row="3"  Style="{StaticResource EmptyBorder2}"   />
 
-                            <Label Name="RestrictionsLabel"  Style="{StaticResource BoldLabel}" Grid.Row="4" Grid.Column="3">Restrictions</Label>
-                            <StackPanel Name="RestrictionsStackPanel"  Grid.Row="4" Grid.Column="4"  Orientation="Horizontal"    >
-                                <CheckBox Name="RestrictionsYesCheckBox"  Style="{StaticResource MaterialDesignCheckBox}" Checked="Restrictions_Check">
-                                    Yes
-                                </CheckBox>
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="4" Grid.Column="0">Release form</Label>
+                                <StackPanel  Grid.Row="4" Grid.Column="1"  Orientation="Horizontal">
+                                    <CheckBox Name="ReleaseFormYesCheckBox"  Style="{StaticResource MaterialDesignCheckBox}" Checked="ReleaseForm_Check">
+                                        Yes
+                                    </CheckBox>
 
-                                <CheckBox Name="RestrictionsNoCheckBox" Style="{StaticResource MaterialDesignCheckBox}" Checked="Restrictions_Check">
-                                    No
-                                </CheckBox>
-                              
-                            </StackPanel>
+                                    <CheckBox Name="ReleaseFormNoCheckBox" Style="{StaticResource MaterialDesignCheckBox}" Checked="ReleaseForm_Check">
+                                        No
+                                    </CheckBox>
+                                </StackPanel>
 
-                            <Border  Name="RestrictionsBorder2" Grid.Row="5"   Style="{StaticResource EmptyBorder}"   />
+                                <Border  Grid.Row="5"  Style="{StaticResource EmptyBorder2}"   />
 
-                            <Label  Name="RestrictionNoteLabel" Style="{StaticResource BoldLabel}" Grid.Row="6" Grid.Column="0">Restriction notes</Label>
-                            
-                            <TextBox Name="RestrictionNoteTextBox" BorderThickness="1"  Grid.Row="6" Grid.Column="1"  Grid.ColumnSpan="5"
-                                    Height="100" AcceptsReturn="True" TextWrapping="Wrap"   VerticalScrollBarVisibility="Auto"      Style="{StaticResource EditableTextBox}" />
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="6" Grid.Column="0">Restrictions</Label>
+                                
+                                <StackPanel Grid.Row="6" Grid.Column="1"  Orientation="Horizontal"    >
+                                    <CheckBox Name="RestrictionsYesCheckBox"  Style="{StaticResource MaterialDesignCheckBox}" Checked="Restrictions_Check">
+                                        Yes
+                                    </CheckBox>
 
-                            <Border  Grid.Row="7"   Style="{StaticResource EmptyBorder}"   />
+                                    <CheckBox Name="RestrictionsNoCheckBox" Style="{StaticResource MaterialDesignCheckBox}" Checked="Restrictions_Check">
+                                        No
+                                    </CheckBox>
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="8" Grid.Column="0">Recording format</Label>
-                            <StackPanel  Grid.Row="8" Grid.Column="1"  Orientation="Horizontal"    >
+                                </StackPanel>                                                                                                                               
 
-                                <CheckBox Name="RecordingFormatAudioCheckBox">
-                                    Audio
-                                </CheckBox>
-                                <CheckBox Name="RecordingFormatVideoCheckBox">
-                                    Video
-                                </CheckBox>
-                            </StackPanel>
+                                <Border Grid.Row="7"   Style="{StaticResource EmptyBorder2}"   />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="8" Grid.Column="3" >Equipment  number</Label>
-                            <TextBox Name="EquipmentNumberTextBox"  Grid.Row="8" Grid.Column="4"  Grid.ColumnSpan="3" Style="{StaticResource EditableTextBox}" />
+                                <Label  Style="{StaticResource BoldLabel}" Grid.Row="8" Grid.Column="0">Restriction note</Label>
 
-                            <Border  Grid.Row="9" Style="{StaticResource EmptyBorder}"   />
+                                <TextBox Name="RestrictionNoteTextBox" BorderThickness="1"  Grid.Row="8" Grid.Column="1"  Grid.ColumnSpan="5"
+                                    Height="50" AcceptsReturn="True" TextWrapping="Wrap"   VerticalScrollBarVisibility="Auto"      Style="{StaticResource EditableTextBox}" />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="10" Grid.Column="0" >Audio equipment  used</Label>
-                            <!--<ComboBox Name="AudioEquipmentUsedComboBox"  materialDesign:HintAssist.HintOpacity=".26"
-                                  Grid.Row="10" Grid.Column="2"  >
-                            </ComboBox>-->
-                            <StackPanel Orientation="Horizontal"   Grid.Row="10" Grid.Column="1">
+                                <Border  Grid.Row="9" Name="DarkArchiveBorder1"  Style="{StaticResource EmptyBorder2}"   />
 
-                                <TextBlock                />
+                                <Label Name="DarkArchiveLabel"  Style="{StaticResource BoldLabel}" Grid.Row="10" Grid.Column="0">Dark Archive</Label>
 
-                                <domain1:FilteredComboBox x:Name="AudioEquipmentUsedFilteredComboBox"  materialDesign:HintAssist.HintOpacity=".26"  ItemsPanel="{DynamicResource ItemsTemplate}" 
+                                <StackPanel Name="DarkArchiveStackPanel"  Grid.Row="10" Grid.Column="1"  Orientation="Horizontal"    >
+                                    <CheckBox Name="DarkArchiveYesCheckBox"  Style="{StaticResource MaterialDesignCheckBox}" Checked="Restrictions_Check">
+                                        Yes
+                                    </CheckBox>
+
+                                    <CheckBox Name="DarkArchiveNoCheckBox" Style="{StaticResource MaterialDesignCheckBox}" Checked="Restrictions_Check">
+                                        No
+                                    </CheckBox>
+
+                                </StackPanel>
+
+                                <Border Grid.Row="11" Name="DarkArchiveBorder2"   Style="{StaticResource EmptyBorder2}"   />
+
+                                <Label  Name="DarkArchiveNoteLabel" Style="{StaticResource BoldLabel}" Grid.Row="12" Grid.Column="0">Dark Archive note</Label>
+
+                                <TextBox Name="DarkArchiveNoteTextBox" BorderThickness="1"  Grid.Row="12" Grid.Column="1"  Grid.ColumnSpan="5"
+                                    Height="50" AcceptsReturn="True" TextWrapping="Wrap"   VerticalScrollBarVisibility="Auto"      Style="{StaticResource EditableTextBox}" />
+                                
+                              <Border  Grid.Row="13"   Style="{StaticResource EmptyBorder2}"   />
+
+                                  <Label Style="{StaticResource BoldLabel}" Grid.Row="14" Grid.Column="0">Recording format</Label>
+                                <StackPanel  Grid.Row="14" Grid.Column="1"  Orientation="Horizontal"    >
+
+                                    <CheckBox Name="RecordingFormatAudioCheckBox">
+                                        Audio
+                                    </CheckBox>
+                                    <CheckBox Name="RecordingFormatVideoCheckBox">
+                                        Video
+                                    </CheckBox>
+                                </StackPanel>
+
+                               <Label Style="{StaticResource BoldLabel}" Grid.Row="14" Grid.Column="3" >Equipment  number</Label>
+                                <TextBox Name="EquipmentNumberTextBox"  Grid.Row="14" Grid.Column="4"  Grid.ColumnSpan="3" Style="{StaticResource EditableTextBox}" />
+
+                                 <Border  Grid.Row="15" Style="{StaticResource EmptyBorder2}"   />
+
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="16" Grid.Column="0" >Audio equipment  used</Label>
+                                                                                        
+                                <StackPanel Orientation="Horizontal"   Grid.Row="16" Grid.Column="1">
+
+                                    <TextBlock                />
+
+                                    <domain1:FilteredComboBox x:Name="AudioEquipmentUsedFilteredComboBox"  materialDesign:HintAssist.HintOpacity=".26"  ItemsPanel="{DynamicResource ItemsTemplate}" 
 
                             HorizontalAlignment="Left" VerticalAlignment="Top" Width="200"/>
 
-                            </StackPanel>
+                                </StackPanel>
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="10" Grid.Column="3" >Video equipment  used</Label>
-                            <!--<ComboBox Name="VideoEquipmentUsedComboBox"  materialDesign:HintAssist.HintOpacity=".26"
-                                  Grid.Row="10" Grid.Column="4"  >
-                            </ComboBox>-->
+                                 <Label Style="{StaticResource BoldLabel}" Grid.Row="16" Grid.Column="3" >Video equipment  used</Label>
+                                                          
 
-                            <StackPanel Orientation="Horizontal"   Grid.Row="10" Grid.Column="4" >
+                                <StackPanel Orientation="Horizontal"   Grid.Row="16" Grid.Column="4" >
 
-                                <TextBlock                />
+                                    <TextBlock                />
 
-                                <domain1:FilteredComboBox x:Name="VideoEquipmentUsedFilteredComboBox"  materialDesign:HintAssist.HintOpacity=".26"  ItemsPanel="{DynamicResource ItemsTemplate}" 
+                                    <domain1:FilteredComboBox x:Name="VideoEquipmentUsedFilteredComboBox"  materialDesign:HintAssist.HintOpacity=".26"  ItemsPanel="{DynamicResource ItemsTemplate}" 
 
                             HorizontalAlignment="Left" VerticalAlignment="Top" Width="200"/>
 
-                            </StackPanel>
+                                </StackPanel>
 
-                            <Border  Grid.Row="17" Style="{StaticResource EmptyBorder}"   />
+                                 <Border  Grid.Row="17" Style="{StaticResource EmptyBorder2}"   />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="18" Grid.Column="0" >Location of interview</Label>
-                            <TextBox Name="PlaceTextBox"  Grid.Row="18" Grid.Column="1"  Grid.ColumnSpan="5" Style="{StaticResource EditableTextBox}" />
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="18" Grid.Column="0" >Location of interview</Label>
+                                <TextBox Name="PlaceTextBox"  Grid.Row="18" Grid.Column="1"  Grid.ColumnSpan="5" Style="{StaticResource EditableTextBox}" />
 
 
-                            <Border  Grid.Row="19"   Style="{StaticResource EmptyBorder}"   />
+                                <Border  Grid.Row="19"   Style="{StaticResource EmptyBorder2}"   />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="20" Grid.Column="0" >Interviewer description</Label>
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="20" Grid.Column="0" >Interviewer description</Label>
 
-                            <TextBox Name="InterviewerDescriptionTextBox"  Grid.Row="20" Grid.Column="1" Grid.ColumnSpan="4"
+                                <TextBox Name="InterviewerDescriptionTextBox"  Grid.Row="20" Grid.Column="1" Grid.ColumnSpan="4"
                          VerticalAlignment="Top" Height="100"    TextWrapping="Wrap" BorderThickness="1"
                          VerticalScrollBarVisibility="Auto" Style="{StaticResource EditableTextBox}"                         />
 
-                            <Border  Grid.Row="21"   Style="{StaticResource EmptyBorder}"   />
+                                <Border  Grid.Row="21"   Style="{StaticResource EmptyBorder2}"   />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="22" Grid.Column="0" >Interviewer keywords</Label>
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="22" Grid.Column="0" >Interviewer keywords</Label>
 
-                            <TextBox Name="InterviewerKeywordsTextBox"  Grid.Row="22" Grid.Column="1" Grid.ColumnSpan="4"
+                                <TextBox Name="InterviewerKeywordsTextBox"  Grid.Row="22" Grid.Column="1" Grid.ColumnSpan="4"
                          VerticalAlignment="Top" Height="100"    TextWrapping="Wrap" BorderThickness="1"
                          VerticalScrollBarVisibility="Auto" Style="{StaticResource EditableTextBox}" />
 
-                            <Border  Grid.Row="23"   Style="{StaticResource EmptyBorder}"   />
+                                <Border  Grid.Row="23"   Style="{StaticResource EmptyBorder2}"   />
 
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="24" Grid.Column="0" >Interviewer subjects</Label>
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="24" Grid.Column="0" >Interviewer subjects</Label>
 
-                            <TextBox Name="InterviewerSubjectsTextBox"  Grid.Row="24" Grid.Column="1" Grid.ColumnSpan="4"
-                         VerticalAlignment="Top" Height="100"    TextWrapping="Wrap" BorderThickness="1"
-                         VerticalScrollBarVisibility="Auto" Style="{StaticResource EditableTextBox}"/>
-                            
-                            
-                            <Border  Grid.Row="25"   Style="{StaticResource EmptyBorder}"/>
-
-                            <Label Style="{StaticResource BoldLabel}" Grid.Row="26" Grid.Column="0" >Interviewer notes</Label>
-
-                            <TextBox Name="InterviewerNoteTextBox"  Grid.Row="26" Grid.Column="1" Grid.ColumnSpan="4"
+                                <TextBox Name="InterviewerSubjectsTextBox"  Grid.Row="24" Grid.Column="1" Grid.ColumnSpan="4"
                          VerticalAlignment="Top" Height="100"    TextWrapping="Wrap" BorderThickness="1"
                          VerticalScrollBarVisibility="Auto" Style="{StaticResource EditableTextBox}"/>
 
-                            <Button Name="SupplementDetailsButton" Grid.Row="27"  Grid.ColumnSpan="5"  Margin="0,20,0,0"  Style="{StaticResource MaterialDesignRaisedAccentButton}"
+
+                                <Border  Grid.Row="25"   Style="{StaticResource EmptyBorder2}"/>
+
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="26" Grid.Column="0" >Interviewer notes</Label>
+
+                                <TextBox Name="InterviewerNoteTextBox"  Grid.Row="26" Grid.Column="1" Grid.ColumnSpan="4"
+                         VerticalAlignment="Top" Height="100"    TextWrapping="Wrap" BorderThickness="1"
+                         VerticalScrollBarVisibility="Auto" Style="{StaticResource EditableTextBox}"/>
+
+                                <Button Name="SupplementDetailsButton" Grid.Row="27"  Grid.ColumnSpan="5"  Margin="0,20,0,0"  Style="{StaticResource MaterialDesignRaisedAccentButton}"
                                     Click="SupplementDetailsButton_Click" 
                         ToolTip="Submit transcript details">
-                                _Submit
-                            </Button>
+                                    _Submit
+                                </Button>
 
-                        </Grid>
+                            </Grid>
 
-                    </StackPanel>
-                </Expander>
+                        </StackPanel>
+                    </TabItem>
+                </dragablz:TabablzControl>
+
             </StackPanel>
         </Grid>
     </ScrollViewer>

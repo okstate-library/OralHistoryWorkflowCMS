@@ -82,9 +82,6 @@
     </Compile>
     <Compile Include="GenericRepository.cs" />
     <Compile Include="IGenericRepository.cs" />
-    <Compile Include="interviewer.cs">
-      <DependentUpon>OralCMSModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="keyword.cs">
       <DependentUpon>OralCMSModel.tt</DependentUpon>
     </Compile>
@@ -102,6 +99,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>OralCMSModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="predefineduser.cs">
+      <DependentUpon>OralCMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="subject.cs">

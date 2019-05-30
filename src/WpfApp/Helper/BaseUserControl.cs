@@ -78,7 +78,7 @@ namespace WpfApp.Helper
         /// <value>
         /// The interviewers.
         /// </value>
-        public static List<string> Interviewers { get; set; }
+        public static List<PredefinedUserModel> PredefinedUsers { get; set; }
 
         /// <summary>
         /// Gets or sets the audio equipments.
@@ -166,14 +166,14 @@ namespace WpfApp.Helper
                 Keywords = response.Keywords;
                 Subjects = response.Subjects;
 
-                Interviewers = response.Interviewers;
+                PredefinedUsers = response.PredefinedUsers;
                 AudioEquipments = response.AudioEquipmentsUsed;
                 VideoEquipments = response.VideoEquipmentsUsed;
                 Usertypes = response.UserTypes;
             }
             else if (response.IsOperationSuccess)
             {
-                Interviewers = response.Interviewers;
+                PredefinedUsers = response.PredefinedUsers;
                 AudioEquipments = response.AudioEquipmentsUsed;
                 VideoEquipments = response.VideoEquipmentsUsed;
             }

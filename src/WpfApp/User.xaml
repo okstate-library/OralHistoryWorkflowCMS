@@ -98,17 +98,17 @@
 
                         <Border  Grid.Row="1"  Style="{StaticResource EmptyBorder}"   />
 
-                        <Label Style="{StaticResource BoldLabel}" Grid.Row="2" Grid.Column="0" >Name</Label>
+                        <TextBlock Style="{StaticResource BoldTextBlock}" Grid.Row="2" Grid.Column="0" Margin="8">Name <TextBlock Foreground="Red"> *</TextBlock> </TextBlock>
                         <TextBox Name="NameTextBox"  Grid.Row="2" Grid.Column="2"  Grid.ColumnSpan="3" Style="{StaticResource EditableTextBox}"/>
 
                         <Border  Grid.Row="3"  Style="{StaticResource EmptyBorder}"   />
 
-                        <Label Style="{StaticResource BoldLabel}" Grid.Row="4" Grid.Column="0" >Username</Label>
+                        <TextBlock Style="{StaticResource BoldTextBlock}" Grid.Row="4" Grid.Column="0" Margin="8">Username <TextBlock Foreground="Red"> *</TextBlock> </TextBlock>
                         <TextBox Name="UsernameTextBox"  Grid.Row="4" Grid.Column="2" Style="{StaticResource EditableTextBox}" />
 
                         <Border  Grid.Row="5"  Style="{StaticResource EmptyBorder}"   />
 
-                        <Label Style="{StaticResource BoldLabel}" Grid.Row="6" Grid.Column="0" >User type</Label>
+                        <TextBlock Style="{StaticResource BoldTextBlock}" Grid.Row="6" Grid.Column="0" Margin="8">User type <TextBlock Foreground="Red"> *</TextBlock> </TextBlock>
                         
                         <ComboBox Grid.Row="6" Grid.Column="2" Name="UserTypeComboBox">
                             <ComboBoxItem  Name="Student" IsSelected="True" >
@@ -124,8 +124,7 @@
 
                         <Border  Grid.Row="7"  Style="{StaticResource EmptyBorder}"   />
 
-                        <Label Style="{StaticResource BoldLabel}" Grid.Row="8" Grid.Column="0" >Password</Label>
-                        <!--<TextBox Name="PasswordTextBox"  Grid.Row="8" Grid.Column="2" Style="{StaticResource EditableTextBox}" Height="29" VerticalAlignment="Top" />-->
+                        <TextBlock Style="{StaticResource BoldTextBlock}" Grid.Row="8" Grid.Column="0" Margin="8">Password <TextBlock Foreground="Red"> *</TextBlock> </TextBlock>
 
                         <PasswordBox x:Name="PasswordTextBox"  Grid.Row="8" Grid.Column="2" Grid.ColumnSpan="3"
                              VerticalAlignment="Top"
