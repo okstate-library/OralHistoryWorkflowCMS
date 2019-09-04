@@ -1,17 +1,11 @@
-﻿using Core.Diagnostics.Logging;
+﻿using log4net;
 using MaterialDesignThemes.Wpf;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
+using System.Diagnostics;
 using System.Net;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
 using WpfApp.Domain;
 using WpfApp.Helper;
-using WpfApp.Properties;
 
 namespace WpfApp
 {
@@ -21,6 +15,7 @@ namespace WpfApp
     /// <seealso cref="System.Windows.Application" />
     public partial class App : Application
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(App));
 
         /// <summary>
         /// Gets or sets a value indicating whether this instance is valid to process.
@@ -52,7 +47,9 @@ namespace WpfApp
         /// <param name="e">A <see cref="T:System.Windows.StartupEventArgs" /> that contains the event data.</param>
         protected override void OnStartup(StartupEventArgs e)
         {
-            //LogManager.SetConfigs(Settings.Default.WelComeApplicationTitle);
+            log4net.Config.XmlConfigurator.Configure();
+
+            log.Error("        =============  Started Logging  =============        ");
 
             base.OnStartup(e);
 
@@ -68,7 +65,7 @@ namespace WpfApp
         /// Initializes a new instance of the <see cref="App" /> class.
         /// </summary>
         public App()
-        {
+        {                        
             BaseUserControl = new BaseUserControl();
 
             if (CheckForInternetConnection())
@@ -121,6 +118,22 @@ namespace WpfApp
         }
 
         /// <summary>
+        /// Shows the message delete record.
+        /// </summary>
+        /// <param name="sucess">if set to <c>true</c> [sucess].</param>
+        /// <param name="message">The message.</param>
+        public static void ShowMessageDeleteRecord(bool sucess, string message)
+        {
+            var sampleMessageDialog = new SampleMessageDialog
+            {
+                PackIcon = { Kind = sucess ? PackIconKind.CheckCircleOutline : PackIconKind.CloseCircleOutline },
+                Message = { Text = string.IsNullOrEmpty(message) ? "Delete record" : message }
+            };
+
+            DialogHost.Show(sampleMessageDialog, "RootDialog");
+        }
+
+        /// <summary>
         /// Applications the dispatcher unhandled exception.
         /// </summary>
         /// <param name="sender">The sender.</param>
@@ -138,6 +151,8 @@ namespace WpfApp
         {
             e.Handled = true;
 
+            log.Error(e.Exception.ToString());
+
             var errorMessage = string.Format("An application error occurred.\nPlease check whether your data is correct and repeat the action." +
                 " If this error occurs again there seems to be a more" +
                 " serious malfunction in the application, and you better close it.\n\nError: {0}\n\nDo you want to continue?\n(if" +
@@ -153,7 +168,11 @@ namespace WpfApp
                 {
                     Application.Current.Shutdown();
                 }
+
+                
             }
+
         }
+               
     }
 }

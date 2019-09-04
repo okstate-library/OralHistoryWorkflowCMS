@@ -6,6 +6,7 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"          
              xmlns:local="clr-namespace:WpfApp"
              mc:Ignorable="d" 
+              xmlns:domain="clr-namespace:WpfApp.Domain" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -19,65 +20,51 @@
 
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid>
 
-        <Grid Name="MainGrid">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="200" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"                    
+                      Margin="0 0 0 32" >
+        <Grid>
 
-            <Border Margin="0 0 0 10" Grid.Row="0" Grid.Column="1" VerticalAlignment="Top">
-                <Grid  Background="{DynamicResource PrimaryHueMidBrush}">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="3*" />
-                        <ColumnDefinition Width="1*" />
-                        <ColumnDefinition Width="2*" />
-                        <ColumnDefinition Width="2*" />
-                    </Grid.ColumnDefinitions>
+            <Grid Name="MainGrid">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="200" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
 
-                    <StackPanel Grid.Row="1" Margin="20 10 0 8" Orientation="Horizontal"  Grid.Column="0">
-                        <Label  Style="{StaticResource BoldLabel}" Content="Clear the database"  />
-                    </StackPanel>
-                    
-                    <StackPanel VerticalAlignment="Center"  Grid.Row="1"  Grid.Column="1" Margin="20 10 0 8" >
-                        <Button Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" Margin="20 10 0 8" Style="{StaticResource MaterialDesignRaisedAccentButton}" 
-                                materialDesign:DialogHost.DialogClosingAttached="Confirmaiton_OnDialogClosing">
-                            <Button.CommandParameter>
-                                <StackPanel Margin="16">
-                                    <TextBlock Text=" Are you really want to delete the database?" FontWeight="Bold" FontSize="20" ></TextBlock>
-                                    <Button Style="{StaticResource MaterialDesignFlatButton}" IsCancel="True" 
-                                            Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
-                                            CommandParameter="true"
-                                            HorizontalAlignment="Center">Ok</Button>
-                                    
-                                    <Button Style="{StaticResource MaterialDesignFlatButton}" IsCancel="True" 
-                                            Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
-                                            CommandParameter="cancel"
-                                            HorizontalAlignment="Center">Cancel</Button>
-                                </StackPanel>
-                            </Button.CommandParameter>
-                           Process
-                        </Button>                       
-                    </StackPanel>
+                <Border Name="RecordCountBorder" Margin="0 0 0 0" Grid.Row="0" Grid.Column="1" VerticalAlignment="Top">
+                    <Grid Background="{DynamicResource PrimaryHueMidBrush}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="5*" />
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                        </Grid.ColumnDefinitions>
 
-                   
 
-                </Grid>
-            </Border>
+                        <TextBlock Margin="20 10 0 8"  Name="RecordCountWordTextBox" VerticalAlignment="Center"  Grid.Column="0" HorizontalAlignment="Stretch" Style="{StaticResource MaterialDesignTitleTextBlock}"  />
 
-            <materialDesign:Card Background="{DynamicResource PrimaryHueLightBrush}"  Grid.Row="0" Grid.Column="0"   
+                        <!--<StackPanel Grid.Row="1" Margin="20 10 0 8" Orientation="Horizontal"  Grid.Column="1">
+                            --><!--Text="{Binding SearchWord}"--><!--
+                            <TextBox  Width="300" Margin="20 10 0 8" Name="SearchWordTextBox"  Background="{StaticResource AlternativeColor}"   />
+                            <Button Margin="20 10 0 8"   Content="Search" Click="SearchButton_Click" Style="{StaticResource MaterialDesignRaisedAccentButton}"/>
+                            <Button Margin="20 10 0 8"  Content="Reset" Click="ResetButton_Click" Style="{StaticResource MaterialDesignRaisedLightButton}"/>
+                        </StackPanel>
+
+                        <TextBlock Margin="20 10 0 8"  Grid.Column="2" HorizontalAlignment="Stretch" Text="{Binding PageCount}"  Style="{StaticResource MaterialDesignTitleTextBlock}"  />-->
+
+                    </Grid>
+                </Border>
+
+                <materialDesign:Card Background="{DynamicResource PrimaryHueLightBrush}"   Grid.Row="0" Grid.Column="0"  Grid.RowSpan="2"   
                       Foreground="{DynamicResource PrimaryHueLightForegroundBrush}"
-                      Width="180" Margin="0 0 1 0">
-                <StackPanel>
-
+                      Width="180" Margin="0 0 0 0">
                     <Grid Margin="10 10 0 10"  >
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -93,23 +80,273 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
+                        <!--<StackPanel Grid.Row="0">
+                            <TextBlock Margin="20 10 0 8" FontWeight="Bold" HorizontalAlignment="Stretch" 
+                                       Text="Users"  Style="{StaticResource MaterialDesignSubheadingTextBlock}"  />
+                            <Button    Style="{StaticResource MaterialDesignFlatButton}" ToolTip="Add new user" >
+                                Add new user..
+                            </Button>
+                            
+                        </StackPanel>-->
                         <StackPanel  Grid.Row="0">
-                            <TextBlock Text="Instructions" FontWeight="Bold" FontSize="18" />
+                            <TextBlock Text="Options" FontWeight="Bold" FontSize="16" />
                         </StackPanel>
-                        <Border Grid.Row="1" Style="{StaticResource EmptyBorder}"   />
-                        <StackPanel  Grid.Row="2">
-                            <TextBlock Text=" Empty database :" FontWeight="Bold" FontSize="13" ></TextBlock>
-                            <TextBlock Margin="10 0 0 0" FontSize="12">
-                            Transcriptions                          
-                            </TextBlock>
+                        <Border Grid.Row="0" Style="{StaticResource EmptyBorder}"   />
+
+                        <StackPanel Grid.Row="1" Margin="5 0 5 0" Orientation="Horizontal">
+                            <Button Name="Users"  
+                                    Style="{StaticResource MaterialDesignFlatButton}"
+                        ToolTip="Modify users" Click="Users_Click">
+                                _Users
+                            </Button>
+                            <Button Name="PlusUsers"  HorizontalAlignment="Right"
+                                    Style="{StaticResource MaterialDesignFlatButton}"
+                        ToolTip="Modify users" Click="AddNewUser_Click">
+                                +
+                            </Button>
                         </StackPanel>
 
+                        <StackPanel Grid.Row="2" Margin="5 0 5 0" Orientation="Horizontal">
+                            <Button Name="Collection"  
+                                    Style="{StaticResource MaterialDesignFlatButton}"
+                        ToolTip="Modify collection" Click="Collection_Click">
+                                _Collection
+                            </Button>
+                            <Button Name="PlusCollection"  HorizontalAlignment="Right"
+                                    Style="{StaticResource MaterialDesignFlatButton}"
+                        ToolTip="Modify users" Click="AddCollection_Click">
+                                +
+                            </Button>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="3" Margin="5 0 5 0" Orientation="Horizontal">
+                            <Button Name="Subseries"  
+                                    Style="{StaticResource MaterialDesignFlatButton}"
+                        ToolTip="Modify subseries" Click="Subseries_Click">
+                                _Subseries
+                            </Button>
+                            <Button Name="PlusSubseries"  HorizontalAlignment="Right"
+                                    Style="{StaticResource MaterialDesignFlatButton}"
+                        ToolTip="Modify users" Click="AddSubseries_Click">
+                                +
+                            </Button>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="4" Margin="5 0 5 0" Name="ExportAllButtonStackPanel" Orientation="Horizontal">
+                            <Button Name="ExportAllButton"  
+                                    Style="{StaticResource MaterialDesignFlatButton}" 
+                        ToolTip="Export all database details" Click="ExportAll_Click">
+                                _Export
+                            </Button>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="5" Margin="5 0 5 0" Name="DeletesStackPanel" Orientation="Horizontal">
+                            <Button Name="Reset"  
+                                    Style="{StaticResource MaterialDesignFlatButton}" 
+                        ToolTip="Reset database" Click="Reset_Click">
+                                _Reset
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+                </materialDesign:Card>
+
+                <StackPanel Name="UsersStackPanel"   Grid.Row="2" Grid.Column="1" Visibility="Visible">
+                    <ListView Margin="10" Name="UsersListView" Grid.Row="1" Grid.Column="1" Width="407"
+                      MouseDoubleClick="UsersListViewListView_MouseDoubleClick"  ItemContainerStyle="{StaticResource ListViewAlternatingRowStyle}" AlternationCount="2"
+                          HorizontalAlignment="Left">
+                    <ListView.View >
+                        <GridView>
+
+                            <!--name-->
+                            <GridViewColumn Header="Name" Width="150"  
+                                            HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}" 
+                                            domain:GridViewSort.PropertyName="Name">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock Name="NameTextBlock_Metadata" ToolTip="{Binding Name}" 
+                                                       Text="{Binding Name}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <!--user name-->
+                            <GridViewColumn Header="Username" Width="100"  
+                                            HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}"  
+                                            domain:GridViewSort.PropertyName="Username">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock  Name="UsernameTextBlock_General" ToolTip="{Binding Username}" 
+                                                        Text="{Binding Username}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <!--User role-->
+                            <GridViewColumn Header="User Type" Width="150"
+                                            HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}" 
+                                            domain:GridViewSort.PropertyName="UserTypeName">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock Name="UserroleTextBlock_Metadata" 
+                                                       ToolTip="{Binding UserTypeName}" 
+                                                       Text="{Binding UserTypeName}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                        </GridView>
+                    </ListView.View>
+
+                </ListView>
+                </StackPanel>
+
+                <StackPanel Name="CollectionStackPanel"   Grid.Row="2" Grid.Column="1" Visibility="Collapsed">
+
+                    <ListView  MouseDoubleClick="CollectionListViewListView_MouseDoubleClick"   Margin="10" Name="CollectionListView" ItemContainerStyle="{StaticResource ListViewAlternatingRowStyle}" AlternationCount="2"
+                          HorizontalAlignment="Left" domain:GridViewSort.AutoSort="True">
+                        <ListView.View >
+                            <GridView>
+                                <!--name-->
+                                <GridViewColumn Header="Collection"  Width="500"  
+                                            HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}" 
+                                            domain:GridViewSort.PropertyName="CollectionName">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel>
+                                                <TextBlock Name="NameTextBlock_Metadata" ToolTip="{Binding CollectionName}" 
+                                                       Text="{Binding CollectionName}" />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+
+                            </GridView>
+                        </ListView.View>
+
+                    </ListView>
+
+                </StackPanel>
+
+                <StackPanel Name="SubseriesStackPanel"  Grid.Row="2" Grid.Column="1" Visibility="Collapsed">
+
+                    <ListView   MouseDoubleClick="SubseriesListViewListView_MouseDoubleClick"    Margin="10" Name="SubseriesListView" ItemContainerStyle="{StaticResource ListViewAlternatingRowStyle}" AlternationCount="2"
+                          HorizontalAlignment="Left" domain:GridViewSort.AutoSort="True">
+                        <ListView.View >
+                            <GridView>
+
+                                <!--name-->
+                                <GridViewColumn Header="Collection" Width="500"  
+                                            HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}" 
+                                            domain:GridViewSort.PropertyName="Name">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel>
+                                                <TextBlock Name="NameTextBlock_Metadata" ToolTip="{Binding CollectionName}" 
+                                                       Text="{Binding CollectionName}" />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+
+                                <!--user name-->
+                                <GridViewColumn Header="Subseries" Width="500"  
+                                            HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}"  
+                                            domain:GridViewSort.PropertyName="Username">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel>
+                                                <TextBlock  Name="USubseryNameTextBlock_General" ToolTip="{Binding SubseryName}" 
+                                                        Text="{Binding SubseryName}" />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+
+                            </GridView>
+                        </ListView.View>
+
+                    </ListView>
+
+                </StackPanel>
+
+                <StackPanel Name="ExportAllStackPanel"  Grid.Row="2" Grid.Column="1" Visibility="Collapsed">
+                    <Grid  VerticalAlignment="Top">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="200" />
+                            <ColumnDefinition Width="100" />
+                        </Grid.ColumnDefinitions>
+
+                        <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource BoldLabel}" Content="Export all transaction details"  />
+
+                        <Button Grid.Row="0" Grid.Column="1" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}"  Style="{StaticResource MaterialDesignRaisedAccentButton}" 
+                                materialDesign:DialogHost.DialogClosingAttached="ExportAllConfirmaiton_OnDialogClosing">
+                            <Button.CommandParameter>
+                                <StackPanel Margin="16">
+                                    <TextBlock Text=" Are you really want to export all transaction details?" FontWeight="Bold" FontSize="20" ></TextBlock>
+                                    <Button Style="{StaticResource MaterialDesignFlatButton}" IsCancel="True" 
+                                            Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                                            CommandParameter="true"
+                                            HorizontalAlignment="Center">Ok</Button>
+
+                                    <Button Style="{StaticResource MaterialDesignFlatButton}" IsCancel="True" 
+                                            Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                                            CommandParameter="cancel"
+                                            HorizontalAlignment="Center">Cancel</Button>
+                                </StackPanel>
+                            </Button.CommandParameter>
+                            Export
+                        </Button>
                     </Grid>
                 </StackPanel>
-            </materialDesign:Card>
+                
+                <StackPanel Name="ResetStackPanel"  Grid.Row="2" Grid.Column="1" Visibility="Collapsed">
+                    <Grid  VerticalAlignment="Top">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="200" />
+                            <ColumnDefinition Width="100" />
+                        </Grid.ColumnDefinitions>               
 
-            <ListView Margin="10"  Grid.Row="1" Grid.Column="1">
-            </ListView>
+                    <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource BoldLabel}" Content="Clear the database"  />
+
+                    <Button Grid.Row="0" Grid.Column="1" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}"  Style="{StaticResource MaterialDesignRaisedAccentButton}" 
+                                materialDesign:DialogHost.DialogClosingAttached="Confirmaiton_OnDialogClosing">
+                        <Button.CommandParameter>
+                            <StackPanel Margin="16">
+                                <TextBlock Text=" Are you really want to delete the database?" FontWeight="Bold" FontSize="20" ></TextBlock>
+                                <Button Style="{StaticResource MaterialDesignFlatButton}" IsCancel="True" 
+                                            Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                                            CommandParameter="true"
+                                            HorizontalAlignment="Center">Ok</Button>
+
+                                <Button Style="{StaticResource MaterialDesignFlatButton}" IsCancel="True" 
+                                            Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                                            CommandParameter="cancel"
+                                            HorizontalAlignment="Center">Cancel</Button>
+                            </StackPanel>
+                        </Button.CommandParameter>
+                        Process
+                    </Button>
+                    </Grid>
+                </StackPanel>
+
+            </Grid>
+            <StackPanel>
+                <Button Content="Back to List..."  Name="BackToListButton" Visibility="Hidden" Click="BackToListButton_Click" />
+
+                <ContentControl x:Name="cc"/>
+            </StackPanel>
         </Grid>
-    </Grid>
+    </ScrollViewer>
 </UserControl>

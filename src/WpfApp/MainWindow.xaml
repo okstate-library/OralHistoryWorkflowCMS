@@ -32,11 +32,7 @@
         <DataTemplate DataType="{x:Type local1:BrowsePageViewModel}">
             <local1:Browse/>
         </DataTemplate>
-
-        <DataTemplate DataType="{x:Type local1:UsersPageViewModel}">
-            <local1:Users/>
-        </DataTemplate>
-
+     
         <DataTemplate DataType="{x:Type local1:FindnReplacePageViewModel}">
             <local1:FindReplace/>
         </DataTemplate>
@@ -118,17 +114,7 @@
                                     </TextBlock>
                                 </StackPanel>
                             </Button>
-
-                            <Button Name="Users1Button" ToolTip="Users"  Command="{Binding Path=LoadUsersPageCommand}" Margin="5"
-                                                PreviewMouseLeftButtonUp="Button_OnPreviewMouseLeftButtonUp">
-                                <StackPanel Orientation="Horizontal">
-                                    <materialDesign:PackIcon Kind="NaturePeople" HorizontalAlignment="Left" />
-                                    <TextBlock Margin="5 0 0 0" Text="Users">
-
-                                    </TextBlock>
-                                </StackPanel>
-                            </Button>
-
+                           
                             <Button Name="FindnReplace1Button" ToolTip="Find and Replace" Command="{Binding Path=LoadFindnReplacePageCommand}" Margin="5"
                                                 PreviewMouseLeftButtonUp="Button_OnPreviewMouseLeftButtonUp">
 
@@ -260,15 +246,6 @@
                                                     PreviewMouseLeftButtonUp="Button_OnPreviewMouseLeftButtonUp" 
                                                     ToolTip="Browse" >
                                             <materialDesign:PackIcon Kind="OpenInApp" />
-                                        </Button>
-
-                                        <Button Name="Users2Button"  
-                                                    Command="{Binding Path=LoadUsersPageCommand}" 
-                                                    Style="{StaticResource HorizontalMenuButton}"
-                                                    Visibility="Collapsed"
-                                                    PreviewMouseLeftButtonUp="Button_OnPreviewMouseLeftButtonUp" 
-                                                    ToolTip="Users" >
-                                            <materialDesign:PackIcon Kind="NaturePeople" />
                                         </Button>
 
                                         <Button Name="FindnReplace2Button" 

@@ -57,6 +57,9 @@ namespace EntityData
         public string AudioEquipmentUsed { get; set; }
         public string VideoEquipmentUsed { get; set; }
         public string InterviewerNote { get; set; }
+
+        public string GeneralNote { get; set; }
+
         public bool ReleaseForm { get; set; }
         public string Place { get; set; }
         public string TranscriberAssigned { get; set; }
@@ -70,7 +73,7 @@ namespace EntityData
         public string FinalEditCompleted { get; set; }
         public Nullable<System.DateTime> FinalSentDate { get; set; }
         public bool TranscriptStatus { get; set; }
-        public byte TranscriptLocation { get; set; }
+
         public string TranscriptNote { get; set; }
         public bool IsAudioFormat { get; set; }
         public bool IsVideoFormat { get; set; }
@@ -80,9 +83,11 @@ namespace EntityData
         public bool IsConvertToDigital { get; set; }
         public Nullable<System.DateTime> ConvertToDigitalDate { get; set; }
         public bool IsAccessMediaStatus { get; set; }
+
+        public string TechnicalSpecification { get; set; }
         public string MasterFileLocation { get; set; }
         public string AccessFileLocation { get; set; }
-        public string TranscriberLocation { get; set; }
+        public string TranscriptLocation { get; set; }
         public int CreatedBy { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public int UpdatedBy { get; set; }

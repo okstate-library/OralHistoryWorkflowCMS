@@ -200,7 +200,7 @@ namespace BusinessServices.Servcices
                                                 p.Title.Contains(Request.SearchWord) ||
                                                 p.Subject.Contains(Request.SearchWord) ||
                                                 p.TranscriberAssigned.Contains(Request.SearchWord) ||
-                                                p.TranscriberLocation.Contains(Request.SearchWord) ||
+                                                p.TranscriptLocation.Contains(Request.SearchWord) ||
                                                 p.Transcript.Contains(Request.SearchWord) ||
                                                 p.TranscriptNote.Contains(Request.SearchWord) ||
                                                 p.Type.Contains(Request.SearchWord)

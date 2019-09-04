@@ -13,7 +13,7 @@ namespace WpfApp.Helper
         /// <value>
         /// The identifier.
         /// </value>
-        public int Id { get; set; }
+        public short Id { get; set; }
 
         /// <summary>
         /// Gets or sets the name.

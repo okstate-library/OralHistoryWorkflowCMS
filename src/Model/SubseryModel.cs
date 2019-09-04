@@ -27,6 +27,6 @@
         /// The collection identifier.
         /// </value>
         public short CollectionId { get; set; }
-
+        public string CollectionName { get; set; }
     }
 }

@@ -9,7 +9,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
 using System.Windows.Navigation;
 
 namespace WpfApp
@@ -40,6 +39,7 @@ namespace WpfApp
         private string AccessMediaStatusColumnName = "Access Media Status";
         private string BornDigitalColumnName = "Born digital";
         private string ConvertedColumnName = "Converted";
+        private string OnlineColumnName = "Online";
         private string RestrictionsColumnName = "Restrictions";
         private string RestrictionNotesColumnName = "Restriction Notes";
         private string VideoEquipmentUsedColumnName = "Video Equipment Used";
@@ -140,15 +140,10 @@ namespace WpfApp
                             {
                                 recordcount++;
 
-                                if (recordcount == 445)
-                                {
-                                    string s = "";
-                                }
-
                                 // Reading and matching the collection name
                                 string collectionName = GetStringValue(item, CollectionColumnName);
 
-                                CollectionModel collection = App.BaseUserControl.Collecions.FirstOrDefault(c => c.CollectionName.Contains(collectionName));
+                                CollectionModel collection = App.BaseUserControl.Collections.FirstOrDefault(c => c.CollectionName.Contains(collectionName));
 
                                 short collectionId = 0;
 
@@ -209,7 +204,7 @@ namespace WpfApp
 
                                     IsBornDigital = GetBoolValue(item, BornDigitalColumnName),
                                     IsConvertToDigital = GetBoolValue(item, ConvertedColumnName),
-                                    IsOnline = false,
+                                    IsOnline = GetBoolValue(item, OnlineColumnName),
                                     IsPriority = false,
                                     IsRestriction = GetBoolValue(item, RestrictionsColumnName),
                                     RestrictionNote = GetStringValue(item, RestrictionNotesColumnName),
@@ -235,7 +230,6 @@ namespace WpfApp
                                     Subject = GetStringValue(item, SubjectColumnName),
                                     SubseriesId = subseriesId,
                                     TranscriberAssigned = GetStringValue(item, TranscriberAssignedColumnName),
-                                    TranscriptLocation = 1,
                                     TranscriptStatus = true,
                                     Place = GetStringValue(item, LocationOfInterviewColumnName),
                                     Title = GetStringValue(item, TitleColumnName),

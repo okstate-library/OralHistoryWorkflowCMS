@@ -116,7 +116,7 @@ namespace EntityData
             _entities.Entry(entity).State = System.Data.Entity.EntityState.Deleted;
             _entities.Set<T>().Remove(entity);
 
-            //Save();
+            Save();
         }
 
         /// <summary>

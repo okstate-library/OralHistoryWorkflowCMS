@@ -25,7 +25,7 @@ namespace Model.Transfer
         /// The transcription identifier.
         /// </value>
         public int TranscriptionId { get; set; }
-        
+
         /// <summary>
         /// Gets or sets a value indicating whether this instance is admin user.
         /// </summary>
@@ -66,6 +66,9 @@ namespace Model.Transfer
         /// </value>
         public WellKnownTranscriptionModificationType WellKnownTranscriptionModificationType { get; set; }
 
+        /// <summary>
+        /// The search word
+        /// </summary>
         private string searchWord;
 
         /// <summary>
@@ -141,5 +144,38 @@ namespace Model.Transfer
         ///   <c>true</c> if this instance is startup; otherwise, <c>false</c>.
         /// </value>
         public bool IsStartup { get; set; }
+
+        /// <summary>
+        /// Gets or sets the collection identifier.
+        /// </summary>
+        /// <value>
+        /// The collection identifier.
+        /// </value>
+        public int CollectionId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the collection model.
+        /// </summary>
+        /// <value>
+        /// The collection model.
+        /// </value>
+        public CollectionModel CollectionModel { get; set; }
+
+        /// <summary>
+        /// Gets or sets the subseries identifier.
+        /// </summary>
+        /// <value>
+        /// The subseries identifier.
+        /// </value>
+        public int SubseriesId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the subsery model.
+        /// </summary>
+        /// <value>
+        /// The subsery model.
+        /// </value>
+        public SubseryModel SubseryModel { get; set; }        
+
     }
 }

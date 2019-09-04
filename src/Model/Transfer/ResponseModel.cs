@@ -15,7 +15,15 @@ namespace Model.Transfer
         /// <value>
         /// The collecions.
         /// </value>
-        public List<CollectionModel> Collecions { get; set; }
+        public List<CollectionModel> Collections { get; set; }
+        
+        /// <summary>
+        /// Gets or sets the collecion.
+        /// </summary>
+        /// <value>
+        /// The collecion.
+        /// </value>
+        public CollectionModel Collection { get; set; }
 
         /// <summary>
         /// Gets or sets the collection model.
@@ -32,6 +40,9 @@ namespace Model.Transfer
         /// The subseries.
         /// </value>
         public List<SubseryModel> Subseries { get; set; }
+
+
+        public SubseryModel SubseriesModel { get; set; }
 
         /// <summary>
         /// Gets or sets the transcription.

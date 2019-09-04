@@ -3,10 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using WpfApp.Helper;
 
 namespace WpfApp.Domain
@@ -70,7 +67,7 @@ namespace WpfApp.Domain
         /// </summary>
         public InterviewModel()
         {
-            SetCollectios();
+            Collections = App.BaseUserControl.ObservableCollection;
 
             SelectedCollection = null;
             SelectedSeries = null;
@@ -221,25 +218,6 @@ namespace WpfApp.Domain
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
-        /// <summary>
-        /// Sets the collectios.
-        /// </summary>
-        private void SetCollectios()
-        {
-            Collections = new ObservableCollection<Collection>();
-
-            foreach (CollectionModel collectionItem in App.BaseUserControl.Collecions)
-            {
-                List<KeyValuePair<int, string>> series = new List<KeyValuePair<int, string>>();
-
-                foreach (SubseryModel subseryItem in App.BaseUserControl.Subseries.FindAll(s => s.CollectionId == collectionItem.Id))
-                {
-                    series.Add(new KeyValuePair<int, string>(subseryItem.Id, subseryItem.SubseryName));
-                }
-
-                Collections.Add(new Collection() { Id = collectionItem.Id, Name = collectionItem.CollectionName, Series = series });
-            }
-        }
+                
     }
 }

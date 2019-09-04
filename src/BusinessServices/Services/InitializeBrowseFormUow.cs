@@ -138,7 +138,7 @@ namespace BusinessServices.Servcices
 
             foreach (transcription item in transcriptions)
             {
-                string[] words = item.Interviewer.Split(';');
+                List<string> words = item.Interviewer.Split(';').Select(p => p.Trim()).ToList();
 
                 foreach (string word in words)
                 {
@@ -148,7 +148,7 @@ namespace BusinessServices.Servcices
                     }
                 }
             }
-
+                       
             var interviewers = from x in interviewerList
                            group x by x into g
                            let count = g.Count()
@@ -160,20 +160,6 @@ namespace BusinessServices.Servcices
                 browseFormModel.InterviewerList.Add(SetPair(interviewer.Value, interviewer.Count));
             }
             
-            //var intervieweeList = transcriptions
-            //                       .GroupBy(n => n.Interviewer)
-            //                       .Select(n => new
-            //                       {
-            //                           Interviewer = n.Key,
-            //                           Count = n.Count()
-            //                       })
-            //                       .OrderBy(n => n.Interviewer);
-
-            //foreach (var item in intervieweeList)
-            //{
-            //    browseFormModel.InterviewerList.Add(SetPair(item.Interviewer, item.Count));
-            //}
-
             //Collection list 
             var collections = transcriptions
                                 .GroupBy(n => n.CollectionId)

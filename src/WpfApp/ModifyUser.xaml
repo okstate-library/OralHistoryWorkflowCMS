@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="WpfApp.User"
+﻿<UserControl x:Class="WpfApp.ModifyUser"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -93,9 +93,6 @@
                             <ColumnDefinition Width="50" />
                             <ColumnDefinition Width="200" />
                         </Grid.ColumnDefinitions>
-
-                        <TextBlock Grid.Row="0" Style="{StaticResource MaterialDesignTitleTextBlock}">User</TextBlock>
-
                         <Border  Grid.Row="1"  Style="{StaticResource EmptyBorder}"   />
 
                         <TextBlock Style="{StaticResource BoldTextBlock}" Grid.Row="2" Grid.Column="0" Margin="8">Name <TextBlock Foreground="Red"> *</TextBlock> </TextBlock>

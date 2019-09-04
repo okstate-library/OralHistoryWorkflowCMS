@@ -217,22 +217,24 @@ namespace BusinessServices.Servcices
             List<KeywordModel> keywordList = new List<KeywordModel>();
             List<UserTypeModel> userTypes = new List<UserTypeModel>();
 
-            if (Request.IsStartup)
-            {
+            //if (Request.IsStartup)
+            //{
                 mainFormModel = new MainFormModel()
                 {
                     BrowseRecordCount = TranscriptionRepository.GetAll().Count(),
                     TranscrptionQueueRecordCount = TranscriptionRepository.FindBy(t => t.TranscriptStatus == false).Count(),
                 };
 
-                foreach (collection item in CollectionRepository.GetCollections())
+                List<collection> collections = CollectionRepository.GetCollections();
+
+                foreach (collection item in collections)
                 {
                     newlist.Add(Util.ConvertToCollectionModel(item));
                 }
 
                 foreach (subsery item in SubseryRepository.GetSubseries())
                 {
-                    newSubseriesList.Add(Util.ConvertToSubseryModel(item));
+                    newSubseriesList.Add(Util.ConvertToSubseryModel(item, collections.FirstOrDefault(s => s.Id == item.CollectionId).CollectionName));
                 }
 
                 foreach (subject item in SubjectRepository.GetSubjects())
@@ -249,7 +251,7 @@ namespace BusinessServices.Servcices
                 {
                     userTypes.Add(Util.ConvertToUsertypeModel(item));
                 }
-            }
+            //}
 
             List<PredefinedUserModel> predefineUserList = Util.ConvertToPredefinedUserModel(PredefineUserRepository.GetPredefinedUsers());
 
@@ -260,7 +262,7 @@ namespace BusinessServices.Servcices
             Response = new ResponseModel()
             {
                 Subseries = newSubseriesList,
-                Collecions = newlist,
+                Collections = newlist,
                 Subjects = subjectList,
                 Keywords = keywordList,
 
