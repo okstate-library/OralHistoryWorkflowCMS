@@ -1,7 +1,5 @@
-﻿using Core.Enums;
-using Model;
+﻿using Model;
 using Model.Transfer;
-using System;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -12,7 +10,7 @@ namespace WpfApp
     /// </summary>
     /// <seealso cref="System.Windows.Controls.UserControl" />
     /// <seealso cref="System.Windows.Markup.IComponentConnector" />
-    public partial class User : UserControl
+    public partial class ModifyCollection : UserControl
     {
         #region Public Properties
         /// <summary>
@@ -24,28 +22,28 @@ namespace WpfApp
         public bool IsAddNewRecord { get; set; }
 
         /// <summary>
-        /// Gets or sets the user identifier.
+        /// Gets or sets the collection identifier.
         /// </summary>
         /// <value>
-        /// The user identifier.
+        /// The collection identifier.
         /// </value>
-        public int UserId { get; set; }
+        public int CollectionId { get; set; }
 
         #endregion
 
         #region Constructor
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="User"/> class.
+        /// Initializes a new instance of the <see cref="collectionId"/> class.
         /// </summary>
-        /// <param name="userId">The user identifier.</param>
-        public User(int userId)
+        /// <param name="collectionId">The user identifier.</param>
+        public ModifyCollection(int collectionId)
         {
             InitializeComponent();
 
-            Loaded += UserUserControl_Loaded;
+            Loaded += ModifyCollectionUserControl_Loaded;
 
-            UserId = userId;
+            CollectionId = collectionId;
 
         }
 
@@ -58,11 +56,12 @@ namespace WpfApp
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
-        private void UserUserControl_Loaded(object sender, RoutedEventArgs e)
+        private void ModifyCollectionUserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            if (UserId > 0)
+            if (CollectionId > 0)
             {
-                ViewUser();
+                ViewCollection();
+
                 IsAddNewRecord = false;
             }
             else
@@ -76,68 +75,45 @@ namespace WpfApp
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
-        private void SaveUserDetails_Click(object sender, RoutedEventArgs e)
+        private void SaveCollectionDetails_Click(object sender, RoutedEventArgs e)
         {
             if (FormValidation())
             {
-                ComboBoxItem ComboItem = (ComboBoxItem)UserTypeComboBox.SelectedItem;
-
-                WellKnownUserType userType = (WellKnownUserType)Enum.Parse(typeof(WellKnownUserType), ComboItem.Name);
 
                 if (IsAddNewRecord)
                 {
                     RequestModel requestModel = new RequestModel()
                     {
-                        UserModel = new UserModel()
+                        CollectionModel = new CollectionModel()
                         {
-                            UserId = UserId,
-                            Name = NameTextBox.Text,
-                            Username = UsernameTextBox.Text,
-                            UserType = (byte)userType,
-                            Password = PasswordTextBox.SecurePassword,
+                            CollectionName = this.CollectionNameTextBox.Text
                         },
 
                         WellKnownModificationType = Core.Enums.WellKnownModificationType.Add,
-
                     };
 
-                    ResponseModel response = App.BaseUserControl.InternalService.ModifyUser(requestModel);
+                    ResponseModel response = App.BaseUserControl.InternalService.ModifyCollection(requestModel);
 
-                    if (response.IsOperationSuccess)
-                    {
-                        App.ShowMessage(true, string.Empty);
-                    }
-                    else
-                    {
-                        App.ShowMessage(false, response.ErrorMessage);
-                    }
+                    ShowMessage(response);
                 }
                 else
                 {
                     RequestModel requestModel = new RequestModel()
                     {
-                        UserModel = new UserModel()
+                        CollectionModel = new CollectionModel()
                         {
-                            UserId = UserId,
-                            Name = NameTextBox.Text,
-                            Username = UsernameTextBox.Text,
-                            UserType = (byte)userType,
+                            Id = CollectionId,
+                            CollectionName = this.CollectionNameTextBox.Text,
                         },
 
                         WellKnownModificationType = Core.Enums.WellKnownModificationType.Edit,
 
                     };
 
-                    ResponseModel response = App.BaseUserControl.InternalService.ModifyUser(requestModel);
+                    ResponseModel response = App.BaseUserControl.InternalService.ModifyCollection(requestModel);
 
-                    if (response.IsOperationSuccess)
-                    {
-                        App.ShowMessage(true, string.Empty);
-                    }
-                    else
-                    {
-                        App.ShowMessage(false, response.ErrorMessage);
-                    }
+                    ShowMessage(response);
+
                 }
             }
             else
@@ -157,7 +133,7 @@ namespace WpfApp
             {
                 UserModel = new UserModel()
                 {
-                    UserId = UserId
+                    UserId = CollectionId
                 },
 
                 WellKnownModificationType = Core.Enums.WellKnownModificationType.Reset,
@@ -182,9 +158,7 @@ namespace WpfApp
         private bool FormValidation()
         {
 
-            if (!string.IsNullOrEmpty(NameTextBox.Text) &&
-                      !string.IsNullOrEmpty(UsernameTextBox.Text) &&
-                       PasswordTextBox.SecurePassword.Length > 0)
+            if (!string.IsNullOrEmpty(CollectionNameTextBox.Text))
             {
                 return true;
             }
@@ -195,27 +169,21 @@ namespace WpfApp
         /// <summary>
         /// Views the user.
         /// </summary>
-        private void ViewUser()
+        private void ViewCollection()
         {
             RequestModel requestModel = new RequestModel()
             {
-                UserModel = new UserModel()
-                {
-                    UserId = UserId
-                },
+                CollectionId = CollectionId
+
             };
 
-            ResponseModel response = App.BaseUserControl.InternalService.GetUser(requestModel);
+            ResponseModel response = App.BaseUserControl.InternalService.GetCollection(requestModel);
 
             if (response.IsOperationSuccess)
             {
-                UserModel user = response.UserModel;
+                CollectionModel collection = response.Collection;
 
-                WellKnownUserType userType = (WellKnownUserType)user.UserType;
-
-                UserTypeComboBox.SelectedIndex = user.UserType - 2;
-                NameTextBox.Text = user.Name;
-                UsernameTextBox.Text = user.Username;
+                CollectionNameTextBox.Text = collection.CollectionName;
 
             }
             else
@@ -224,6 +192,21 @@ namespace WpfApp
             }
 
         }
+
+        private void ShowMessage(ResponseModel response)
+        {
+            if (response.IsOperationSuccess)
+            {
+                App.ShowMessage(true, string.Empty);
+
+                App.BaseUserControl.InitializeComponent(false);
+            }
+            else
+            {
+                App.ShowMessage(false, response.ErrorMessage);
+            }
+        }
+
         #endregion
     }
 }

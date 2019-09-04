@@ -9,7 +9,6 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 using WpfApp.Helper;
-using WpfApp.Model;
 
 namespace WpfApp
 {
@@ -170,9 +169,8 @@ namespace WpfApp
             }
 
             ControlsVisibility();
-
         }
-
+        
         /// <summary>
         /// Handles the MouseDoubleClick event of the TranscriptionQueueListView control.
         /// </summary>
@@ -449,11 +447,13 @@ namespace WpfApp
 
             SearchList = new List<string>();
 
-            TranscriptionSearchModel = new TranscriptionSearchModel();
-            TranscriptionSearchModel.Contentdms = new List<string>();
-            TranscriptionSearchModel.CollectionNames = new List<string>();
-            TranscriptionSearchModel.Interviewers = new List<string>();
-            TranscriptionSearchModel.Subjects = new List<string>();
+            TranscriptionSearchModel = new TranscriptionSearchModel
+            {
+                Contentdms = new List<string>(),
+                CollectionNames = new List<string>(),
+                Interviewers = new List<string>(),
+                Subjects = new List<string>()
+            };
         }
 
         /// <summary>

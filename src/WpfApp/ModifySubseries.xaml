@@ -1,0 +1,123 @@
+﻿<UserControl x:Class="WpfApp.ModifySubseries"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBox.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Card.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style TargetType="{x:Type TextBlock}"  x:Key="expanderHeaderTextBlock">
+                <Setter Property="Margin" Value="0 0 0 0" />
+                <Setter Property="FontSize" Value="15"></Setter>
+            </Style>
+           
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <ScrollViewer HorizontalScrollBarVisibility="Hidden"  VerticalScrollBarVisibility="Hidden"                     
+                      Margin="0 0 0 0">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Orientation="Horizontal" Margin="20 0 0 10" Grid.Row="0" Grid.ColumnSpan="2">
+                <Label Name="TitleLabel"  BorderThickness="1"  FontSize="30" />
+            </StackPanel>
+
+            <materialDesign:Card Background="{DynamicResource PrimaryHueLightBrush}"  Grid.Row="1" Grid.Column="0"   
+                      Foreground="{DynamicResource PrimaryHueLightForegroundBrush}"
+                      Width="180" Margin="0 0 1 0">
+                <StackPanel>
+                    <TextBlock Margin="20">Modify Subseries details</TextBlock>
+                </StackPanel>
+            </materialDesign:Card>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left"   Grid.Row="1" Grid.Column="1">
+
+                <StackPanel Orientation="Vertical"
+                            TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
+                            Margin="20,24,50,24"  >
+
+
+                    <Grid  VerticalAlignment="Top" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="200" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="200" />
+                            <ColumnDefinition Width="50" />
+                            <ColumnDefinition Width="200" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Style="{StaticResource BoldTextBlock}" Grid.Row="0" Grid.Column="0" Margin="8">Collection <TextBlock Foreground="Red"> *</TextBlock> </TextBlock>
+ 
+                        <ComboBox Grid.Row="0" Grid.Column="2" ItemsSource="{Binding Collections}" DisplayMemberPath="Name" 
+                                  HorizontalAlignment="Left" Name="CollectionComboBox" VerticalAlignment="Top" Width="435" 
+                                  Grid.ColumnSpan="3" SelectedValuePath="Id" 
+                                  
+                                  SelectedValue="{Binding SelectedId, ValidatesOnDataErrors=True}">                                                       
+                        </ComboBox>
+
+                        <Border  Grid.Row="1"  Style="{StaticResource EmptyBorder}"   />
+
+                        <TextBlock Style="{StaticResource BoldTextBlock}" Grid.Row="2" Grid.Column="0" Margin="8">Subseries <TextBlock Foreground="Red"> *</TextBlock> </TextBlock>
+
+                        <TextBox Name="SubseriesNameTextBox"  Grid.Row="2" Grid.Column="2"  Grid.ColumnSpan="3" Style="{StaticResource EditableTextBox}"/>
+
+                        <Button Grid.Row="9" Name="SubmitButton" Grid.ColumnSpan="3"  Margin="0,20,0,0" Style="{StaticResource MaterialDesignRaisedAccentButton}" Click="SaveUserDetails_Click" 
+                        ToolTip="Submit transcript details">
+                            _Submit
+                        </Button>
+
+                    </Grid>
+
+                </StackPanel>
+
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
+</UserControl>

@@ -1,4 +1,5 @@
 ﻿using EntityData;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -22,5 +23,14 @@ namespace Repository.Implementations
             return GetAll().ToList();
         }
 
+        /// <summary>
+        /// Gets the subseries to edit.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        public subsery GetSubseriesToEdit(int id)
+        {
+            return FirstToDelete(i => i.Id == id);
+        }
     }
 }

@@ -2,6 +2,7 @@
 using Model;
 using Model.Transfer;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using WpfApp.Properties;
 
 namespace WpfApp.Helper
@@ -110,7 +111,9 @@ namespace WpfApp.Helper
         /// <value>
         /// The collecions.
         /// </value>
-        public List<CollectionModel> Collecions { get; set; }
+        public List<CollectionModel> Collections { get; set; }
+
+        public ObservableCollection<Collection> ObservableCollection { get; set; }
 
         /// <summary>
         /// The default collection identifier
@@ -162,7 +165,7 @@ namespace WpfApp.Helper
                 BrowseRecordCount = response.MainFormModel?.BrowseRecordCount ?? 0;
 
                 Subseries = response.Subseries;
-                Collecions = response.Collecions;
+                Collections = response.Collections;
                 Keywords = response.Keywords;
                 Subjects = response.Subjects;
 
@@ -173,10 +176,36 @@ namespace WpfApp.Helper
             }
             else if (response.IsOperationSuccess)
             {
+                Subseries = response.Subseries;
+                Collections = response.Collections;
+
                 PredefinedUsers = response.PredefinedUsers;
                 AudioEquipments = response.AudioEquipmentsUsed;
                 VideoEquipments = response.VideoEquipmentsUsed;
             }
+
+            SetCollections();
+        }
+        
+        /// <summary>
+        /// Sets the collectios.
+        /// </summary>
+        public void SetCollections()
+        {
+            ObservableCollection = new ObservableCollection<Collection>();
+
+            foreach (CollectionModel collectionItem in App.BaseUserControl.Collections)
+            {
+                List<KeyValuePair<int, string>> series = new List<KeyValuePair<int, string>>();
+
+                foreach (SubseryModel subseryItem in App.BaseUserControl.Subseries.FindAll(s => s.CollectionId == collectionItem.Id))
+                {
+                    series.Add(new KeyValuePair<int, string>(subseryItem.Id, subseryItem.SubseryName));
+                }
+
+                ObservableCollection.Add(new Collection() { Id = (short)collectionItem.Id, Name = collectionItem.CollectionName, Series = series });
+            }
+
         }
 
     }

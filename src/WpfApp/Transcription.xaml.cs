@@ -127,7 +127,7 @@ namespace WpfApp
                 FinalSentDatePicker.SelectedDate.Value.Date
                 : (DateTime?)null,
 
-                TranscriberLocation = TranscriberLocationTextBox.Text,
+                TranscriptLocation = TranscriptionLocationTextBox.Text,
                 TranscriptNote = TranscriberNoteTextBox.Text,
             };
 
@@ -167,6 +167,7 @@ namespace WpfApp
             transcriptionModel.IsAccessMediaStatus = AccessMediaStatusCompleteCheckBox.IsChecked.Value;
 
             transcriptionModel.MasterFileLocation = MasterFileLocationTextBox.Text;
+            transcriptionModel.TechnicalSpecification = TechnicalSpecificationTextBox.Text;
             transcriptionModel.AccessFileLocation = AccessFileLocationTextBox.Text;
 
             UpdateTranscription(transcriptionModel, WellKnownTranscriptionModificationType.Media);
@@ -231,6 +232,37 @@ namespace WpfApp
         }
 
         /// <summary>
+        /// Handles the Click event of the DeleteButton control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        private void DeleteButton_Click(object sender, EventArgs e)
+        {
+            TranscriptionModel transcriptionModel = new TranscriptionModel()
+            {
+                Id = TranscriptionId,
+            };
+
+            RequestModel requestModel = new RequestModel()
+            {
+                TranscriptionModel = transcriptionModel,
+            };
+
+            ResponseModel response = App.BaseUserControl.InternalService.DeleteTranscription(requestModel);
+
+            if (response.IsOperationSuccess)
+            {
+                App.ShowMessageDeleteRecord(true, string.Empty);
+            }
+            else
+            {
+                App.ShowMessage(false, response.ErrorMessage);
+            }
+
+        }
+
+
+        /// <summary>
         /// Handles the Click event of the SupplementDetailsButton control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
@@ -268,6 +300,7 @@ namespace WpfApp
 
                 Place = PlaceTextBox.Text,
                 InterviewerNote = InterviewerNoteTextBox.Text,
+                GeneralNote = GeneralNoteTextBox.Text,
 
                 IsANewAudioEquipment = isANewAudioEquipment,
                 IsANewVideoEquipment = isANewVideoEquipment,
@@ -507,7 +540,7 @@ namespace WpfApp
                 SentOutYesCheckBox.IsChecked = transcriptionModel.SentOut;
                 SentOutNoCheckBox.IsChecked = !transcriptionModel.SentOut;
 
-                TranscriberLocationTextBox.Text = transcriptionModel.TranscriberLocation;
+                TranscriptionLocationTextBox.Text = transcriptionModel.TranscriptLocation;
 
                 TranscriberNoteTextBox.Text = transcriptionModel.TranscriptNote;
 
@@ -533,6 +566,7 @@ namespace WpfApp
                 AccessMediaStatusCompleteCheckBox.IsChecked = transcriptionModel.IsAccessMediaStatus;
                 AccessMediaStatusInProgressCheckBox.IsChecked = !transcriptionModel.IsAccessMediaStatus;
 
+                TechnicalSpecificationTextBox.Text = transcriptionModel.TechnicalSpecification;
                 MasterFileLocationTextBox.Text = transcriptionModel.MasterFileLocation;
                 AccessFileLocationTextBox.Text = transcriptionModel.AccessFileLocation;
 
@@ -612,7 +646,7 @@ namespace WpfApp
 
                 PlaceTextBox.Text = transcriptionModel.Place;
                 InterviewerNoteTextBox.Text = transcriptionModel.InterviewerNote;
-
+                GeneralNoteTextBox.Text = transcriptionModel.GeneralNote;
             }
         }
 
@@ -623,7 +657,6 @@ namespace WpfApp
         /// <param name="modificationType">Type of the modification.</param>
         private void UpdateTranscription(TranscriptionModel transcriptionModel, WellKnownTranscriptionModificationType modificationType)
         {
-
             transcriptionModel.Id = TranscriptionId;
             transcriptionModel.UpdatedBy = App.BaseUserControl.UserModel.UserId;
             transcriptionModel.UpdatedDate = DateTime.Now;
@@ -687,14 +720,22 @@ namespace WpfApp
                 case WellKnownUserType.Student:
                     DarkArchieveAndButtonVisibility(Visibility.Collapsed,
                         Visibility.Collapsed);
+
+                    DeleteButtonVisibility(Visibility.Collapsed);
                     break;
                 case WellKnownUserType.Staff:
                     DarkArchieveAndButtonVisibility(Visibility.Collapsed,
                         Visibility.Visible);
+
+                    DeleteButtonVisibility(Visibility.Collapsed);
+
                     break;
                 case WellKnownUserType.AdminUser:
+
                     DarkArchieveAndButtonVisibility(Visibility.Visible,
                         Visibility.Visible);
+
+                    DeleteButtonVisibility(Visibility.Visible);
                     break;
                 default:
                     break;
@@ -722,6 +763,15 @@ namespace WpfApp
             SupplementDetailsButton.Visibility = isButtonDisplay;
         }
 
+        /// <summary>
+        /// Deletes the button visibility.
+        /// </summary>
+        /// <param name="isDarkArcieveDisplay">The is dark arcieve display.</param>
+        private void DeleteButtonVisibility(Visibility isDarkArcieveDisplay)
+        {
+            DeleteButtonStackPanel.Visibility = isDarkArcieveDisplay;
+        }
+        
         /// <summary>
         /// Populates the intialize view.
         /// </summary>

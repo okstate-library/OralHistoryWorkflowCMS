@@ -1,4 +1,5 @@
-﻿using BusinessServices.Servcices;
+﻿using System;
+using BusinessServices.Servcices;
 using Model.Transfer;
 
 namespace BusinessServices
@@ -281,7 +282,98 @@ namespace BusinessServices
             return uow.Response;
         }
 
-        
+        /// <summary>
+        /// Deletes the transcription.
+        /// </summary>
+        /// <param name="requestModel">The request model.</param>
+        /// <returns></returns>
+        public ResponseModel DeleteTranscription(RequestModel requestModel)
+        {
+            DeleteTranscriptionUow uow = new DeleteTranscriptionUow
+            {
+                Request = requestModel
+            };
+
+            uow.DoWork();
+
+            return uow.Response;
+        }
+
+        /// <summary>
+        /// Gets the collection.
+        /// </summary>
+        /// <param name="requestModel">The request model.</param>
+        /// <returns></returns>
+        public ResponseModel GetCollection(RequestModel requestModel)
+        {
+            GetCollectionUow uow = new GetCollectionUow
+            {
+                Request = requestModel
+            };
+
+            uow.DoWork();
+
+            return uow.Response;
+        }
+
+        /// <summary>
+        /// Gets the subseies.
+        /// </summary>
+        /// <param name="requestModel">The request model.</param>
+        /// <returns></returns>
+        public ResponseModel GetSubseies(RequestModel requestModel)
+        {
+            GetSubseriesUoW uow = new GetSubseriesUoW
+            {
+                Request = requestModel
+            };
+
+            uow.DoWork();
+
+            return uow.Response;
+        }
+
+        public ResponseModel ModifyCollection(RequestModel request)
+        {
+            ModifyCollectionUow uow = new ModifyCollectionUow
+            {
+                Request = request
+            };
+
+            uow.DoWork();
+
+            return uow.Response;
+        }
+
+        public ResponseModel ModifySubseries(RequestModel request)
+        {
+            ModifySubseriesUow uow = new ModifySubseriesUow
+            {
+                Request = request
+            };
+
+            uow.DoWork();
+
+            return uow.Response;
+        }
+
+        /// <summary>
+        /// Exports all.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns></returns>
+        public ResponseModel ExportAll(RequestModel request)
+        {
+            ExportAllUow uow = new ExportAllUow
+            {
+                Request = request
+            };
+
+            uow.DoWork();
+
+            return uow.Response;
+        }
+
     }
 
 }

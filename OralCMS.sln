@@ -7,6 +7,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "db", "db", "{91265E6A-F95C-
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{91265E6A-F95C-406A-AE1A-3D9026B4C498}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "setup", "setup", "{61FDE15B-CD9C-4419-A9D1-8ECD1A80B745}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "src\Core\Core.csproj", "{C9193853-8CAD-41B4-A66C-758B4CCD82A4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityData", "src\EntityData\EntityData.csproj", "{DAAFD30D-0D36-4CCF-8302-EE05F88BD2F3}"
@@ -40,17 +42,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "query", "query", "{014FB1FB
 		db\mysql\query\definition.1.2.0.0.sql = db\mysql\query\definition.1.2.0.0.sql
 		db\mysql\query\definition.1.3.0.0.sql = db\mysql\query\definition.1.3.0.0.sql
 		db\mysql\query\definition.1.4.0.0.sql = db\mysql\query\definition.1.4.0.0.sql
+		db\mysql\query\definition.1.5.0.0.sql = db\mysql\query\definition.1.5.0.0.sql
 		db\mysql\query\masterData.1.0.0.0.sql = db\mysql\query\masterData.1.0.0.0.sql
 		db\mysql\query\masterData.1.4.0.0.sql = db\mysql\query\masterData.1.4.0.0.sql
 		db\mysql\query\masterData.2.0.0.0.sql = db\mysql\query\masterData.2.0.0.0.sql
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "config", "config", "{AF716937-A44B-4EE8-AA43-DAAEB6D31C14}"
-	ProjectSection(SolutionItems) = preProject
-		config\log4net.config = config\log4net.config
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfApp", "src\WpfApp\WpfApp.csproj", "{0DFDB793-B624-4A9E-A1FA-417A70FC8E06}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "SetupProj", "setup\SetupProj\SetupProj.vdproj", "{FEB2F9B0-A595-4B9E-A8B5-FD9A469CEECF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -212,6 +212,30 @@ Global
 		{0DFDB793-B624-4A9E-A1FA-417A70FC8E06}.Release|x64.Build.0 = Release|Any CPU
 		{0DFDB793-B624-4A9E-A1FA-417A70FC8E06}.Release|x86.ActiveCfg = Release|Any CPU
 		{0DFDB793-B624-4A9E-A1FA-417A70FC8E06}.Release|x86.Build.0 = Release|Any CPU
+		{FEB2F9B0-A595-4B9E-A8B5-FD9A469CEECF}.AppVeyor|Any CPU.ActiveCfg = Release
+		{FEB2F9B0-A595-4B9E-A8B5-FD9A469CEECF}.AppVeyor|Any CPU.Build.0 = Release
+		{FEB2F9B0-A595-4B9E-A8B5-FD9A469CEECF}.AppVeyor|ARM.ActiveCfg = Release
+		{FEB2F9B0-A595-4B9E-A8B5-FD9A469CEECF}.AppVeyor|ARM.Build.0 = Release
+		{FEB2F9B0-A595-4B9E-A8B5-FD9A469CEECF}.AppVeyor|x64.ActiveCfg = Release
+		{FEB2F9B0-A595-4B9E-A8B5-FD9A469CEECF}.AppVeyor|x64.Build.0 = Release
+		{FEB2F9B0-A595-4B9E-A8B5-FD9A469CEECF}.AppVeyor|x86.ActiveCfg = Release
+		{FEB2F9B0-A595-4B9E-A8B5-FD9A469CEECF}.AppVeyor|x86.Build.0 = Release
+		{FEB2F9B0-A595-4B9E-A8B5-FD9A469CEECF}.Debug|Any CPU.ActiveCfg = Debug
+		{FEB2F9B0-A595-4B9E-A8B5-FD9A469CEECF}.Debug|Any CPU.Build.0 = Debug
+		{FEB2F9B0-A595-4B9E-A8B5-FD9A469CEECF}.Debug|ARM.ActiveCfg = Debug
+		{FEB2F9B0-A595-4B9E-A8B5-FD9A469CEECF}.Debug|ARM.Build.0 = Debug
+		{FEB2F9B0-A595-4B9E-A8B5-FD9A469CEECF}.Debug|x64.ActiveCfg = Debug
+		{FEB2F9B0-A595-4B9E-A8B5-FD9A469CEECF}.Debug|x64.Build.0 = Debug
+		{FEB2F9B0-A595-4B9E-A8B5-FD9A469CEECF}.Debug|x86.ActiveCfg = Debug
+		{FEB2F9B0-A595-4B9E-A8B5-FD9A469CEECF}.Debug|x86.Build.0 = Debug
+		{FEB2F9B0-A595-4B9E-A8B5-FD9A469CEECF}.Release|Any CPU.ActiveCfg = Release
+		{FEB2F9B0-A595-4B9E-A8B5-FD9A469CEECF}.Release|Any CPU.Build.0 = Release
+		{FEB2F9B0-A595-4B9E-A8B5-FD9A469CEECF}.Release|ARM.ActiveCfg = Release
+		{FEB2F9B0-A595-4B9E-A8B5-FD9A469CEECF}.Release|ARM.Build.0 = Release
+		{FEB2F9B0-A595-4B9E-A8B5-FD9A469CEECF}.Release|x64.ActiveCfg = Release
+		{FEB2F9B0-A595-4B9E-A8B5-FD9A469CEECF}.Release|x64.Build.0 = Release
+		{FEB2F9B0-A595-4B9E-A8B5-FD9A469CEECF}.Release|x86.ActiveCfg = Release
+		{FEB2F9B0-A595-4B9E-A8B5-FD9A469CEECF}.Release|x86.Build.0 = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -228,6 +252,7 @@ Global
 		{E5483770-5F81-4403-92BB-708AD3CFA8F9} = {91265E6A-F95C-CDEF-AE1A-3D9026B4C498}
 		{014FB1FB-4A8C-4917-8C8F-839076DD5560} = {E5483770-5F81-4403-92BB-708AD3CFA8F9}
 		{0DFDB793-B624-4A9E-A1FA-417A70FC8E06} = {91265E6A-F95C-406A-AE1A-3D9026B4C498}
+		{FEB2F9B0-A595-4B9E-A8B5-FD9A469CEECF} = {61FDE15B-CD9C-4419-A9D1-8ECD1A80B745}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3E02FE59-F2FA-4EFF-9C3F-2072785FD722}

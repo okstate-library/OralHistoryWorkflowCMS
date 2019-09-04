@@ -52,6 +52,7 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
                     <StackPanel Grid.Row="0" Margin="5 10 10 0">
@@ -71,6 +72,14 @@
                             </Grid>
                         </StackPanel>
                         <Label HorizontalAlignment="Right" Content="(progress percentage)"  BorderThickness="1"  FontSize="10" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="2" Margin="5 10 10 20" Name="DeleteButtonStackPanel">
+                        <Button Name="DeleteButton" Grid.Row="18" Margin="0,20,0,0"  
+                                    Style="{StaticResource MaterialDesignRaisedAccentButton}" Click="DeleteButton_Click" 
+                        ToolTip="Delete transcript">
+                            _Delete
+                        </Button>
                     </StackPanel>
                 </Grid>
 
@@ -394,8 +403,8 @@
 
                                 <Border  Grid.Row="27"  Style="{StaticResource EmptyBorder2}"   />
 
-                                <Label Style="{StaticResource BoldLabel}" Grid.Row="28" Grid.Column="0" >Transcriber location</Label>
-                                <TextBox Name="TranscriberLocationTextBox"  Grid.Row="28" Grid.Column="2"  Grid.ColumnSpan="3" Style="{StaticResource EditableTextBox}" />
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="28" Grid.Column="0" >Transcript location</Label>
+                                <TextBox Name="TranscriptionLocationTextBox"  Grid.Row="28" Grid.Column="2"  Grid.ColumnSpan="3" Style="{StaticResource EditableTextBox}" />
 
                                 <Border  Grid.Row="29"  Style="{StaticResource EmptyBorder2}"   />
 
@@ -533,25 +542,26 @@
                                     <CheckBox Name="AccessMediaStatusInProgressCheckBox"
                                             Style="{StaticResource MaterialDesignCheckBox}" Checked="AccessMediaStatus_Check">
                                         In progress
-                                    </CheckBox>
-
-                                    <!--<ToggleButton Style="{StaticResource ProgressToggleButtonStyle}"
-                                  IsChecked="True" Name="AccessMediaToggleButton">
-                                </ToggleButton>-->
+                                    </CheckBox>                                  
                                 </StackPanel>
 
                                 <Border  Grid.Row="12"  Style="{StaticResource EmptyBorder2}"   />
 
-                                <Label Style="{StaticResource BoldLabel}" Grid.Row="13" Grid.Column="0" >Master file location</Label>
-                                <TextBox Name="MasterFileLocationTextBox"  Grid.Row="13" Grid.Column="2"  Grid.ColumnSpan="3" Style="{StaticResource EditableTextBox}" />
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="13" Grid.Column="0" >Technical specification</Label>
+                                <TextBox Name="TechnicalSpecificationTextBox"  Grid.Row="13" Grid.Column="2"  Grid.ColumnSpan="3" Style="{StaticResource EditableTextBox}" />
 
                                 <Border  Grid.Row="14"  Style="{StaticResource EmptyBorder2}"   />
 
-                                <Label Style="{StaticResource BoldLabel}" Grid.Row="15" Grid.Column="0" >Access file location</Label>
-                                <TextBox Name="AccessFileLocationTextBox"  Grid.Row="15" Grid.Column="2"  Grid.ColumnSpan="3" Style="{StaticResource EditableTextBox}" />
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="15" Grid.Column="0" >Master file location</Label>
+                                <TextBox Name="MasterFileLocationTextBox"  Grid.Row="15" Grid.Column="2"  Grid.ColumnSpan="3" Style="{StaticResource EditableTextBox}" />
+
+                                <Border  Grid.Row="16"  Style="{StaticResource EmptyBorder2}"   />
+
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="17" Grid.Column="0" >Access file location</Label>
+                                <TextBox Name="AccessFileLocationTextBox"  Grid.Row="17" Grid.Column="2"  Grid.ColumnSpan="3" Style="{StaticResource EditableTextBox}" />
 
 
-                                <Button Name="MediaDetailsButto" Grid.Row="16"  Grid.ColumnSpan="5"  Margin="0,20,0,0"  
+                                <Button Name="MediaDetailsButto" Grid.Row="18"  Grid.ColumnSpan="5"  Margin="0,20,0,0"  
                                     Style="{StaticResource MaterialDesignRaisedAccentButton}" Click="MediaDetailsButton_Click" 
                         ToolTip="Submit transcript details">
                                     _Submit
@@ -1009,7 +1019,16 @@
                          VerticalAlignment="Top" Height="100"    TextWrapping="Wrap" BorderThickness="1"
                          VerticalScrollBarVisibility="Auto" Style="{StaticResource EditableTextBox}"/>
 
-                                <Button Name="SupplementDetailsButton" Grid.Row="27"  Grid.ColumnSpan="5"  Margin="0,20,0,0"  Style="{StaticResource MaterialDesignRaisedAccentButton}"
+                                <Border  Grid.Row="27"   Style="{StaticResource EmptyBorder2}"/>
+
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="28" Grid.Column="0" >General notes</Label>
+
+                                <TextBox Name="GeneralNoteTextBox"  Grid.Row="28" Grid.Column="1" Grid.ColumnSpan="4"
+                         VerticalAlignment="Top" Height="100"    TextWrapping="Wrap" BorderThickness="1"
+                         VerticalScrollBarVisibility="Auto" Style="{StaticResource EditableTextBox}"/>
+                                
+
+                                <Button Name="SupplementDetailsButton" Grid.Row="29"  Grid.ColumnSpan="5"  Margin="0,20,0,0"  Style="{StaticResource MaterialDesignRaisedAccentButton}"
                                     Click="SupplementDetailsButton_Click" 
                         ToolTip="Submit transcript details">
                                     _Submit

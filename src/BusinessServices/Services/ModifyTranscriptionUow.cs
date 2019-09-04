@@ -228,7 +228,7 @@ namespace BusinessServices.Servcices
 
                             daTranscription.TranscriptStatus = transcriptionModel.TranscriptStatus;
 
-                            daTranscription.TranscriberLocation = transcriptionModel.TranscriberLocation;
+                            daTranscription.TranscriptLocation = transcriptionModel.TranscriptLocation;
                             daTranscription.TranscriptNote = transcriptionModel.TranscriptNote;
 
                             break;
@@ -243,6 +243,7 @@ namespace BusinessServices.Servcices
                             daTranscription.IsConvertToDigital = transcriptionModel.IsConvertToDigital;
                             daTranscription.ConvertToDigitalDate = transcriptionModel.ConvertToDigitalDate;
                             daTranscription.IsAccessMediaStatus = transcriptionModel.IsAccessMediaStatus;
+                            daTranscription.TechnicalSpecification = transcriptionModel.TechnicalSpecification;
                             daTranscription.MasterFileLocation = transcriptionModel.MasterFileLocation;
                             daTranscription.AccessFileLocation = transcriptionModel.AccessFileLocation;
 
@@ -303,6 +304,7 @@ namespace BusinessServices.Servcices
                             daTranscription.InterviewerKeywords = transcriptionModel.InterviewerKeywords;
                             daTranscription.InterviewerSubjects = transcriptionModel.InterviewerSubjects;
                             daTranscription.InterviewerNote = transcriptionModel.InterviewerNote;
+                            daTranscription.GeneralNote = transcriptionModel.GeneralNote;
                             break;
                         default:
                             break;

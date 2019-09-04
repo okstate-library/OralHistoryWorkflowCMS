@@ -153,10 +153,7 @@ namespace WpfApp
 
             Browse1Button.Visibility = Visibility.Collapsed;
             Browse2Button.Visibility = Visibility.Collapsed;
-
-            Users1Button.Visibility = Visibility.Collapsed;
-            Users2Button.Visibility = Visibility.Collapsed;
-
+            
             FindnReplace1Button.Visibility = Visibility.Collapsed;
             FindnReplace2Button.Visibility = Visibility.Collapsed;
             Reports1Button.Visibility = Visibility.Collapsed;
@@ -187,11 +184,7 @@ namespace WpfApp
                     case "Browse":
                         Browse1Button.Visibility = Visibility.Visible;
                         Browse2Button.Visibility = Visibility.Visible;
-                        break;
-                    case "Users":
-                        Users1Button.Visibility = Visibility.Visible;
-                        Users2Button.Visibility = Visibility.Visible;
-                        break;
+                        break;                  
                     case "Find and Replace":
                         FindnReplace1Button.Visibility = Visibility.Visible;
                         FindnReplace2Button.Visibility = Visibility.Visible;

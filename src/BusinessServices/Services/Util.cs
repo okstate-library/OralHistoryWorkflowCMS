@@ -104,17 +104,55 @@ namespace BusinessServices.Services
         }
 
         /// <summary>
+        /// Converts to collection.
+        /// </summary>
+        /// <param name="collectionModel">The collection model.</param>
+        /// <returns></returns>
+        public static collection ConvertToCollection(CollectionModel collectionModel)
+        {
+            return new collection()
+            {
+                Id = (short)collectionModel.Id,
+                CollectionName = collectionModel.CollectionName
+            };
+        }
+
+        /// <summary>
+        /// Converts to collection.
+        /// </summary>
+        /// <param name="collection">The collection.</param>
+        /// <param name="collectionModel">The collection model.</param>
+        /// <returns></returns>
+        internal static collection ConvertToCollection(collection collection, CollectionModel collectionModel)
+        {
+            collection.CollectionName = collectionModel.CollectionName;
+
+            return collection;
+        }
+
+        /// <summary>
         /// Converts to subsery model.
         /// </summary>
         /// <param name="subsery">The subsery.</param>
         /// <returns></returns>
-        public static SubseryModel ConvertToSubseryModel(subsery subsery)
+        public static SubseryModel ConvertToSubseryModel(subsery subsery , string collectionName)
         {
             return new SubseryModel()
             {
                 Id = subsery.Id,
                 CollectionId = subsery.CollectionId,
+                CollectionName = collectionName,
                 SubseryName = subsery.SubseriesName
+            };
+        }
+
+        public static subsery ConvertToSubsery(subsery subsery, SubseryModel subseryModel)
+        {
+            return new subsery()
+            {
+                Id = subsery.Id,
+                CollectionId = subsery.CollectionId,
+                SubseriesName = subseryModel.SubseryName
             };
         }
 
@@ -205,6 +243,7 @@ namespace BusinessServices.Services
                 IsRosetta = transcription.IsRosetta,
                 IsRosettaForm = transcription.IsRosettaForm,
                 Language = transcription.Language,
+                TechnicalSpecification = transcription.TechnicalSpecification,
                 MasterFileLocation = transcription.MasterFileLocation,
                 OriginalMedium = transcription.OriginalMedium,
                 OriginalMediumType = transcription.OriginalMediumType,
@@ -216,15 +255,15 @@ namespace BusinessServices.Services
                 SecondEditCompleted = transcription.SecondEditCompleted,
                 TranscriberAssigned = transcription.TranscriberAssigned,
                 Transcript = transcription.Transcript,
-                TranscriptLocation = transcription.TranscriptLocation,
                 TranscriptNote = transcription.TranscriptNote,
                 TranscriptStatus = transcription.TranscriptStatus,
                 Type = transcription.Type,
-                TranscriberLocation = transcription.TranscriberLocation,
+                TranscriptLocation = transcription.TranscriptLocation,
                 UpdatedBy = transcription.UpdatedBy,
                 UpdatedDate = transcription.UpdatedDate.Date,
                 Identifier = transcription.Identifier,
-
+                GeneralNote = transcription.GeneralNote,
+                
                 InterviewerDescription = transcription.InterviewerDescription,
                 InterviewerKeywords = transcription.InterviewerKeywords,
                 InterviewerSubjects = transcription.InterviewerSubjects,
@@ -280,6 +319,7 @@ namespace BusinessServices.Services
                 InterviewDate2 = transcriptionModel.InterviewDate2,
 
                 InterviewerNote = transcriptionModel.InterviewerNote,
+                GeneralNote = transcriptionModel.GeneralNote,
                 IsAudioFormat = transcriptionModel.IsAudioFormat,
                 IsVideoFormat = transcriptionModel.IsVideoFormat,
                 IsRestriction = transcriptionModel.IsRestriction,
@@ -340,6 +380,7 @@ namespace BusinessServices.Services
                 //TranscriptLocation = 1,
                 //TranscriptStatus = 1,
                 Type = transcriptionModel.Type,
+                IsOnline = transcriptionModel.IsOnline,
 
                 ProjectCode = transcriptionModel.ProjectCode,
                 IsPriority = transcriptionModel.IsPriority,
@@ -395,6 +436,7 @@ namespace BusinessServices.Services
                 InterviewDate1 = interview.InterviewDate1,
                 InterviewDate2 = interview.InterviewDate2,
 
+                GeneralNote = interview.GeneralNote,
                 InterviewerNote = interview.InterviewerNote,
                 IsAudioFormat = interview.IsAudioFormat,
                 IsRestriction = interview.IsRestriction,
@@ -486,6 +528,8 @@ namespace BusinessServices.Services
                 InterviewDate2 = transcriptionModel.InterviewDate2,
 
                 InterviewerNote = transcriptionModel.InterviewerNote,
+                GeneralNote = transcriptionModel.GeneralNote,
+
                 IsAudioFormat = transcriptionModel.IsAudioFormat,
                 IsRestriction = transcriptionModel.IsRestriction,
                 IsDarkArchive = transcriptionModel.IsDarkArchive,

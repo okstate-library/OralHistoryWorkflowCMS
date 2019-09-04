@@ -1,4 +1,5 @@
 ﻿using EntityData;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -21,6 +22,16 @@ namespace Repository.Implementations
         public List<collection> GetCollections()
         {
             return GetAll().ToList();
+        }
+
+        /// <summary>
+        /// Gets the collecrtion to edit.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        public collection GetCollecrtionToEdit(int id)
+        {
+            return FirstToDelete(i => i.Id == id);
         }
     }
 }

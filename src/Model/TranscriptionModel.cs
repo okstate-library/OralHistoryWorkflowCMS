@@ -265,6 +265,15 @@ namespace Model
         /// The interviewer note.
         /// </value>
         public string InterviewerNote { get; set; }
+
+        /// <summary>
+        /// Gets or sets the general note.
+        /// </summary>
+        /// <value>
+        /// The general note.
+        /// </value>
+        public string GeneralNote { get; set; }
+
         /// <summary>
         /// Gets or sets a value indicating whether this instance is audio format.
         /// </summary>
@@ -359,6 +368,7 @@ namespace Model
         /// The final sent date.
         /// </value>
         public Nullable<System.DateTime> FinalSentDate { get; set; }
+
         /// <summary>
         /// Gets or sets a value indicating whether [transcript status].
         /// </summary>
@@ -366,13 +376,7 @@ namespace Model
         ///   <c>true</c> if [transcript status]; otherwise, <c>false</c>.
         /// </value>
         public bool TranscriptStatus { get; set; }
-        /// <summary>
-        /// Gets or sets the transcript location.
-        /// </summary>
-        /// <value>
-        /// The transcript location.
-        /// </value>
-        public byte TranscriptLocation { get; set; }
+
         /// <summary>
         /// Gets or sets the transcript note.
         /// </summary>
@@ -422,6 +426,15 @@ namespace Model
         ///   <c>true</c> if this instance is access media status; otherwise, <c>false</c>.
         /// </value>
         public bool IsAccessMediaStatus { get; set; }
+        
+        /// <summary>
+        /// Gets or sets the technical specification.
+        /// </summary>
+        /// <value>
+        /// The technical specification.
+        /// </value>
+        public string TechnicalSpecification { get; set; }
+
         /// <summary>
         /// Gets or sets the master file location.
         /// </summary>
@@ -442,7 +455,7 @@ namespace Model
         /// <value>
         /// The transcriber location.
         /// </value>
-        public string TranscriberLocation { get; set; }
+        public string TranscriptLocation { get; set; }
         /// <summary>
         /// Gets or sets the created by.
         /// </summary>
