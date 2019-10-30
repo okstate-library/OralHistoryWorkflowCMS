@@ -4,6 +4,7 @@ using Model.Transfer;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
@@ -38,6 +39,22 @@ namespace WpfApp
         /// </value>
         public TranscriptionModel TranscriptionModel { get; set; }
 
+        /// <summary>
+        /// Gets or sets the collections.
+        /// </summary>
+        /// <value>
+        /// The collections.
+        /// </value>
+        public ObservableCollection<Collection> Collections { get; set; }
+
+        /// <summary>
+        /// Gets or sets the selected identifier.
+        /// </summary>
+        /// <value>
+        /// The selected identifier.
+        /// </value>
+        public short SelectedCollectionId { get; set; }
+
         #endregion
 
         #region Constructor
@@ -50,6 +67,10 @@ namespace WpfApp
         public Transcription(int transcriptionId, WellKnownExpander expander)
         {
             InitializeComponent();
+
+            DataContext = new TranscriptionUiModel();
+
+            CollectionComboBox.ItemsSource = App.BaseUserControl.ObservableCollection;
 
             TranscriptionId = transcriptionId;
 
@@ -86,6 +107,7 @@ namespace WpfApp
             {
                 PopulateIntializeView();
             };
+
         }
 
         #endregion
@@ -222,6 +244,8 @@ namespace WpfApp
                 CoverageSpatial = CoverageSpatialTextBox.Text,
                 CoverageTemporal = CoverageTemporalTextBox.Text,
 
+                CollectionId = short.Parse(((TranscriptionUiModel)DataContext).SelectedCollection),
+                SubseriesId = int.Parse(((TranscriptionUiModel)DataContext).SelectedSeries),
             };
 
             UpdateTranscription(transcriptionModel, WellKnownTranscriptionModificationType.Metadata);
@@ -260,7 +284,6 @@ namespace WpfApp
             }
 
         }
-
 
         /// <summary>
         /// Handles the Click event of the SupplementDetailsButton control.
@@ -612,6 +635,9 @@ namespace WpfApp
 
                 FileNameTextBox.Text = transcriptionModel.FileName;
 
+                ((TranscriptionUiModel)DataContext).SelectedCollection = transcriptionModel.CollectionId.ToString();
+                ((TranscriptionUiModel)DataContext).SelectedSeries = transcriptionModel.SubseriesId.ToString();
+                
                 //// Tab 5 
 
                 OnContentDmYesCheckBox.IsChecked = transcriptionModel.IsOnline;
@@ -771,7 +797,7 @@ namespace WpfApp
         {
             DeleteButtonStackPanel.Visibility = isDarkArcieveDisplay;
         }
-        
+
         /// <summary>
         /// Populates the intialize view.
         /// </summary>
@@ -823,6 +849,6 @@ namespace WpfApp
         }
 
         #endregion
-
+           
     }
 }

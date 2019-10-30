@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
+using WpfApp.Domain;
 using WpfApp.Helper;
 
 namespace WpfApp
@@ -15,15 +16,9 @@ namespace WpfApp
     /// <seealso cref="System.Windows.Markup.IComponentConnector" />
     public partial class ModifySubseries : UserControl
     {
-        /// <summary>
-        /// Gets or sets the collections.
-        /// </summary>
-        /// <value>
-        /// The collections.
-        /// </value>
-        public ObservableCollection<Collection> Collections { get; set; }
 
         #region Public Properties
+        
         /// <summary>
         /// Gets or sets a value indicating whether this instance is add new record.
         /// </summary>
@@ -31,15 +26,7 @@ namespace WpfApp
         ///   <c>true</c> if this instance is add new record; otherwise, <c>false</c>.
         /// </value>
         public bool IsAddNewRecord { get; set; }
-
-        /// <summary>
-        /// Gets or sets the selected identifier.
-        /// </summary>
-        /// <value>
-        /// The selected identifier.
-        /// </value>
-        public short SelectedId { get; set; }
-        
+               
         /// <summary>
         /// Gets or sets the user identifier.
         /// </summary>
@@ -52,17 +39,17 @@ namespace WpfApp
 
         #region Constructor
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ModifySubseries" /> class.
-        /// </summary>
-        public ModifySubseries()
-        {
-            InitializeComponent();
+        ///// <summary>
+        ///// Initializes a new instance of the <see cref="ModifySubseries" /> class.
+        ///// </summary>
+        //public ModifySubseries()
+        //{
+        //    InitializeComponent();
 
-            Loaded += ModifySubseriesUserControl_Loaded;
+        //    Loaded += ModifySubseriesUserControl_Loaded;
 
-            Collections = App.BaseUserControl.ObservableCollection;
-        }
+        //    DataContext = new SubseriesUIModel();
+        //}
 
         /// <summary>
         /// Initializes a new instance of the <see cref="User" /> class.
@@ -71,12 +58,12 @@ namespace WpfApp
         public ModifySubseries(int subseriesId)
         {
             InitializeComponent();
-
+            
             Loaded += ModifySubseriesUserControl_Loaded;
 
             SubseriesId = subseriesId;
 
-            Collections = App.BaseUserControl.ObservableCollection;
+          DataContext = new SubseriesUIModel();
         }
 
         #endregion
@@ -101,8 +88,6 @@ namespace WpfApp
                 IsAddNewRecord = true;
             }
 
-
-            DataContext = this;
         }
 
         /// <summary>
@@ -114,19 +99,14 @@ namespace WpfApp
         {
             if (FormValidation())
             {
-
-                short collectionId = short.Parse(CollectionComboBox.SelectedValue.ToString());
+                //short collectionId = short.Parse(CollectionComboBox.SelectedValue.ToString());
 
                 if (IsAddNewRecord)
                 {
                     RequestModel requestModel = new RequestModel()
                     {
-                        SubseryModel = new SubseryModel()
-                        {
-                            CollectionId = collectionId,
-                            SubseryName = SubseriesNameTextBox.Text,
-                        },
-
+                        SubseryModel = GetSubseriesModel(true),
+                        
                         WellKnownModificationType = Core.Enums.WellKnownModificationType.Add,
 
                     };
@@ -139,12 +119,7 @@ namespace WpfApp
                 {
                     RequestModel requestModel = new RequestModel()
                     {
-                        SubseryModel = new SubseryModel()
-                        {
-                            Id = SubseriesId,
-                            CollectionId = collectionId,
-                            SubseryName = SubseriesNameTextBox.Text,
-                        },
+                        SubseryModel = GetSubseriesModel(false),
 
                         WellKnownModificationType = Core.Enums.WellKnownModificationType.Edit,
 
@@ -152,7 +127,7 @@ namespace WpfApp
 
                     ResponseModel response = App.BaseUserControl.InternalService.ModifySubseries(requestModel);
 
-                    ShowMessage(response);                  
+                    ShowMessage(response);
                 }
             }
             else
@@ -161,38 +136,52 @@ namespace WpfApp
             }
         }
 
-        /// <summary>
-        /// Handles the Click event of the ResetPassword control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
-        private void ResetPassword_Click(object sender, RoutedEventArgs e)
-        {
-            RequestModel requestModel = new RequestModel()
-            {
-                UserModel = new UserModel()
-                {
-                    UserId = SubseriesId
-                },
-
-                WellKnownModificationType = Core.Enums.WellKnownModificationType.Reset,
-            };
-
-            ResponseModel response = App.BaseUserControl.InternalService.ModifyUser(requestModel);
-
-            if (response.IsOperationSuccess)
-            {
-                App.ShowMessage(true, string.Empty);
-            }
-            else
-            {
-                App.ShowMessage(false, response.ErrorMessage);
-            }
-        }
-
         #endregion
 
         #region Private Methods
+
+        private SubseryModel GetSubseriesModel(bool isNewRecord)
+        {
+            SubseryModel subseryModel = new SubseryModel()
+            {
+                CollectionId = short.Parse(((SubseriesUIModel)DataContext).SelectedCollection),
+                SubseryName = SubseriesNameTextBox.Text,
+                Number = NumberTextBox.Text,
+                Dates = DatesTextBox.Text,
+                Note = NotesTextBox.Text,
+                Subjects = SubjectTextBox.Text,
+                Keywords = KeywordsTextBox.Text,
+                Description = DescriptionTextBox.Text,
+                ScopeAndContent = ScopeAndContentTextBox.Text,
+                CustodialHistory = CustodialHistoryTextBox.Text,
+                Size = SizeTextBox.Text,
+                Acquisitioninfo = AcquisitioninfoTextBox.Text,
+                Language = LanguageTextBox.Text,
+
+                PreservationNote = PreservationNoteTextBox.Text,
+                Rights = RightsTextBox.Text,
+                AccessRestrictions = AccessRestrictionsTextBox.Text,
+                PublicationRights = PublicationRightsTextBox.Text,
+
+                PreferredCitation = PreferredCitationTextBox.Text,
+                RelatedCollection = RelatedCollectionTextBox.Text,
+                SeparatedMaterial = SeparatedMaterialTextBox.Text,
+                OriginalLocation = OriginalLocationTextBox.Text,
+                CopiesLocation = CopiesLocationTextBox.Text,
+                PublicationNote = PublicationNoteTextBox.Text,
+                Creator = CreatorTextBox.Text,
+                Contributors = ContributorsTextBox.Text,
+                ProcessedBy = ProcessedByTextBox.Text,
+                Sponsors = SponsorsTextBox.Text
+            };
+
+            if (!isNewRecord)
+            {
+                subseryModel.Id = SubseriesId;
+            }
+
+            return subseryModel;
+        }
 
         /// <summary>
         /// Forms the validation.
@@ -224,17 +213,36 @@ namespace WpfApp
             {
                 SubseryModel subseries = response.SubseriesModel;
 
-                //WellKnownUserType userType = (WellKnownUserType)user.UserType;
-
-                //UserTypeComboBox.SelectedIndex = user.UserType - 2;
-                //NameTextBox.Text = user.Name;
+                ((SubseriesUIModel)DataContext).SelectedCollection = subseries.CollectionId.ToString();               
                 SubseriesNameTextBox.Text = subseries.SubseryName;
 
+                NumberTextBox.Text = subseries.Number;
+                DatesTextBox.Text = subseries.Dates;
+                NotesTextBox.Text = subseries.Note;
+                SubjectTextBox.Text = subseries.Subjects;
+                KeywordsTextBox.Text = subseries.Keywords;
+                DescriptionTextBox.Text = subseries.Description;
+                ScopeAndContentTextBox.Text = subseries.ScopeAndContent;
+                CustodialHistoryTextBox.Text = subseries.CustodialHistory;
+                SizeTextBox.Text = subseries.Size;
+                AcquisitioninfoTextBox.Text = subseries.Acquisitioninfo;
+                LanguageTextBox.Text = subseries.Language;
 
-                //ComboBoxItem ComboItem = (ComboBoxItem)CollectionComboBox.SelectedItem;
-                //CollectionComboBox.SelectedItem = 5;
+                PreservationNoteTextBox.Text = subseries.PreservationNote;
+                RightsTextBox.Text = subseries.Rights;
+                AccessRestrictionsTextBox.Text = subseries.AccessRestrictions;
+                PublicationRightsTextBox.Text = subseries.PublicationRights;
 
-                SelectedId = subseries.CollectionId;
+                PreferredCitationTextBox.Text = subseries.PreferredCitation;
+                RelatedCollectionTextBox.Text = subseries.RelatedCollection;
+                SeparatedMaterialTextBox.Text = subseries.SeparatedMaterial;
+                OriginalLocationTextBox.Text = subseries.OriginalLocation;
+                CopiesLocationTextBox.Text = subseries.CopiesLocation;
+                PublicationNoteTextBox.Text = subseries.PublicationNote;
+                CreatorTextBox.Text = subseries.Creator;
+                ContributorsTextBox.Text = subseries.Contributors;
+                ProcessedByTextBox.Text = subseries.ProcessedBy;
+                SponsorsTextBox.Text = subseries.Sponsors;
             }
             else
             {
@@ -258,7 +266,7 @@ namespace WpfApp
                 App.ShowMessage(false, response.ErrorMessage);
             }
         }
-               
+
         #endregion
     }
 }

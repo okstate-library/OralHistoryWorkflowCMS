@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="87a77b055bfc40618fa21197588bfc72" Name="Diagram1" ZoomLevel="71">
+      <Diagram DiagramId="87a77b055bfc40618fa21197588bfc72" Name="Diagram1" ZoomLevel="72">
         <EntityTypeShape EntityType="oralcmsdbModel.collection" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="oralcmsdbModel.keyword" Width="1.5" PointX="4.75" PointY="0.75" />
         <EntityTypeShape EntityType="oralcmsdbModel.subject" Width="1.5" PointX="2.625" PointY="0.75" />
@@ -13,6 +13,7 @@
         <EntityTypeShape EntityType="oralcmsdbModel.transcription" Width="1.5" PointX="8.625" PointY="0.75" />
         <EntityTypeShape EntityType="oralcmsdbModel.interviewer" Width="1.5" PointX="12.625" PointY="0.75" />
         <EntityTypeShape EntityType="oralcmsdbModel.audioequipmentused" Width="2.625" PointX="14.875" PointY="0.75" />
+        <EntityTypeShape EntityType="oralcmsdbModel.repository" Width="1.5" PointX="4.375" PointY="4.25" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

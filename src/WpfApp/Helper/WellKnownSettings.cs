@@ -16,23 +16,28 @@
         Users = 1,
 
         /// <summary>
+        /// The repository
+        /// </summary>
+        Repository = 2,
+
+        /// <summary>
         /// The collection
         /// </summary>
-        Collection = 2,
+        Collection = 3,
 
         /// <summary>
         /// The subseries
         /// </summary>
-        Subseries = 3,
+        Subseries = 4,
 
         /// <summary>
         /// The export all
         /// </summary>
-        ExportAll = 4,
+        ExportAll = 5,
 
         /// <summary>
         /// The reset
         /// </summary>
-        Reset = 5
+        Reset = 6
     }
 }

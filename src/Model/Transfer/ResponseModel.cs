@@ -9,6 +9,8 @@ namespace Model.Transfer
     /// <seealso cref="Model.BaseResponse" />
     public class ResponseModel : BaseResponse
     {
+        public List<RepositoryModel> Repositories { get; set; }
+
         /// <summary>
         /// Gets or sets the collecions.
         /// </summary>
@@ -16,7 +18,10 @@ namespace Model.Transfer
         /// The collecions.
         /// </value>
         public List<CollectionModel> Collections { get; set; }
-        
+
+
+        public RepositoryModel Repository { get; set; }
+
         /// <summary>
         /// Gets or sets the collecion.
         /// </summary>

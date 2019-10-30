@@ -1,7 +1,10 @@
 ﻿using Model;
 using Model.Transfer;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
+using WpfApp.Domain;
+using WpfApp.Helper;
 
 namespace WpfApp
 {
@@ -32,7 +35,7 @@ namespace WpfApp
         #endregion
 
         #region Constructor
-
+        
         /// <summary>
         /// Initializes a new instance of the <see cref="collectionId"/> class.
         /// </summary>
@@ -45,6 +48,7 @@ namespace WpfApp
 
             CollectionId = collectionId;
 
+            DataContext = new CollectionUIModel();
         }
 
         #endregion
@@ -84,10 +88,7 @@ namespace WpfApp
                 {
                     RequestModel requestModel = new RequestModel()
                     {
-                        CollectionModel = new CollectionModel()
-                        {
-                            CollectionName = this.CollectionNameTextBox.Text
-                        },
+                        CollectionModel = GetCollectionModel(true),
 
                         WellKnownModificationType = Core.Enums.WellKnownModificationType.Add,
                     };
@@ -100,11 +101,7 @@ namespace WpfApp
                 {
                     RequestModel requestModel = new RequestModel()
                     {
-                        CollectionModel = new CollectionModel()
-                        {
-                            Id = CollectionId,
-                            CollectionName = this.CollectionNameTextBox.Text,
-                        },
+                        CollectionModel = GetCollectionModel(false),
 
                         WellKnownModificationType = Core.Enums.WellKnownModificationType.Edit,
 
@@ -121,39 +118,53 @@ namespace WpfApp
                 App.ShowMessage(false, "Fill all the fields.");
             }
         }
-
-        /// <summary>
-        /// Handles the Click event of the ResetPassword control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
-        private void ResetPassword_Click(object sender, RoutedEventArgs e)
-        {
-            RequestModel requestModel = new RequestModel()
-            {
-                UserModel = new UserModel()
-                {
-                    UserId = CollectionId
-                },
-
-                WellKnownModificationType = Core.Enums.WellKnownModificationType.Reset,
-            };
-
-            ResponseModel response = App.BaseUserControl.InternalService.ModifyUser(requestModel);
-
-            if (response.IsOperationSuccess)
-            {
-                App.ShowMessage(true, string.Empty);
-            }
-            else
-            {
-                App.ShowMessage(false, response.ErrorMessage);
-            }
-        }
-
+               
         #endregion
 
         #region Private Methods
+
+        private CollectionModel GetCollectionModel(bool isNewRecord)
+        {
+            CollectionModel collectionModel = new CollectionModel()
+            {
+                RepositoryId = short.Parse(((CollectionUIModel)DataContext).SelectedRepository),
+                CollectionName = CollectionNameTextBox.Text,
+                Number = NumberTextBox.Text,
+                Dates = DatesTextBox.Text,
+                Note = NotesTextBox.Text,
+                Subjects = SubjectTextBox.Text,
+                Keywords = KeywordsTextBox.Text,
+                Description = DescriptionTextBox.Text,
+                ScopeAndContent = ScopeAndContentTextBox.Text,
+                CustodialHistory = CustodialHistoryTextBox.Text,
+                Size = SizeTextBox.Text,
+                Acquisitioninfo = AcquisitioninfoTextBox.Text,
+                Language = LanguageTextBox.Text,
+
+                PreservationNote = PreservationNoteTextBox.Text,
+                Rights = RightsTextBox.Text,
+                AccessRestrictions = AccessRestrictionsTextBox.Text,
+                PublicationRights = PublicationRightsTextBox.Text,
+
+                PreferredCitation = PreferredCitationTextBox.Text,
+                RelatedCollection = RelatedCollectionTextBox.Text,
+                SeparatedMaterial = SeparatedMaterialTextBox.Text,
+                OriginalLocation = OriginalLocationTextBox.Text,
+                CopiesLocation = CopiesLocationTextBox.Text,
+                PublicationNote = PublicationNoteTextBox.Text,
+                Creator = CreatorTextBox.Text,
+                Contributors = ContributorsTextBox.Text,
+                ProcessedBy = ProcessedByTextBox.Text,
+                Sponsors = SponsorsTextBox.Text
+            };
+
+            if (!isNewRecord)
+            {
+                collectionModel.Id = CollectionId;
+            }
+
+            return collectionModel;
+        }
 
         private bool FormValidation()
         {
@@ -183,7 +194,36 @@ namespace WpfApp
             {
                 CollectionModel collection = response.Collection;
 
+                ((CollectionUIModel)DataContext).SelectedRepository = collection.RepositoryId.ToString();
+
                 CollectionNameTextBox.Text = collection.CollectionName;
+                NumberTextBox.Text = collection.Number;
+                DatesTextBox.Text = collection.Dates;
+                NotesTextBox.Text = collection.Note;
+                SubjectTextBox.Text = collection.Subjects;
+                KeywordsTextBox.Text = collection.Keywords;
+                DescriptionTextBox.Text = collection.Description;
+                ScopeAndContentTextBox.Text = collection.ScopeAndContent;
+                CustodialHistoryTextBox.Text = collection.CustodialHistory;
+                SizeTextBox.Text = collection.Size;
+                AcquisitioninfoTextBox.Text = collection.Acquisitioninfo;
+                LanguageTextBox.Text = collection.Language;
+
+                PreservationNoteTextBox.Text = collection.PreservationNote;
+                RightsTextBox.Text = collection.Rights;
+                AccessRestrictionsTextBox.Text = collection.AccessRestrictions;
+                PublicationRightsTextBox.Text = collection.PublicationRights;
+
+                PreferredCitationTextBox.Text = collection.PreferredCitation;
+                RelatedCollectionTextBox.Text = collection.RelatedCollection;
+                SeparatedMaterialTextBox.Text = collection.SeparatedMaterial;
+                OriginalLocationTextBox.Text = collection.OriginalLocation;
+                CopiesLocationTextBox.Text = collection.CopiesLocation;
+                PublicationNoteTextBox.Text = collection.PublicationNote;
+                CreatorTextBox.Text = collection.Creator;
+                ContributorsTextBox.Text = collection.Contributors;
+                ProcessedByTextBox.Text = collection.ProcessedBy;
+                SponsorsTextBox.Text = collection.Sponsors;
 
             }
             else

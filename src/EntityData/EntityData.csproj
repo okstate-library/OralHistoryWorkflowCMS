@@ -104,6 +104,9 @@
       <DependentUpon>OralCMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="repository.cs">
+      <DependentUpon>OralCMSModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="subject.cs">
       <DependentUpon>OralCMSModel.tt</DependentUpon>
     </Compile>

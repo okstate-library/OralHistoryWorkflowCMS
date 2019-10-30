@@ -56,6 +56,20 @@ namespace BusinessServices.Servcices
         /// <value>
         /// The collection repository.
         /// </value>
+        private RepositoryRepository RepositoryRepository
+        {
+            get;
+            set;
+        }
+
+
+
+        /// <summary>
+        /// Gets or sets the collection repository.
+        /// </summary>
+        /// <value>
+        /// The collection repository.
+        /// </value>
         private CollectionRepository CollectionRepository
         {
             get;
@@ -192,6 +206,7 @@ namespace BusinessServices.Servcices
             WellKnownError = new WellKnownErrors();
 
             TranscriptionRepository = new TranscriptionRepository();
+            RepositoryRepository = new RepositoryRepository();
             CollectionRepository = new CollectionRepository();
             SubseryRepository = new SubseryRepository();
             SubjectRepository = new SubjectRepository();
@@ -211,6 +226,7 @@ namespace BusinessServices.Servcices
         {
             MainFormModel mainFormModel = null;
 
+            List<RepositoryModel> repositoryList = new List<RepositoryModel>();
             List<CollectionModel> newlist = new List<CollectionModel>();
             List<SubseryModel> newSubseriesList = new List<SubseryModel>();
             List<SubjectModel> subjectList = new List<SubjectModel>();
@@ -219,38 +235,51 @@ namespace BusinessServices.Servcices
 
             //if (Request.IsStartup)
             //{
-                mainFormModel = new MainFormModel()
-                {
-                    BrowseRecordCount = TranscriptionRepository.GetAll().Count(),
-                    TranscrptionQueueRecordCount = TranscriptionRepository.FindBy(t => t.TranscriptStatus == false).Count(),
-                };
+            mainFormModel = new MainFormModel()
+            {
+                BrowseRecordCount = TranscriptionRepository.GetAll().Count(),
+                TranscrptionQueueRecordCount = TranscriptionRepository.FindBy(t => t.TranscriptStatus == false).Count(),
+            };
 
-                List<collection> collections = CollectionRepository.GetCollections();
+            // collect repository details.
+            List<repository> repositories = RepositoryRepository.GetRepositoriess();
 
-                foreach (collection item in collections)
-                {
-                    newlist.Add(Util.ConvertToCollectionModel(item));
-                }
+            foreach (repository item in repositories)
+            {
+                repositoryList.Add(Util.ConvertToRepositoryModel(item));
+            }
 
-                foreach (subsery item in SubseryRepository.GetSubseries())
-                {
-                    newSubseriesList.Add(Util.ConvertToSubseryModel(item, collections.FirstOrDefault(s => s.Id == item.CollectionId).CollectionName));
-                }
+            // collect collection details.
+            List<collection> collections = CollectionRepository.GetCollections();
 
-                foreach (subject item in SubjectRepository.GetSubjects())
-                {
-                    subjectList.Add(Util.ConvertToSubjectModel(item));
-                }
+            foreach (collection item in collections)
+            {
+                newlist.Add(Util.ConvertToCollectionModel(item, repositories.First(c => c.Id == item.RepositoryId).RepositoryName));
+            }
 
-                foreach (keyword item in KeywordRepository.GetKeywords())
-                {
-                    keywordList.Add(Util.ConvertToKeywordModel(item));
-                }
+            // collect subseries details.
+            foreach (subsery item in SubseryRepository.GetSubseries())
+            {
+                newSubseriesList.Add(Util.ConvertToSubseryModel(item, collections.FirstOrDefault(s => s.Id == item.CollectionId).CollectionName));
+            }
 
-                foreach (usertype item in UserTypeRepository.GetAll())
-                {
-                    userTypes.Add(Util.ConvertToUsertypeModel(item));
-                }
+            // collect subject details.
+            foreach (subject item in SubjectRepository.GetSubjects())
+            {
+                subjectList.Add(Util.ConvertToSubjectModel(item));
+            }
+
+            // collect keywords details.
+            foreach (keyword item in KeywordRepository.GetKeywords())
+            {
+                keywordList.Add(Util.ConvertToKeywordModel(item));
+            }
+
+            // collect user types details.
+            foreach (usertype item in UserTypeRepository.GetAll())
+            {
+                userTypes.Add(Util.ConvertToUsertypeModel(item));
+            }
             //}
 
             List<PredefinedUserModel> predefineUserList = Util.ConvertToPredefinedUserModel(PredefineUserRepository.GetPredefinedUsers());
@@ -258,9 +287,10 @@ namespace BusinessServices.Servcices
             List<string> audioEquipmentsUsed = AudioEquipmentUsedRepository.List();
 
             List<string> videoEquipmentsUsed = VideoEquipmentUsedRepository.List();
-            
+
             Response = new ResponseModel()
             {
+                Repositories = repositoryList,
                 Subseries = newSubseriesList,
                 Collections = newlist,
                 Subjects = subjectList,

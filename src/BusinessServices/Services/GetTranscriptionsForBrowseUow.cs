@@ -57,6 +57,12 @@ namespace BusinessServices.Servcices
             set;
         }
 
+        public CollectionRepository CollectionRepository
+        {
+            get;
+            set;
+        }
+
         /// <summary>
         /// Gets or sets the well known error.
         /// </summary>
@@ -104,6 +110,7 @@ namespace BusinessServices.Servcices
             WellKnownError = new WellKnownErrors();
 
             TranscriptionRepository = new TranscriptionRepository();
+            CollectionRepository = new CollectionRepository();
 
             WellKnownError.Value = WellKnownError.NoError;
         }
@@ -117,6 +124,7 @@ namespace BusinessServices.Servcices
 
             List<TranscriptionModel> newlist = new List<TranscriptionModel>();
             List<transcription> allTranscriptions = null;
+            List<transcription> filteredList = null;
 
             if (Request.IsAdminUser)
             {
@@ -124,10 +132,8 @@ namespace BusinessServices.Servcices
             }
             else
             {
-                allTranscriptions = TranscriptionRepository.FindBy(p => !p.IsRestriction).ToList();
+                allTranscriptions = TranscriptionRepository.FindBy(p => !p.IsRestriction && !p.IsDarkArchive).ToList();
             }
-
-            pagedList = allTranscriptions.ToPagedList(Request.SearchRequest.CurrentPage, Request.SearchRequest.ListLength);
 
             if (Request.TranscriptionSearchModel.IsSearchRecordsExists() || !string.IsNullOrEmpty(Request.SearchWord))
             {
@@ -152,7 +158,6 @@ namespace BusinessServices.Servcices
                 {
                     predicate = predicate.Or(p => p.IsOnline == bool.Parse(item));
                 }
-                
 
                 IEnumerable<transcription> dataset3 = allTranscriptions.Where<transcription>(predicate.Compile());
 
@@ -175,8 +180,15 @@ namespace BusinessServices.Servcices
                     dataset3 = dataset3.Union(pagedTransactionList);
                 }
 
+                filteredList = dataset3.ToList();
 
                 pagedList = dataset3.ToPagedList(Request.SearchRequest.CurrentPage, Request.SearchRequest.ListLength);
+            }
+            else
+            {
+                filteredList = allTranscriptions;
+
+                pagedList = allTranscriptions.ToPagedList(Request.SearchRequest.CurrentPage, Request.SearchRequest.ListLength);
             }
 
             PaginationInfo page = page = new PaginationInfo()
@@ -197,6 +209,7 @@ namespace BusinessServices.Servcices
 
             Response = new ResponseModel()
             {
+                BrowseFormModel = GetFilterBoxes(filteredList),
                 PaginationInfo = page,
                 Transcriptions = newlist,
                 IsOperationSuccess = true
@@ -225,5 +238,91 @@ namespace BusinessServices.Servcices
 
             }
         }
+
+        private BrowseFormModel GetFilterBoxes(IEnumerable<transcription> transcriptions)
+        {
+            BrowseFormModel browseFormModel = new BrowseFormModel();
+
+            // Interview list
+
+            List<string> interviewerList = new List<string>();
+            List<string> subjectList = new List<string>();
+
+            foreach (transcription item in transcriptions)
+            {
+                List<string> words = item.Interviewer.Split(';').Select(p => p.Trim()).ToList();
+
+                foreach (string word in words)
+                {
+                    if (!string.IsNullOrEmpty(word))
+                    {
+                        interviewerList.Add(word);
+                    }
+                }
+
+                string[] subjects = item.Subject.Split(';');
+
+                foreach (string word in subjects)
+                {
+                    if (!string.IsNullOrEmpty(word))
+                    {
+                        subjectList.Add(word);
+                    }
+                }
+            }
+
+            var interviewers = from x in interviewerList
+                               group x by x into g
+                               let count = g.Count()
+                               orderby count descending
+                               select new { Value = g.Key, Count = count };
+
+            foreach (var interviewer in interviewers)
+            {
+                browseFormModel.InterviewerList.Add(BrowseFormModel.SetListBoxItem(interviewer.Value.Trim(), interviewer.Count, Request.TranscriptionSearchModel.Interviewers));
+            }
+
+            var subjectsList = from x in subjectList
+                               group x by x into g
+                               let count = g.Count()
+                               orderby count descending
+                               select new { Value = g.Key.Trim(), Count = count };
+
+            foreach (var subject in subjectsList)
+            {
+                browseFormModel.SubjectList.Add(BrowseFormModel.SetListBoxItem(subject.Value.Trim(), subject.Count, Request.TranscriptionSearchModel.Subjects));
+            }
+
+            //Content DM list 
+
+            var contentDMs = transcriptions
+                              .GroupBy(n => n.IsOnline)
+                              .Select(n => new
+                              {
+                                  IsOnline = n.Key,
+                                  Count = n.Count()
+                              });
+
+            List<KeyValuePair<string, string>> contentDMList = new List<KeyValuePair<string, string>>();
+
+            foreach (var item in contentDMs)
+            {
+                browseFormModel.ContentDmList.Add(BrowseFormModel.SetListBoxItem(item.IsOnline.ToString(), item.Count, Request.TranscriptionSearchModel.Contentdms));
+            }
+
+
+            // Dark Archieve List 
+            ListBoxItem restriction = browseFormModel.RestrictionList.First();
+
+            restriction.Name = Request.TranscriptionSearchModel.IsDarkArchived ? BrowseFormModel.DarkArchive : BrowseFormModel.NotDarkArchive;
+            restriction.IsChecked = Request.TranscriptionSearchModel.IsDarkArchived;
+            restriction.Count = transcriptions.Count();
+
+            return browseFormModel;
+        }
+
+
+
+
     }
 }

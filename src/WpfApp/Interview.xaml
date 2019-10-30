@@ -356,9 +356,31 @@
 
                         <Border Name="RestrictionsBorder1" Grid.Row="20"  Style="{StaticResource EmptyBorder}"   />
 
-                        <Label Name="RestrictionsLabel" Style="{StaticResource BoldLabel}" Grid.Row="21" Grid.Column="0">Restriction</Label>
+                        <Label Name="BornDigitalLabel" Style="{StaticResource BoldLabel}" Grid.Row="21" Grid.Column="0">Born Digital</Label>
 
-                        <StackPanel Name="RestrictionsStackPanel"  Grid.Row="21" Grid.Column="1" Orientation="Horizontal">
+                        <StackPanel Name="BornDigitalStackPanel"  Grid.Row="21" Grid.Column="1" Orientation="Horizontal">
+
+                            <CheckBox Name="BornDigitalYesCheckBox"
+                                            Style="{StaticResource MaterialDesignCheckBox}" Checked="BornDigital_Check">
+                                Yes
+                            </CheckBox>
+
+                            <CheckBox Name="BornDigitalNoCheckBox"
+                                            Style="{StaticResource MaterialDesignCheckBox}" Checked="BornDigital_Check">
+                                No
+                            </CheckBox>
+
+                        </StackPanel>
+
+                        <Label Style="{StaticResource BoldLabel}" Grid.Row="21" Grid.Column="2" Margin="15 0 0 0" >Transcriber assigned</Label>
+
+                        <TextBox Name="TranscriberAssignedTextBox" Grid.Row="21" Grid.Column="3"   Style="{StaticResource EditableTextBox}" />
+
+                        <Border  Name="RestrictionsBorder2"  Grid.Row="22"  Style="{StaticResource EmptyBorder}"   />
+
+                        <Label Name="RestrictionsLabel" Style="{StaticResource BoldLabel}" Grid.Row="23" Grid.Column="0">Restriction</Label>
+
+                        <StackPanel Name="RestrictionsStackPanel"  Grid.Row="23" Grid.Column="1" Orientation="Horizontal">
 
                             <CheckBox Name="RestrictionYesCheckBox"
                                             Style="{StaticResource MaterialDesignCheckBox}" Checked="Restriction_Check">
@@ -372,15 +394,9 @@
 
                         </StackPanel>
 
-                        <Label Style="{StaticResource BoldLabel}" Grid.Row="21" Grid.Column="2" Margin="15 0 0 0" >Transcriber assigned</Label>
+                        <Label  Name="RestrictionNoteLabel" Style="{StaticResource BoldLabel}" Grid.Row="23" Grid.Column="2" Margin="15 0 0 0">Restriction note</Label>
 
-                        <TextBox Name="TranscriberAssignedTextBox" Grid.Row="21" Grid.Column="3"   Style="{StaticResource EditableTextBox}" />
-
-                        <Border  Name="RestrictionsBorder2"  Grid.Row="22"  Style="{StaticResource EmptyBorder}"   />
-
-                        <Label  Name="RestrictionNoteLabel" Style="{StaticResource BoldLabel}" Grid.Row="23" Grid.Column="0">Restriction note</Label>
-
-                        <TextBox Name="RestrictionNoteTextBox" Grid.Row="23" Grid.Column="1" Grid.ColumnSpan="3" Height="50" Style="{StaticResource EditableTextBox}" />
+                        <TextBox Name="RestrictionNoteTextBox" Grid.Row="23" Grid.Column="3" Grid.ColumnSpan="2" Height="50" Style="{StaticResource EditableTextBox}" />
 
                         <Border  Grid.Row="24"  Style="{StaticResource EmptyBorder}"   />
 

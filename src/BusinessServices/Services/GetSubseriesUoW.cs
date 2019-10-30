@@ -137,7 +137,7 @@ namespace BusinessServices.Servcices
             {
                 foreach (collection item in collections)
                 {
-                    newlist.Add(Util.ConvertToCollectionModel(item));
+                    newlist.Add(Util.ConvertToCollectionModel(item , string.Empty));
                 }
 
                 foreach (subsery item in SubseryRepository.GetSubseries())
