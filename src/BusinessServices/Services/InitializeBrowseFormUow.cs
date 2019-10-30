@@ -49,6 +49,12 @@ namespace BusinessServices.Servcices
             set;
         }
 
+        public SubseryRepository SubseryRepository
+        {
+            get;
+            set;
+        }
+        
         /// <summary>
         /// Gets or sets the TranscriptionRepository repository.
         /// </summary>
@@ -109,6 +115,7 @@ namespace BusinessServices.Servcices
 
             TranscriptionRepository = new TranscriptionRepository();
             CollectionRepository = new CollectionRepository();
+            SubseryRepository = new SubseryRepository();
 
             WellKnownError.Value = WellKnownError.NoError;
         }
@@ -134,32 +141,32 @@ namespace BusinessServices.Servcices
 
             // Interview list
 
-            List<string> interviewerList = new List<string>();
+            //List<string> interviewerList = new List<string>();
 
-            foreach (transcription item in transcriptions)
-            {
-                List<string> words = item.Interviewer.Split(';').Select(p => p.Trim()).ToList();
+            //foreach (transcription item in transcriptions)
+            //{
+            //    List<string> words = item.Interviewer.Split(';').Select(p => p.Trim()).ToList();
 
-                foreach (string word in words)
-                {
-                    if (!string.IsNullOrEmpty(word))
-                    {
-                        interviewerList.Add(word);
-                    }
-                }
-            }
+            //    foreach (string word in words)
+            //    {
+            //        if (!string.IsNullOrEmpty(word))
+            //        {
+            //            interviewerList.Add(word);
+            //        }
+            //    }
+            //}
                        
-            var interviewers = from x in interviewerList
-                           group x by x into g
-                           let count = g.Count()
-                           orderby count descending
-                           select new { Value = g.Key, Count = count };
+            //var interviewers = from x in interviewerList
+            //               group x by x into g
+            //               let count = g.Count()
+            //               orderby count descending
+           //                select new { Value = g.Key, Count = count };
 
-            foreach (var interviewer in interviewers)
-            {
-                browseFormModel.InterviewerList.Add(SetPair(interviewer.Value, interviewer.Count));
-            }
-            
+            //foreach (var interviewer in interviewers)
+            //{
+            //    browseFormModel.InterviewerList.Add(SetPair(interviewer.Value, interviewer.Count));
+            //}
+
             //Collection list 
             var collections = transcriptions
                                 .GroupBy(n => n.CollectionId)
@@ -168,64 +175,84 @@ namespace BusinessServices.Servcices
                                     CollectionId = n.Key,
                                     Count = n.Count()
                                 });
-
-
+            
             List<collection> daCollections = CollectionRepository.GetCollections();
 
             foreach (var item in collections)
             {
                 collection collectionOjb = daCollections.First(c => c.Id == item.CollectionId);
 
-                browseFormModel.CollectionList.Add(new KeyValuePair<string, string>(
-                    collectionOjb.CollectionName + " (" + item.Count + ")", collectionOjb.Id.ToString()));
-            }
-
-            //Content DM list 
-
-            var contentDMs = transcriptions
-                              .GroupBy(n => n.IsOnline)
-                              .Select(n => new
-                              {
-                                  IsOnline = n.Key,
-                                  Count = n.Count()
-                              });
-
-            List<KeyValuePair<string, string>> contentDMList = new List<KeyValuePair<string, string>>();
-
-            foreach (var item in contentDMs)
-            {
-                browseFormModel.ContentDmList.Add(
-                    new KeyValuePair<string, string>(
-                    item.IsOnline.ToString() + " (" + item.Count + ")", item.IsOnline.ToString()));
+                browseFormModel.CollectionList.Add(SetListBoxItem(collectionOjb.CollectionName, item.Count, collectionOjb.Id));
 
             }
+                       
+            // Subseries List 
+            //var subserieList = transcriptions
+            //                   .GroupBy(n => n.SubseriesId)
+            //                   .Select(n => new
+            //                   {
+            //                       SubseriesId = n.Key,
+            //                       Count = n.Count()
+            //                   });
 
-            // Subject list
-            List<string> subjectList = new List<string>();
+            //List<subsery> subseries = SubseryRepository.GetAll().ToList();
 
-            foreach (transcription item in transcriptions)
-            {
-                string[] words = item.Subject.Split(';');
+            //foreach (var item in subserieList)
+            //{
+            //    subsery subseryObj = subseries.First(c => c.Id == item.SubseriesId);
 
-                foreach (string word in words)
-                {
-                    if (!string.IsNullOrEmpty(word))
-                    {
-                        subjectList.Add(word);
-                    }
-                }
-            }
+            //    if (subseryObj.SubseriesName.Trim() != "N/A")
+            //    {
+            //        browseFormModel.SubseriesList.Add(SetListBoxItem(subseryObj.SubseriesName, item.Count, subseryObj.Id));
+            //    }                               
+            //}
+            
+            ////Content DM list 
 
-            var subjects = from x in subjectList
-                           group x by x into g
-                           let count = g.Count()
-                           orderby count descending
-                           select new { Value = g.Key, Count = count };
+            //var contentDMs = transcriptions
+            //                  .GroupBy(n => n.IsOnline)
+            //                  .Select(n => new
+            //                  {
+            //                      IsOnline = n.Key,
+            //                      Count = n.Count()
+            //                  });
 
-            foreach (var subject in subjects)
-            {
-                browseFormModel.SubjectList.Add(SetPair(subject.Value, subject.Count));
-            }
+            //List<KeyValuePair<string, string>> contentDMList = new List<KeyValuePair<string, string>>();
+
+            //foreach (var item in contentDMs)
+            //{
+            //    browseFormModel.ContentDmList.Add(
+            //        new KeyValuePair<string, string>(
+            //        item.IsOnline.ToString() + " (" + item.Count + ")", item.IsOnline.ToString()));
+
+            //}
+
+            //// Subject list
+            //List<string> subjectList = new List<string>();
+
+            //foreach (transcription item in transcriptions)
+            //{
+            //    string[] words = item.Subject.Split(';');
+
+            //    foreach (string word in words)
+            //    {
+            //        if (!string.IsNullOrEmpty(word))
+            //        {
+            //            subjectList.Add(word);
+            //        }
+            //    }
+            //}
+
+            //var subjects = from x in subjectList
+            //               group x by x into g
+            //               let count = g.Count()
+            //               orderby count descending
+            //               select new { Value = g.Key, Count = count };
+
+            //foreach (var subject in subjects)
+            //{
+            //    browseFormModel.SubjectList.Add(SetPair(subject.Value, subject.Count));
+            //}
 
             Response = new ResponseModel()
             {
@@ -233,6 +260,16 @@ namespace BusinessServices.Servcices
                 IsOperationSuccess = true
             };
 
+        }
+
+        private ListBoxItem SetListBoxItem(string name, int count, int value)
+        {
+            return new ListBoxItem
+            {
+                Name = name,
+                Count = count,
+                Value = value.ToString()
+            };
         }
 
         /// <summary>

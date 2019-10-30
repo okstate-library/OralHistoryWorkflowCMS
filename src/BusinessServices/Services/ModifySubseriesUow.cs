@@ -125,13 +125,8 @@ namespace BusinessServices.Servcices
             {
                 case Core.Enums.WellKnownModificationType.Add:
 
-                    subsery = new subsery()
-                    {
-                        CollectionId = Request.SubseryModel.CollectionId,
-                        SubseriesName = Request.SubseryModel.SubseryName
-
-                    };
-
+                    subsery = Util.ConvertToSubsery(Request.SubseryModel);
+                  
                     SubseryRepository.Add(subsery);
 
                     SubseryRepository.Save();

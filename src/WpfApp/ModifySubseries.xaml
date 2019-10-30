@@ -84,31 +84,208 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="200" />
-                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="150" />
                             <ColumnDefinition Width="200" />
                             <ColumnDefinition Width="50" />
+                            <ColumnDefinition Width="150" />
                             <ColumnDefinition Width="200" />
                         </Grid.ColumnDefinitions>
 
                         <TextBlock Style="{StaticResource BoldTextBlock}" Grid.Row="0" Grid.Column="0" Margin="8">Collection <TextBlock Foreground="Red"> *</TextBlock> </TextBlock>
- 
-                        <ComboBox Grid.Row="0" Grid.Column="2" ItemsSource="{Binding Collections}" DisplayMemberPath="Name" 
+
+                        <!--<ComboBox Grid.Row="0" Grid.Column="1"  Grid.ColumnSpan="4" ItemsSource="{Binding Collections}" DisplayMemberPath="Name" 
                                   HorizontalAlignment="Left" Name="CollectionComboBox" VerticalAlignment="Top" Width="435" 
-                                  Grid.ColumnSpan="3" SelectedValuePath="Id" 
+                                  SelectedValuePath="Id" 
                                   
                                   SelectedValue="{Binding SelectedId, ValidatesOnDataErrors=True}">                                                       
-                        </ComboBox>
+                        </ComboBox>-->
+                       
+                        <ComboBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="4"  ItemsSource="{Binding Path=Collections}" 
+                            DisplayMemberPath="Name" SelectedValuePath="Id" SelectedValue="{Binding Path=SelectedCollection}" />
 
                         <Border  Grid.Row="1"  Style="{StaticResource EmptyBorder}"   />
 
                         <TextBlock Style="{StaticResource BoldTextBlock}" Grid.Row="2" Grid.Column="0" Margin="8">Subseries <TextBlock Foreground="Red"> *</TextBlock> </TextBlock>
 
-                        <TextBox Name="SubseriesNameTextBox"  Grid.Row="2" Grid.Column="2"  Grid.ColumnSpan="3" Style="{StaticResource EditableTextBox}"/>
+                        <TextBox Name="SubseriesNameTextBox"  Grid.Row="2" Grid.Column="1"   Grid.ColumnSpan="4" Style="{StaticResource EditableTextBox}"/>
 
-                        <Button Grid.Row="9" Name="SubmitButton" Grid.ColumnSpan="3"  Margin="0,20,0,0" Style="{StaticResource MaterialDesignRaisedAccentButton}" Click="SaveUserDetails_Click" 
+                        <Border  Grid.Row="3"  Style="{StaticResource EmptyBorder}"   />
+
+                        <TextBlock Style="{StaticResource BoldTextBlock}" Grid.Row="4" Grid.Column="0" Margin="8">Number</TextBlock>
+
+                        <TextBox Name="NumberTextBox"  Grid.Row="4" Grid.Column="1"  Style="{StaticResource EditableTextBox}"/>
+
+                        <TextBlock Style="{StaticResource BoldTextBlock}" Grid.Row="4" Grid.Column="3" Margin="8">Dates</TextBlock>
+
+                        <TextBox Name="DatesTextBox"  Grid.Row="4" Grid.Column="4"  Style="{StaticResource EditableTextBox}"/>
+
+                        <Border  Grid.Row="5"  Style="{StaticResource EmptyBorder}"   />
+
+                        <TextBlock Style="{StaticResource BoldTextBlock}" Grid.Row="6" Grid.Column="0" Margin="8">Notes</TextBlock>
+
+                        <TextBox Name="NotesTextBox"  Grid.Row="6" Grid.Column="1"  Grid.ColumnSpan="4" Style="{StaticResource EditableTextBox}"/>
+
+                        <Border  Grid.Row="7"  Style="{StaticResource EmptyBorder}"   />
+
+                        <TextBlock Style="{StaticResource BoldTextBlock}" Grid.Row="8" Grid.Column="0" Margin="8">Subject</TextBlock>
+
+                        <TextBox Name="SubjectTextBox"  Grid.Row="8" Grid.Column="1"  Grid.ColumnSpan="4" Style="{StaticResource EditableTextBox}"/>
+
+                        <Border  Grid.Row="9"  Style="{StaticResource EmptyBorder}"   />
+
+                        <TextBlock Style="{StaticResource BoldTextBlock}" Grid.Row="10" Grid.Column="0" Margin="8">Keywords</TextBlock>
+
+                        <TextBox Name="KeywordsTextBox"  Grid.Row="10" Grid.Column="1"  Grid.ColumnSpan="4" Style="{StaticResource EditableTextBox}"/>
+
+                        <Border  Grid.Row="11"  Style="{StaticResource EmptyBorder}"   />
+
+                        <TextBlock Style="{StaticResource BoldTextBlock}" Grid.Row="12" Grid.Column="0" Margin="8">Description</TextBlock>
+
+                        <TextBox Name="DescriptionTextBox"  Grid.Row="12" Grid.Column="1"  Grid.ColumnSpan="4" Style="{StaticResource EditableTextBox}"/>
+
+                        <Border  Grid.Row="13"  Style="{StaticResource EmptyBorder}"   />
+
+                        <TextBlock Style="{StaticResource BoldTextBlock}" Grid.Row="14" Grid.Column="0" Margin="8">Scope &amp; Content</TextBlock>
+
+                        <TextBox Name="ScopeAndContentTextBox"  Grid.Row="14" Grid.Column="1"  Grid.ColumnSpan="4" Style="{StaticResource EditableTextBox}"/>
+
+                        <Border  Grid.Row="15"  Style="{StaticResource EmptyBorder}"   />
+
+                        <TextBlock Style="{StaticResource BoldTextBlock}" Grid.Row="16" Grid.Column="0" Margin="8">Custodial History</TextBlock>
+
+                        <TextBox Name="CustodialHistoryTextBox"  Grid.Row="16" Grid.Column="1"  Grid.ColumnSpan="4" Style="{StaticResource EditableTextBox}"/>
+
+                        <Border  Grid.Row="17"  Style="{StaticResource EmptyBorder}"   />
+
+                        <TextBlock Style="{StaticResource BoldTextBlock}" Grid.Row="18" Grid.Column="0" Margin="8">Size</TextBlock>
+
+                        <TextBox Name="SizeTextBox"  Grid.Row="18" Grid.Column="1"  Style="{StaticResource EditableTextBox}"/>
+
+                        <TextBlock Style="{StaticResource BoldTextBlock}" Grid.Row="18" Grid.Column="3" Margin="8">Language</TextBlock>
+
+                        <TextBox Name="LanguageTextBox"  Grid.Row="18" Grid.Column="4"  Style="{StaticResource EditableTextBox}"/>
+
+                        <Border  Grid.Row="19"  Style="{StaticResource EmptyBorder}"   />
+
+                        <TextBlock Style="{StaticResource BoldTextBlock}" Grid.Row="20" Grid.Column="0" Margin="8">Acquisition info</TextBlock>
+
+                        <TextBox Name="AcquisitioninfoTextBox"  Grid.Row="20" Grid.Column="1"  Grid.ColumnSpan="4" Style="{StaticResource EditableTextBox}"/>
+
+                        <Border  Grid.Row="21"  Style="{StaticResource EmptyBorder}"   />
+
+                        <TextBlock Style="{StaticResource BoldTextBlock}" Grid.Row="22" Grid.Column="0" Margin="8">Preservation Note</TextBlock>
+
+                        <TextBox Name="PreservationNoteTextBox"  Grid.Row="22" Grid.Column="1"  Grid.ColumnSpan="4" Style="{StaticResource EditableTextBox}"/>
+
+                        <Border  Grid.Row="23"  Style="{StaticResource EmptyBorder}"   />
+
+                        <TextBlock Style="{StaticResource BoldTextBlock}" Grid.Row="24" Grid.Column="0" Margin="8">Rights</TextBlock>
+
+                        <TextBox Name="RightsTextBox"  Grid.Row="24" Grid.Column="1"  Grid.ColumnSpan="4" Style="{StaticResource EditableTextBox}"/>
+
+                        <Border  Grid.Row="25"  Style="{StaticResource EmptyBorder}"   />
+
+                        <TextBlock Style="{StaticResource BoldTextBlock}" Grid.Row="26" Grid.Column="0" Margin="8">Access Restrictions</TextBlock>
+
+                        <TextBox Name="AccessRestrictionsTextBox"  Grid.Row="26" Grid.Column="1"  Grid.ColumnSpan="4" Style="{StaticResource EditableTextBox}"/>
+
+                        <Border  Grid.Row="27"  Style="{StaticResource EmptyBorder}"   />
+
+                        <TextBlock Style="{StaticResource BoldTextBlock}" Grid.Row="28" Grid.Column="0" Margin="8">Publication Rights</TextBlock>
+
+                        <TextBox Name="PublicationRightsTextBox"  Grid.Row="28" Grid.Column="1"  Grid.ColumnSpan="4" Style="{StaticResource EditableTextBox}"/>
+
+                        <Border  Grid.Row="29"  Style="{StaticResource EmptyBorder}"   />
+
+                        <TextBlock Style="{StaticResource BoldTextBlock}" Grid.Row="30" Grid.Column="0" Margin="8">Preferred Citation</TextBlock>
+
+                        <TextBox Name="PreferredCitationTextBox"  Grid.Row="30" Grid.Column="1"  Grid.ColumnSpan="4" Style="{StaticResource EditableTextBox}"/>
+
+                        <Border  Grid.Row="31"  Style="{StaticResource EmptyBorder}"   />
+
+                        <TextBlock Style="{StaticResource BoldTextBlock}" Grid.Row="32" Grid.Column="0" Margin="8">Related Collection</TextBlock>
+
+                        <TextBox Name="RelatedCollectionTextBox"  Grid.Row="32" Grid.Column="1"  Grid.ColumnSpan="4" Style="{StaticResource EditableTextBox}"/>
+
+                        <Border  Grid.Row="33"  Style="{StaticResource EmptyBorder}"   />
+
+                        <TextBlock Style="{StaticResource BoldTextBlock}" Grid.Row="34" Grid.Column="0" Margin="8">Separated Material</TextBlock>
+
+                        <TextBox Name="SeparatedMaterialTextBox"  Grid.Row="34" Grid.Column="1"  Grid.ColumnSpan="4" Style="{StaticResource EditableTextBox}"/>
+
+                        <Border  Grid.Row="35"  Style="{StaticResource EmptyBorder}"   />
+
+                        <TextBlock Style="{StaticResource BoldTextBlock}" Grid.Row="36" Grid.Column="0" Margin="8">Original Location</TextBlock>
+
+                        <TextBox Name="OriginalLocationTextBox"  Grid.Row="36" Grid.Column="1"  Grid.ColumnSpan="4" Style="{StaticResource EditableTextBox}"/>
+
+                        <Border  Grid.Row="37"  Style="{StaticResource EmptyBorder}"   />
+
+                        <TextBlock Style="{StaticResource BoldTextBlock}" Grid.Row="38" Grid.Column="0" Margin="8">Copies Location</TextBlock>
+
+                        <TextBox Name="CopiesLocationTextBox"  Grid.Row="38" Grid.Column="1"  Grid.ColumnSpan="4" Style="{StaticResource EditableTextBox}"/>
+
+                        <Border  Grid.Row="39"  Style="{StaticResource EmptyBorder}"   />
+
+                        <TextBlock Style="{StaticResource BoldTextBlock}" Grid.Row="40" Grid.Column="0" Margin="8">Publication Note</TextBlock>
+
+                        <TextBox Name="PublicationNoteTextBox"  Grid.Row="40" Grid.Column="1"  Grid.ColumnSpan="4" Style="{StaticResource EditableTextBox}"/>
+
+                        <Border  Grid.Row="41"  Style="{StaticResource EmptyBorder}"   />
+
+                        <TextBlock Style="{StaticResource BoldTextBlock}" Grid.Row="42" Grid.Column="0" Margin="8">Creator</TextBlock>
+
+                        <TextBox Name="CreatorTextBox"  Grid.Row="42" Grid.Column="1"  Grid.ColumnSpan="4" Style="{StaticResource EditableTextBox}"/>
+
+                        <Border  Grid.Row="43"  Style="{StaticResource EmptyBorder}"   />
+
+                        <TextBlock Style="{StaticResource BoldTextBlock}" Grid.Row="44" Grid.Column="0" Margin="8">Contributors</TextBlock>
+
+                        <TextBox Name="ContributorsTextBox"  Grid.Row="44" Grid.Column="1"  Grid.ColumnSpan="4" Style="{StaticResource EditableTextBox}"/>
+
+                        <Border  Grid.Row="45"  Style="{StaticResource EmptyBorder}"   />
+
+                        <TextBlock Style="{StaticResource BoldTextBlock}" Grid.Row="46" Grid.Column="0" Margin="8">Processed By</TextBlock>
+
+                        <TextBox Name="ProcessedByTextBox"  Grid.Row="46" Grid.Column="1"  Grid.ColumnSpan="4" Style="{StaticResource EditableTextBox}"/>
+
+                        <Border  Grid.Row="47"  Style="{StaticResource EmptyBorder}"   />
+
+                        <TextBlock Style="{StaticResource BoldTextBlock}" Grid.Row="48" Grid.Column="0" Margin="8">Sponsors</TextBlock>
+
+                        <TextBox Name="SponsorsTextBox"  Grid.Row="48" Grid.Column="1"  Grid.ColumnSpan="4" Style="{StaticResource EditableTextBox}"/>
+                        
+                        <Button Grid.Row="50" Name="SubmitButton" Grid.ColumnSpan="5"  Margin="0,20,0,0" Style="{StaticResource MaterialDesignRaisedAccentButton}" Click="SaveUserDetails_Click" 
                         ToolTip="Submit transcript details">
                             _Submit
                         </Button>

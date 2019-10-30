@@ -19,6 +19,8 @@ namespace Model
         /// </value>
         public List<string> CollectionNames { get; set; }
 
+        public List<int> CollectionIds { get; set; }
+
         /// <summary>
         /// Gets or sets the interviewers.
         /// </summary>

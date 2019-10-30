@@ -35,6 +35,7 @@ namespace WpfApp.Helper
         /// The browse record count.
         /// </value>
         public int BrowseRecordCount { get; set; }
+       
 
         /// <summary>
         /// The instance
@@ -113,7 +114,12 @@ namespace WpfApp.Helper
         /// </value>
         public List<CollectionModel> Collections { get; set; }
 
+        public List<RepositoryModel> Repositories { get; private set; }
+
+
         public ObservableCollection<Collection> ObservableCollection { get; set; }
+
+        public ObservableCollection<Repository> ObservablRepository { get; set; }
 
         /// <summary>
         /// The default collection identifier
@@ -164,6 +170,7 @@ namespace WpfApp.Helper
                 TranscrptionQueueRecordCount = response.MainFormModel?.TranscrptionQueueRecordCount ?? 0;
                 BrowseRecordCount = response.MainFormModel?.BrowseRecordCount ?? 0;
 
+                Repositories = response.Repositories;
                 Subseries = response.Subseries;
                 Collections = response.Collections;
                 Keywords = response.Keywords;
@@ -176,6 +183,7 @@ namespace WpfApp.Helper
             }
             else if (response.IsOperationSuccess)
             {
+                Repositories = response.Repositories;
                 Subseries = response.Subseries;
                 Collections = response.Collections;
 
@@ -184,13 +192,13 @@ namespace WpfApp.Helper
                 VideoEquipments = response.VideoEquipmentsUsed;
             }
 
-            SetCollections();
+            SetObservableLists();
         }
         
         /// <summary>
-        /// Sets the collectios.
+        /// Sets the oberservable lists.
         /// </summary>
-        public void SetCollections()
+        public void SetObservableLists()
         {
             ObservableCollection = new ObservableCollection<Collection>();
 
@@ -203,7 +211,15 @@ namespace WpfApp.Helper
                     series.Add(new KeyValuePair<int, string>(subseryItem.Id, subseryItem.SubseryName));
                 }
 
-                ObservableCollection.Add(new Collection() { Id = (short)collectionItem.Id, Name = collectionItem.CollectionName, Series = series });
+                ObservableCollection.Add(new Collection() { Id = (short)collectionItem.Id, Name = collectionItem.CollectionName, Series = series , Subseries = App.BaseUserControl.Subseries });
+            }
+
+
+            ObservablRepository = new ObservableCollection<Repository>();
+
+            foreach (RepositoryModel repositoryModel in App.BaseUserControl.Repositories)
+            {              
+                ObservablRepository.Add(new Repository() { Id = (short)repositoryModel.Id, Name = repositoryModel.RepositoryName});
             }
 
         }

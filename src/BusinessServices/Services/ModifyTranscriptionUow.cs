@@ -276,7 +276,8 @@ namespace BusinessServices.Servcices
                             daTranscription.Identifier = transcriptionModel.Identifier;
                             daTranscription.Transcript = transcriptionModel.Transcript;
                             daTranscription.FileName = transcriptionModel.FileName;
-
+                            daTranscription.CollectionId = transcriptionModel.CollectionId;
+                            daTranscription.SubseriesId = transcriptionModel.SubseriesId;
 
                             break;
                         case Core.Enums.WellKnownTranscriptionModificationType.Supplement:

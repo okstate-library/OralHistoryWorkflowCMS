@@ -145,6 +145,8 @@ namespace Model.Transfer
         /// </value>
         public bool IsStartup { get; set; }
 
+        public int RepositoryId { get; set; }
+
         /// <summary>
         /// Gets or sets the collection identifier.
         /// </summary>
@@ -175,7 +177,12 @@ namespace Model.Transfer
         /// <value>
         /// The subsery model.
         /// </value>
-        public SubseryModel SubseryModel { get; set; }        
+        public SubseryModel SubseryModel { get; set; }
+
+        public RepositoryModel RepositoryModel { get; set; }
+
+
+        
 
     }
 }

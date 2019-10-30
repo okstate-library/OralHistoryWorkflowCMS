@@ -32,16 +32,6 @@ namespace WpfApp
         /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-            //App.BaseUserControl.UserModel = new UserModel()
-            //{
-            //    UserId = 1,
-            //    Name = "Admin",
-            //    UserType = 4,
-            //    Username = "admin"
-            //};
-
-            //Close();
-
             RequestModel requestModel = new RequestModel()
             {
                 UserModel = new UserModel

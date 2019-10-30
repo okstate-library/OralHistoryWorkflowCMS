@@ -125,7 +125,7 @@
                                             <CheckBox Name="CheckedBoxCollection"
                                                       Tag="{Binding Value}" 
                                                       ToolTip="{Binding Key}" 
-                                                      Content="{Binding Key , Converter={StaticResource ShortTextConverter}}" 
+                                                      Content="{Binding Key , Converter={StaticResource ShortTextConverter}}"                                                      
                                                       Checked="CheckBoxSelection_Process" 
                                                       Unchecked="CheckBoxSelection_Process" Style="{StaticResource listCheckBox}"/>
                                         </DataTemplate>
@@ -134,19 +134,39 @@
                             </StackPanel>
                         </Expander>
                         <Border Background="{DynamicResource MaterialDesignDivider}" Height="1" HorizontalAlignment="Stretch" SnapsToDevicePixels="True" />
+                        <!--<Expander HorizontalAlignment="Stretch" Background="{DynamicResource AlternativeColor}"
+                          Header="Subseries"  FontWeight="Bold">
+                            <StackPanel Orientation="Vertical"
+                            TextBlock.Foreground="{DynamicResource MaterialDesignBody}" >
+
+                                <ListBox Name="SubseriesListBox" ItemsSource="{Binding TheList}"  Margin="0 0 0 10">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <CheckBox Name="CheckedBoxSubseries"
+                                                      Tag="{Binding Value}" 
+                                                      ToolTip="{Binding Key}" 
+                                                      Content="{Binding Key , Converter={StaticResource ShortTextConverter}}"                                                      
+                                                      Checked="CheckBoxSelection_Process" 
+                                                      Unchecked="CheckBoxSelection_Process" Style="{StaticResource listCheckBox}"/>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                            </StackPanel>
+                        </Expander>
+                        <Border Background="{DynamicResource MaterialDesignDivider}" Height="1" HorizontalAlignment="Stretch" SnapsToDevicePixels="True" />-->
                         <Expander HorizontalAlignment="Stretch" Background="{DynamicResource PrimaryHueLightBrush}"
                       Header="Interviewer(s)"   FontWeight="Bold">
                             <StackPanel Orientation="Vertical"
                             TextBlock.Foreground="{DynamicResource MaterialDesignBody}">
-                                <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Visible" >
-
-                                    <ListBox Name="InterviewerListBox" ItemsSource="{Binding TheList}"  Margin="0 0 0 10">
+                                <ScrollViewer MaxHeight="250" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Visible" >
+                                    <ListBox Name="InterviewerListBox"  ItemsSource="{Binding TheList}"  Margin="0 0 0 10">
                                         <ListBox.ItemTemplate>
                                             <DataTemplate>
                                                 <CheckBox Name="CheckedBoxInterviewer"
                                                       Tag="{Binding Value}" 
                                                       ToolTip="{Binding Key}" 
                                                       Content="{Binding Key , Converter={StaticResource ShortTextConverter}}" 
+                                                      IsChecked="{Binding IsChecked}"
                                                       Checked="CheckBoxSelection_Process" 
                                                       Unchecked="CheckBoxSelection_Process"  Style="{StaticResource listCheckBox}" />
                                             </DataTemplate>
@@ -158,14 +178,15 @@
                         <Border Background="{DynamicResource MaterialDesignDivider}" Height="1" HorizontalAlignment="Stretch" SnapsToDevicePixels="True" />
                         <Expander HorizontalAlignment="Stretch" Background="{DynamicResource AlternativeColor}" Header="Subject(s)" FontWeight="Bold">
                             <StackPanel Orientation="Vertical" TextBlock.Foreground="{DynamicResource MaterialDesignBody}" >
-                                <ScrollViewer Height="250"  HorizontalScrollBarVisibility="Auto"  VerticalScrollBarVisibility="Visible" >
-                                    <ListBox Name="SubjectListBox" ItemsSource="{Binding TheList}"  Margin="0 0 0 10">
+                                <ScrollViewer MaxHeight="250" PreviewMouseWheel="SubjectListBox_PreviewMouseWheel" Background="Transparent" HorizontalScrollBarVisibility="Auto"  VerticalScrollBarVisibility="Visible" >
+                                    <ListBox Name="SubjectListBox"  ItemsSource="{Binding TheList}"  Margin="0 0 0 10">
                                         <ListBox.ItemTemplate>
                                             <DataTemplate>
                                                 <CheckBox Name="CheckedBoxSubject"
                                                       Tag="{Binding Value}" 
                                                       ToolTip="{Binding Key}" 
                                                       Content="{Binding Key , Converter={StaticResource ShortTextConverter}}" 
+                                                      IsChecked="{Binding IsChecked}"
                                                       Checked="CheckBoxSelection_Process" 
                                                       Unchecked="CheckBoxSelection_Process"  Style="{StaticResource listCheckBox}"/>
                                             </DataTemplate>
@@ -186,6 +207,7 @@
                                                       Tag="{Binding Value}" 
                                                       ToolTip="{Binding Key}" 
                                                       Content="{Binding Key , Converter={StaticResource ShortTextConverter}}" 
+                                                      IsChecked="{Binding IsChecked}"
                                                       Checked="CheckBoxSelection_Process" 
                                                       Unchecked="CheckBoxSelection_Process"
                                                       Style="{StaticResource listCheckBox}" />
@@ -208,6 +230,7 @@
                                             <CheckBox Name="CheckedBoxDarkArchive"
                                                       Tag="{Binding Value}" 
                                                       ToolTip="{Binding Key}" 
+                                                      IsChecked="{Binding IsChecked}"
                                                       Content="{Binding Key , Converter={StaticResource ShortTextConverter}}" 
                                                       Checked="CheckBoxSelection_Process" 
                                                       Unchecked="CheckBoxSelection_Process"

@@ -142,6 +142,7 @@ namespace WpfApp
 
                         IsANewAudioEquipment = isANewAudioEquipment,
                         IsANewVideoEquipment = isANewVideoEquipment,
+                        IsBornDigital = (bool)BornDigitalYesCheckBox.IsChecked,
                     },
 
                     WellKnownModificationType = Core.Enums.WellKnownModificationType.Add,
@@ -184,9 +185,18 @@ namespace WpfApp
 
             UIHelper.SetMutualExclusivity((CheckBox)sender,
                 ReleaseFromYesCheckBox,
-                ReleaseFromYesCheckBox);
+                ReleaseFromNoCheckBox);
         }
 
+        private void BornDigital_Check(object sender, RoutedEventArgs e)
+        {
+            CheckBox currentCheckBox = (CheckBox)sender;
+
+            UIHelper.SetMutualExclusivity((CheckBox)sender,
+                BornDigitalYesCheckBox,
+                BornDigitalNoCheckBox);
+        }
+        
         /// <summary>
         /// Handles the Check event of the Restriction control.
         /// </summary>

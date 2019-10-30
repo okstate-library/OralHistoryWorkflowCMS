@@ -27,7 +27,7 @@
 
         </ResourceDictionary>
     </UserControl.Resources>
-    <ScrollViewer HorizontalScrollBarVisibility="Hidden"  VerticalScrollBarVisibility="Hidden"                     
+    <ScrollViewer HorizontalScrollBarVisibility="Hidden"   VerticalScrollBarVisibility="Hidden"                     
                       Margin="0 0 0 0">
         <Grid>
             <Grid.RowDefinitions>
@@ -577,9 +577,11 @@
                             TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
                                 Margin="20,00,50,24"  >
 
-
                             <Grid  VerticalAlignment="Top" >
                                 <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
@@ -747,53 +749,119 @@
 
                                 <TextBox Name="PublisherTextBox"  Grid.Row="22" Grid.Column="1"  Grid.ColumnSpan="5" Height="50" Style="{StaticResource EditableTextBox}" />
 
-                                <Border  Grid.Row="23"  Style="{StaticResource EmptyBorder2}"   />
+                                <Border  Grid.Row="23"  Style="{StaticResource EmptyBorder}"   />
 
-                                <Label Style="{StaticResource BoldLabel}" Grid.Row="24" Grid.Column="0">Coverage-spatial</Label>
+                                <TextBlock Style="{StaticResource BoldTextBlock}" Grid.Row="24" Grid.Column="0" Margin="5">Collection <TextBlock Foreground="Red"> *</TextBlock> </TextBlock>
 
-                                <TextBox Name="CoverageSpatialTextBox"  Grid.Row="24" Grid.Column="1"   Height="50" Grid.ColumnSpan="5" Style="{StaticResource EditableTextBox}" />
+                                <ComboBox Grid.Row="24" Grid.Column="1"  ItemsSource="{Binding Path=Collections}" Name="CollectionComboBox"
+                  DisplayMemberPath="Name"
+                  SelectedValuePath="Id"
+                  SelectedValue="{Binding Path=SelectedCollection}" />
+                                
+                                <!--<ComboBox Grid.Row="24" Grid.Column="1" ItemsSource="{Binding Collections}" DisplayMemberPath="Name" 
+                                  HorizontalAlignment="Left" Name="CollectionComboBox" VerticalAlignment="Top" Width="300" >
+                                    <ComboBox.Text>
+                                        <Binding Path="SelectedCollection" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <domain1:NotEmptyValidationRule ValidatesOnTargetUpdated="True"/>
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </ComboBox.Text>
+                                </ComboBox>-->
 
+                                <TextBlock Style="{StaticResource BoldTextBlock}" Grid.Row="24" Grid.Column="3" Margin="15">Subseries <TextBlock Foreground="Red"> *</TextBlock> </TextBlock>
+
+                                <!--<ComboBox Grid.Row="24" Grid.Column="4"  ItemsSource="{Binding SelectedItem.Subseries, ElementName=CollectionComboBox}"  Name="SubseriesComboBox"
+                  DisplayMemberPath="SubseryName"
+                  SelectedValuePath="Id"
+                  SelectedValue="{Binding Path=SelectedSeries}" />-->
+                                
+
+                                <!--<ComboBox Grid.Row="24" Grid.Column="1"  ItemsSource="{Binding Path=Collections}" Name="SubseriesComboBox"
+                  DisplayMemberPath="Name"
+                  SelectedValuePath="Id"
+                  SelectedValue="{Binding Path=SelectedCollection}" />-->
+
+                                                             
+                                <ComboBox Grid.Row="24" Grid.Column="4" ItemsSource="{Binding SelectedItem.Series, ElementName=CollectionComboBox}" SelectedValuePath="Key"   DisplayMemberPath="Value" 
+                                  HorizontalAlignment="Left" Name="SubseriesComboBox" VerticalAlignment="Top"   Width="300" SelectedValue="{Binding Path=SelectedSeries}" >
+                                    <!--<ComboBox.Text>
+                                        <Binding Path="SelectedCollection" Mode="OneWay" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <domain1:NotEmptyValidationRule ValidatesOnTargetUpdated="True"/>
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </ComboBox.Text>-->
+                                </ComboBox>
+
+
+                                <!--<ComboBox Grid.Row="24" Grid.Column="1" ItemsSource="{Binding Collections}" DisplayMemberPath="Name" 
+                                  HorizontalAlignment="Left" Name="CollectionComboBox" VerticalAlignment="Top" Width="300" 
+                                   SelectedValuePath="Id" 
+                                  
+                                  SelectedValue="{Binding SelectedCollectionId, ValidatesOnDataErrors=True}">
+                                </ComboBox>
+
+                                <TextBlock Style="{StaticResource BoldTextBlock}" Grid.Row="24" Grid.Column="3" Margin="15">Subseries <TextBlock Foreground="Red"> *</TextBlock> </TextBlock>
+
+                                <ComboBox Grid.Row="24" Grid.Column="4" ItemsSource="{Binding SelectedItem.Series, ElementName=CollectionComboBox}"   DisplayMemberPath="Value" 
+                                  HorizontalAlignment="Left" Name="SubseriesComboBox" VerticalAlignment="Top"   Width="300" >
+                                    <ComboBox.Text>
+                                        <Binding Path="SelectedCollection" Mode="OneWay" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <domain1:NotEmptyValidationRule ValidatesOnTargetUpdated="True"/>
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </ComboBox.Text>
+                                </ComboBox>-->
+                                
                                 <Border  Grid.Row="25"  Style="{StaticResource EmptyBorder2}"   />
 
-                                <Label Style="{StaticResource BoldLabel}" Grid.Row="26" Grid.Column="0">Project code</Label>
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="26" Grid.Column="0">Coverage-spatial</Label>
 
-                                <TextBox Name="ProjectCodeTextBox2" Grid.Row="26" Grid.Column="1"   Style="{StaticResource EditableTextBox}" />
-
-                                <Label Style="{StaticResource BoldLabel}" Grid.Row="26" Grid.Column="3">Coverage-temporal</Label>
-
-                                <TextBox Name="CoverageTemporalTextBox" Grid.Row="26" Grid.Column="4"   Style="{StaticResource EditableTextBox}" />
+                                <TextBox Name="CoverageSpatialTextBox"  Grid.Row="26" Grid.Column="1"   Height="50" Grid.ColumnSpan="5" Style="{StaticResource EditableTextBox}" />
 
                                 <Border  Grid.Row="27"  Style="{StaticResource EmptyBorder2}"   />
 
-                                <Label Style="{StaticResource BoldLabel}" Grid.Row="28" Grid.Column="0">Format</Label>
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="28" Grid.Column="0">Project code</Label>
 
-                                <TextBox Name="Format2TextBox"  Grid.Row="28" Grid.Column="1"   Style="{StaticResource EditableTextBox}" />
+                                <TextBox Name="ProjectCodeTextBox2" Grid.Row="28" Grid.Column="1"   Style="{StaticResource EditableTextBox}" />
 
-                                <Label Style="{StaticResource BoldLabel}" Grid.Row="28" Grid.Column="3">Language</Label>
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="28" Grid.Column="3">Coverage-temporal</Label>
 
-                                <TextBox Name="LabguageTextBox" Grid.Row="28" Grid.Column="4"   Style="{StaticResource EditableTextBox}" />
+                                <TextBox Name="CoverageTemporalTextBox" Grid.Row="28" Grid.Column="4"   Style="{StaticResource EditableTextBox}" />
 
                                 <Border  Grid.Row="29"  Style="{StaticResource EmptyBorder2}"   />
 
-                                <Label Style="{StaticResource BoldLabel}" Grid.Row="30" Grid.Column="0">Type</Label>
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="30" Grid.Column="0">Format</Label>
 
-                                <TextBox Name="TypeTextBox"  Grid.Row="30" Grid.Column="1"   Style="{StaticResource EditableTextBox}" />
+                                <TextBox Name="Format2TextBox"  Grid.Row="30" Grid.Column="1"   Style="{StaticResource EditableTextBox}" />
 
-                                <Label Style="{StaticResource BoldLabel}" Grid.Row="30" Grid.Column="3">Transcript</Label>
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="30" Grid.Column="3">Language</Label>
 
-                                <TextBox Name="TranscriptTextBox" Grid.Row="30" Grid.Column="4"   Style="{StaticResource EditableTextBox}" />
+                                <TextBox Name="LabguageTextBox" Grid.Row="30" Grid.Column="4"   Style="{StaticResource EditableTextBox}" />
 
                                 <Border  Grid.Row="31"  Style="{StaticResource EmptyBorder2}"   />
 
-                                <Label Style="{StaticResource BoldLabel}" Grid.Row="32" Grid.Column="0">Relation-is part of</Label>
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="32" Grid.Column="0">Type</Label>
 
-                                <TextBox Name="RelationIsPartofTextBox"  Grid.Row="32" Grid.Column="1"   Style="{StaticResource EditableTextBox}" />
+                                <TextBox Name="TypeTextBox"  Grid.Row="32" Grid.Column="1"   Style="{StaticResource EditableTextBox}" />
 
-                                <Label Style="{StaticResource BoldLabel}" Grid.Row="32" Grid.Column="3">File name</Label>
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="32" Grid.Column="3">Transcript</Label>
 
-                                <TextBox Name="FileNameTextBox" Grid.Row="32" Grid.Column="4"   Style="{StaticResource EditableTextBox}" />
+                                <TextBox Name="TranscriptTextBox" Grid.Row="32" Grid.Column="4"   Style="{StaticResource EditableTextBox}" />
 
-                                <Button Name="MetadataButton" Grid.Row="33"  Grid.ColumnSpan="5"  Margin="0,20,0,0"  Style="{StaticResource MaterialDesignRaisedAccentButton}" Click="MetadataButton_Click" 
+                                <Border  Grid.Row="33"  Style="{StaticResource EmptyBorder2}"   />
+
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="34" Grid.Column="0">Relation-is part of</Label>
+
+                                <TextBox Name="RelationIsPartofTextBox"  Grid.Row="34" Grid.Column="1"   Style="{StaticResource EditableTextBox}" />
+
+                                <Label Style="{StaticResource BoldLabel}" Grid.Row="34" Grid.Column="3">File name</Label>
+
+                                <TextBox Name="FileNameTextBox" Grid.Row="34" Grid.Column="4"   Style="{StaticResource EditableTextBox}" />
+
+                                <Button Name="MetadataButton" Grid.Row="36"  Grid.ColumnSpan="5"  Margin="0,20,0,0"  Style="{StaticResource MaterialDesignRaisedAccentButton}" Click="MetadataButton_Click" 
                         ToolTip="Submit metadata details">
                                     _Submit
                                 </Button>

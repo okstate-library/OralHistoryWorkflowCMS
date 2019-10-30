@@ -83,8 +83,12 @@
     <Compile Include="ControlledVocabulary.xaml.cs">
       <DependentUpon>ControlledVocabulary.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Domain\SubseriesUIModel.cs" />
     <Compile Include="Domain\FindandReplaceModel.cs" />
     <Compile Include="Domain\GridViewSort.cs" />
+    <Compile Include="Domain\CollectionUIModel.cs" />
+    <Compile Include="Domain\TranscriptionUiModel.cs" />
+    <Compile Include="Helper\Repository.cs" />
     <Compile Include="Helper\WellKnownPredefinedUserType.cs" />
     <Compile Include="Helper\WellKnownSettings.cs" />
     <Compile Include="Model\BasePage.cs" />
@@ -128,6 +132,9 @@
     <Compile Include="Model\BrowsePageViewModel.cs" />
     <Compile Include="Model\SettingsPageViewModel.cs" />
     <Compile Include="Model\ViewModelBase.cs" />
+    <Compile Include="ModifyRepository.xaml.cs">
+      <DependentUpon>ModifyRepository.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Reports.xaml.cs">
       <DependentUpon>Reports.xaml</DependentUpon>
     </Compile>
@@ -228,6 +235,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="ModifyRepository.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Reports.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

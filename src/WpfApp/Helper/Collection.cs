@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using Model;
+using System.Collections.Generic;
 
 namespace WpfApp.Helper
 {
     /// <summary>
-    /// Collection model use for binding two combo boxes. ie Collectino and series
+    /// Collection model use for binding two combo boxes. ie Collection and series
     /// </summary>
     public class Collection
     {
@@ -30,5 +31,7 @@ namespace WpfApp.Helper
         /// The series.
         /// </value>
         public List<KeyValuePair<int,string>> Series { get; set; }
+
+        public List<SubseryModel> Subseries { get; set; }
     }
 }

@@ -11,7 +11,7 @@ namespace EntityData
 {
     using System;
     using System.Collections.Generic;
-
+    
     public partial class transcription
     {
         public int Id { get; set; }
@@ -24,11 +24,8 @@ namespace EntityData
         public string Interviewee { get; set; }
         public string Interviewer { get; set; }
         public string InterviewDate { get; set; }
-
         public string InterviewDate1 { get; set; }
-
         public string InterviewDate2 { get; set; }
-
         public string Title { get; set; }
         public string Description { get; set; }
         public string Keywords { get; set; }
@@ -50,20 +47,15 @@ namespace EntityData
         public bool IsRosettaForm { get; set; }
         public bool IsRestriction { get; set; }
         public bool IsDarkArchive { get; set; }
-
         public string RestrictionNote { get; set; }
         public string DarkArchiveNote { get; set; }
-
         public string AudioEquipmentUsed { get; set; }
         public string VideoEquipmentUsed { get; set; }
         public string InterviewerNote { get; set; }
-
         public string GeneralNote { get; set; }
-
         public bool ReleaseForm { get; set; }
         public string Place { get; set; }
         public string TranscriberAssigned { get; set; }
-        public Nullable<System.DateTime> TranscriberCompleted { get; set; }
         public string AuditCheckCompleted { get; set; }
         public string FirstEditCompleted { get; set; }
         public string SecondEditCompleted { get; set; }
@@ -73,7 +65,6 @@ namespace EntityData
         public string FinalEditCompleted { get; set; }
         public Nullable<System.DateTime> FinalSentDate { get; set; }
         public bool TranscriptStatus { get; set; }
-
         public string TranscriptNote { get; set; }
         public bool IsAudioFormat { get; set; }
         public bool IsVideoFormat { get; set; }
@@ -83,7 +74,6 @@ namespace EntityData
         public bool IsConvertToDigital { get; set; }
         public Nullable<System.DateTime> ConvertToDigitalDate { get; set; }
         public bool IsAccessMediaStatus { get; set; }
-
         public string TechnicalSpecification { get; set; }
         public string MasterFileLocation { get; set; }
         public string AccessFileLocation { get; set; }

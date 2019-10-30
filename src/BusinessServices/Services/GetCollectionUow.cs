@@ -50,6 +50,12 @@ namespace BusinessServices.Servcices
             set;
         }
 
+        public RepositoryRepository RepositoryRepository
+        {
+            get;
+            set;
+        }
+
         /// <summary>
         /// Gets or sets the well known error.
         /// </summary>
@@ -97,6 +103,7 @@ namespace BusinessServices.Servcices
             WellKnownError = new WellKnownErrors();
 
             CollectionRepository = new CollectionRepository();
+            RepositoryRepository = new RepositoryRepository();
 
             WellKnownError.Value = WellKnownError.NoError;
         }
@@ -109,15 +116,20 @@ namespace BusinessServices.Servcices
             List<CollectionModel> newlist = new List<CollectionModel>();
             CollectionModel collectionModel = new CollectionModel();
 
+            List<repository> repositories = RepositoryRepository.GetRepositoriess();
+
             if (this.Request.CollectionId > 0)
             {
-                collectionModel = Util.ConvertToCollectionModel(CollectionRepository.FirstOrDefault(c => c.Id == this.Request.CollectionId));
+                collection collection = CollectionRepository.FirstOrDefault(c => c.Id == this.Request.CollectionId);
+
+                collectionModel = Util.ConvertToCollectionModel(
+                    collection, repositories.First(c => c.Id == collection.RepositoryId).RepositoryName);
             }
             else
             {
                 foreach (collection item in CollectionRepository.GetCollections())
                 {
-                    newlist.Add(Util.ConvertToCollectionModel(item));
+                    newlist.Add(Util.ConvertToCollectionModel(item, repositories.First(c => c.Id == item.RepositoryId).RepositoryName));
                 }
             }
 
@@ -129,7 +141,7 @@ namespace BusinessServices.Servcices
             };
 
         }
-             
+
         /// <summary>
         /// Runs after the work has been done.
         /// </summary>

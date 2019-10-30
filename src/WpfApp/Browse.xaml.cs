@@ -4,6 +4,7 @@ using Model.Transfer;
 using Model.Transfer.Search;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -170,7 +171,7 @@ namespace WpfApp
 
             ControlsVisibility();
         }
-        
+
         /// <summary>
         /// Handles the MouseDoubleClick event of the TranscriptionQueueListView control.
         /// </summary>
@@ -470,18 +471,17 @@ namespace WpfApp
 
             CollectionListBox.ItemsSource = response.BrowseFormModel.CollectionList;
 
-            InterviewerListBox.ItemsSource = response.BrowseFormModel.InterviewerList;
+        }
 
-            SubjectListBox.ItemsSource = response.BrowseFormModel.SubjectList;
+        private void PopulateIntializeView(BrowseFormModel browseFormModel)
+        {
+            InterviewerListBox.ItemsSource = browseFormModel.InterviewerList;
 
-            ContentDMListBox.ItemsSource = response.BrowseFormModel.ContentDmList;
+            SubjectListBox.ItemsSource = browseFormModel.SubjectList;
 
-            List<KeyValuePair<string, string>> restrictionList = new List<KeyValuePair<string, string>>()
-            {
-                new KeyValuePair<string, string>("Dark Archive", "Dark Archive"),
-            };
+            ContentDMListBox.ItemsSource = browseFormModel.ContentDmList;
 
-            DarkArchiveListBox.ItemsSource = restrictionList;
+            DarkArchiveListBox.ItemsSource = browseFormModel.RestrictionList;
         }
 
         /// <summary>
@@ -504,6 +504,8 @@ namespace WpfApp
             if (response.IsOperationSuccess)
             {
                 BrowseListView.ItemsSource = response.Transcriptions;
+
+                PopulateIntializeView(response.BrowseFormModel);
 
                 response.SetTranscriptionIds();
 
@@ -604,6 +606,24 @@ namespace WpfApp
 
         }
 
-        #endregion              
+        /// <summary>
+        /// Sets the pair.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <param name="count">The count.</param>
+        /// <returns></returns>
+        private KeyValuePair<string, string> SetPair(string name, int count)
+        {
+            return new KeyValuePair<string, string>(name + " (" + count + ")", name);
+        }
+
+        #endregion
+
+        private void SubjectListBox_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            ScrollViewer scv = (ScrollViewer)sender;
+            scv.ScrollToVerticalOffset(scv.VerticalOffset - e.Delta);
+            e.Handled = true;
+        }
     }
 }

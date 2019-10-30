@@ -316,6 +316,18 @@ namespace BusinessServices
             return uow.Response;
         }
 
+        public ResponseModel GetRepository(RequestModel requestModel)
+        {
+            GetRepositoryUow uow = new GetRepositoryUow
+            {
+                Request = requestModel
+            };
+
+            uow.DoWork();
+
+            return uow.Response;
+        }
+
         /// <summary>
         /// Gets the subseies.
         /// </summary>
@@ -333,6 +345,20 @@ namespace BusinessServices
             return uow.Response;
         }
 
+
+
+
+        public ResponseModel ModifyRepository(RequestModel request)
+        {
+            ModifyRepositoryUow uow = new ModifyRepositoryUow
+            {
+                Request = request
+            };
+
+            uow.DoWork();
+
+            return uow.Response;
+        }
         public ResponseModel ModifyCollection(RequestModel request)
         {
             ModifyCollectionUow uow = new ModifyCollectionUow
@@ -365,6 +391,30 @@ namespace BusinessServices
         public ResponseModel ExportAll(RequestModel request)
         {
             ExportAllUow uow = new ExportAllUow
+            {
+                Request = request
+            };
+
+            uow.DoWork();
+
+            return uow.Response;
+        }
+
+        public ResponseModel ExportAllCollection(RequestModel request)
+        {
+            ExportAllCollectionUow uow = new ExportAllCollectionUow
+            {
+                Request = request
+            };
+
+            uow.DoWork();
+
+            return uow.Response;
+        }
+
+        public ResponseModel ExportAllSubseries(RequestModel request)
+        {
+            ExportAllSubseriesUow uow = new ExportAllSubseriesUow
             {
                 Request = request
             };

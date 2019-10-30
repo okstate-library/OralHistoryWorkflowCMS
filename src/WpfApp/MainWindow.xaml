@@ -62,19 +62,19 @@
                             <RowDefinition Height="5*" />
                         </Grid.RowDefinitions>
 
-                        <Grid  Grid.Row="0"  >
+                        <!--<Grid  Grid.Row="0"  >
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="3*" />
                                 <ColumnDefinition Width="1*" />
                             </Grid.ColumnDefinitions>
 
-                            <ToggleButton Name="ToggleButton"   Grid.Column="1" Style="{StaticResource  MaterialDesignHamburgerToggleButton}" 
+                            --><!--<ToggleButton Name="ToggleButton"   Grid.Column="1" Style="{StaticResource  MaterialDesignHamburgerToggleButton}" 
                                     DockPanel.Dock="Top" 
                                     HorizontalAlignment="Right" Margin="20"
-                                    IsChecked="{Binding ElementName=MenuToggleButton, Path=IsChecked, Mode=TwoWay}" />
-                        </Grid>
+                                    IsChecked="{Binding ElementName=MenuToggleButton, Path=IsChecked, Mode=TwoWay}" />--><!--
+                        </Grid>-->
 
-                        <StackPanel  x:Name="VerticalDemoItemsList"   Grid.Row="1" Width="200">
+                        <!--<StackPanel  x:Name="VerticalDemoItemsList"   Grid.Row="1" Width="200">
                             <Button Name="Home1Button" ToolTip="Home"  Margin="5"
                                                 PreviewMouseLeftButtonUp="Button_OnPreviewMouseLeftButtonUp" >
 
@@ -156,7 +156,7 @@
                                 </StackPanel>
                             </Button>
                           
-                        </StackPanel>
+                        </StackPanel>-->
 
                     </Grid>
                 </DockPanel>
@@ -175,14 +175,14 @@
                                     <RowDefinition Height="20" />
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="50" />
+                                    <ColumnDefinition Width="10" />
                                     <ColumnDefinition Width="365" />
                                     <ColumnDefinition Width="200" />
                                 </Grid.ColumnDefinitions>
 
-                                <ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}" Margin="5" Padding="5"  
+                                <!--<ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}" Margin="5" Padding="5"  
                                               Grid.Row="0" Grid.Column="0" IsChecked="False"
-                                        x:Name="MenuToggleButton"/>
+                                        x:Name="MenuToggleButton"/>-->
 
                                 <TextBlock PreviewMouseLeftButtonUp="Button_OnPreviewMouseLeftButtonUp" ToolTip="Home" 
                                            HorizontalAlignment="Left" VerticalAlignment="Center" Name="ApplicationNameTextBlock" 
@@ -217,14 +217,14 @@
                                     Margin="0 10 10 10"
                                    materialDesign:ShadowAssist.ShadowDepth="Depth1">
                                     <StackPanel  Orientation="Horizontal">
-                                        <Button Name="Home2Button"
+                                        <Button Name="HomeButton"
                                                     Style="{StaticResource HorizontalMenuButton}"
                                                     PreviewMouseLeftButtonUp="Button_OnPreviewMouseLeftButtonUp" 
                                                     ToolTip="Home" >
                                             <materialDesign:PackIcon Kind="Home" />
                                         </Button>
 
-                                        <Button Name="Interview2Button"  
+                                        <Button Name="InterviewButton"  
                                                 Command="{Binding Path=LoadInterviewPageCommand}" 
                                                Style="{StaticResource HorizontalMenuButton}" 
                                                 PreviewMouseLeftButtonUp="Button_OnPreviewMouseLeftButtonUp" 
@@ -232,7 +232,7 @@
                                             <materialDesign:PackIcon Kind="CommentQuestion" />
                                         </Button>
 
-                                        <Button Name="TranscriptionQueue2Button"  
+                                        <Button Name="TranscriptionQueueButton"  
                                                     Command="{Binding Path=LoadTranscriptionQueuePageCommand}" 
                                                     Style="{StaticResource HorizontalMenuButton}"
                                                     PreviewMouseLeftButtonUp="Button_OnPreviewMouseLeftButtonUp" 
@@ -240,7 +240,7 @@
                                             <materialDesign:PackIcon Kind="LibraryPlus" />
                                         </Button>
 
-                                        <Button Name="Browse2Button" 
+                                        <Button Name="BrowseButton" 
                                                     Command="{Binding Path=LoadBrowsePageCommand}" 
                                                     Style="{StaticResource HorizontalMenuButton}" 
                                                     PreviewMouseLeftButtonUp="Button_OnPreviewMouseLeftButtonUp" 
@@ -248,7 +248,7 @@
                                             <materialDesign:PackIcon Kind="OpenInApp" />
                                         </Button>
 
-                                        <Button Name="FindnReplace2Button" 
+                                        <Button Name="FindnReplaceButton" 
                                                 Command="{Binding Path=LoadFindnReplacePageCommand}" 
                                                Style="{StaticResource HorizontalMenuButton}"
                                                 Visibility="Collapsed"
@@ -257,7 +257,7 @@
                                             <materialDesign:PackIcon Kind="FindReplace" />
                                         </Button>
 
-                                        <Button Name="Reports2Button"  Command="{Binding Path=LoadReportsPageCommand}" 
+                                        <Button Name="ReportsButton"  Command="{Binding Path=LoadReportsPageCommand}" 
                                                     Style="{StaticResource HorizontalMenuButton}"
                                                     Visibility="Collapsed"
                                                     PreviewMouseLeftButtonUp="Button_OnPreviewMouseLeftButtonUp" 
@@ -265,7 +265,7 @@
                                             <materialDesign:PackIcon Kind="FileDocument" />
                                         </Button>
 
-                                        <Button  Name="Setting2Button"  Command="{Binding Path=LoadSettingsPageCommand}" 
+                                        <Button  Name="SettingButton"  Command="{Binding Path=LoadSettingsPageCommand}" 
                                                      Style="{StaticResource HorizontalMenuButton}"
                                                      Visibility="Collapsed"
                                                      PreviewMouseLeftButtonUp="Button_OnPreviewMouseLeftButtonUp" 
@@ -273,7 +273,7 @@
                                             <materialDesign:PackIcon Kind="Settings" />
                                         </Button>
 
-                                        <Button Name="Import2Button" 
+                                        <Button Name="ImportButton" 
                                                     Command="{Binding Path=LoadImportPageCommand}" 
                                                     Style="{StaticResource HorizontalMenuButton}"                                                   
                                                     Visibility="Collapsed"

@@ -89,17 +89,82 @@ namespace BusinessServices.Services
 
         #endregion
 
+        #region Repository
+
+        public static repository ConvertToRepository(RepositoryModel model)
+        {
+            return new repository()
+            {
+                RepositoryName = model.RepositoryName,
+            };
+        }
+
+        public static RepositoryModel ConvertToRepositoryModel(repository repository)
+        {
+            return new RepositoryModel()
+            {
+                Id = repository.Id,
+                RepositoryName = repository.RepositoryName,
+            };
+        }
+
+        public static repository ConvertToRepository(repository repository, RepositoryModel model)
+        {
+            repository.RepositoryName = model.RepositoryName;
+
+            return repository;
+        }
+
+        #endregion
+
+        #region Collection
+
         /// <summary>
         /// Converts to collection model.
         /// </summary>
         /// <param name="collection">The collection.</param>
         /// <returns></returns>
-        public static CollectionModel ConvertToCollectionModel(collection collection)
+        public static CollectionModel ConvertToCollectionModel(collection collection, string repositoryName)
         {
             return new CollectionModel()
             {
                 Id = collection.Id,
-                CollectionName = collection.CollectionName
+                CollectionName = collection.CollectionName,
+
+                RepositoryId = collection.RepositoryId,
+                RepositoryName = repositoryName,
+                Number = collection.Number,
+                Dates = collection.Dates,
+                Note = collection.Note,
+                Subjects = collection.Subjects,
+                Keywords = collection.Keywords,
+
+                Description = collection.Description,
+                ScopeAndContent = collection.ScopeAndContent,
+                CustodialHistory = collection.CustodialHistory,
+                Size = collection.Size,
+                Acquisitioninfo = collection.Acquisitioninfo,
+                Language = collection.Language,
+
+                PreservationNote = collection.PreservationNote,
+                Rights = collection.Rights,
+                AccessRestrictions = collection.AccessRestrictions,
+                PublicationRights = collection.PublicationRights,
+                PreferredCitation = collection.PreferredCitation,
+                RelatedCollection = collection.RelatedCollection,
+                SeparatedMaterial = collection.SeparatedMaterial,
+                OriginalLocation = collection.OriginalLocation,
+                CopiesLocation = collection.CopiesLocation,
+                PublicationNote = collection.PublicationNote,
+                Creator = collection.Creator,
+                Contributors = collection.Contributors,
+                ProcessedBy = collection.ProcessedBy,
+                Sponsors = collection.Sponsors,
+                CreatedBy = collection.CreatedBy,
+                CreatedDate = collection.CreatedDate,
+                UpdatedBy = collection.UpdatedBy,
+                UpdatedDate = collection.UpdatedDate,
+
             };
         }
 
@@ -113,7 +178,39 @@ namespace BusinessServices.Services
             return new collection()
             {
                 Id = (short)collectionModel.Id,
-                CollectionName = collectionModel.CollectionName
+                CollectionName = collectionModel.CollectionName,
+                RepositoryId = collectionModel.RepositoryId,
+                Number = collectionModel.Number,
+                Dates = collectionModel.Dates,
+                Note = collectionModel.Note,
+                Subjects = collectionModel.Subjects,
+                Keywords = collectionModel.Keywords,
+
+                Description = collectionModel.Description,
+                ScopeAndContent = collectionModel.ScopeAndContent,
+                CustodialHistory = collectionModel.CustodialHistory,
+                Size = collectionModel.Size,
+                Acquisitioninfo = collectionModel.Acquisitioninfo,
+                Language = collectionModel.Language,
+
+                PreservationNote = collectionModel.PreservationNote,
+                Rights = collectionModel.Rights,
+                AccessRestrictions = collectionModel.AccessRestrictions,
+                PublicationRights = collectionModel.PublicationRights,
+                PreferredCitation = collectionModel.PreferredCitation,
+                RelatedCollection = collectionModel.RelatedCollection,
+                SeparatedMaterial = collectionModel.SeparatedMaterial,
+                OriginalLocation = collectionModel.OriginalLocation,
+                CopiesLocation = collectionModel.CopiesLocation,
+                PublicationNote = collectionModel.PublicationNote,
+                Creator = collectionModel.Creator,
+                Contributors = collectionModel.Contributors,
+                ProcessedBy = collectionModel.ProcessedBy,
+                Sponsors = collectionModel.Sponsors,
+                CreatedBy = collectionModel.CreatedBy,
+                CreatedDate = collectionModel.CreatedDate,
+                UpdatedBy = collectionModel.UpdatedBy,
+                UpdatedDate = collectionModel.UpdatedDate,
             };
         }
 
@@ -126,23 +223,91 @@ namespace BusinessServices.Services
         internal static collection ConvertToCollection(collection collection, CollectionModel collectionModel)
         {
             collection.CollectionName = collectionModel.CollectionName;
+            collection.RepositoryId = collectionModel.RepositoryId;
+            collection.Number = collectionModel.Number;
+            collection.Dates = collectionModel.Dates;
+            collection.Note = collectionModel.Note;
+            collection.Subjects = collectionModel.Subjects;
+            collection.Keywords = collectionModel.Keywords;
+
+            collection.Description = collectionModel.Description;
+            collection.ScopeAndContent = collectionModel.ScopeAndContent;
+            collection.CustodialHistory = collectionModel.CustodialHistory;
+            collection.Size = collectionModel.Size;
+            collection.Acquisitioninfo = collectionModel.Acquisitioninfo;
+            collection.Language = collectionModel.Language;
+
+            collection.PreservationNote = collectionModel.PreservationNote;
+            collection.Rights = collectionModel.Rights;
+            collection.AccessRestrictions = collectionModel.AccessRestrictions;
+            collection.PublicationRights = collectionModel.PublicationRights;
+            collection.PreferredCitation = collectionModel.PreferredCitation;
+            collection.RelatedCollection = collectionModel.RelatedCollection;
+            collection.SeparatedMaterial = collectionModel.SeparatedMaterial;
+            collection.OriginalLocation = collectionModel.OriginalLocation;
+            collection.CopiesLocation = collectionModel.CopiesLocation;
+            collection.PublicationNote = collectionModel.PublicationNote;
+            collection.Creator = collectionModel.Creator;
+            collection.Contributors = collectionModel.Contributors;
+            collection.ProcessedBy = collectionModel.ProcessedBy;
+            collection.Sponsors = collectionModel.Sponsors;
+            collection.CreatedBy = collectionModel.CreatedBy;
+            collection.CreatedDate = collectionModel.CreatedDate;
+            collection.UpdatedBy = collectionModel.UpdatedBy;
+            collection.UpdatedDate = collectionModel.UpdatedDate;
 
             return collection;
         }
+
+        #endregion
+
+        #region Subseries
 
         /// <summary>
         /// Converts to subsery model.
         /// </summary>
         /// <param name="subsery">The subsery.</param>
         /// <returns></returns>
-        public static SubseryModel ConvertToSubseryModel(subsery subsery , string collectionName)
+        public static SubseryModel ConvertToSubseryModel(subsery subsery, string collectionName)
         {
             return new SubseryModel()
             {
                 Id = subsery.Id,
                 CollectionId = subsery.CollectionId,
                 CollectionName = collectionName,
-                SubseryName = subsery.SubseriesName
+                SubseryName = subsery.SubseriesName,
+
+                Number = subsery.Number,
+                Dates = subsery.Dates,
+                Note = subsery.Note,
+                Subjects = subsery.Subjects,
+                Keywords = subsery.Keywords,
+
+                Description = subsery.Description,
+                ScopeAndContent = subsery.ScopeAndContent,
+                CustodialHistory = subsery.CustodialHistory,
+                Size = subsery.Size,
+                Acquisitioninfo = subsery.Acquisitioninfo,
+                Language = subsery.Language,
+
+                PreservationNote = subsery.PreservationNote,
+                Rights = subsery.Rights,
+                AccessRestrictions = subsery.AccessRestrictions,
+                PublicationRights = subsery.PublicationRights,
+                PreferredCitation = subsery.PreferredCitation,
+                RelatedCollection = subsery.RelatedCollection,
+                SeparatedMaterial = subsery.SeparatedMaterial,
+                OriginalLocation = subsery.OriginalLocation,
+                CopiesLocation = subsery.CopiesLocation,
+                PublicationNote = subsery.PublicationNote,
+                Creator = subsery.Creator,
+                Contributors = subsery.Contributors,
+                ProcessedBy = subsery.ProcessedBy,
+                Sponsors = subsery.Sponsors,
+                CreatedBy = subsery.CreatedBy,
+                CreatedDate = subsery.CreatedDate,
+                UpdatedBy = subsery.UpdatedBy,
+                UpdatedDate = subsery.UpdatedDate,
             };
         }
 
@@ -152,9 +317,83 @@ namespace BusinessServices.Services
             {
                 Id = subsery.Id,
                 CollectionId = subsery.CollectionId,
-                SubseriesName = subseryModel.SubseryName
+                SubseriesName = subseryModel.SubseryName,
+                Number = subseryModel.Number,
+                Dates = subseryModel.Dates,
+                Note = subseryModel.Note,
+                Subjects = subseryModel.Subjects,
+                Keywords = subseryModel.Keywords,
+
+                Description = subseryModel.Description,
+                ScopeAndContent = subseryModel.ScopeAndContent,
+                CustodialHistory = subseryModel.CustodialHistory,
+                Size = subseryModel.Size,
+                Acquisitioninfo = subseryModel.Acquisitioninfo,
+                Language = subseryModel.Language,
+
+                PreservationNote = subseryModel.PreservationNote,
+                Rights = subseryModel.Rights,
+                AccessRestrictions = subseryModel.AccessRestrictions,
+                PublicationRights = subseryModel.PublicationRights,
+                PreferredCitation = subseryModel.PreferredCitation,
+                RelatedCollection = subseryModel.RelatedCollection,
+                SeparatedMaterial = subseryModel.SeparatedMaterial,
+                OriginalLocation = subseryModel.OriginalLocation,
+                CopiesLocation = subseryModel.CopiesLocation,
+                PublicationNote = subseryModel.PublicationNote,
+                Creator = subseryModel.Creator,
+                Contributors = subseryModel.Contributors,
+                ProcessedBy = subseryModel.ProcessedBy,
+                Sponsors = subseryModel.Sponsors,
+                CreatedBy = subseryModel.CreatedBy,
+                CreatedDate = subseryModel.CreatedDate,
+                UpdatedBy = subseryModel.UpdatedBy,
+                UpdatedDate = subseryModel.UpdatedDate,
             };
         }
+
+        public static subsery ConvertToSubsery(SubseryModel subseryModel)
+        {
+            return new subsery()
+            {
+                Id = subseryModel.Id,
+                CollectionId = subseryModel.CollectionId,
+                SubseriesName = subseryModel.SubseryName,
+                Number = subseryModel.Number,
+                Dates = subseryModel.Dates,
+                Note = subseryModel.Note,
+                Subjects = subseryModel.Subjects,
+                Keywords = subseryModel.Keywords,
+
+                Description = subseryModel.Description,
+                ScopeAndContent = subseryModel.ScopeAndContent,
+                CustodialHistory = subseryModel.CustodialHistory,
+                Size = subseryModel.Size,
+                Acquisitioninfo = subseryModel.Acquisitioninfo,
+                Language = subseryModel.Language,
+
+                PreservationNote = subseryModel.PreservationNote,
+                Rights = subseryModel.Rights,
+                AccessRestrictions = subseryModel.AccessRestrictions,
+                PublicationRights = subseryModel.PublicationRights,
+                PreferredCitation = subseryModel.PreferredCitation,
+                RelatedCollection = subseryModel.RelatedCollection,
+                SeparatedMaterial = subseryModel.SeparatedMaterial,
+                OriginalLocation = subseryModel.OriginalLocation,
+                CopiesLocation = subseryModel.CopiesLocation,
+                PublicationNote = subseryModel.PublicationNote,
+                Creator = subseryModel.Creator,
+                Contributors = subseryModel.Contributors,
+                ProcessedBy = subseryModel.ProcessedBy,
+                Sponsors = subseryModel.Sponsors,
+                CreatedBy = subseryModel.CreatedBy,
+                CreatedDate = subseryModel.CreatedDate,
+                UpdatedBy = subseryModel.UpdatedBy,
+                UpdatedDate = subseryModel.UpdatedDate,
+            };
+        }
+
+        #endregion
 
         /// <summary>
         /// Converts to keyword model.
@@ -183,6 +422,44 @@ namespace BusinessServices.Services
                 Name = item.SubjectName
             };
         }
+
+        internal static UserTypeModel ConvertToUsertypeModel(usertype item)
+        {
+            return new UserTypeModel()
+            {
+                Id = item.Id,
+                UserTypeName = item.UserTypeName,
+                IsHorizontalMenu = item.IsHorizontalMenu,
+            };
+        }
+
+        internal static PredefinedUserModel ConvertToInterviewerModel(predefineduser item)
+        {
+            return new PredefinedUserModel()
+            {
+                Id = item.Id,
+                UserType = item.UserType,
+                Name = item.Name
+            };
+        }
+
+        /// <summary>
+        /// Gets the sub string.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <returns></returns>
+        private static string GetSubString(string value)
+        {
+
+            if (!string.IsNullOrEmpty(value))
+            {
+                return value.Length > 1000 ? value.Substring(1000) : value;
+            }
+
+            return string.Empty;
+        }
+
+        #region Transcription
 
         /// <summary>
         /// Converts to transcription model.
@@ -263,7 +540,7 @@ namespace BusinessServices.Services
                 UpdatedDate = transcription.UpdatedDate.Date,
                 Identifier = transcription.Identifier,
                 GeneralNote = transcription.GeneralNote,
-                
+
                 InterviewerDescription = transcription.InterviewerDescription,
                 InterviewerKeywords = transcription.InterviewerKeywords,
                 InterviewerSubjects = transcription.InterviewerSubjects,
@@ -273,26 +550,6 @@ namespace BusinessServices.Services
 
                 CollectionName = collectionListInstance.First(c => c.Id == transcription.CollectionId).CollectionName,
                 SubseriesName = SubseriesListInstance.First(s => s.Id == transcription.SubseriesId).SubseriesName,
-            };
-        }
-
-        internal static UserTypeModel ConvertToUsertypeModel(usertype item)
-        {
-            return new UserTypeModel()
-            {
-                Id = item.Id,
-                UserTypeName = item.UserTypeName,
-                IsHorizontalMenu = item.IsHorizontalMenu,
-            };
-        }
-
-        internal static PredefinedUserModel ConvertToInterviewerModel(predefineduser item)
-        {
-            return new PredefinedUserModel()
-            {
-                Id = item.Id,
-                UserType = item.UserType,
-                Name = item.Name
             };
         }
 
@@ -335,11 +592,12 @@ namespace BusinessServices.Services
                 MetadataDraft = transcriptionModel.MetadataDraft,
                 SentOut = transcriptionModel.SentOut,
                 EquipmentNumber = transcriptionModel.EquipmentNumber,
-                
+
                 InterviewerDescription = GetSubString(transcriptionModel.InterviewerDescription),
                 InterviewerKeywords = GetSubString(transcriptionModel.InterviewerKeywords),
                 InterviewerSubjects = GetSubString(transcriptionModel.InterviewerSubjects),
-                
+                IsBornDigital = transcriptionModel.IsBornDigital,
+
                 //AuditCheckCompletedDate = DateTime.MinValue,//DBNull.Value, //transcriptionModel.CreatedDate,
                 //EditWithCorrectionDate = DateTime.MinValue,
                 //ConvertToDigitalDate = DateTime.MinValue,
@@ -353,7 +611,7 @@ namespace BusinessServices.Services
                 //AccessFileLocation = "AccessFileLocation",
                 //AuditCheckCompleted = "AuditCheckCompleted",
                 CoverageSpatial = transcriptionModel.CoverageSpatial,
-                CoverageTemporal= transcriptionModel.CoverageTemporal,
+                CoverageTemporal = transcriptionModel.CoverageTemporal,
                 //EditWithCorrectionCompleted = "EditWithCorrectionCompleted",
                 //FileName= "FileName",
                 //FinalEditCompleted= "FinalEditCompleted",
@@ -393,22 +651,6 @@ namespace BusinessServices.Services
                 UpdatedBy = transcriptionModel.UpdatedBy,
                 UpdatedDate = transcriptionModel.UpdatedDate
             };
-        }
-
-        /// <summary>
-        /// Gets the sub string.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns></returns>
-        private static string GetSubString(string value)
-        {
-
-            if (!string.IsNullOrEmpty(value))
-            {
-                return value.Length > 1000 ? value.Substring(1000) : value;
-            }
-
-            return string.Empty;
         }
 
         /// <summary>
@@ -547,6 +789,10 @@ namespace BusinessServices.Services
             };
         }
 
+        #endregion
+
+        #region User
+
         /// <summary>
         /// Converts to user model.
         /// </summary>
@@ -594,7 +840,7 @@ namespace BusinessServices.Services
 
             return daUser;
         }
-        
+
         internal static List<PredefinedUserModel> ConvertToPredefinedUserModel(List<predefineduser> predefinedUsers)
         {
             List<PredefinedUserModel> list = new List<PredefinedUserModel>();
@@ -607,5 +853,7 @@ namespace BusinessServices.Services
             return list;
 
         }
+
+        #endregion
     }
 }

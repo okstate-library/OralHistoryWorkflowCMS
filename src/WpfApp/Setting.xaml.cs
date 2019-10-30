@@ -87,6 +87,23 @@ namespace WpfApp
             }
         }
 
+        private void ExportAllCollectionConfirmaiton_OnDialogClosing(object sender, DialogClosingEventArgs eventArgs)
+        {
+            if (eventArgs.Parameter.Equals("true"))
+            {
+                ExportAllCollection();
+            }
+        }
+
+        private void ExportAllSubseriesConfirmaiton_OnDialogClosing(object sender, DialogClosingEventArgs eventArgs)
+        {
+            if (eventArgs.Parameter.Equals("true"))
+            {
+                ExportAllSubseries();
+            }
+        }
+
+
         /// <summary>
         /// Handles the Click event of the Users control.
         /// </summary>
@@ -96,7 +113,19 @@ namespace WpfApp
         {
             SelectedSettings = WellKnownSettings.Users;
 
-            SetVisibility(Visibility.Visible, Visibility.Collapsed, Visibility.Collapsed, Visibility.Collapsed, Visibility.Collapsed);
+            SetVisibility(Visibility.Visible, Visibility.Collapsed, Visibility.Collapsed,
+                Visibility.Collapsed, Visibility.Collapsed, Visibility.Collapsed);
+
+            PopulateUserList(true);
+        }
+
+        private void Repository_Click(object sender, RoutedEventArgs e)
+        {
+            SelectedSettings = WellKnownSettings.Repository;
+
+            SetVisibility(Visibility.Collapsed, Visibility.Visible, Visibility.Collapsed, Visibility.Collapsed, Visibility.Collapsed, Visibility.Collapsed);
+
+            PopulateRepositoryList(true);
         }
 
         /// <summary>
@@ -108,7 +137,7 @@ namespace WpfApp
         {
             SelectedSettings = WellKnownSettings.Collection;
 
-            SetVisibility(Visibility.Collapsed, Visibility.Visible, Visibility.Collapsed, Visibility.Collapsed, Visibility.Collapsed);
+            SetVisibility(Visibility.Collapsed, Visibility.Collapsed, Visibility.Visible, Visibility.Collapsed, Visibility.Collapsed, Visibility.Collapsed);
 
             PopulateCollectionList(true);
         }
@@ -122,7 +151,7 @@ namespace WpfApp
         {
             SelectedSettings = WellKnownSettings.Subseries;
 
-            SetVisibility(Visibility.Collapsed, Visibility.Collapsed, Visibility.Visible, Visibility.Collapsed, Visibility.Collapsed);
+            SetVisibility(Visibility.Collapsed, Visibility.Collapsed, Visibility.Collapsed, Visibility.Visible, Visibility.Collapsed, Visibility.Collapsed);
 
             PopulateSubseriesList(true);
         }
@@ -136,7 +165,7 @@ namespace WpfApp
         {
             SelectedSettings = WellKnownSettings.ExportAll;
 
-            SetVisibility(Visibility.Collapsed, Visibility.Collapsed, Visibility.Collapsed, Visibility.Visible, Visibility.Collapsed);
+            SetVisibility(Visibility.Collapsed, Visibility.Collapsed, Visibility.Collapsed, Visibility.Collapsed, Visibility.Visible, Visibility.Collapsed);
         }
 
         /// <summary>
@@ -148,7 +177,7 @@ namespace WpfApp
         {
             SelectedSettings = WellKnownSettings.Reset;
 
-            SetVisibility(Visibility.Collapsed, Visibility.Collapsed, Visibility.Collapsed, Visibility.Collapsed, Visibility.Visible);
+            SetVisibility(Visibility.Collapsed, Visibility.Collapsed, Visibility.Collapsed, Visibility.Collapsed, Visibility.Collapsed, Visibility.Visible);
         }
 
         /// <summary>
@@ -180,11 +209,24 @@ namespace WpfApp
         /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void AddNewUser_Click(object sender, RoutedEventArgs e)
         {
+            SelectedSettings = WellKnownSettings.Users;
+
             BackToListButton.Visibility = Visibility.Visible;
 
             MainGrid.Visibility = Visibility.Hidden;
 
             cc.Content = new ModifyUser(0);
+        }
+
+        private void AddRepository_Click(object sender, RoutedEventArgs e)
+        {
+            SelectedSettings = WellKnownSettings.Repository;
+
+            BackToListButton.Visibility = Visibility.Visible;
+
+            MainGrid.Visibility = Visibility.Hidden;
+
+            cc.Content = new ModifyRepository(0);
         }
 
         /// <summary>
@@ -194,6 +236,8 @@ namespace WpfApp
         /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void AddCollection_Click(object sender, RoutedEventArgs e)
         {
+            SelectedSettings = WellKnownSettings.Collection;
+
             BackToListButton.Visibility = Visibility.Visible;
 
             MainGrid.Visibility = Visibility.Hidden;
@@ -208,6 +252,8 @@ namespace WpfApp
         /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void AddSubseries_Click(object sender, RoutedEventArgs e)
         {
+            SelectedSettings = WellKnownSettings.Subseries;
+
             BackToListButton.Visibility = Visibility.Visible;
 
             MainGrid.Visibility = Visibility.Hidden;
@@ -231,8 +277,10 @@ namespace WpfApp
                 case WellKnownSettings.Users:
                     PopulateUserList(true);
                     break;
+                case WellKnownSettings.Repository:
+                    PopulateRepositoryList(true);
+                    break;                  
                 case WellKnownSettings.Collection:
-                   
                     PopulateCollectionList(true);
                     break;
                 case WellKnownSettings.Subseries:
@@ -276,6 +324,30 @@ namespace WpfApp
                     MainGrid.Visibility = Visibility.Hidden;
 
                     cc.Content = new ModifyUser(userModel.UserId);
+                }
+
+            }
+        }
+
+        void RepositoryListViewListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            UIElement clicked = e.OriginalSource as UIElement;
+
+            string name = ((FrameworkElement)clicked).Name;
+
+            if (clicked != null && !string.IsNullOrEmpty(name))
+            {
+                string[] words = name.Split('_');
+
+                if (words.Length > 1)
+                {
+                    BackToListButton.Visibility = Visibility.Visible;
+
+                    RepositoryModel repositoryModel = ((FrameworkElement)e.OriginalSource).DataContext as RepositoryModel;
+
+                    MainGrid.Visibility = Visibility.Hidden;
+
+                    cc.Content = new ModifyRepository(repositoryModel.Id);
                 }
 
             }
@@ -373,7 +445,43 @@ namespace WpfApp
 
             if (response.IsOperationSuccess)
             {
-                App.ShowMessage(true, "You successfully deleted \n records from database.");
+                App.ShowMessage(true, "You successfully exports \n records from database.");
+            }
+            else
+            {
+                App.ShowMessage(false, response.ErrorMessage);
+            }
+        }
+
+        private void ExportAllCollection()
+        {
+            ResponseModel response = App.BaseUserControl.InternalService.ExportAllCollection(null);
+
+            ExportHelper helper = new ExportHelper();
+
+            helper.ExportAllCollection(response.Collections);
+
+            if (response.IsOperationSuccess)
+            {
+                App.ShowMessage(true, "You successfully exports \n records from database.");
+            }
+            else
+            {
+                App.ShowMessage(false, response.ErrorMessage);
+            }
+        }
+
+        private void ExportAllSubseries()
+        {
+            ResponseModel response = App.BaseUserControl.InternalService.ExportAllSubseries(null);
+
+            ExportHelper helper = new ExportHelper();
+
+            helper.ExportAllSubseries(response.Subseries);
+
+            if (response.IsOperationSuccess)
+            {
+                App.ShowMessage(true, "You successfully exports \n records from database.");
             }
             else
             {
@@ -389,9 +497,12 @@ namespace WpfApp
         /// <param name="subseries">The subseries.</param>
         /// <param name="exportAll">The export all.</param>
         /// <param name="reset">The reset.</param>
-        private void SetVisibility(Visibility users, Visibility collection, Visibility subseries, Visibility exportAll, Visibility reset)
+        private void SetVisibility(Visibility users, Visibility repository,
+            Visibility collection, Visibility subseries,
+            Visibility exportAll, Visibility reset)
         {
             UsersStackPanel.Visibility = users;
+            RepositoryStackPanel.Visibility = repository;
             SubseriesStackPanel.Visibility = subseries;
             CollectionStackPanel.Visibility = collection;
             ResetStackPanel.Visibility = reset;
@@ -419,6 +530,30 @@ namespace WpfApp
                 UsersListView.ItemsSource = response.Users;
 
                 RecordCountWordTextBox.Text = response.Users.Count + " user record(s)";
+            }
+
+        }
+
+        /// <summary>
+        /// Populates the collection list.
+        /// </summary>
+        /// <param name="isInitialTime">if set to <c>true</c> [is initial time].</param>
+        private void PopulateRepositoryList(bool isInitialTime)
+        {
+            RequestModel requestModel = new RequestModel()
+            {
+                //FilterKeyWords = SearchList,
+                //SearchWord = SearchWordTextBox.Text.Trim(),
+            };
+
+            ResponseModel response = App.BaseUserControl.InternalService.GetRepository(requestModel);
+
+            if (response.IsOperationSuccess)
+            {
+                RepositoryListView.ItemsSource = response.Repositories;
+
+                RecordCountWordTextBox.Text = response.Repositories.Count + " repository record(s)";
+
             }
 
         }

@@ -55,6 +55,8 @@ namespace WpfApp
 
             TranscriptionQueueTextBlock.Text = App.BaseUserControl.TranscrptionQueueRecordCount.ToString();
             AllRecordsTextBlock.Text = App.BaseUserControl.BrowseRecordCount.ToString();
+
+            ButtonColorChange(HomeButton);
         }
 
         #endregion
@@ -100,6 +102,129 @@ namespace WpfApp
         }
 
         /// <summary>
+        /// Handles the OnPreviewMouseLeftButtonUp event of the Button control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="MouseButtonEventArgs" /> instance containing the event data.</param>
+        private void Button_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            string toolTip = "";
+
+            if (sender.GetType().Equals(typeof(Button)))
+            {
+                toolTip = ((Button)sender).ToolTip.ToString();
+            }
+            else
+            {
+                toolTip = ((TextBlock)sender).ToolTip.ToString();
+            }
+
+            ApplicationPageTextBlock.Text = "- " + toolTip;
+
+            //MenuToggleButton.IsChecked = false;
+
+            if (toolTip.Equals("Home"))
+            {
+                InitialControlSetup();
+
+                MainGrid.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                MainGrid.Visibility = Visibility.Collapsed;
+            }
+
+            if (toolTip.Equals("Search"))
+            {
+                this.SearchTextBox.Text = string.Empty;
+            }
+
+            ButtonBackgroundColorRest(HomeButton);
+            ButtonBackgroundColorRest(InterviewButton);
+            ButtonBackgroundColorRest(TranscriptionQueueButton);
+            ButtonBackgroundColorRest(BrowseButton);
+            ButtonBackgroundColorRest(FindnReplaceButton);
+            ButtonBackgroundColorRest(ReportsButton);
+            ButtonBackgroundColorRest(SettingButton);
+            ButtonBackgroundColorRest(ImportButton);
+
+            switch (toolTip)
+            {
+                case "Home":
+                    ButtonColorChange(HomeButton);
+                    break;
+                case "Add Interview":
+                    ButtonColorChange(InterviewButton);
+                    break;
+                case "Transcription Queue":
+                    ButtonColorChange(TranscriptionQueueButton);
+                    break;
+                case "Browse":
+                    ButtonColorChange(BrowseButton);
+                    break;
+                case "Find and Replace":
+                    ButtonColorChange(FindnReplaceButton);
+                    break;
+                case "Controlled vocabulary":
+                    break;
+                case "Reports":
+                    ButtonColorChange(ReportsButton);
+                    break;
+                case "Settings":
+                    ButtonColorChange(SettingButton);
+                    break;
+                case "Import records":
+                    ButtonColorChange(ImportButton);
+                    break;
+
+                default:
+                    break;
+
+            }
+        }
+
+        /// <summary>
+        /// Handles the Click event of the LogoutButton control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RequestNavigateEventArgs" /> instance containing the event data.</param>
+        private void LogoutButton_Click(object sender, RequestNavigateEventArgs e)
+        {
+            MainGrid.Visibility = Visibility.Visible;
+
+            App.BaseUserControl.UserModel = null;
+
+            //MenuToggleButton.IsChecked = false;
+
+            MainWindow_Loaded(null, null);
+        }
+
+        /// <summary>
+        /// Handles the MouseDoubleClick event of the LatestTranscriptionsListView control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="MouseButtonEventArgs"/> instance containing the event data.</param>
+        void LatestTranscriptionsListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            UIElement clicked = e.OriginalSource as UIElement;
+
+            TranscriptionModel itemTranscriptionModel = ((FrameworkElement)e.OriginalSource).DataContext as TranscriptionModel;
+
+            MainGrid.Visibility = Visibility.Hidden;
+
+            if (itemTranscriptionModel != null)
+            {
+                object parameter = itemTranscriptionModel.Id;
+
+                BrowseButton.Command?.Execute(parameter);
+            }
+        }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
         /// Sets the labels.
         /// </summary>
         private void SetLabels()
@@ -121,89 +246,50 @@ namespace WpfApp
         {
             UserTypeModel current = App.BaseUserControl.Usertypes.Find(u => u.Id == userType);
 
-            //if (current.IsHorizontalMenu)
-            //{
-            //    MenuToggleButton.Visibility = Visibility.Collapsed;
-
-            //    VerticalDemoItemsList.Visibility = Visibility.Hidden;
-            //    HorizontalDemoItemsList.Visibility = Visibility.Visible;
-            //}
-            //else
-            //{
-            //    MenuToggleButton.Visibility = Visibility.Visible;
-
-            //    VerticalDemoItemsList.Visibility = Visibility.Visible;
-            //    HorizontalDemoItemsList.Visibility = Visibility.Hidden;
-            //}
-
-            MenuToggleButton.Visibility = Visibility.Visible;
-
             HorizontalDemoItemsList.Visibility = Visibility.Visible;
-            VerticalDemoItemsList.Visibility = Visibility.Visible;
 
             AuthorizationModel model = new Domain.AuthorizationModel(App.IsValidToProcess);
 
-            Home1Button.Visibility = Visibility.Collapsed;
-            Home2Button.Visibility = Visibility.Collapsed;
-            Interview1Button.Visibility = Visibility.Collapsed;
-            Interview2Button.Visibility = Visibility.Collapsed;
-
-            TranscriptionQueue1Button.Visibility = Visibility.Collapsed;
-            TranscriptionQueue2Button.Visibility = Visibility.Collapsed;
-
-            Browse1Button.Visibility = Visibility.Collapsed;
-            Browse2Button.Visibility = Visibility.Collapsed;
-            
-            FindnReplace1Button.Visibility = Visibility.Collapsed;
-            FindnReplace2Button.Visibility = Visibility.Collapsed;
-            Reports1Button.Visibility = Visibility.Collapsed;
-            Reports2Button.Visibility = Visibility.Collapsed;
-
-            Setting1Button.Visibility = Visibility.Collapsed;
-            Setting2Button.Visibility = Visibility.Collapsed;
-
-            Import1Button.Visibility = Visibility.Collapsed;
-            Import2Button.Visibility = Visibility.Collapsed;
+            HomeButton.Visibility = Visibility.Collapsed;
+            InterviewButton.Visibility = Visibility.Collapsed;
+            TranscriptionQueueButton.Visibility = Visibility.Collapsed;
+            BrowseButton.Visibility = Visibility.Collapsed;
+            FindnReplaceButton.Visibility = Visibility.Collapsed;
+            ReportsButton.Visibility = Visibility.Collapsed;
+            SettingButton.Visibility = Visibility.Collapsed;
+            ImportButton.Visibility = Visibility.Collapsed;
 
             foreach (DemoItem item in model.DemoItems)
             {
                 switch (item.Name)
                 {
                     case "Home":
-                        Home1Button.Visibility = Visibility.Visible;
-                        Home2Button.Visibility = Visibility.Visible;
+                        HomeButton.Visibility = Visibility.Visible;
                         break;
                     case "Interview":
-                        Interview1Button.Visibility = Visibility.Visible;
-                        Interview2Button.Visibility = Visibility.Visible;
+                        InterviewButton.Visibility = Visibility.Visible;
                         break;
                     case "Transcription Queue":
-                        TranscriptionQueue1Button.Visibility = Visibility.Visible;
-                        TranscriptionQueue2Button.Visibility = Visibility.Visible;
+                        TranscriptionQueueButton.Visibility = Visibility.Visible;
                         break;
                     case "Browse":
-                        Browse1Button.Visibility = Visibility.Visible;
-                        Browse2Button.Visibility = Visibility.Visible;
-                        break;                  
+                        BrowseButton.Visibility = Visibility.Visible;
+                        break;
                     case "Find and Replace":
-                        FindnReplace1Button.Visibility = Visibility.Visible;
-                        FindnReplace2Button.Visibility = Visibility.Visible;
+                        FindnReplaceButton.Visibility = Visibility.Visible;
                         break;
                     case "Controlled vocabulary":
                         break;
                     case "Reports":
-                        Reports1Button.Visibility = Visibility.Visible;
-                        Reports2Button.Visibility = Visibility.Visible;
+                        ReportsButton.Visibility = Visibility.Visible;
                         break;
                     case "Setting":
-                        Setting1Button.Visibility = Visibility.Visible;
-                        Setting2Button.Visibility = Visibility.Visible;
+                        SettingButton.Visibility = Visibility.Visible;
                         break;
                     case "Import":
-                        Import1Button.Visibility = Visibility.Visible;
-                        Import2Button.Visibility = Visibility.Visible;
+                        ImportButton.Visibility = Visibility.Visible;
                         break;
-                                           
+
                     default:
                         break;
                 }
@@ -211,84 +297,6 @@ namespace WpfApp
             }
 
         }
-
-        /// <summary>
-        /// Handles the OnPreviewMouseLeftButtonUp event of the Button control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="MouseButtonEventArgs" /> instance containing the event data.</param>
-        private void Button_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            string toolTip = "";
-
-            if (sender.GetType().Equals(typeof(Button)))
-            {
-                toolTip = ((Button)sender).ToolTip.ToString();
-            }
-            else
-            {
-                toolTip = ((TextBlock)sender).ToolTip.ToString();
-            }          
-
-            ApplicationPageTextBlock.Text = "- " + toolTip;
-
-            MenuToggleButton.IsChecked = false;
-            
-            if (toolTip.Equals("Home"))
-            {
-                InitialControlSetup();
-
-                MainGrid.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                MainGrid.Visibility = Visibility.Collapsed;
-            }
-
-            if (toolTip.Equals("Search"))
-            {
-                this.SearchTextBox.Text = string.Empty;
-            }
-        }
-
-        /// <summary>
-        /// Handles the Click event of the LogoutButton control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="RequestNavigateEventArgs" /> instance containing the event data.</param>
-        private void LogoutButton_Click(object sender, RequestNavigateEventArgs e)
-        {
-            MainGrid.Visibility = Visibility.Visible;
-
-            App.BaseUserControl.UserModel = null;
-
-            MenuToggleButton.IsChecked = false;
-
-            MainWindow_Loaded(null, null);
-        }
-
-
-        /// <summary>
-        /// Handles the MouseDoubleClick event of the LatestTranscriptionsListView control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="MouseButtonEventArgs"/> instance containing the event data.</param>
-        void LatestTranscriptionsListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            UIElement clicked = e.OriginalSource as UIElement;
-
-            TranscriptionModel itemTranscriptionModel = ((FrameworkElement)e.OriginalSource).DataContext as TranscriptionModel;
-
-            MainGrid.Visibility = Visibility.Hidden;
-
-            if (itemTranscriptionModel != null)
-            {
-                object parameter = itemTranscriptionModel.Id;
-                
-                Browse2Button.Command?.Execute(parameter);
-            }
-        }
-
 
         /// <summary>
         /// Initials the control setup.
@@ -326,6 +334,24 @@ namespace WpfApp
                 LatestTranscriptions.ItemsSource = "No data found";
                 LatestTranscriptions.Visibility = Visibility.Collapsed;
             }
+        }
+
+        /// <summary>
+        /// Buttons the color change.
+        /// </summary>
+        /// <param name="btn">The BTN.</param>
+        private void ButtonColorChange(Button btn)
+        {
+            btn.Background = new SolidColorBrush(Colors.Green);
+        }
+
+        /// <summary>
+        /// Buttons the background color rest.
+        /// </summary>
+        /// <param name="btn">The BTN.</param>
+        private void ButtonBackgroundColorRest(Button btn)
+        {
+            btn.ClearValue(Button.BackgroundProperty);
         }
 
         #endregion

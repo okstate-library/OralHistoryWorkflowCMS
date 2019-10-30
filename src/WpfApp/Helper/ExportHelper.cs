@@ -15,7 +15,7 @@ namespace WpfApp.Helper
         /// <summary>
         /// The temporary file
         /// </summary>
-        string tempFile = Path.GetTempPath()+ "/out.xls";
+        string tempFile = Path.GetTempPath() + "/out.xls";
 
         /// <summary>
         /// Handles the Click event of the ExportButton control.
@@ -330,6 +330,210 @@ namespace WpfApp.Helper
 
         }
 
+        public void ExportAllCollection(List<CollectionModel> collections)
+        {
+            var path = System.IO.Path.GetFullPath(tempFile);
+
+            FileHelper.DeleteFile(path);
+
+            Excel.Application xlApp;
+            Excel.Workbook xlWorkBook;
+            Excel.Worksheet xlWorkSheet;
+            object misValue = System.Reflection.Missing.Value;
+
+            xlApp = new Excel.Application();
+            xlWorkBook = xlApp.Workbooks.Add(misValue);
+            xlWorkSheet = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1);
+
+            xlWorkSheet.Cells[1, 1] = "Collection Name";
+            xlWorkSheet.Cells[1, 2] = "Number";
+            xlWorkSheet.Cells[1, 3] = "Dates";
+            xlWorkSheet.Cells[1, 4] = "Note";
+            xlWorkSheet.Cells[1, 5] = "Subjects";
+
+            xlWorkSheet.Cells[1, 6] = "Keywords";
+            xlWorkSheet.Cells[1, 7] = "Description";
+            xlWorkSheet.Cells[1, 8] = "Scope And Content";
+            xlWorkSheet.Cells[1, 9] = "Custodial History";
+            xlWorkSheet.Cells[1, 10] = "Size";
+
+            xlWorkSheet.Cells[1, 11] = "Acquisition info";
+            xlWorkSheet.Cells[1, 12] = "Language";
+            xlWorkSheet.Cells[1, 13] = "Preservation Note";
+            xlWorkSheet.Cells[1, 14] = "Rights";
+            xlWorkSheet.Cells[1, 15] = "Access Restrictions";
+
+            xlWorkSheet.Cells[1, 16] = "Publication Rights";
+            xlWorkSheet.Cells[1, 17] = "Preferred Citation";
+            xlWorkSheet.Cells[1, 18] = "Related Collection";
+            xlWorkSheet.Cells[1, 19] = "Separated Material";
+            xlWorkSheet.Cells[1, 20] = "Original Location";
+
+            xlWorkSheet.Cells[1, 21] = "Copies Location";
+            xlWorkSheet.Cells[1, 22] = "Publication Note";
+            xlWorkSheet.Cells[1, 23] = "Creator";
+            xlWorkSheet.Cells[1, 24] = "Contributors";
+            xlWorkSheet.Cells[1, 25] = "ProcessedBy";
+
+            xlWorkSheet.Cells[1, 26] = "Sponsors";
+
+            int i = 2;
+
+            foreach (CollectionModel collection in collections)
+            {
+                xlWorkSheet.Cells[i, 1] = collection.CollectionName;
+                xlWorkSheet.Cells[i, 2] = collection.Number;
+                xlWorkSheet.Cells[i, 3] = collection.Dates;
+                xlWorkSheet.Cells[i, 4] = collection.Note;
+                xlWorkSheet.Cells[i, 5] = collection.Subjects;
+
+                xlWorkSheet.Cells[i, 6] = collection.Keywords;
+                xlWorkSheet.Cells[i, 7] = collection.Description;
+                xlWorkSheet.Cells[i, 8] = collection.ScopeAndContent;
+                xlWorkSheet.Cells[i, 9] = collection.CustodialHistory;
+                xlWorkSheet.Cells[i, 10] = collection.Size;
+
+                xlWorkSheet.Cells[i, 11] = collection.Acquisitioninfo;
+                xlWorkSheet.Cells[i, 12] = collection.Language;
+                xlWorkSheet.Cells[i, 13] = collection.PreservationNote;
+                xlWorkSheet.Cells[i, 14] = collection.Rights;
+                xlWorkSheet.Cells[i, 15] = collection.AccessRestrictions;
+
+                xlWorkSheet.Cells[i, 16] = collection.PublicationRights;
+                xlWorkSheet.Cells[i, 17] = collection.PreferredCitation;
+                xlWorkSheet.Cells[i, 18] = collection.RelatedCollection;
+                xlWorkSheet.Cells[i, 19] = collection.SeparatedMaterial;
+                xlWorkSheet.Cells[i, 20] = collection.OriginalLocation;
+
+                xlWorkSheet.Cells[i, 21] = collection.CopiesLocation;
+                xlWorkSheet.Cells[i, 22] = collection.PublicationNote;
+                xlWorkSheet.Cells[i, 23] = collection.Creator;
+                xlWorkSheet.Cells[i, 24] = collection.Contributors;
+                xlWorkSheet.Cells[i, 25] = collection.ProcessedBy;
+
+                xlWorkSheet.Cells[i, 26] = collection.Sponsors;
+
+                i++;
+            }
+
+            xlWorkBook.SaveAs(path,
+                Excel.XlFileFormat.xlWorkbookNormal, misValue, misValue, misValue, misValue, Excel.XlSaveAsAccessMode.xlExclusive,
+                misValue, misValue, misValue, misValue, misValue);
+
+            xlWorkBook.Close(true, misValue, misValue);
+            xlApp.Quit();
+
+            ReleaseObject(xlWorkSheet);
+            ReleaseObject(xlWorkBook);
+            ReleaseObject(xlApp);
+
+            Process.Start(path);
+
+        }
+
+        public void ExportAllSubseries(List<SubseryModel> subseriesList)
+        {
+            var path = System.IO.Path.GetFullPath(tempFile);
+
+            FileHelper.DeleteFile(path);
+
+            Excel.Application xlApp;
+            Excel.Workbook xlWorkBook;
+            Excel.Worksheet xlWorkSheet;
+            object misValue = System.Reflection.Missing.Value;
+
+            xlApp = new Excel.Application();
+            xlWorkBook = xlApp.Workbooks.Add(misValue);
+            xlWorkSheet = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1);
+
+            xlWorkSheet.Cells[1, 1] = "Collection Name";
+            xlWorkSheet.Cells[1, 2] = "Subseries Name";
+            xlWorkSheet.Cells[1, 3] = "Number";
+            xlWorkSheet.Cells[1, 4] = "Dates";
+            xlWorkSheet.Cells[1, 5] = "Note";
+
+            xlWorkSheet.Cells[1, 6] = "Subjects";
+            xlWorkSheet.Cells[1, 7] = "Keywords";
+            xlWorkSheet.Cells[1, 8] = "Description";
+            xlWorkSheet.Cells[1, 9] = "Scope And Content";
+            xlWorkSheet.Cells[1, 10] = "Custodial History";
+
+            xlWorkSheet.Cells[1, 11] = "Size";
+            xlWorkSheet.Cells[1, 12] = "Acquisition info";
+            xlWorkSheet.Cells[1, 13] = "Language";
+            xlWorkSheet.Cells[1, 14] = "Preservation Note";
+            xlWorkSheet.Cells[1, 15] = "Rights";
+
+            xlWorkSheet.Cells[1, 16] = "Access Restrictions";
+            xlWorkSheet.Cells[1, 17] = "Publication Rights";
+            xlWorkSheet.Cells[1, 18] = "Preferred Citation";
+            xlWorkSheet.Cells[1, 19] = "Related Collection";
+            xlWorkSheet.Cells[1, 20] = "Separated Material";
+
+            xlWorkSheet.Cells[1, 21] = "Original Location";
+            xlWorkSheet.Cells[1, 22] = "Copies Location";
+            xlWorkSheet.Cells[1, 23] = "Publication Note";
+            xlWorkSheet.Cells[1, 24] = "Creator";
+            xlWorkSheet.Cells[1, 25] = "Contributors";
+
+            xlWorkSheet.Cells[1, 26] = "ProcessedBy";
+            xlWorkSheet.Cells[1, 27] = "Sponsors";
+
+            int i = 2;
+
+            foreach (SubseryModel subseries in subseriesList)
+            {
+                xlWorkSheet.Cells[i, 1] = subseries.CollectionName;
+                xlWorkSheet.Cells[i, 2] = subseries.SubseryName;
+                xlWorkSheet.Cells[i, 3] = subseries.Number;
+                xlWorkSheet.Cells[i, 4] = subseries.Dates;
+                xlWorkSheet.Cells[i, 5] = subseries.Note;
+
+                xlWorkSheet.Cells[i, 6] = subseries.Subjects;
+                xlWorkSheet.Cells[i, 7] = subseries.Keywords;
+                xlWorkSheet.Cells[i, 8] = subseries.Description;
+                xlWorkSheet.Cells[i, 9] = subseries.ScopeAndContent;
+                xlWorkSheet.Cells[i, 10] = subseries.CustodialHistory;
+
+                xlWorkSheet.Cells[i, 11] = subseries.Size;
+                xlWorkSheet.Cells[i, 12] = subseries.Acquisitioninfo;
+                xlWorkSheet.Cells[i, 13] = subseries.Language;
+                xlWorkSheet.Cells[i, 14] = subseries.PreservationNote;
+                xlWorkSheet.Cells[i, 15] = subseries.Rights;
+
+                xlWorkSheet.Cells[i, 16] = subseries.AccessRestrictions;
+                xlWorkSheet.Cells[i, 17] = subseries.PublicationRights;
+                xlWorkSheet.Cells[i, 18] = subseries.PreferredCitation;
+                xlWorkSheet.Cells[i, 19] = subseries.RelatedCollection;
+                xlWorkSheet.Cells[i, 20] = subseries.SeparatedMaterial;
+
+                xlWorkSheet.Cells[i, 21] = subseries.OriginalLocation;
+                xlWorkSheet.Cells[i, 22] = subseries.CopiesLocation;
+                xlWorkSheet.Cells[i, 23] = subseries.PublicationNote;
+                xlWorkSheet.Cells[i, 24] = subseries.Creator;
+                xlWorkSheet.Cells[i, 25] = subseries.Contributors;
+
+                xlWorkSheet.Cells[i, 26] = subseries.ProcessedBy;
+                xlWorkSheet.Cells[i, 27] = subseries.Sponsors;
+
+                i++;
+            }
+
+            xlWorkBook.SaveAs(path,
+                Excel.XlFileFormat.xlWorkbookNormal, misValue, misValue, misValue, misValue, Excel.XlSaveAsAccessMode.xlExclusive,
+                misValue, misValue, misValue, misValue, misValue);
+
+            xlWorkBook.Close(true, misValue, misValue);
+            xlApp.Quit();
+
+            ReleaseObject(xlWorkSheet);
+            ReleaseObject(xlWorkBook);
+            ReleaseObject(xlApp);
+
+            Process.Start(path);
+
+        }
+
         /// <summary>
         /// Releases the object.
         /// </summary>
@@ -341,7 +545,7 @@ namespace WpfApp.Helper
                 System.Runtime.InteropServices.Marshal.ReleaseComObject(obj);
                 obj = null;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 obj = null;
                 //MessageBox.Show("Exception Occured while releasing object " + ex.ToString());

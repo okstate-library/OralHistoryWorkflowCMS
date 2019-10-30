@@ -45,6 +45,7 @@
     <Compile Include="BaseResponse.cs" />
     <Compile Include="BrowseFormModel.cs" />
     <Compile Include="BusinessException.cs" />
+    <Compile Include="RepositoryModel.cs" />
     <Compile Include="CollectionModel.cs" />
     <Compile Include="FindReplaceModel.cs" />
     <Compile Include="MainFormModel.cs" />
