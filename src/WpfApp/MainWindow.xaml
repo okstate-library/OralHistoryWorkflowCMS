@@ -4,7 +4,8 @@
         xmlns:domain="clr-namespace:WpfApp.Domain"
         xmlns:system="clr-namespace:System;assembly=mscorlib"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        Height="950" Width="1420"       
+        Height="{Binding Source={x:Static SystemParameters.PrimaryScreenHeight}, Converter={helper:RatioConverter}, ConverterParameter='0.9' }" 
+        Width="{Binding Source={x:Static SystemParameters.PrimaryScreenWidth}, Converter={helper:RatioConverter}, ConverterParameter='0.9' }"      
         TextElement.FontWeight="Regular"
         TextElement.FontSize="15"
         TextOptions.TextFormattingMode="Ideal" 
@@ -12,7 +13,8 @@
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{StaticResource MaterialDesignFont}"   
-        xmlns:local1="clr-namespace:WpfApp">
+        xmlns:local1="clr-namespace:WpfApp"
+        xmlns:helper="clr-namespace:WpfApp.Helper">
 
     <Window.Resources>
         <!--<ResourceDictionary>

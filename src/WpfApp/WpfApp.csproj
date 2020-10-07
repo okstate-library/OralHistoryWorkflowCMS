@@ -88,6 +88,7 @@
     <Compile Include="Domain\GridViewSort.cs" />
     <Compile Include="Domain\CollectionUIModel.cs" />
     <Compile Include="Domain\TranscriptionUiModel.cs" />
+    <Compile Include="Helper\RatioConverter.cs" />
     <Compile Include="Helper\Repository.cs" />
     <Compile Include="Helper\WellKnownPredefinedUserType.cs" />
     <Compile Include="Helper\WellKnownSettings.cs" />
