@@ -100,6 +100,19 @@
                         </StackPanel>
 
                         <StackPanel Grid.Row="2" Margin="5 0 5 0" Orientation="Horizontal">
+                            <Button Name="Interviewers"  
+                                    Style="{StaticResource MaterialDesignFlatButton}"
+                        ToolTip="Modify Interviewers" Click="Interviewers_Click">
+                                _Interviewers
+                            </Button>
+                            <Button Name="PlusInterviewers"  HorizontalAlignment="Right"
+                                    Style="{StaticResource MaterialDesignFlatButton}"
+                        ToolTip="Modify Interviewers" Click="AddNewInterviewer_Click">
+                                +
+                            </Button>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="3" Margin="5 0 5 0" Orientation="Horizontal">
                             <Button Name="Repository"  
                                     Style="{StaticResource MaterialDesignFlatButton}"
                         ToolTip="Modify repository" Click="Repository_Click">
@@ -112,7 +125,7 @@
                             </Button>
                         </StackPanel>
                         
-                        <StackPanel Grid.Row="3" Margin="5 0 5 0" Orientation="Horizontal">
+                        <StackPanel Grid.Row="4" Margin="5 0 5 0" Orientation="Horizontal">
                             <Button Name="Collection"  
                                     Style="{StaticResource MaterialDesignFlatButton}"
                         ToolTip="Modify collection" Click="Collection_Click">
@@ -125,7 +138,7 @@
                             </Button>
                         </StackPanel>
 
-                        <StackPanel Grid.Row="4" Margin="5 0 5 0" Orientation="Horizontal">
+                        <StackPanel Grid.Row="5" Margin="5 0 5 0" Orientation="Horizontal">
                             <Button Name="Subseries"  
                                     Style="{StaticResource MaterialDesignFlatButton}"
                         ToolTip="Modify subseries" Click="Subseries_Click">
@@ -138,7 +151,7 @@
                             </Button>
                         </StackPanel>
 
-                        <StackPanel Grid.Row="5" Margin="5 0 5 0" Name="ExportAllButtonStackPanel" Orientation="Horizontal">
+                        <StackPanel Grid.Row="6" Margin="5 0 5 0" Name="ExportAllButtonStackPanel" Orientation="Horizontal">
                             <Button Name="ExportAllButton"  
                                     Style="{StaticResource MaterialDesignFlatButton}" 
                         ToolTip="Export all database details" Click="ExportAll_Click">
@@ -146,7 +159,7 @@
                             </Button>
                         </StackPanel>
 
-                        <StackPanel Grid.Row="6" Margin="5 0 5 0" Name="DeletesStackPanel" Orientation="Horizontal">
+                        <StackPanel Grid.Row="7" Margin="5 0 5 0" Name="DeletesStackPanel" Orientation="Horizontal">
                             <Button Name="Reset"  
                                     Style="{StaticResource MaterialDesignFlatButton}" 
                         ToolTip="Reset database" Click="Reset_Click">
@@ -214,7 +227,7 @@
 
                 <StackPanel Name="RepositoryStackPanel"   Grid.Row="2" Grid.Column="1" Visibility="Collapsed">
 
-                    <ListView  MouseDoubleClick="RepositoryListViewListView_MouseDoubleClick"   Margin="10" 
+                    <ListView VerticalAlignment="Top"  MouseDoubleClick="RepositoryListViewListView_MouseDoubleClick"   Margin="10" 
                                Name="RepositoryListView" ItemContainerStyle="{StaticResource ListViewAlternatingRowStyle}" AlternationCount="2"
                           HorizontalAlignment="Left" domain:GridViewSort.AutoSort="True">
                         <ListView.View >
@@ -355,7 +368,7 @@
                                 materialDesign:DialogHost.DialogClosingAttached="ExportAllConfirmaiton_OnDialogClosing">
                             <Button.CommandParameter>
                                 <StackPanel Margin="16">
-                                    <TextBlock Text=" Are you really want to export all transaction details?" FontWeight="Bold" FontSize="20" ></TextBlock>
+                                    <TextBlock Text=" Do you really want to export all transaction/collection/subseries details?" FontWeight="Bold" FontSize="20" ></TextBlock>
                                     <Button Style="{StaticResource MaterialDesignFlatButton}" IsCancel="True" 
                                             Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
                                             CommandParameter="true"
@@ -372,11 +385,12 @@
 
                         <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource BoldLabel}" Content="Export all collection details"  Margin="20 0 0 0" />
                         
-                        <Button Grid.Row="2" Grid.Column="1" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}"  Style="{StaticResource MaterialDesignRaisedAccentButton}" 
+                        <Button Grid.Row="2" Grid.Column="1" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}"  
+                                Style="{StaticResource MaterialDesignRaisedAccentButton}" 
                                 materialDesign:DialogHost.DialogClosingAttached="ExportAllCollectionConfirmaiton_OnDialogClosing">
                             <Button.CommandParameter>
                                 <StackPanel Margin="16">
-                                    <TextBlock Text=" Are you really want to export all collection details?" FontWeight="Bold" FontSize="20" ></TextBlock>
+                                    <TextBlock Text=" Do you really want to export all collection details?" FontWeight="Bold" FontSize="20" ></TextBlock>
                                     <Button Style="{StaticResource MaterialDesignFlatButton}" IsCancel="True" 
                                             Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
                                             CommandParameter="true"
@@ -397,7 +411,7 @@
                                 materialDesign:DialogHost.DialogClosingAttached="ExportAllSubseriesConfirmaiton_OnDialogClosing">
                             <Button.CommandParameter>
                                 <StackPanel Margin="16">
-                                    <TextBlock Text=" Are you really want to export all subseries details?" FontWeight="Bold" FontSize="20" ></TextBlock>
+                                    <TextBlock Text=" Do you really want to export all subseries details?" FontWeight="Bold" FontSize="20" ></TextBlock>
                                     <Button Style="{StaticResource MaterialDesignFlatButton}" IsCancel="True" 
                                             Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
                                             CommandParameter="true"
@@ -419,7 +433,7 @@
                     <Grid  VerticalAlignment="Top">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="40" />
-                            <RowDefinition Height="190" />
+                            <RowDefinition Height="250" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="400" />
@@ -456,6 +470,33 @@
                     </Grid>
                 </StackPanel>
 
+                <StackPanel Name="InterviewersStackPanel"   Grid.Row="2" Grid.Column="1" Visibility="Collapsed">
+
+                    <ListView  MouseDoubleClick="InterviewersListViewListView_MouseDoubleClick"   Margin="10" 
+                               Name="InterviewersListView" ItemContainerStyle="{StaticResource ListViewAlternatingRowStyle}" AlternationCount="2"
+                          HorizontalAlignment="Left" domain:GridViewSort.AutoSort="True">
+                        <ListView.View >
+                            <GridView>
+                                <!--name-->
+                                <GridViewColumn Header="Repository"  Width="500"  
+                                            HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}" 
+                                            domain:GridViewSort.PropertyName="RepositoryName">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel>
+                                                <TextBlock Name="NameTextBlock_Metadata" ToolTip="{Binding RepositoryName}" 
+                                                       Text="{Binding RepositoryName}" />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+
+                            </GridView>
+                        </ListView.View>
+
+                    </ListView>
+
+                </StackPanel>
             </Grid>
             <StackPanel>
                 <Button Content="Back to List..."  Name="BackToListButton" Visibility="Hidden" Click="BackToListButton_Click" />

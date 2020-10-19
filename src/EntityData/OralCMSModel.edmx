@@ -141,8 +141,8 @@
           <Property Name="InterviewDate2" Type="varchar" Nullable="true" />
           <Property Name="Title" Type="varchar" MaxLength="250" Nullable="false" />
           <Property Name="Description" Type="text" />
-          <Property Name="Keywords" Type="varchar" MaxLength="250" />
-          <Property Name="Subject" Type="varchar" MaxLength="300" />
+          <Property Name="Keywords" Type="text" />
+          <Property Name="Subject" Type="text" />
           <Property Name="InterviewerDescription" Type="text" />
           <Property Name="InterviewerKeywords" Type="varchar" MaxLength="500" />
           <Property Name="InterviewerSubjects" Type="varchar" MaxLength="300" />
@@ -153,7 +153,7 @@
           <Property Name="RelationIsPartOf" Type="varchar" MaxLength="250" />
           <Property Name="CoverageSpatial" Type="varchar" MaxLength="250" />
           <Property Name="CoverageTemporal" Type="varchar" MaxLength="250" />
-          <Property Name="Rights" Type="varchar" MaxLength="500" />
+          <Property Name="Rights" Type="text" />
           <Property Name="Language" Type="varchar" MaxLength="20" />
           <Property Name="Identifier" Type="varchar" MaxLength="50" />
           <Property Name="Transcript" Type="varchar" MaxLength="250" />
@@ -372,16 +372,16 @@
           <Property Name="InterviewDate2" Type="String" Nullable="true" />
           <Property Name="Title" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="Description" Type="String" MaxLength="1500" FixedLength="false" Unicode="false" />
-          <Property Name="Keywords" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="Subject" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
-          <Property Name="ScopeAndContents" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Keywords" Type="String" MaxLength="1500" FixedLength="false" Unicode="false" />
+          <Property Name="Subject" Type="String" MaxLength="1500" FixedLength="false" Unicode="false" />
+          <Property Name="ScopeAndContents" Type="String" MaxLength="1500" FixedLength="false" Unicode="false" />
           <Property Name="Format" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Type" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Publisher" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="RelationIsPartOf" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="CoverageSpatial" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="CoverageTemporal" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="Rights" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Rights" Type="String" MaxLength="1500" FixedLength="false" Unicode="false" />
           <Property Name="Language" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="Identifier" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Transcript" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />

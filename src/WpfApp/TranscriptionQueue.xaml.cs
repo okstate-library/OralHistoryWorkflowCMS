@@ -274,6 +274,14 @@ namespace WpfApp
             {
                 requestPage = PreviousPageNumber;
             }
+            else if (hyperlinkName == "FirstPagesHyperlink")
+            {
+                requestPage =1;
+            }
+            else if (hyperlinkName == "PrevoiousHyperlink")
+            {
+                requestPage = PreviousPageNumber;
+            }
 
             SearchRequest.CurrentPage = requestPage;
 

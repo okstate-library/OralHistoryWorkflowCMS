@@ -161,6 +161,7 @@ namespace WpfApp.Domain
         public static void ApplySort(ICollectionView view, string propertyName)
         {
             ListSortDirection direction = ListSortDirection.Ascending;
+
             if (view.SortDescriptions.Count > 0)
             {
                 SortDescription currentSort = view.SortDescriptions[0];
@@ -173,6 +174,7 @@ namespace WpfApp.Domain
                 }
                 view.SortDescriptions.Clear();
             }
+
             if (!string.IsNullOrEmpty(propertyName))
             {
                 view.SortDescriptions.Add(new SortDescription(propertyName, direction));

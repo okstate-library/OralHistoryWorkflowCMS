@@ -113,7 +113,7 @@ namespace BusinessServices.Servcices
             IQueryable<transcription> transcriptions = TranscriptionRepository
                 .FindBy(i => i.UpdatedBy == Request.UserModel.UserId)
                 .OrderByDescending(i => i.CreatedDate)
-                .Take(10);
+                .Take(20);
 
             foreach (transcription item in transcriptions.ToList())
             {

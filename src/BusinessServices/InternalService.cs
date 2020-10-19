@@ -345,8 +345,22 @@ namespace BusinessServices
             return uow.Response;
         }
 
+        /// <summary>
+        /// Gets the subseies.
+        /// </summary>
+        /// <param name="requestModel">The request model.</param>
+        /// <returns></returns>
+        public ResponseModel GetPredefineUsers(RequestModel requestModel)
+        {
+            GetSubseriesUoW uow = new GetSubseriesUoW
+            {
+                Request = requestModel
+            };
 
+            uow.DoWork();
 
+            return uow.Response;
+        }
 
         public ResponseModel ModifyRepository(RequestModel request)
         {
@@ -359,6 +373,7 @@ namespace BusinessServices
 
             return uow.Response;
         }
+
         public ResponseModel ModifyCollection(RequestModel request)
         {
             ModifyCollectionUow uow = new ModifyCollectionUow

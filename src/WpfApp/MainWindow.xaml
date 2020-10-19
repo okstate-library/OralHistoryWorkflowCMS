@@ -62,103 +62,7 @@
                             <RowDefinition Height="2*" />
                             <RowDefinition Height="7*" />
                             <RowDefinition Height="5*" />
-                        </Grid.RowDefinitions>
-
-                        <!--<Grid  Grid.Row="0"  >
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="3*" />
-                                <ColumnDefinition Width="1*" />
-                            </Grid.ColumnDefinitions>
-
-                            --><!--<ToggleButton Name="ToggleButton"   Grid.Column="1" Style="{StaticResource  MaterialDesignHamburgerToggleButton}" 
-                                    DockPanel.Dock="Top" 
-                                    HorizontalAlignment="Right" Margin="20"
-                                    IsChecked="{Binding ElementName=MenuToggleButton, Path=IsChecked, Mode=TwoWay}" />--><!--
-                        </Grid>-->
-
-                        <!--<StackPanel  x:Name="VerticalDemoItemsList"   Grid.Row="1" Width="200">
-                            <Button Name="Home1Button" ToolTip="Home"  Margin="5"
-                                                PreviewMouseLeftButtonUp="Button_OnPreviewMouseLeftButtonUp" >
-
-                                <StackPanel Orientation="Horizontal">
-                                    <materialDesign:PackIcon Kind="Home" HorizontalAlignment="Left" />
-                                    <TextBlock Margin="5 0 0 0" Text="Home">
-                                    </TextBlock>
-                                </StackPanel>
-                            </Button>
-                            <Button Name="Interview1Button" ToolTip="Interview" Command="{Binding Path=LoadInterviewPageCommand}" Margin="5"
-                                                PreviewMouseLeftButtonUp="Button_OnPreviewMouseLeftButtonUp">
-                                <StackPanel Orientation="Horizontal">
-                                    <materialDesign:PackIcon Kind="CommentQuestion" HorizontalAlignment="Left" />
-                                    <TextBlock Margin="5 0 0 0" Text="Interview">
-
-                                    </TextBlock>
-                                </StackPanel>
-                            </Button>
-
-                            <Button Name="TranscriptionQueue1Button" ToolTip="Transcription Queue" Command="{Binding Path=LoadTranscriptionQueuePageCommand}" Margin="5"
-                                                PreviewMouseLeftButtonUp="Button_OnPreviewMouseLeftButtonUp">
-
-                                <StackPanel Orientation="Horizontal">
-                                    <materialDesign:PackIcon Kind="LibraryPlus" HorizontalAlignment="Left" />
-                                    <TextBlock Margin="5 0 0 0" Text="Transcription Queue">
-
-                                    </TextBlock>
-                                </StackPanel>
-                            </Button>
-
-                            <Button Name="Browse1Button" ToolTip="Browse"  Command="{Binding Path=LoadBrowsePageCommand}"  Margin="5"
-                                                PreviewMouseLeftButtonUp="Button_OnPreviewMouseLeftButtonUp">
-                                <StackPanel Orientation="Horizontal">
-                                    <materialDesign:PackIcon Kind="OpenInApp" HorizontalAlignment="Left" />
-                                    <TextBlock Margin="5 0 0 0" Text="Browse">
-
-                                    </TextBlock>
-                                </StackPanel>
-                            </Button>
-                           
-                            <Button Name="FindnReplace1Button" ToolTip="Find and Replace" Command="{Binding Path=LoadFindnReplacePageCommand}" Margin="5"
-                                                PreviewMouseLeftButtonUp="Button_OnPreviewMouseLeftButtonUp">
-
-                                <StackPanel Orientation="Horizontal">
-                                    <materialDesign:PackIcon Kind="FindReplace" HorizontalAlignment="Left" />
-                                    <TextBlock Margin="5 0 0 0" Text="Find and Replace">
-
-                                    </TextBlock>
-                                </StackPanel>
-                            </Button>
-
-                            <Button Name="Reports1Button" ToolTip="Reports" Command="{Binding Path=LoadReportsPageCommand}" Margin="5"
-                                                PreviewMouseLeftButtonUp="Button_OnPreviewMouseLeftButtonUp">
-                                <StackPanel Orientation="Horizontal">
-                                    <materialDesign:PackIcon Kind="FileDocument" HorizontalAlignment="Left" />
-                                    <TextBlock Margin="5 0 0 0" Text="Reports">
-
-                                    </TextBlock>
-                                </StackPanel>
-                            </Button>
-
-                            <Button  Name="Setting1Button"  ToolTip="Settings"  Command="{Binding Path=LoadSettingsPageCommand}"  Margin="5"
-                                                 PreviewMouseLeftButtonUp="Button_OnPreviewMouseLeftButtonUp">
-                                <StackPanel Orientation="Horizontal">
-                                    <materialDesign:PackIcon Kind="Settings" HorizontalAlignment="Left" />
-                                    <TextBlock Margin="5 0 0 0" Text="Settings">
-
-                                    </TextBlock>
-                                </StackPanel>
-                            </Button>
-
-                            <Button Name="Import1Button"  ToolTip="Import" Command="{Binding Path=LoadImportPageCommand}" Margin="5"
-                                                PreviewMouseLeftButtonUp="Button_OnPreviewMouseLeftButtonUp">
-                                <StackPanel Orientation="Horizontal">
-                                    <materialDesign:PackIcon Kind="Upload" HorizontalAlignment="Left" />
-                                    <TextBlock Margin="5 0 0 0" Text="Upload">
-
-                                    </TextBlock>
-                                </StackPanel>
-                            </Button>
-                          
-                        </StackPanel>-->
+                        </Grid.RowDefinitions>                      
 
                     </Grid>
                 </DockPanel>
@@ -404,9 +308,9 @@
                                 </materialDesign:Card>
 
 
-                                <!--MouseDoubleClick="LatestTranscriptionsListView_MouseDoubleClick"-->
+                                <!---->
                                 <materialDesign:Card Width="850" Margin="0"  Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
-                                    <ListView Margin="2" Name="LatestTranscriptions"
+                                    <ListView Margin="2" Name="LatestTranscriptions" MouseDoubleClick="LatestTranscriptionsListView_MouseDoubleClick"
                                                 ItemContainerStyle="{StaticResource ListViewAlternatingRowStyle}" AlternationCount="2">
                                         <ListView.View>
                                             <GridView>                                         

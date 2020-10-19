@@ -44,6 +44,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "query", "query", "{014FB1FB
 		db\mysql\query\definition.1.4.0.0.sql = db\mysql\query\definition.1.4.0.0.sql
 		db\mysql\query\definition.1.5.0.0.sql = db\mysql\query\definition.1.5.0.0.sql
 		db\mysql\query\definition.1.6.0.0.sql = db\mysql\query\definition.1.6.0.0.sql
+		db\mysql\query\definition.1.7.0.0.sql = db\mysql\query\definition.1.7.0.0.sql
 		db\mysql\query\masterData.1.0.0.0.sql = db\mysql\query\masterData.1.0.0.0.sql
 		db\mysql\query\masterData.1.4.0.0.sql = db\mysql\query\masterData.1.4.0.0.sql
 		db\mysql\query\masterData.1.5.0.0.sql = db\mysql\query\masterData.1.5.0.0.sql

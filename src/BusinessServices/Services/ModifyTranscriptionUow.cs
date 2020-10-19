@@ -226,6 +226,9 @@ namespace BusinessServices.Servcices
                             daTranscription.FinalSentDate = transcriptionModel.FinalSentDate;
                             daTranscription.MetadataDraft = transcriptionModel.MetadataDraft;
 
+                            daTranscription.IsPriority = transcriptionModel.IsPriority;
+                            daTranscription.ReasonForPriority = transcriptionModel.ReasonForPriority;
+
                             daTranscription.TranscriptStatus = transcriptionModel.TranscriptStatus;
 
                             daTranscription.TranscriptLocation = transcriptionModel.TranscriptLocation;

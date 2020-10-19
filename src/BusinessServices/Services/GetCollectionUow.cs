@@ -127,7 +127,7 @@ namespace BusinessServices.Servcices
             }
             else
             {
-                foreach (collection item in CollectionRepository.GetCollections())
+                foreach (collection item in CollectionRepository.GetCollections().OrderBy(c=>c.CollectionName))
                 {
                     newlist.Add(Util.ConvertToCollectionModel(item, repositories.First(c => c.Id == item.RepositoryId).RepositoryName));
                 }

@@ -59,7 +59,7 @@ namespace WpfApp.Helper
                 xlWorkSheet.Cells[i, 1] = transcriptionModel.Title;
                 xlWorkSheet.Cells[i, 2] = transcriptionModel.Interviewee;
                 xlWorkSheet.Cells[i, 3] = transcriptionModel.Interviewer;
-                xlWorkSheet.Cells[i, 4] = transcriptionModel.CreatedDate;
+                xlWorkSheet.Cells[i, 4] = transcriptionModel.InterviewDate;
                 xlWorkSheet.Cells[i, 5] = transcriptionModel.ConvertToDigitalDate;
                 xlWorkSheet.Cells[i, 6] = transcriptionModel.Subject;
                 xlWorkSheet.Cells[i, 7] = transcriptionModel.Keywords;

@@ -114,16 +114,27 @@ namespace WpfApp
             SelectedSettings = WellKnownSettings.Users;
 
             SetVisibility(Visibility.Visible, Visibility.Collapsed, Visibility.Collapsed,
-                Visibility.Collapsed, Visibility.Collapsed, Visibility.Collapsed);
+                Visibility.Collapsed, Visibility.Collapsed, Visibility.Collapsed, Visibility.Collapsed);
 
             PopulateUserList(true);
         }
 
+        private void Interviewers_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            SelectedSettings = WellKnownSettings.Interviewers;
+
+            SetVisibility(Visibility.Visible, Visibility.Collapsed, Visibility.Collapsed,
+                Visibility.Collapsed, Visibility.Collapsed, Visibility.Collapsed, Visibility.Collapsed);
+
+            PopulateUserList(true);
+        }
+                
         private void Repository_Click(object sender, RoutedEventArgs e)
         {
             SelectedSettings = WellKnownSettings.Repository;
 
-            SetVisibility(Visibility.Collapsed, Visibility.Visible, Visibility.Collapsed, Visibility.Collapsed, Visibility.Collapsed, Visibility.Collapsed);
+            SetVisibility(Visibility.Collapsed, Visibility.Visible, Visibility.Collapsed, 
+                Visibility.Collapsed, Visibility.Collapsed, Visibility.Collapsed, Visibility.Collapsed);
 
             PopulateRepositoryList(true);
         }
@@ -137,7 +148,8 @@ namespace WpfApp
         {
             SelectedSettings = WellKnownSettings.Collection;
 
-            SetVisibility(Visibility.Collapsed, Visibility.Collapsed, Visibility.Visible, Visibility.Collapsed, Visibility.Collapsed, Visibility.Collapsed);
+            SetVisibility(Visibility.Collapsed, Visibility.Collapsed, Visibility.Visible, 
+                Visibility.Collapsed, Visibility.Collapsed, Visibility.Collapsed, Visibility.Collapsed);
 
             PopulateCollectionList(true);
         }
@@ -151,7 +163,8 @@ namespace WpfApp
         {
             SelectedSettings = WellKnownSettings.Subseries;
 
-            SetVisibility(Visibility.Collapsed, Visibility.Collapsed, Visibility.Collapsed, Visibility.Visible, Visibility.Collapsed, Visibility.Collapsed);
+            SetVisibility(Visibility.Collapsed, Visibility.Collapsed, Visibility.Collapsed,
+                Visibility.Visible, Visibility.Collapsed, Visibility.Collapsed, Visibility.Collapsed);
 
             PopulateSubseriesList(true);
         }
@@ -165,7 +178,8 @@ namespace WpfApp
         {
             SelectedSettings = WellKnownSettings.ExportAll;
 
-            SetVisibility(Visibility.Collapsed, Visibility.Collapsed, Visibility.Collapsed, Visibility.Collapsed, Visibility.Visible, Visibility.Collapsed);
+            SetVisibility(Visibility.Collapsed, Visibility.Collapsed, Visibility.Collapsed, 
+                Visibility.Collapsed, Visibility.Visible, Visibility.Collapsed, Visibility.Collapsed);
         }
 
         /// <summary>
@@ -177,7 +191,8 @@ namespace WpfApp
         {
             SelectedSettings = WellKnownSettings.Reset;
 
-            SetVisibility(Visibility.Collapsed, Visibility.Collapsed, Visibility.Collapsed, Visibility.Collapsed, Visibility.Collapsed, Visibility.Visible);
+            SetVisibility(Visibility.Collapsed, Visibility.Collapsed, Visibility.Collapsed,
+                Visibility.Collapsed, Visibility.Collapsed, Visibility.Visible, Visibility.Collapsed);
         }
 
         /// <summary>
@@ -210,6 +225,17 @@ namespace WpfApp
         private void AddNewUser_Click(object sender, RoutedEventArgs e)
         {
             SelectedSettings = WellKnownSettings.Users;
+
+            BackToListButton.Visibility = Visibility.Visible;
+
+            MainGrid.Visibility = Visibility.Hidden;
+
+            cc.Content = new ModifyUser(0);
+        }
+
+        private void AddNewInterviewer_Click(object sender, RoutedEventArgs e)
+        {
+            SelectedSettings = WellKnownSettings.Interviewers;
 
             BackToListButton.Visibility = Visibility.Visible;
 
@@ -411,6 +437,30 @@ namespace WpfApp
             }
         }
 
+        void InterviewersListViewListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            UIElement clicked = e.OriginalSource as UIElement;
+
+            string name = ((FrameworkElement)clicked).Name;
+
+            if (clicked != null && !string.IsNullOrEmpty(name))
+            {
+                string[] words = name.Split('_');
+
+                if (words.Length > 1)
+                {
+                    BackToListButton.Visibility = Visibility.Visible;
+
+                    RepositoryModel repositoryModel = ((FrameworkElement)e.OriginalSource).DataContext as RepositoryModel;
+
+                    MainGrid.Visibility = Visibility.Hidden;
+
+                    cc.Content = new ModifyRepository(repositoryModel.Id);
+                }
+
+            }
+        }
+
         #endregion
 
         #region Methods
@@ -499,7 +549,8 @@ namespace WpfApp
         /// <param name="reset">The reset.</param>
         private void SetVisibility(Visibility users, Visibility repository,
             Visibility collection, Visibility subseries,
-            Visibility exportAll, Visibility reset)
+            Visibility exportAll, Visibility reset,
+            Visibility interviewers)
         {
             UsersStackPanel.Visibility = users;
             RepositoryStackPanel.Visibility = repository;
@@ -507,6 +558,7 @@ namespace WpfApp
             CollectionStackPanel.Visibility = collection;
             ResetStackPanel.Visibility = reset;
             ExportAllStackPanel.Visibility = exportAll;
+            InterviewersStackPanel.Visibility = interviewers;
 
             RecordCountBorder.Visibility = (SelectedSettings == WellKnownSettings.ExportAll || SelectedSettings == WellKnownSettings.Reset ?
                 Visibility.Collapsed : Visibility.Visible);
@@ -539,6 +591,26 @@ namespace WpfApp
         /// </summary>
         /// <param name="isInitialTime">if set to <c>true</c> [is initial time].</param>
         private void PopulateRepositoryList(bool isInitialTime)
+        {
+            RequestModel requestModel = new RequestModel()
+            {
+                //FilterKeyWords = SearchList,
+                //SearchWord = SearchWordTextBox.Text.Trim(),
+            };
+
+            ResponseModel response = App.BaseUserControl.InternalService.GetRepository(requestModel);
+
+            if (response.IsOperationSuccess)
+            {
+                RepositoryListView.ItemsSource = response.Repositories;
+
+                RecordCountWordTextBox.Text = response.Repositories.Count + " repository record(s)";
+
+            }
+
+        }
+
+        private void PopulateInterviewersList(bool isInitialTime)
         {
             RequestModel requestModel = new RequestModel()
             {

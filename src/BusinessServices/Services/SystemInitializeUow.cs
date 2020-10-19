@@ -250,7 +250,7 @@ namespace BusinessServices.Servcices
             }
 
             // collect collection details.
-            List<collection> collections = CollectionRepository.GetCollections();
+            List<collection> collections = CollectionRepository.GetCollections().OrderBy(c=>c.CollectionName).ToList();
 
             foreach (collection item in collections)
             {
@@ -258,7 +258,7 @@ namespace BusinessServices.Servcices
             }
 
             // collect subseries details.
-            foreach (subsery item in SubseryRepository.GetSubseries())
+            foreach (subsery item in SubseryRepository.GetSubseries().OrderBy(s=>s.SubseriesName))
             {
                 newSubseriesList.Add(Util.ConvertToSubseryModel(item, collections.FirstOrDefault(s => s.Id == item.CollectionId).CollectionName));
             }

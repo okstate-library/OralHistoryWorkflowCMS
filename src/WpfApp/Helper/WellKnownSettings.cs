@@ -38,6 +38,11 @@
         /// <summary>
         /// The reset
         /// </summary>
-        Reset = 6
+        Reset = 6,
+
+        /// <summary>
+        /// the interviewers
+        /// </summary>
+        Interviewers = 7,
     }
 }

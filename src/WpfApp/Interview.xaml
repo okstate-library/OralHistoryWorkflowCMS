@@ -248,7 +248,7 @@
                                 </DatePicker.Resources>
                             </DatePicker>
                         </Grid>
-                      
+
                         <Border  Grid.Row="8"  Style="{StaticResource EmptyBorder}"   />
 
                         <TextBlock Style="{StaticResource BoldTextBlock}" Grid.Row="9" Grid.Column="0" Margin="5">Collection <TextBlock Foreground="Red"> *</TextBlock> </TextBlock>

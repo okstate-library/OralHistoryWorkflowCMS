@@ -74,21 +74,21 @@ namespace WpfApp
             {
 
                 //TODO: Login window
-                LoginWindow loginWindow = new LoginWindow
-                {
-                    Owner = this,
-                    WindowStartupLocation = WindowStartupLocation.CenterOwner
-                };
-
-                loginWindow.ShowDialog();
-
-                //App.BaseUserControl.UserModel = new UserModel()
+                //LoginWindow loginWindow = new LoginWindow
                 //{
-                //    UserId = 1,
-                //    Name = "Patrick",
-                //    UserType = 4,
-                //    Username = "admin"
+                //    Owner = this,
+                //    WindowStartupLocation = WindowStartupLocation.CenterOwner
                 //};
+
+                //loginWindow.ShowDialog();
+
+                App.BaseUserControl.UserModel = new UserModel()
+                {
+                    UserId = 1,
+                    Name = "Patrick",
+                    UserType = 4,
+                    Username = "admin"
+                };
 
                 SetLabels();
 
@@ -210,14 +210,24 @@ namespace WpfApp
 
             TranscriptionModel itemTranscriptionModel = ((FrameworkElement)e.OriginalSource).DataContext as TranscriptionModel;
 
-            MainGrid.Visibility = Visibility.Hidden;
+            //MainGrid.Visibility = Visibility.Hidden;
 
-            if (itemTranscriptionModel != null)
+            //if (itemTranscriptionModel != null)
+            //{
+            //    object parameter = itemTranscriptionModel.Id;
+
+            //    BrowseButton.Command?.Execute(parameter);
+            //}
+
+            Window window = new Window
             {
-                object parameter = itemTranscriptionModel.Id;
+                Title = "My User Control Dialog",
+                Content = new Transcription(itemTranscriptionModel.Id, Helper.WellKnownExpander.General),
+                Owner = this,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner
+            };
 
-                BrowseButton.Command?.Execute(parameter);
-            }
+            window.ShowDialog();
         }
 
         #endregion

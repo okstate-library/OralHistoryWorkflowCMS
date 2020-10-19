@@ -144,9 +144,9 @@ namespace WpfApp
         /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
         private void BrowseUserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            MainGrid.Visibility = Visibility.Visible;
+            //MainGrid.Visibility = Visibility.Visible;
 
-            cc.Content = null;
+            //cc.Content = null;
 
             SearchRequest = new SearchRequest(SearchHelper.InitialCurrentPage,
                 SearchHelper.InitialListLength);
@@ -155,7 +155,7 @@ namespace WpfApp
 
             PopulateList();
 
-            BackToListButton.Visibility = Visibility.Hidden;
+            //BackToListButton.Visibility = Visibility.Hidden;
 
             if (!string.IsNullOrEmpty(InterviewIdTextBox.Text))
             {
@@ -200,11 +200,21 @@ namespace WpfApp
 
         private void LoadBrowseData(int id, WellKnownExpander expader)
         {
-            BackToListButton.Visibility = Visibility.Visible;
+            //BackToListButton.Visibility = Visibility.Visible;
 
-            MainGrid.Visibility = Visibility.Hidden;
+           // MainGrid.Visibility = Visibility.Hidden;
 
-            cc.Content = new Transcription(id, expader);
+            // cc.Content = new Transcription(id, expader);
+
+            Window window = new Window
+            {
+                Title = "My User Control Dialog",
+                Content = new Transcription(id, expader),
+                //Owner = this.Parent,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner
+            };
+
+            window.ShowDialog();
         }
 
         /// <summary>
@@ -241,13 +251,13 @@ namespace WpfApp
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
         private void BackToListButton_Click(object sender, EventArgs e)
         {
-            cc.Content = null;
+            //cc.Content = null;
 
-            MainGrid.Visibility = Visibility.Visible;
+           // MainGrid.Visibility = Visibility.Visible;
 
             PopulateList();
 
-            BackToListButton.Visibility = Visibility.Hidden;
+            //BackToListButton.Visibility = Visibility.Hidden;
         }
 
         /// <summary>

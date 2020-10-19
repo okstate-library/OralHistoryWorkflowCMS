@@ -116,7 +116,7 @@ namespace BusinessServices.Servcices
             WellKnownError.Value = WellKnownError.NoError;
         }
 
-        /// <summary>
+        /// <summary
         /// The actual Work to be done.
         /// </summary>
         protected override void Execute()
@@ -125,7 +125,7 @@ namespace BusinessServices.Servcices
             List<SubseryModel> newSubseriesList = new List<SubseryModel>();
             SubseryModel subseryModel = new SubseryModel();
 
-            List<collection> collections = CollectionRepository.GetCollections();
+            List<collection> collections = CollectionRepository.GetCollections().OrderBy(o=>o.CollectionName).ToList();
 
             if (this.Request.SubseriesId > 0)
             {
@@ -135,6 +135,8 @@ namespace BusinessServices.Servcices
             }
             else
             {
+                List<SubseryModel> newSubseriesUnorderedList = new List<SubseryModel>();
+
                 foreach (collection item in collections)
                 {
                     newlist.Add(Util.ConvertToCollectionModel(item , string.Empty));
@@ -142,8 +144,10 @@ namespace BusinessServices.Servcices
 
                 foreach (subsery item in SubseryRepository.GetSubseries())
                 {
-                    newSubseriesList.Add(Util.ConvertToSubseryModel(item, collections.FirstOrDefault(s => s.Id == item.CollectionId).CollectionName));
+                    newSubseriesUnorderedList.Add(Util.ConvertToSubseryModel(item, collections.FirstOrDefault(s => s.Id == item.CollectionId).CollectionName));
                 }
+
+                newSubseriesList = newSubseriesUnorderedList.OrderBy(i => i.CollectionName).ThenBy(i=>i.SubseryName).ToList();
             }
 
             Response = new ResponseModel()

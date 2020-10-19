@@ -1,4 +1,5 @@
 ﻿using Core.Enums;
+using MaterialDesignThemes.Wpf;
 using Model;
 using Model.Transfer;
 using System;
@@ -114,6 +115,33 @@ namespace WpfApp
 
         #region Events
 
+        private void DeleteConfirmaiton_OnDialogClosing(object sender, DialogClosingEventArgs eventArgs)
+        {
+            if (eventArgs.Parameter.Equals("true"))
+            {
+                TranscriptionModel transcriptionModel = new TranscriptionModel()
+                {
+                    Id = TranscriptionId,
+                };
+
+                RequestModel requestModel = new RequestModel()
+                {
+                    TranscriptionModel = transcriptionModel,
+                };
+
+                ResponseModel response = App.BaseUserControl.InternalService.DeleteTranscription(requestModel);
+
+                if (response.IsOperationSuccess)
+                {
+                    App.ShowMessageDeleteRecord(true, string.Empty);
+                }
+                else
+                {
+                    App.ShowMessage(false, response.ErrorMessage);
+                }
+            }
+        }
+
         /// <summary>
         /// Handles the Click event of the TranscriptionDetailsButton control.
         /// </summary>
@@ -144,6 +172,9 @@ namespace WpfApp
                 SentOut = SentOutYesCheckBox.IsChecked.Value,
 
                 MetadataDraft = MetadataDraftTextBox.Text,
+
+                IsPriority = IsPriorityYesCheckBox.IsChecked.Value,
+                ReasonForPriority = ReasonofPriorityTextBox.Text,
 
                 FinalSentDate = FinalSentDatePicker.SelectedDate != null ?
                 FinalSentDatePicker.SelectedDate.Value.Date
@@ -262,26 +293,7 @@ namespace WpfApp
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void DeleteButton_Click(object sender, EventArgs e)
         {
-            TranscriptionModel transcriptionModel = new TranscriptionModel()
-            {
-                Id = TranscriptionId,
-            };
 
-            RequestModel requestModel = new RequestModel()
-            {
-                TranscriptionModel = transcriptionModel,
-            };
-
-            ResponseModel response = App.BaseUserControl.InternalService.DeleteTranscription(requestModel);
-
-            if (response.IsOperationSuccess)
-            {
-                App.ShowMessageDeleteRecord(true, string.Empty);
-            }
-            else
-            {
-                App.ShowMessage(false, response.ErrorMessage);
-            }
 
         }
 
@@ -423,6 +435,20 @@ namespace WpfApp
         }
 
         /// <summary>
+        /// Called when [is priority check].
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+        private void IsPriority_Check(object sender, RoutedEventArgs e)
+        {
+            CheckBox currentCheckBox = (CheckBox)sender;
+
+            UIHelper.SetMutualExclusivity((CheckBox)sender,
+                IsPriorityYesCheckBox,
+                IsPriorityNoCheckBox);
+        }
+
+        /// <summary>
         /// Handles the Check event of the InRosetta control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
@@ -462,10 +488,20 @@ namespace WpfApp
             UIHelper.SetMutualExclusivity((CheckBox)sender,
                 RestrictionsYesCheckBox,
                 RestrictionsNoCheckBox);
+        }
+
+        /// <summary>
+        /// Handles the Check event of the Dark Archive control. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DarkArchive_Check(object sender, RoutedEventArgs e)
+        {
+            CheckBox currentCheckBox = (CheckBox)sender;
 
             UIHelper.SetMutualExclusivity((CheckBox)sender,
-             DarkArchiveYesCheckBox,
-             DarkArchiveNoCheckBox);
+                DarkArchiveYesCheckBox,
+                DarkArchiveNoCheckBox);
         }
 
         #endregion
@@ -554,6 +590,11 @@ namespace WpfApp
 
                 MetadataDraftTextBox.Text = transcriptionModel.MetadataDraft;
 
+                IsPriorityYesCheckBox.IsChecked = transcriptionModel.IsPriority;
+                IsPriorityNoCheckBox.IsChecked = !transcriptionModel.IsPriority;
+
+                ReasonofPriorityTextBox.Text = transcriptionModel.ReasonForPriority;
+
                 FinalSentDatePicker.Text = transcriptionModel.FinalSentDate != null ?
                     ((DateTime)transcriptionModel.FinalSentDate).ToShortDateString() : string.Empty;
 
@@ -637,7 +678,7 @@ namespace WpfApp
 
                 ((TranscriptionUiModel)DataContext).SelectedCollection = transcriptionModel.CollectionId.ToString();
                 ((TranscriptionUiModel)DataContext).SelectedSeries = transcriptionModel.SubseriesId.ToString();
-                
+
                 //// Tab 5 
 
                 OnContentDmYesCheckBox.IsChecked = transcriptionModel.IsOnline;
@@ -849,6 +890,6 @@ namespace WpfApp
         }
 
         #endregion
-           
+
     }
 }
