@@ -221,10 +221,12 @@ namespace WpfApp
 
             Window window = new Window
             {
-                Title = "My User Control Dialog",
+                Title = itemTranscriptionModel.Title,
                 Content = new Transcription(itemTranscriptionModel.Id, Helper.WellKnownExpander.General),
                 Owner = this,
-                WindowStartupLocation = WindowStartupLocation.CenterOwner
+                WindowStartupLocation = WindowStartupLocation.CenterOwner,
+                Height = SystemParameters.PrimaryScreenHeight * .8,
+                Width = SystemParameters.PrimaryScreenWidth * .8,
             };
 
             window.ShowDialog();
