@@ -57,6 +57,14 @@ namespace WpfApp
         public int NextPageNumber { get; set; }
 
         /// <summary>
+        /// Gets or sets the last page number.
+        /// </summary>
+        /// <value>
+        /// The last page number.
+        /// </value>
+        public int LastPageNumber { get; set; }
+
+        /// <summary>
         /// Gets or sets the current page number.
         /// </summary>
         /// <value>
@@ -124,10 +132,6 @@ namespace WpfApp
         {
             MainGrid.Visibility = Visibility.Visible;
 
-            cc.Content = null;
-
-            BackToListButton.Visibility = Visibility.Hidden;
-
             AllToggleButton.IsChecked = true;
 
             SearchList = new List<string>();
@@ -149,6 +153,7 @@ namespace WpfApp
         /// <param name="e">The <see cref="MouseButtonEventArgs" /> instance containing the event data.</param>
         void TranscriptionQueueListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
+
             UIElement clicked = e.OriginalSource as UIElement;
 
             string name = ((FrameworkElement)clicked).Name;
@@ -159,33 +164,14 @@ namespace WpfApp
 
                 if (words.Length > 1)
                 {
-                    BackToListButton.Visibility = Visibility.Visible;
-
                     WellKnownExpander expader = (WellKnownExpander)Enum.Parse(typeof(WellKnownExpander), words[1]);
 
                     TranscriptionModel itemTranscriptionModel = ((FrameworkElement)e.OriginalSource).DataContext as TranscriptionModel;
 
-                    MainGrid.Visibility = Visibility.Hidden;
-
-                    cc.Content = new Transcription(itemTranscriptionModel.Id, expader);
-
+                    LoadBrowseData(itemTranscriptionModel.Id, expader);
                 }
-
             }
-        }
 
-        /// <summary>
-        /// Handles the Click event of the BackToListButton control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
-        private void BackToListButton_Click(object sender, EventArgs e)
-        {
-            cc.Content = null;
-
-            MainGrid.Visibility = Visibility.Visible;
-
-            BackToListButton.Visibility = Visibility.Hidden;
         }
 
         /// <summary>
@@ -274,15 +260,19 @@ namespace WpfApp
             {
                 requestPage = PreviousPageNumber;
             }
-            else if (hyperlinkName == "FirstPagesHyperlink")
+            else if (hyperlinkName == "FirstPageHyperlink")
             {
-                requestPage =1;
+                requestPage = 1;
             }
             else if (hyperlinkName == "PrevoiousHyperlink")
             {
                 requestPage = PreviousPageNumber;
             }
-
+            else if (hyperlinkName == "LastPageHyperlink")
+            {
+                requestPage = LastPageNumber;
+            }
+            
             SearchRequest.CurrentPage = requestPage;
 
             PopulateList();
@@ -381,6 +371,27 @@ namespace WpfApp
 
         #region Private Methods
 
+        private void LoadBrowseData(int id, WellKnownExpander expader)
+        {
+            //BackToListButton.Visibility = Visibility.Visible;
+
+            // MainGrid.Visibility = Visibility.Hidden;
+
+            // cc.Content = new Transcription(id, expader);
+
+            Window window = new Window
+            {
+                Title = "My User Control Dialog",
+                Content = new Transcription(id, expader),
+                Owner = Application.Current.MainWindow,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner,
+                Height = SystemParameters.PrimaryScreenHeight * .85,
+                Width = SystemParameters.PrimaryScreenWidth * .85,
+            };
+
+            window.ShowDialog();
+        }
+
         /// <summary>
         /// Populatrs the list.
         /// </summary>
@@ -421,7 +432,7 @@ namespace WpfApp
         /// Sets the zero list message.
         /// </summary>
         private void SetZeroListMessage()
-        {           
+        {
             CurrentPageTextBox.Visibility = Visibility.Hidden;
             RecordCountWordTextBox.Text = SearchHelper.NoRecordsFoundMessage;
         }
@@ -434,6 +445,7 @@ namespace WpfApp
         {
             NextTextBlock.Visibility = Visibility.Hidden;
             PrevoiousTextBlock.Visibility = Visibility.Hidden;
+            LastPageNumber = paginationInfo.TotalPages;
 
             if (paginationInfo.CurrentPage == 1 && paginationInfo.TotalPages > paginationInfo.CurrentPage)
             {
@@ -453,7 +465,7 @@ namespace WpfApp
                 PreviousPageNumber = paginationInfo.CurrentPage - 1;
             }
 
-            CurrentPageTextBox.Text = paginationInfo.CurrentPage + " Page";
+            CurrentPageTextBox.Text = "Page " + paginationInfo.CurrentPage;
 
             RecordCountWordTextBox.Text = SearchHelper.GetRecordCountText(paginationInfo.ListLength,
                 paginationInfo.CurrentPage, paginationInfo.TotalListLength);

@@ -276,7 +276,7 @@
                                         <StackPanel Grid.Column="1" >
                                             <TextBlock  Margin="16 35 16 8"  HorizontalAlignment="Center" FontSize="20" VerticalAlignment="Center"> All 
            
-                                Records(s)</TextBlock>
+                                Records</TextBlock>
 
                                         </StackPanel>
 
@@ -299,7 +299,7 @@
 
                                         </StackPanel>
                                         <StackPanel Grid.Column="1" >
-                                            <TextBlock VerticalAlignment="Center"   Margin="16 35 16 8"  HorizontalAlignment="Center" FontSize="18" > Transcription Queue(s)
+                                            <TextBlock VerticalAlignment="Center"   Margin="16 35 16 8"  HorizontalAlignment="Center" FontSize="18" > Transcription Queue
                                             </TextBlock>
 
                                         </StackPanel>

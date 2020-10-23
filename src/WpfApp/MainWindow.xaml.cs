@@ -74,21 +74,21 @@ namespace WpfApp
             {
 
                 //TODO: Login window
-                //LoginWindow loginWindow = new LoginWindow
-                //{
-                //    Owner = this,
-                //    WindowStartupLocation = WindowStartupLocation.CenterOwner
-                //};
-
-                //loginWindow.ShowDialog();
-
-                App.BaseUserControl.UserModel = new UserModel()
+                LoginWindow loginWindow = new LoginWindow
                 {
-                    UserId = 1,
-                    Name = "Patrick",
-                    UserType = 4,
-                    Username = "admin"
+                    Owner = this,
+                    WindowStartupLocation = WindowStartupLocation.CenterOwner
                 };
+
+                loginWindow.ShowDialog();
+
+                //App.BaseUserControl.UserModel = new UserModel()
+                //{
+                //    UserId = 1,
+                //    Name = "Patrick",
+                //    UserType = 4,
+                //    Username = "admin"
+                //};
 
                 SetLabels();
 
@@ -225,8 +225,8 @@ namespace WpfApp
                 Content = new Transcription(itemTranscriptionModel.Id, Helper.WellKnownExpander.General),
                 Owner = this,
                 WindowStartupLocation = WindowStartupLocation.CenterOwner,
-                Height = SystemParameters.PrimaryScreenHeight * .8,
-                Width = SystemParameters.PrimaryScreenWidth * .8,
+                Height = SystemParameters.PrimaryScreenHeight * .85,
+                Width = SystemParameters.PrimaryScreenWidth * .85,
             };
 
             window.ShowDialog();

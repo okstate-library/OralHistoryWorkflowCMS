@@ -56,6 +56,14 @@ namespace WpfApp
         public int NextPageNumber { get; set; }
 
         /// <summary>
+        /// Gets or sets the last page number.
+        /// </summary>
+        /// <value>
+        /// The last page number.
+        /// </value>
+        public int LastPageNumber { get; set; }
+
+        /// <summary>
         /// Gets or sets the current page number.
         /// </summary>
         /// <value>
@@ -144,9 +152,6 @@ namespace WpfApp
         /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
         private void BrowseUserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            //MainGrid.Visibility = Visibility.Visible;
-
-            //cc.Content = null;
 
             SearchRequest = new SearchRequest(SearchHelper.InitialCurrentPage,
                 SearchHelper.InitialListLength);
@@ -155,19 +160,19 @@ namespace WpfApp
 
             PopulateList();
 
-            //BackToListButton.Visibility = Visibility.Hidden;
+            ////BackToListButton.Visibility = Visibility.Hidden;
 
-            if (!string.IsNullOrEmpty(InterviewIdTextBox.Text))
-            {
-                int id = int.Parse(InterviewIdTextBox.Text);
+            //if (!string.IsNullOrEmpty(InterviewIdTextBox.Text))
+            //{
+            //    int id = int.Parse(InterviewIdTextBox.Text);
 
-                if (id > 0)
-                {
-                    LoadBrowseData(id, WellKnownExpander.Supplemental);
-                }
+            //    if (id > 0)
+            //    {
+            //        LoadBrowseData(id, WellKnownExpander.Supplemental);
+            //    }
 
-                InterviewIdTextBox.Text = string.Empty;
-            }
+            //    InterviewIdTextBox.Text = string.Empty;
+            //}
 
             ControlsVisibility();
         }
@@ -202,7 +207,7 @@ namespace WpfApp
         {
             //BackToListButton.Visibility = Visibility.Visible;
 
-           // MainGrid.Visibility = Visibility.Hidden;
+            // MainGrid.Visibility = Visibility.Hidden;
 
             // cc.Content = new Transcription(id, expader);
 
@@ -210,8 +215,10 @@ namespace WpfApp
             {
                 Title = "My User Control Dialog",
                 Content = new Transcription(id, expader),
-                //Owner = this.Parent,
-                WindowStartupLocation = WindowStartupLocation.CenterOwner
+                Owner = Application.Current.MainWindow,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner,
+                Height = SystemParameters.PrimaryScreenHeight * .85,
+                Width = SystemParameters.PrimaryScreenWidth * .85,
             };
 
             window.ShowDialog();
@@ -234,9 +241,17 @@ namespace WpfApp
             {
                 requestPage = NextPageNumber;
             }
+            else if (hyperlinkName == "FirstPageHyperlink")
+            {
+                requestPage = 1;
+            }
             else if (hyperlinkName == "PrevoiousHyperlink")
             {
                 requestPage = PreviousPageNumber;
+            }
+            else if (hyperlinkName == "LastPageHyperlink")
+            {
+                requestPage = LastPageNumber;
             }
 
             SearchRequest.CurrentPage = requestPage;
@@ -253,7 +268,7 @@ namespace WpfApp
         {
             //cc.Content = null;
 
-           // MainGrid.Visibility = Visibility.Visible;
+            // MainGrid.Visibility = Visibility.Visible;
 
             PopulateList();
 
@@ -394,6 +409,7 @@ namespace WpfApp
                 SearchRequest.CurrentPage = 1;
                 NextPageNumber = 0;
                 PreviousPageNumber = 0;
+                LastPageNumber = 0;
                 CurrentPageTextBox.Text = string.Empty;
 
                 PopulateList();
@@ -559,6 +575,7 @@ namespace WpfApp
 
             NextTextBlock.Visibility = Visibility.Hidden;
             PrevoiousTextBlock.Visibility = Visibility.Hidden;
+            LastPageNumber = paginationInfo.TotalPages;
 
             if (paginationInfo.CurrentPage == 1 && paginationInfo.TotalPages > paginationInfo.CurrentPage)
             {
@@ -578,7 +595,7 @@ namespace WpfApp
                 PreviousPageNumber = paginationInfo.CurrentPage - 1;
             }
 
-            CurrentPageTextBox.Text = paginationInfo.CurrentPage + " Page";
+            CurrentPageTextBox.Text = "Page " + paginationInfo.CurrentPage;
 
             RecordCountWordTextBox.Text = SearchHelper.GetRecordCountText(paginationInfo.ListLength,
               paginationInfo.CurrentPage, paginationInfo.TotalListLength);

@@ -45,15 +45,15 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
-                        
+
                         <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="300" />
                             <ColumnDefinition Width="Auto" />
-                           <ColumnDefinition Width="Auto" />
-                             <!--<ColumnDefinition Width="1*" />
+                            <!--<ColumnDefinition Width="1*" />
                             <ColumnDefinition Width="5*" />
                             <ColumnDefinition Width="5*" />-->
                         </Grid.ColumnDefinitions>
-                        
+
                         <TextBlock Margin="20 10 0 8"  Name="RecordCountWordTextBox" VerticalAlignment="Center"  
                                   Grid.Row="0" Grid.Column="0" HorizontalAlignment="Stretch" Style="{StaticResource MaterialDesignTitleTextBlock}"  />
 
@@ -63,7 +63,7 @@
                             <Button Margin="20 10 0 8"  Content="Reset"  Style="{StaticResource MaterialDesignRaisedLightButton}"  Click="ResetButton_Click"/>
                         </StackPanel>
 
-                        <Grid Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"  Margin="20 10 0 8">
+                        <Grid Grid.Row="1" Grid.ColumnSpan="2" VerticalAlignment="Center"  Margin="20 10 0 8">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
@@ -71,6 +71,7 @@
                                 <ColumnDefinition Width="1*" />
                                 <ColumnDefinition Width="1*" />
                                 <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="5*" />
                                 <ColumnDefinition Width="5*" />
                                 <ColumnDefinition Width="5*" />
                                 <ColumnDefinition Width="5*" />
@@ -85,10 +86,10 @@
                             <TextBlock Margin="20 21 0 8"  Grid.Column="2" HorizontalAlignment="Center" Text="entries"  />
 
                             <TextBlock Name="FirstPageTextBlock" Margin="25 21 20 0" Grid.Column="3" >
-                                <Hyperlink Name="FirstPagesHyperlink" Click="PageClickButton_Click">
+                                <Hyperlink Name="FirstPageHyperlink" Click="PageClickButton_Click">
                                     <TextBlock  Text="First Page" />
                                 </Hyperlink>    
-                        </TextBlock>
+                            </TextBlock>
 
                             <TextBlock Name="PrevoiousTextBlock" Margin="25 21 20 0" Grid.Column="4" Visibility="Hidden">
                                 <Hyperlink Name="PrevoiousHyperlink" Click="PageClickButton_Click">
@@ -103,6 +104,12 @@
                                     <TextBlock Text="Next Page »" />
                                 </Hyperlink>    
                          </TextBlock>
+
+                            <TextBlock Name="LastPageTextBlock" Margin="25 21 20 0" Grid.Column="7" >
+                                <Hyperlink Name="LastPageHyperlink" Click="PageClickButton_Click">
+                                    <TextBlock  Text="Last Page" />
+                                </Hyperlink>    
+                            </TextBlock>
 
                         </Grid>
                     </Grid>
@@ -182,7 +189,7 @@
                         </StackPanel>
                     </Grid>
                 </materialDesign:Card>
-                
+
                 <ListView Margin="0 10 0 100" Name="TranscriptionQueueListView" Grid.Row="1" Grid.Column="1"  
                           Grid.RowSpan="7"  VerticalAlignment="Top" HorizontalAlignment="Left"                     
                           MouseDoubleClick="TranscriptionQueueListView_MouseDoubleClick" 
@@ -251,7 +258,7 @@
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            
+
                             <!--Transcriber -->
                             <GridViewColumn Header="Transcriber Assigned" Width="150"
                                             HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}" 
@@ -280,7 +287,7 @@
                                         </StackPanel>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
-                            </GridViewColumn>                           
+                            </GridViewColumn>
 
                             <!--Audit Check Completed-->
                             <GridViewColumn Header="Audit check" Width="150" 
@@ -342,20 +349,6 @@
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
 
-                            <!--Edit With Correction Completed Date-->
-                            <GridViewColumn Header="Correction made" Width="150" 
-                                            HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}" 
-                                            domain:GridViewSort.PropertyName="EditWithCorrectionCompleted">
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <StackPanel>
-                                            <TextBlock Name="CorrectionMadeTextBlock_Transcript" ToolTip="{Binding EditWithCorrectionCompleted , StringFormat='{}{0:MM/dd/yyyy}'}" 
-                                                       Text="{Binding EditWithCorrectionCompleted , StringFormat='{}{0:MM/dd/yyyy}'}" />
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-
                             <!--Final Edit Completed-->
                             <GridViewColumn Header="Final edit" Width="150" 
                                             HeaderContainerStyle="{StaticResource GridViewColumnHeaderLargeFontStyle}"   
@@ -375,10 +368,6 @@
 
                 </ListView>
             </Grid>
-            <StackPanel>
-                <Button Content="Back to List..."  Name="BackToListButton" Visibility="Hidden" Click="BackToListButton_Click" />
-                <ContentControl x:Name="cc"/>
-            </StackPanel>
         </Grid>
     </ScrollViewer>
 

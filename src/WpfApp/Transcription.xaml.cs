@@ -550,11 +550,7 @@ namespace WpfApp
                     FormatTextBox.Text = "Video";
                 }
 
-                double completePercentage = GetObjectCompletePercentage(transcriptionModel);
-                TranscriptionProgressProgressBar.Value = completePercentage;
-                TranscriptionProgressLabel.Content = completePercentage + " %";
-
-                CurrentStatusLabel.Content = transcriptionModel.TranscriptStatus ? "Complete" : "In Progress";
+                CurrentStatusLabel.Content = (transcriptionModel.TranscriptStatus ? "Complete" : "In Progress");
                 TranscriptionStatusTextBox.Text = transcriptionModel.TranscriptStatus ? "Complete" : "In Progress";
 
                 AccessMediaStatusTextBox.Text = transcriptionModel.IsAccessMediaStatus ? "Yes" : "No";
@@ -747,33 +743,7 @@ namespace WpfApp
             }
 
         }
-
-        /// <summary>
-        /// Gets the object complete percentage.
-        /// </summary>
-        /// <param name="transcriptionModel">The transcription model.</param>
-        /// <returns></returns>
-        private double GetObjectCompletePercentage(TranscriptionModel transcriptionModel)
-        {
-            double totalProperties = 0, filledProperties = 0;
-
-            foreach (PropertyInfo prop in transcriptionModel.GetType().GetProperties())
-            {
-                totalProperties++;
-
-                object obj = prop.GetValue(transcriptionModel, null);
-
-                if (obj != null)
-                {
-                    filledProperties++;
-                }
-            }
-
-            double percentage = filledProperties / totalProperties * 100;
-
-            return Math.Round(percentage, 0);
-        }
-
+        
         /// <summary>
         /// Controlses the visibility.
         /// </summary>

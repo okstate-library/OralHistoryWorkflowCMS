@@ -114,7 +114,7 @@ namespace WpfApp
                 Message = { Text = string.IsNullOrEmpty(message) ? "Record submit" : message }
             };
 
-            DialogHost.Show(sampleMessageDialog, "RootDialog");
+            DialogHost.Show(sampleMessageDialog);
         }
 
         /// <summary>

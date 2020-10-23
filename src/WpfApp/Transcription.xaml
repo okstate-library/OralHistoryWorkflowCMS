@@ -6,6 +6,7 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:domain1="clr-namespace:WpfApp.Domain"
              xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
+             xmlns:local="clr-namespace:WpfApp"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
@@ -14,7 +15,6 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBox.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Card.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            
             <Style TargetType="{x:Type CheckBox}"  x:Key="listCheckBox" >
                 <Setter Property="Margin" Value="0 0 0 0" />
                 <Setter Property="FontSize" Value="13"></Setter>
@@ -25,6 +25,10 @@
                 <Setter Property="Margin" Value="7" />
             </Style>
 
+            <DataTemplate x:Key="TabItemBold">
+                <TextBlock Text="{Binding}" Height="30" FontWeight="Bold" FontSize="15" />
+                
+            </DataTemplate>
         </ResourceDictionary>
     </UserControl.Resources>
     <ScrollViewer HorizontalScrollBarVisibility="Hidden"   VerticalScrollBarVisibility="Hidden"                     
@@ -36,86 +40,64 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="200" />
                 <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="2*" />
             </Grid.ColumnDefinitions>
 
-            <StackPanel Orientation="Horizontal" Margin="20 0 0 10" Grid.Row="0" Grid.ColumnSpan="2">
+            <StackPanel Orientation="Horizontal" Background="{DynamicResource PrimaryHueLightBrush}" Margin="20 20 0 0" Grid.Row="0" Grid.Column="0">
                 <Label Name="TitleLabel"  BorderThickness="1"  FontSize="30" />
             </StackPanel>
 
-            <materialDesign:Card Background="{DynamicResource PrimaryHueLightBrush}"  Grid.Row="1" Grid.Column="0"   
-                      Foreground="{DynamicResource PrimaryHueLightForegroundBrush}"
-                      Width="180" Margin="0 0 1 0">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" Background="{DynamicResource PrimaryHueLightBrush}" Margin="0 20 0 0" Grid.Column="1">
+                <Label Name="CurrentStatusLabel" Margin="0 10 0 0"  FontSize="20" />
+                <Label HorizontalAlignment="Right" Content="(status)"  BorderThickness="1"  FontSize="10" />
+            </StackPanel>
 
-                    <StackPanel Grid.Row="0" Margin="5 10 10 0">
-                        <Label Name="CurrentStatusLabel"  BorderThickness="1"  FontSize="20" />
-                        <Label HorizontalAlignment="Right" Content="(status)"  BorderThickness="1"  FontSize="10" />
-                    </StackPanel>
-
-                    <StackPanel Grid.Row="1" Margin="10 10 10 0">
-                        <StackPanel Orientation="Horizontal">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="125" />
-                                    <ColumnDefinition Width="25" />
-                                </Grid.ColumnDefinitions>
-                                <ProgressBar Name="TranscriptionProgressProgressBar" Grid.Column="0" Value="75" Orientation="Horizontal" Height="5"  />
-                                <Label Name="TranscriptionProgressLabel" HorizontalAlignment="Right" Grid.Column="1" BorderThickness="1"  FontSize="10" />
-                            </Grid>
-                        </StackPanel>
-                        <Label HorizontalAlignment="Right" Content="(progress percentage)"  BorderThickness="1"  FontSize="10" />
-                    </StackPanel>
-
-                    <StackPanel Grid.Row="2" Margin="5 10 10 20" Name="DeleteButtonStackPanel">
-                        <Button Name="DeleteButton" Grid.Row="18" Margin="0,20,0,0"  
+            <StackPanel Grid.Row="0" Background="{DynamicResource PrimaryHueLightBrush}" Grid.Column="2"
+                        Margin="0 20 0 0" Name="DeleteButtonStackPanel">
+                <Button Name="DeleteButton"   Width="100" Margin="0 10 0 0" 
                                     Style="{StaticResource MaterialDesignRaisedAccentButton}" Click="DeleteButton_Click" 
                         ToolTip="Delete transcript">
-                            _Delete
-                        </Button>
-                    </StackPanel>
-                    
-                    <!--<StackPanel Grid.Row="2" Margin="5 10 10 20" Name="DeleteButtonStackPanel">
+                    _Delete
+                </Button>
+            </StackPanel>
+            
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="20 20 20 30"   Grid.Row="1"  Grid.ColumnSpan="3">
 
-                        <Button Grid.Row="18" Margin="0,20,0,0" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}"  
-                                Style="{StaticResource MaterialDesignRaisedAccentButton}" 
-                                materialDesign:DialogHost.DialogClosingAttached="DeleteConfirmaiton_OnDialogClosing">
-                            <Button.CommandParameter>
-                                <StackPanel Margin="16">
-                                    <TextBlock Text=" Do you really want to export all collection details?" FontWeight="Bold" FontSize="20" ></TextBlock>
-                                    <Button Style="{StaticResource MaterialDesignFlatButton}" IsCancel="True" 
-                                            Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
-                                            CommandParameter="true"
-                                            HorizontalAlignment="Center">Ok</Button>
+                <!--<dragablz:TabablzControl>-->
+                <TabControl>
+                    <TabControl.Resources>
+                        <Style TargetType="TabItem">
+                            <!--<Setter Property="FontWeight" Value="Bold"/>
+                            <Setter Property="FontSize" Value="15"/>
+                           -->
+                           
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="TabItem">
+                                        <Border Name="Border" BorderThickness="1,1,1,0" BorderBrush="Gainsboro" CornerRadius="4,4,0,0" Margin="2,0">
+                                            <ContentPresenter x:Name="ContentSite"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"
+                                        ContentSource="Header"
+                                        Margin="10,2"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter TargetName="Border" Property="Background" Value="{DynamicResource PrimaryHueDarkBrush}" />
+                                                <Setter Property="HeaderTemplate" Value="{StaticResource TabItemBold}" />
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                    
+                                </Setter.Value>
 
-                                    <Button Style="{StaticResource MaterialDesignFlatButton}" IsCancel="True" 
-                                            Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
-                                            CommandParameter="cancel"
-                                            HorizontalAlignment="Center">Cancel</Button>
-                                </StackPanel>
-                            </Button.CommandParameter>
-                            _Delete
-                        </Button>
-                    </StackPanel>-->
+                            </Setter>
+                        </Style>
+                    </TabControl.Resources>
 
-                    
-                </Grid>
-
-
-            </materialDesign:Card>
-
-            <StackPanel Orientation="Vertical" HorizontalAlignment="Left"   Grid.Row="1" Grid.Column="1">
-
-                <dragablz:TabablzControl>
-    
-                    <TabItem Header="General" Height="200">
+                    <TabItem Header="General">
                         <StackPanel Orientation="Vertical"
                             TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
                                 Margin="20,00,50,24"  >
@@ -154,10 +136,10 @@
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="200" />
+                                    <ColumnDefinition Width="175" />
                                     <ColumnDefinition Width="300" />
                                     <ColumnDefinition Width="50" />
-                                    <ColumnDefinition Width="200" />
+                                    <ColumnDefinition Width="175" />
                                     <ColumnDefinition Width="300" />
                                 </Grid.ColumnDefinitions>
 
@@ -275,8 +257,8 @@
 
                         </StackPanel>
                     </TabItem>
-                    
-                    <TabItem Header="Transcript"  Height="200">
+
+                    <TabItem Header="Transcript" >
                         <StackPanel Orientation="Vertical"
                             TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
                                 Margin="20,00,50,24"  >
@@ -479,7 +461,7 @@
                         </StackPanel>
                     </TabItem>
                     
-                    <TabItem Header="Media"  Height="200">
+                    <TabItem Header="Media">
                         <StackPanel Orientation="Vertical"
                             TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
                                 Margin="20,00,50,24"  >
@@ -518,11 +500,11 @@
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="200" />
-                                    <ColumnDefinition Width="50" />
-                                    <ColumnDefinition Width="200" />
-                                    <ColumnDefinition Width="50" />
-                                    <ColumnDefinition Width="200" />
+                                    <ColumnDefinition Width="250" />
+                                    <ColumnDefinition Width="125" />
+                                    <ColumnDefinition Width="250" />
+                                    <ColumnDefinition Width="125" />
+                                    <ColumnDefinition Width="250" />
                                 </Grid.ColumnDefinitions>
                                 <Border  Grid.Row="1"  Style="{StaticResource EmptyBorder2}"   />
 
@@ -628,7 +610,7 @@
                         </StackPanel>
                     </TabItem>
                     
-                    <TabItem Header="Metadata"  Height="200">
+                    <TabItem Header="Metadata">
                         <StackPanel Orientation="Vertical"
                             TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
                                 Margin="20,00,50,24"  >
@@ -675,10 +657,10 @@
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="200" />
+                                    <ColumnDefinition Width="175" />
                                     <ColumnDefinition Width="300" />
                                     <ColumnDefinition Width="50" />
-                                    <ColumnDefinition Width="200" />
+                                    <ColumnDefinition Width="175" />
                                     <ColumnDefinition Width="300" />
                                 </Grid.ColumnDefinitions>
 
@@ -927,7 +909,7 @@
                         </StackPanel>
                     </TabItem>
                     
-                    <TabItem Header="Supplemental"  Height="200">
+                    <TabItem Header="Supplemental">
                         <StackPanel Orientation="Vertical"
                             TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
                                 Margin="20,00,50,24"  >
@@ -966,10 +948,10 @@
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="200" />
+                                    <ColumnDefinition Width="175" />
                                     <ColumnDefinition Width="300" />
                                     <ColumnDefinition Width="50" />
-                                    <ColumnDefinition Width="200" />
+                                    <ColumnDefinition Width="175" />
                                     <ColumnDefinition Width="300" />
                                 </Grid.ColumnDefinitions>
 
@@ -1162,8 +1144,8 @@
 
                         </StackPanel>
                     </TabItem>
-                </dragablz:TabablzControl>
-
+                <!--</dragablz:TabablzControl>-->
+                </TabControl>
             </StackPanel>
         </Grid>
     </ScrollViewer>
