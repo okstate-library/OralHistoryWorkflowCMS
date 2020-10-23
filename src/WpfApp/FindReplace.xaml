@@ -29,11 +29,11 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="200" />
                 <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="5*" />
             </Grid.ColumnDefinitions>
 
-            <materialDesign:Card Background="{DynamicResource PrimaryHueLightBrush}"  Grid.Row="1" Grid.Column="0"   
+            <materialDesign:Card Background="{DynamicResource PrimaryHueLightBrush}"  Grid.Row="0" Grid.Column="0"   
                       Foreground="{DynamicResource PrimaryHueLightForegroundBrush}"
                       Width="180" Margin="0 0 1 0">
                 <StackPanel>
@@ -43,15 +43,7 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
+                           
                         </Grid.RowDefinitions>
                         <StackPanel  Grid.Row="0">
                             <TextBlock Text="Instructions" FontWeight="Bold" FontSize="18" />
@@ -75,27 +67,25 @@
                 </StackPanel>
             </materialDesign:Card>
 
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left"   Grid.Row="1" Grid.Column="1">
+            <StackPanel Margin="20 0 0 0"  Orientation="Horizontal" HorizontalAlignment="Left"   Grid.Row="0" Grid.Column="1">
 
-                <StackPanel Orientation="Vertical"
-                            TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
-                            Margin="20,0,50,24"  >
-
-
-                    <Grid  VerticalAlignment="Top"  Background="{DynamicResource PrimaryHueMidBrush}">
+                <Grid  VerticalAlignment="Top"  Background="{DynamicResource PrimaryHueMidBrush}">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />                           
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="200" />
-                            <ColumnDefinition Width="300" />
-                            <ColumnDefinition Width="200" />
-                            <ColumnDefinition Width="300" />
-                            <ColumnDefinition Width="800" />
-                        </Grid.ColumnDefinitions>
+
+                        <ColumnDefinition Width="175" />
+                        <ColumnDefinition Width="300" />
+                        <ColumnDefinition Width="500" />
+                    </Grid.ColumnDefinitions>
 
                         <Label Grid.Row="0" Grid.ColumnSpan="4" Style="{StaticResource PageTitleLabel}" Content="Find all the words to replace"  />
 
@@ -105,30 +95,28 @@
 
                         <TextBox Name="FindTextBox"  Grid.Row="2" Grid.Column="1"  Style="{StaticResource EditableTextBox}" />
 
-                        <Label Style="{StaticResource BoldLabel}" Margin="50 0 0 0" Grid.Row="2" Grid.Column="2">Replace word</Label>
+                        <Border  Grid.Row="3"  Style="{StaticResource EmptyBorder}"   />
+                        
+                        <Label Style="{StaticResource BoldLabel}" Margin="50 0 0 0" Grid.Row="4" Grid.Column="0">Replace word</Label>
 
-                        <TextBox Name="ReplaceTextBox" Grid.Row="2" Grid.Column="3"   Style="{StaticResource EditableTextBox}" />
+                        <TextBox Name="ReplaceTextBox" Grid.Row="4" Grid.Column="1"   Style="{StaticResource EditableTextBox}" />
 
-                        <Button Grid.Row="3"  Grid.ColumnSpan="4" Margin="20 20 0 20" HorizontalAlignment="Right"
+                        <Border  Grid.Row="5"  Style="{StaticResource EmptyBorder}"   />
+                        
+                        <Button Grid.Row="6"  Grid.Column="1" Margin="20 20 0 20" HorizontalAlignment="Right"
                                 Style="{StaticResource MaterialDesignRaisedAccentButton}" Click="FindAndReplaceButton_Click" 
                         ToolTip="Find and replace all fields">
                             _Find and replace
                         </Button>
 
-                        <Border  Grid.Row="4"  Style="{StaticResource EmptyBorder}"   />
 
                     </Grid>
 
-                </StackPanel>
-
             </StackPanel>
 
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left"   Grid.Row="2" Grid.Column="1">
+            <StackPanel Margin="20" Orientation="Horizontal" HorizontalAlignment="Left"   Grid.Row="1" Grid.Column="1">
 
-                <StackPanel Orientation="Vertical"
-                            TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
-                            Margin="20,10,50,80"  >
-
+              
 
                     <Grid  VerticalAlignment="Top"  Background="{DynamicResource AlternativeColor}" >
                         <Grid.RowDefinitions>
@@ -136,18 +124,21 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="200" />
-                            <ColumnDefinition Width="300" />
-                            <ColumnDefinition Width="200" />
-                            <ColumnDefinition Width="300" />
-                            <ColumnDefinition Width="200" />
-                            <ColumnDefinition Width="300" />
-                            <ColumnDefinition Width="800" />
-                        </Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="175" />
+                        <ColumnDefinition Width="300" />
+                        <ColumnDefinition Width="500" />
 
-                        <Label Grid.Row="0" Grid.ColumnSpan="4" Style="{StaticResource PageTitleLabel}" Content="Find specific word in a field to replace"  />
+                    </Grid.ColumnDefinitions>
+
+                        <Label Grid.Row="0" Grid.ColumnSpan="4" Style="{StaticResource PageTitleLabel}" 
+                               Content="Find specific word in a field to replace"  />
 
                         <Border  Grid.Row="1"  Style="{StaticResource EmptyBorder}"   />
 
@@ -155,28 +146,29 @@
 
                         <TextBox Name="FindFieldWordTextBox"  Grid.Row="2" Grid.Column="1"  Style="{StaticResource EditableTextBox}" />
 
-                        <Label Style="{StaticResource BoldLabel}"  Margin="80 0 0 0" Grid.Row="2" Grid.Column="2">Select field</Label>
+                        <Border  Grid.Row="3"  Style="{StaticResource EmptyBorder}"   />
+                        
+                        <Label Style="{StaticResource BoldLabel}"  Margin="80 0 0 0" Grid.Row="4" Grid.Column="0">Select field</Label>
 
-                        <ComboBox Grid.Row="2" Grid.Column="3" ItemsSource="{Binding Fields}" 
+                        <ComboBox Grid.Row="4" Grid.Column="1" ItemsSource="{Binding Fields}" 
                                   HorizontalAlignment="Left" Name="FieldsComboBox" VerticalAlignment="Top" Width="300" >
                           
                         </ComboBox>
 
-                        <Label Style="{StaticResource BoldLabel}" Margin="50 0 0 0" Grid.Row="2" Grid.Column="4">Replace word</Label>
+                        <Border  Grid.Row="5"  Style="{StaticResource EmptyBorder}"   />
+                        
+                        <Label Style="{StaticResource BoldLabel}" Margin="50 0 0 0" Grid.Row="6" Grid.Column="0">Replace word</Label>
 
-                        <TextBox Name="ReplaceFieldWordTextBox" Grid.Row="2" Grid.Column="5"   Style="{StaticResource EditableTextBox}" />
+                        <TextBox Name="ReplaceFieldWordTextBox" Grid.Row="6" Grid.Column="1"   Style="{StaticResource EditableTextBox}" />
 
-                        <Button Grid.Row="3"  Grid.ColumnSpan="6"   Margin="20 20 0 20"   HorizontalAlignment="Right"
+                        <Button Grid.Row="7"  Grid.ColumnSpan="2"   Margin="20 20 0 20"   HorizontalAlignment="Right"
                                 Style="{StaticResource MaterialDesignRaisedAccentButton}" Click="FindAndReplaceFieldButton_Click" 
                         ToolTip="Find and replace for specific field details">
                             _Find and replace
                         </Button>
 
-                        <Border  Grid.Row="4"  Style="{StaticResource EmptyBorder}"   />
 
                     </Grid>
-
-                </StackPanel>
 
             </StackPanel>
         </Grid>

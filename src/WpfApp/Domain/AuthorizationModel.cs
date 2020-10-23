@@ -125,8 +125,8 @@ namespace WpfApp.Domain
         private static DemoItem[] GuestUserDemoItems { get; } = new[]
         {
             homeDemoItem ,
-            interviewDemoItem,
-            transactionQueueDemoItem,
+            //interviewDemoItem,
+            //transactionQueueDemoItem,
             browseQueueDemoItem,
         };
 
